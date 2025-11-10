@@ -15,11 +15,11 @@
 | logic programming | البرمجة المنطقية | 0.9 | 2 | Programming paradigm |
 | meta-model | النموذج الفوقي | 0.8 | 1 | Model of models |
 | swarm system | نظام سربي | 0.8 | 1 | Robotics/AI collective behavior |
-| simulation | محاكاة | 0.9 | 4 | Computational modeling |
+| simulation | محاكاة | 0.9 | 5 | Computational modeling |
 | mathematical model | نموذج رياضي | 0.9 | 3 | Abstract representation |
 | feed-forward network | شبكة التغذية الأمامية | 0.9 | 2 | Neural network type |
 | parameter | معامل | 1.0 | 5 | Model parameter |
-| benchmark | معيار | 0.9 | 2 | Performance evaluation |
+| benchmark | معيار | 0.9 | 3 | Performance evaluation |
 | image classification | تصنيف الصور | 0.9 | 4 | Computer vision task |
 | computer vision | رؤية حاسوبية | 1.0 | 2 | AI field |
 | encoder | مشفر | 0.9 | 1 | Neural network component |
@@ -31,12 +31,12 @@
 | abstract syntax tree | شجرة البنية التركيبية المجردة | 0.9 | 1 | Code representation |
 | code completion | إكمال الشفرة | 0.9 | 1 | Programming assistance |
 | semantic | دلالي | 1.0 | 2 | Meaning-related |
-| functional programming | البرمجة الوظيفية | 1.0 | 4 | Programming paradigm |
+| functional programming | البرمجة الوظيفية | 1.0 | 9 | Programming paradigm |
 | structured programming | البرمجة المنظمة | 0.9 | 1 | Programming paradigm |
 | monad | موناد | 0.8 | 2 | Functional programming concept |
-| parallelism | التوازي | 0.9 | 9 | Concurrent execution |
+| parallelism | التوازي | 0.9 | 14 | Concurrent execution |
 | syntax | بنية نحوية | 1.0 | 3 | Language grammar |
-| inference | استنتاج | 0.9 | 1 | Logical deduction |
+| inference | استنتاج | 0.9 | 2 | Logical deduction |
 | search space | فضاء البحث | 0.9 | 1 | Problem solving domain |
 | dependency | اعتمادية | 0.9 | 1 | Relationship between elements |
 | transpiling | التحويل البرمجي | 0.8 | 1 | Source-to-source compilation |
@@ -45,10 +45,10 @@
 | object-oriented programming | البرمجة الموجهة بالكائنات | 1.0 | 2 | Programming paradigm |
 | class | صنف | 1.0 | 1 | OOP construct |
 | subclass | صنف فرعي | 1.0 | 1 | Class inheritance |
-| function | دالة | 1.0 | 3 | Programming construct |
+| function | دالة | 1.0 | 8 | Programming construct |
 | inductive programming | البرمجة الاستقرائية | 0.8 | 1 | Program synthesis approach |
 | program synthesis | توليد البرامج | 0.8 | 1 | Automatic program generation |
-| type system | نظام الأنواع | 0.9 | 1 | Type theory implementation |
+| type system | نظام الأنواع | 0.9 | 4 | Type theory implementation |
 | reuse | إعادة الاستخدام | 1.0 | 1 | Code reusability |
 | modular | نمطي | 0.9 | 1 | Modular design |
 | formal methods | الأساليب الرسمية | 1.0 | 25 | Mathematical techniques for software/hardware |
@@ -112,7 +112,7 @@
 | probabilistic | احتمالي | 0.9 | 4 | Based on probability |
 | uncertainty | عدم اليقين | 1.0 | 5 | Lack of certainty |
 | monitoring | المراقبة | 1.0 | 4 | Runtime observation |
-| abstraction | التجريد | 1.0 | 7 | Simplified representation |
+| abstraction | التجريد | 1.0 | 9 | Simplified representation |
 | scalability | قابلية التوسع | 0.9 | 4 | Ability to handle growth |
 | multi-agent | متعدد الوكلاء | 0.8 | 2 | Multiple autonomous entities |
 | requirements | متطلبات | 1.0 | 9 | System requirements |
@@ -131,7 +131,7 @@
 | RFID | تحديد الترددات الراديوية | 0.9 | 1 | Radio-frequency identification |
 | hash function | دالة التجزئة | 0.9 | 3 | Cryptographic function |
 | axiom | بديهية | 1.0 | 3 | Self-evident truth |
-| computational model | نموذج حسابي | 0.9 | 3 | Model of computation |
+| computational model | نموذج حسابي | 0.9 | 6 | Model of computation |
 | support vector machine | آلة المتجهات الداعمة | 0.9 | 1 | ML classification algorithm |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | training | التدريب | 1.0 | 9 | ML model training |
@@ -147,7 +147,7 @@
 | embedded systems | أنظمة مدمجة | 1.0 | 4 | Integrated computing systems |
 | database | قاعدة بيانات | 1.0 | 12 | Data storage system |
 | memory | ذاكرة | 1.0 | 19 | Computer memory |
-| performance | أداء | 1.0 | 24 | System performance |
+| performance | أداء | 1.0 | 29 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
 | framework | إطار العمل | 0.9 | 21 | Software framework |
@@ -184,7 +184,7 @@
 | offloading | تفريغ | 0.8 | 1 | Computation offloading |
 | tabular workload | حمل عمل جدولي | 0.7 | 1 | Table-based workload |
 | columnar layout | تخطيط عمودي | 0.9 | 2 | Column layout |
-| operator | معامل | 1.0 | 2 | Query/mathematical operator |
+| operator | معامل | 1.0 | 4 | Query/mathematical operator |
 | aggregation | تجميع | 0.9 | 1 | Data aggregation |
 | sorting | فرز | 1.0 | 1 | Data sorting |
 | execution path | مسار تنفيذ | 0.9 | 1 | Execution path |
@@ -202,7 +202,7 @@
 | dataflow | تدفق البيانات | 1.0 | 17 | Data flow architecture |
 | pipeline | خط أنابيب | 0.9 | 7 | Data pipeline |
 | FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 5 | Field-Programmable Gate Array |
-| GPU | وحدة معالجة الرسومات | 1.0 | 13 | Graphics Processing Unit |
+| GPU | وحدة معالجة الرسومات | 1.0 | 14 | Graphics Processing Unit |
 | CPU | وحدة المعالجة المركزية | 1.0 | 6 | Central Processing Unit |
 | tiling | تبليط | 0.8 | 1 | Loop tiling optimization |
 | buffering | تخزين مؤقت | 0.9 | 1 | Data buffering |
@@ -230,7 +230,7 @@
 | array-of-structs | مصفوفة البنى | 0.9 | 1 | AoS pattern |
 | cloud computing | الحوسبة السحابية | 1.0 | 3 | Cloud infrastructure |
 | component | مكون | 1.0 | 3 | System component |
-| compiler | مترجم | 1.0 | 9 | Language compiler |
+| compiler | مترجم | 1.0 | 11 | Language compiler |
 | concurrent | متزامن | 1.0 | 1 | Concurrent execution |
 | concurrency | التزامن | 1.0 | 1 | Concurrent programming |
 | data engineering | هندسة البيانات | 0.9 | 2 | Data engineering field |
@@ -366,7 +366,19 @@
 | mutable | قابل للتغيير | 0.9 | 1 | Can be modified |
 | tape | شريط | 0.8 | 1 | AD tape/trace |
 | correctness by construction | الصحة بالبناء | 0.8 | 1 | Correct-by-construction approach |
-| programming language | لغة البرمجة | 1.0 | 1 | Programming language |
+| programming language | لغة البرمجة | 1.0 | 6 | Programming language |
+| array programming | برمجة المصفوفات | 0.9 | 5 | Array-oriented programming paradigm |
+| array language | لغة المصفوفات | 0.9 | 5 | Programming language for array operations |
+| array | مصفوفة | 1.0 | 5 | Array data structure |
+| array shape | شكل المصفوفة | 0.9 | 3 | Shape/dimensions of array |
+| rank polymorphism | تعدد الأشكال حسب الرتبة | 0.8 | 4 | Lifting functions to higher-rank arrays |
+| rank | رتبة | 0.9 | 4 | Array rank/dimensionality |
+| lifting | رفع | 0.8 | 2 | Lifting functions to operate on arrays |
+| vector notation | ترميز المتجهات | 0.9 | 2 | Mathematical vector notation |
+| notation | ترميز | 0.9 | 2 | Mathematical or programming notation |
+| broadcasting | بث | 0.9 | 1 | Array broadcasting operation |
+| introspection | تأمل ذاتي | 0.8 | 1 | Self-reflection and analysis |
+| portability | قابلية النقل | 0.9 | 1 | Code portability across platforms |
 | convolution | التفاف | 0.9 | 1 | Mathematical convolution |
 | semiring | حلقة شبه جمعية | 0.8 | 1 | Algebraic semiring structure |
 | semimodule | وحدة شبه جمعية | 0.8 | 1 | Algebraic semimodule |
@@ -408,7 +420,7 @@
 | distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
 | network | شبكة | 1.0 | 2 | Computer network |
 | decentralization | اللامركزية | 0.9 | 1 | Distributed control/authority |
-| efficiency | كفاءة | 1.0 | 2 | System efficiency |
+| efficiency | كفاءة | 1.0 | 3 | System efficiency |
 | Byzantine agreement | الاتفاق البيزنطي | 0.9 | 1 | Fault-tolerant consensus protocol |
 | Paxos | باكسوس | 0.9 | 1 | Distributed consensus algorithm |
 | leader election | انتخاب القائد | 0.9 | 1 | Selecting coordinator in distributed system |
