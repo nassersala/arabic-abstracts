@@ -423,3 +423,24 @@
 | fault tolerance | تحمل الأخطاء | 0.9 | 0 | Ability to continue despite failures |
 | synchronization | المزامنة | 0.9 | 0 | Coordinating concurrent operations |
 | asynchronous | لامتزامن | 0.9 | 0 | Not synchronized in time |
+| authenticated data structure | بنية بيانات مصادق عليها | 0.9 | 5 | Data structure with cryptographic authentication |
+| collision-resistant | مقاوم للتصادم | 0.9 | 1 | Cryptographic collision resistance |
+| relational separation logic | منطق فصل علائقي | 0.8 | 1 | Logic for reasoning about programs |
+| type abstraction | التجريد النوعي | 0.8 | 1 | Abstracting types for security |
+| cryptographic | تشفيري | 1.0 | 3 | Related to cryptography |
+| memory corruption | تلف الذاكرة | 0.9 | 1 | Memory integrity violation |
+| composable | قابل للتركيب | 0.9 | 1 | Can be combined/composed |
+| blockweb | شبكة الكتل | 0.8 | 1 | Block-based web structure |
+| directed acyclic graph | رسم بياني لا دوري موجه | 0.9 | 1 | DAG structure |
+| immutability | عدم القابلية للتغيير | 0.9 | 1 | Cannot be modified |
+| self-authentication | المصادقة الذاتية | 0.9 | 1 | Self-verifying authentication |
+| proof-of-work | إثبات العمل | 0.9 | 1 | Computational proof mechanism |
+| trust model | نموذج الثقة | 0.9 | 1 | Framework for trust relationships |
+| auditable | قابل للمراجعة | 0.9 | 1 | Can be audited/reviewed |
+| trustworthiness | الموثوقية | 1.0 | 1 | Quality of being trustworthy |
+| consistency | الاتساق | 1.0 | 1 | Data consistency property |
+| path hash accumulator | مجمع تجزئة المسار | 0.8 | 1 | Cryptographic path verification tool |
+| graph connectivity | اتصال الرسم البياني | 0.9 | 1 | Graph nodes connectivity |
+| geometric search | البحث الهندسي | 0.9 | 1 | Spatial/geometric searching |
+| intersection detection | اكتشاف التقاطع | 0.9 | 1 | Finding geometric intersections |
+| containment verification | التحقق من الاحتواء | 0.8 | 1 | Verifying spatial containment |
