@@ -56,8 +56,46 @@
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
 | specification | مواصفة | 1.0 | 12 | Formal description of behavior |
 | model checking | فحص النماذج | 0.9 | 10 | Automated verification technique |
-| proof | برهان | 1.0 | 8 | Mathematical proof |
+| proof | برهان | 1.0 | 11 | Mathematical proof |
 | theorem | مبرهنة | 1.0 | 5 | Proven statement |
+| category | فئة | 1.0 | 5 | Category theory structure |
+| abelian | أبيلي | 0.9 | 2 | Abelian property |
+| functor | دالة تصنيفية | 0.9 | 2 | Category theory functor |
+| 2-category | فئة ثنائية | 0.8 | 1 | Higher category |
+| anti-equivalence | تكافؤ عكسي | 0.8 | 1 | Categorical anti-equivalence |
+| definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
+| additive category | فئة جمعية | 0.9 | 1 | Additive category |
+| coherent | متماسك | 0.9 | 1 | Coherent structure |
+| morphism | تشاكل | 0.9 | 1 | Category morphism |
+| descent theory | نظرية النزول | 0.8 | 1 | Categorical descent |
+| Hopf category | فئة هوبف | 0.8 | 1 | Hopf algebraic category |
+| Galois theory | نظرية جالوا | 0.9 | 1 | Galois theory |
+| linear category | فئة خطية | 0.9 | 1 | Linear category |
+| isomorphic | متشاكل | 0.9 | 1 | Isomorphism |
+| representation | تمثيل | 0.9 | 1 | Category representation |
+| dual | مزدوج | 1.0 | 1 | Dual structure |
+| groupoid | زمرة شبيهة | 0.8 | 1 | Groupoid |
+| graded | مدرج | 0.9 | 1 | Graded structure |
+| opetope | أوبتوب | 0.7 | 1 | Opetope structure |
+| presheaf | حزمة أمامية | 0.8 | 1 | Presheaf |
+| equivalent | مكافئ | 1.0 | 1 | Equivalence |
+| enriched category | فئة مُثرَى | 0.8 | 1 | Enriched category |
+| strictification | تصريم | 0.7 | 1 | Strictification process |
+| monoidal | أحادي | 0.9 | 1 | Monoidal structure |
+| symmetric | متماثل | 1.0 | 1 | Symmetric property |
+| permutative | تبديلي | 0.8 | 1 | Permutative category |
+| bimonoidal | أحادي ثنائي | 0.7 | 1 | Bimonoidal structure |
+| indexed | مفهرس | 0.9 | 1 | Indexed structure |
+| contextual | سياقي | 0.9 | 1 | Contextual category |
+| type theory | نظرية الأنواع | 0.9 | 1 | Type theory |
+| fibration | ألياف | 0.8 | 1 | Categorical fibration |
+| model category | فئة نموذجية | 0.9 | 1 | Model category |
+| pullback | سحب | 0.9 | 1 | Pullback operation |
+| cofibration | ألياف مشتركة | 0.7 | 1 | Cofibration |
+| finite limit | حد منتهي | 0.9 | 1 | Finite limit |
+| simplicial | بسيط | 0.9 | 1 | Simplicial structure |
+| Cartesian closed | ديكارتي مغلق | 0.9 | 1 | Cartesian closed |
+| colimit | حد مشترك | 0.9 | 1 | Categorical colimit |
 | satisfiability | الإرضاء | 0.8 | 4 | Logical satisfiability |
 | SMT solver | حلال SMT | 0.8 | 3 | Satisfiability modulo theory solver |
 | abstract interpretation | التفسير المجرد | 0.8 | 3 | Static analysis technique |
@@ -112,7 +150,7 @@
 | performance | أداء | 1.0 | 20 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
-| framework | إطار العمل | 0.9 | 13 | Software framework |
+| framework | إطار العمل | 0.9 | 14 | Software framework |
 | Structure of Arrays | بنية المصفوفات | 0.9 | 1 | SoA pattern |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | lock-free | خالية من القفل | 0.8 | 1 | Concurrent programming technique |
