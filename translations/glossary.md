@@ -4,10 +4,10 @@
 |---------|--------|------------|-------------|-------|
 | algorithm | خوارزمية | 1.0 | 7 | Standard term |
 | data structure | بنية البيانات | 1.0 | 16 | Standard term |
-| machine learning | تعلم الآلة | 1.0 | 12 | Standard term |
-| neural network | شبكة عصبية | 1.0 | 9 | Standard term |
-| deep learning | تعلم عميق | 1.0 | 13 | Standard term |
-| transformer | محول | 0.8 | 3 | Deep learning architecture |
+| machine learning | تعلم الآلة | 1.0 | 15 | Standard term |
+| neural network | شبكة عصبية | 1.0 | 11 | Standard term |
+| deep learning | تعلم عميق | 1.0 | 17 | Standard term |
+| transformer | محول | 0.8 | 4 | Deep learning architecture |
 | attention mechanism | آلية الانتباه | 0.9 | 2 | Used in transformers |
 | ontology | أنطولوجيا | 0.8 | 1 | Knowledge representation |
 | validation | التحقق من الصحة | 0.9 | 8 | Verification process |
@@ -18,10 +18,10 @@
 | simulation | محاكاة | 0.9 | 3 | Computational modeling |
 | mathematical model | نموذج رياضي | 0.9 | 3 | Abstract representation |
 | feed-forward network | شبكة التغذية الأمامية | 0.9 | 1 | Neural network type |
-| parameter | معامل | 1.0 | 5 | Model parameter |
+| parameter | معامل | 1.0 | 6 | Model parameter |
 | benchmark | معيار | 0.9 | 1 | Performance evaluation |
 | image classification | تصنيف الصور | 0.9 | 3 | Computer vision task |
-| computer vision | رؤية حاسوبية | 1.0 | 1 | AI field |
+| computer vision | رؤية حاسوبية | 1.0 | 2 | AI field |
 | encoder | مشفر | 0.9 | 1 | Neural network component |
 | decoder | فك التشفير | 0.9 | 1 | Neural network component |
 | embedding | التضمين | 0.9 | 3 | Representation learning |
@@ -58,9 +58,9 @@
 | model checking | فحص النماذج | 0.9 | 10 | Automated verification technique |
 | proof | برهان | 1.0 | 12 | Mathematical proof |
 | theorem | مبرهنة | 1.0 | 6 | Proven statement |
-| category | فئة | 1.0 | 12 | Category theory structure |
+| category | فئة | 1.0 | 16 | Category theory structure |
 | abelian | أبيلي | 0.9 | 2 | Abelian property |
-| functor | دالة تصنيفية | 0.9 | 4 | Category theory functor |
+| functor | دالة تصنيفية | 0.9 | 5 | Category theory functor |
 | 2-category | فئة ثنائية | 0.8 | 3 | Higher category |
 | anti-equivalence | تكافؤ عكسي | 0.8 | 1 | Categorical anti-equivalence |
 | definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
@@ -112,7 +112,7 @@
 | probabilistic | احتمالي | 0.9 | 4 | Based on probability |
 | uncertainty | عدم اليقين | 1.0 | 5 | Lack of certainty |
 | monitoring | المراقبة | 1.0 | 4 | Runtime observation |
-| abstraction | التجريد | 1.0 | 7 | Simplified representation |
+| abstraction | التجريد | 1.0 | 8 | Simplified representation |
 | scalability | قابلية التوسع | 0.9 | 3 | Ability to handle growth |
 | multi-agent | متعدد الوكلاء | 0.8 | 2 | Multiple autonomous entities |
 | requirements | متطلبات | 1.0 | 9 | System requirements |
@@ -150,12 +150,12 @@
 | performance | أداء | 1.0 | 21 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
-| framework | إطار العمل | 0.9 | 17 | Software framework |
+| framework | إطار العمل | 0.9 | 19 | Software framework |
 | Structure of Arrays | بنية المصفوفات | 0.9 | 1 | SoA pattern |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | lock-free | خالية من القفل | 0.8 | 1 | Concurrent programming technique |
 | bitmap | خريطة بت | 0.9 | 1 | Bit array data structure |
-| hierarchical | هرمي | 0.9 | 2 | Hierarchical organization |
+| hierarchical | هرمي | 0.9 | 4 | Hierarchical organization |
 | columnar storage | التخزين العمودي | 0.9 | 6 | Column-oriented storage |
 | column-oriented | موجه نحو الأعمدة | 0.9 | 1 | Column-based approach |
 | graph database | قاعدة بيانات الرسوم البيانية | 0.9 | 3 | Graph-based database system |
@@ -244,8 +244,8 @@
 | stream processing | معالجة التدفقات | 0.9 | 5 | Stream data processing |
 | technique | تقنية | 1.0 | 5 | Computational technique |
 | vectorization | التمتير | 0.9 | 1 | SIMD vectorization |
-| graph neural network | الشبكات العصبية البيانية | 0.9 | 2 | Neural networks on graphs |
-| loss function | دالة الخسارة | 0.9 | 1 | Training loss function |
+| graph neural network | الشبكات العصبية البيانية | 0.9 | 3 | Neural networks on graphs |
+| loss function | دالة الخسارة | 0.9 | 2 | Training loss function |
 | score function | دالة النقاط | 0.8 | 1 | Scoring function |
 | regression | الانحدار | 0.9 | 1 | Statistical regression |
 | multi-layer perceptron | الشبكات الإدراكية متعددة الطبقات | 0.9 | 1 | MLP architecture |
@@ -266,11 +266,11 @@
 | Riemannian manifold | متعدد ريمان | 0.8 | 2 | Riemannian geometry manifold |
 | geometric optimization | التحسين الهندسي | 0.9 | 3 | Geometric optimization methods |
 | Euclidean space | الفضاء الإقليدي | 0.9 | 2 | Euclidean geometry space |
-| gradient | التدرجات | 0.9 | 2 | Gradient in optimization |
+| gradient | التدرجات | 0.9 | 4 | Gradient in optimization |
 | vanishing gradient | تلاشي التدرجات | 0.8 | 1 | Vanishing gradient problem |
 | exploding gradient | انفجار التدرجات | 0.8 | 1 | Exploding gradient problem |
-| convolutional neural network | الشبكة العصبية الالتفافية | 0.9 | 1 | CNN architecture |
-| recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 2 | RNN architecture |
+| convolutional neural network | الشبكة العصبية الالتفافية | 0.9 | 2 | CNN architecture |
+| recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 3 | RNN architecture |
 | transfer learning | التعلم بالنقل | 0.9 | 1 | Transfer learning technique |
 | feature redundancy | التكرار في الميزات | 0.8 | 1 | Feature redundancy issue |
 | virtual reality | الواقع الافتراضي | 0.9 | 2 | VR technology |
@@ -289,7 +289,7 @@
 | drug design | تصميم الأدوية | 0.9 | 1 | Drug design and discovery |
 | structure-based | القائم على البنية | 0.9 | 2 | Structure-based approach |
 | macromolecule | الجزيئات الكبيرة | 0.8 | 1 | Macromolecular structures |
-| protein | البروتينات | 1.0 | 1 | Protein molecules |
+| protein | البروتينات | 1.0 | 2 | Protein molecules |
 | nucleic acid | الأحماض النووية | 0.9 | 1 | DNA/RNA |
 | ligand | الرابط | 0.8 | 2 | Molecular ligand |
 | bioorganic chemistry | الكيمياء العضوية الحيوية | 0.8 | 1 | Bioorganic chemistry field |
@@ -350,11 +350,11 @@
 | quantum circuit | دائرة كمومية | 0.9 | 3 | Quantum computing circuit |
 | rewrite rule | قاعدة إعادة كتابة | 0.8 | 1 | Transformation rule |
 | Clifford gate | بوابة كليفورد | 0.8 | 1 | Clifford quantum gate |
-| parametric | بارامتري | 0.8 | 1 | Parameter-based |
+| parametric | بارامتري | 0.8 | 2 | Parameter-based |
 | speedup | تسريع | 0.9 | 1 | Performance acceleration |
 | boolean | منطقي | 0.9 | 1 | Boolean logic |
 | classical simulation | محاكاة كلاسيكية | 0.9 | 1 | Classical computer simulation |
-| algebraic | جبري | 0.9 | 2 | Algebraic mathematics |
+| algebraic | جبري | 0.9 | 3 | Algebraic mathematics |
 | Dirac notation | ترميز ديراك | 0.9 | 1 | Dirac bra-ket notation |
 | pictorial | تصويري | 0.9 | 1 | Picture-based |
 | natural language | اللغة الطبيعية | 1.0 | 1 | Human language |
@@ -362,7 +362,7 @@
 | quantum hardware | أجهزة كمومية | 0.9 | 1 | Physical quantum devices |
 | automatic differentiation | التفاضل الآلي | 0.9 | 1 | Automatic computation of derivatives |
 | reverse-mode | النمط العكسي | 0.8 | 1 | Reverse-mode AD |
-| derivative | مشتقة | 1.0 | 1 | Mathematical derivative |
+| derivative | مشتقة | 1.0 | 2 | Mathematical derivative |
 | mutable | قابل للتغيير | 0.9 | 1 | Can be modified |
 | tape | شريط | 0.8 | 1 | AD tape/trace |
 | correctness by construction | الصحة بالبناء | 0.8 | 1 | Correct-by-construction approach |
@@ -377,8 +377,8 @@
 | polynomial | كثير حدود | 0.9 | 1 | Polynomial expression |
 | image convolution | التفاف الصور | 0.9 | 1 | Convolution operation on images |
 | supervised learning | التعلم الموجه | 0.9 | 1 | Learning from labeled data |
-| optics | البصريات | 0.8 | 1 | Category theory optics |
-| lenses | العدسات | 0.8 | 1 | Category theory lenses |
+| optics | البصريات | 0.8 | 2 | Category theory optics |
+| lenses | العدسات | 0.8 | 2 | Category theory lenses |
 | bidirectional | ثنائي الاتجاه | 0.9 | 1 | Bidirectional data flow |
 | denotational | دلالي | 0.8 | 1 | Denotational semantics |
 | operational | تشغيلي | 0.8 | 1 | Operational semantics |
@@ -388,3 +388,28 @@
 | biactegory | فئة الفعل الثنائية | 0.7 | 1 | Biaction category |
 | braided | مضفر | 0.8 | 1 | Braided monoidal structure |
 | probability | الاحتمال | 0.9 | 1 | Probability theory |
+| string diagram | المخططات الخيطية | 0.8 | 1 | Diagrammatic representation |
+| reproducibility | قابلية إعادة الإنتاج | 0.9 | 1 | Research reproducibility |
+| integral transform | التحويلات التكاملية | 0.8 | 1 | Integral transformations |
+| simplicial | بسيط | 0.8 | 1 | Simplicial structure |
+| simplicial complex | مركب بسيط | 0.8 | 1 | Simplicial complex structure |
+| backpropagation | الانتشار الخلفي | 0.9 | 2 | Backpropagation algorithm |
+| endofunctor | دالة تصنيفية ذاتية | 0.7 | 1 | Endofunctor category theory |
+| coalgebraic | جبرية مشتركة | 0.7 | 1 | Coalgebraic formulation |
+| generative AI | الذكاء الاصطناعي التوليدي | 0.9 | 1 | Generative artificial intelligence |
+| lifting diagram | رفع المخططات | 0.7 | 1 | Diagram lifting |
+| gradient descent | النزول بالتدرج | 0.9 | 1 | Gradient descent optimization |
+| ADAM | ADAM | 1.0 | 1 | ADAM optimizer |
+| AdaGrad | AdaGrad | 1.0 | 1 | AdaGrad optimizer |
+| Nesterov momentum | زخم نيستروف | 0.8 | 1 | Nesterov momentum method |
+| MSE | MSE | 1.0 | 1 | Mean Squared Error |
+| Softmax | Softmax | 1.0 | 1 | Softmax activation function |
+| cross-entropy | الإنتروبيا التبادلية | 0.9 | 1 | Cross-entropy loss |
+| boolean circuits | الدوائر المنطقية | 0.9 | 1 | Boolean logic circuits |
+| smooth maps | الخرائط السلسة | 0.8 | 1 | Smooth mathematical maps |
+| feature learning | تعلم الميزات | 0.9 | 1 | Feature learning approach |
+| representation learning | تعلم التمثيل | 0.9 | 1 | Representation learning |
+| regularities | انتظامات | 0.8 | 1 | Mathematical regularities |
+| geometric | هندسي | 0.9 | 1 | Geometric properties |
+| Erlangen Program | برنامج إرلانجن | 0.8 | 1 | Felix Klein's Erlangen Program |
+| prior knowledge | المعرفة المسبقة | 0.9 | 1 | Prior knowledge incorporation |
