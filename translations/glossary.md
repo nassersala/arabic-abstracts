@@ -2,11 +2,11 @@
 
 | English | Arabic | Confidence | Usage Count | Notes |
 |---------|--------|------------|-------------|-------|
-| algorithm | خوارزمية | 1.0 | 6 | Standard term |
-| data structure | بنية البيانات | 1.0 | 14 | Standard term |
+| algorithm | خوارزمية | 1.0 | 7 | Standard term |
+| data structure | بنية البيانات | 1.0 | 16 | Standard term |
 | machine learning | تعلم الآلة | 1.0 | 11 | Standard term |
 | neural network | شبكة عصبية | 1.0 | 6 | Standard term |
-| deep learning | تعلم عميق | 1.0 | 10 | Standard term |
+| deep learning | تعلم عميق | 1.0 | 11 | Standard term |
 | transformer | محول | 0.8 | 3 | Deep learning architecture |
 | attention mechanism | آلية الانتباه | 0.9 | 2 | Used in transformers |
 | ontology | أنطولوجيا | 0.8 | 1 | Knowledge representation |
@@ -34,8 +34,8 @@
 | functional programming | البرمجة الوظيفية | 1.0 | 4 | Programming paradigm |
 | structured programming | البرمجة المنظمة | 0.9 | 1 | Programming paradigm |
 | monad | موناد | 0.8 | 1 | Functional programming concept |
-| parallelism | التوازي | 0.9 | 8 | Concurrent execution |
-| syntax | بنية نحوية | 1.0 | 1 | Language grammar |
+| parallelism | التوازي | 0.9 | 9 | Concurrent execution |
+| syntax | بنية نحوية | 1.0 | 3 | Language grammar |
 | inference | استنتاج | 0.9 | 1 | Logical deduction |
 | search space | فضاء البحث | 0.9 | 1 | Problem solving domain |
 | dependency | اعتمادية | 0.9 | 1 | Relationship between elements |
@@ -136,7 +136,7 @@
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | training | التدريب | 1.0 | 4 | ML model training |
 | data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
-| optimization | التحسين | 1.0 | 32 | Making optimal |
+| optimization | التحسين | 1.0 | 33 | Making optimal |
 | counterexample | مثال مضاد | 0.9 | 3 | Example showing falsity |
 | metric temporal logic | منطق زمني متري | 0.8 | 1 | Time-constrained temporal logic |
 | smart grid | الشبكة الذكية | 0.8 | 1 | Intelligent electrical grid |
@@ -150,7 +150,7 @@
 | performance | أداء | 1.0 | 21 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
-| framework | إطار العمل | 0.9 | 14 | Software framework |
+| framework | إطار العمل | 0.9 | 15 | Software framework |
 | Structure of Arrays | بنية المصفوفات | 0.9 | 1 | SoA pattern |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | lock-free | خالية من القفل | 0.8 | 1 | Concurrent programming technique |
@@ -190,7 +190,7 @@
 | execution path | مسار تنفيذ | 0.9 | 1 | Execution path |
 | storage hierarchy | تسلسل هرمي للتخزين | 0.8 | 1 | Storage tier hierarchy |
 | HPC | HPC | 1.0 | 1 | High Performance Computing |
-| graph | رسم بياني | 1.0 | 7 | Graph data structure |
+| graph | رسم بياني | 1.0 | 8 | Graph data structure |
 | graph-structured | ذات بنية رسومية بيانية | 0.8 | 1 | Graph-structured data |
 | memory hierarchy | التسلسل الهرمي للذاكرة | 0.9 | 5 | Memory hierarchy levels |
 | spatial locality | موضعية مكانية | 0.9 | 2 | Cache optimization |
@@ -230,7 +230,7 @@
 | array-of-structs | مصفوفة البنى | 0.9 | 1 | AoS pattern |
 | cloud computing | الحوسبة السحابية | 1.0 | 2 | Cloud infrastructure |
 | component | مكون | 1.0 | 2 | System component |
-| compiler | مترجم | 1.0 | 8 | Language compiler |
+| compiler | مترجم | 1.0 | 9 | Language compiler |
 | concurrent | متزامن | 1.0 | 1 | Concurrent execution |
 | concurrency | التزامن | 1.0 | 1 | Concurrent programming |
 | data engineering | هندسة البيانات | 0.9 | 2 | Data engineering field |
@@ -360,3 +360,19 @@
 | natural language | اللغة الطبيعية | 1.0 | 1 | Human language |
 | quantum compiler | مترجم كمومي | 0.8 | 1 | Quantum circuit compiler |
 | quantum hardware | أجهزة كمومية | 0.9 | 1 | Physical quantum devices |
+| automatic differentiation | التفاضل الآلي | 0.9 | 1 | Automatic computation of derivatives |
+| reverse-mode | النمط العكسي | 0.8 | 1 | Reverse-mode AD |
+| derivative | مشتقة | 1.0 | 1 | Mathematical derivative |
+| mutable | قابل للتغيير | 0.9 | 1 | Can be modified |
+| tape | شريط | 0.8 | 1 | AD tape/trace |
+| correctness by construction | الصحة بالبناء | 0.8 | 1 | Correct-by-construction approach |
+| programming language | لغة البرمجة | 1.0 | 1 | Programming language |
+| convolution | التفاف | 0.9 | 1 | Mathematical convolution |
+| semiring | حلقة شبه جمعية | 0.8 | 1 | Algebraic semiring structure |
+| semimodule | وحدة شبه جمعية | 0.8 | 1 | Algebraic semimodule |
+| regular expression | تعبير نمطي | 0.9 | 1 | Pattern matching expression |
+| trie | شجرة بادئة | 0.9 | 1 | Prefix tree data structure |
+| weighted | موزون | 0.9 | 1 | With weights |
+| n-ary relation | علاقة n-أرية | 0.8 | 1 | N-ary mathematical relation |
+| polynomial | كثير حدود | 0.9 | 1 | Polynomial expression |
+| image convolution | التفاف الصور | 0.9 | 1 | Convolution operation on images |
