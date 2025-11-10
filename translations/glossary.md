@@ -2,7 +2,7 @@
 
 | English | Arabic | Confidence | Usage Count | Notes |
 |---------|--------|------------|-------------|-------|
-| algorithm | خوارزمية | 1.0 | 8 | Standard term |
+| algorithm | خوارزمية | 1.0 | 9 | Standard term |
 | data structure | بنية البيانات | 1.0 | 16 | Standard term |
 | machine learning | تعلم الآلة | 1.0 | 12 | Standard term |
 | neural network | شبكة عصبية | 1.0 | 14 | Standard term |
@@ -113,7 +113,7 @@
 | uncertainty | عدم اليقين | 1.0 | 5 | Lack of certainty |
 | monitoring | المراقبة | 1.0 | 4 | Runtime observation |
 | abstraction | التجريد | 1.0 | 7 | Simplified representation |
-| scalability | قابلية التوسع | 0.9 | 3 | Ability to handle growth |
+| scalability | قابلية التوسع | 0.9 | 4 | Ability to handle growth |
 | multi-agent | متعدد الوكلاء | 0.8 | 2 | Multiple autonomous entities |
 | requirements | متطلبات | 1.0 | 9 | System requirements |
 | formalization | الصياغة الرسمية | 0.9 | 6 | Making formal |
@@ -146,8 +146,8 @@
 | real-time | الوقت الفعلي | 1.0 | 3 | Immediate response systems |
 | embedded systems | أنظمة مدمجة | 1.0 | 4 | Integrated computing systems |
 | database | قاعدة بيانات | 1.0 | 12 | Data storage system |
-| memory | ذاكرة | 1.0 | 18 | Computer memory |
-| performance | أداء | 1.0 | 22 | System performance |
+| memory | ذاكرة | 1.0 | 19 | Computer memory |
+| performance | أداء | 1.0 | 24 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
 | framework | إطار العمل | 0.9 | 19 | Software framework |
@@ -168,7 +168,7 @@
 | edge | حافة | 0.9 | 2 | Graph edge |
 | compression | ضغط | 0.9 | 2 | Data compression |
 | bit vector | متجه البت | 0.9 | 2 | Bit array |
-| blockchain | البلوك تشين | 0.9 | 2 | Blockchain technology |
+| blockchain | البلوك تشين | 0.9 | 3 | Blockchain technology |
 | column-based | قائم على الأعمدة | 0.9 | 2 | Column-based design |
 | learned model | نموذج متعلم | 0.8 | 1 | Machine learning model |
 | index | فهرس | 1.0 | 1 | Data index |
@@ -190,13 +190,13 @@
 | execution path | مسار تنفيذ | 0.9 | 1 | Execution path |
 | storage hierarchy | تسلسل هرمي للتخزين | 0.8 | 1 | Storage tier hierarchy |
 | HPC | HPC | 1.0 | 1 | High Performance Computing |
-| graph | رسم بياني | 1.0 | 8 | Graph data structure |
+| graph | رسم بياني | 1.0 | 9 | Graph data structure |
 | graph-structured | ذات بنية رسومية بيانية | 0.8 | 1 | Graph-structured data |
 | memory hierarchy | التسلسل الهرمي للذاكرة | 0.9 | 5 | Memory hierarchy levels |
 | spatial locality | موضعية مكانية | 0.9 | 2 | Cache optimization |
 | hierarchical blocking | تجزئة هرمية | 0.7 | 1 | Hierarchical block organization |
-| node | عقدة | 1.0 | 2 | Graph or tree node |
-| breadth-first search | بحث بالعرض أولاً | 0.9 | 1 | BFS algorithm |
+| node | عقدة | 1.0 | 3 | Graph or tree node |
+| breadth-first search | بحث بالعرض أولاً | 0.9 | 2 | BFS algorithm |
 | tree | شجرة | 1.0 | 1 | Tree data structure |
 | constant space | مساحة ثابتة | 0.9 | 1 | Constant space complexity |
 | dataflow | تدفق البيانات | 1.0 | 17 | Data flow architecture |
@@ -228,8 +228,8 @@
 | open-source | مفتوح المصدر | 1.0 | 1 | Open source software |
 | analysis | تحليل | 1.0 | 4 | Data analysis |
 | array-of-structs | مصفوفة البنى | 0.9 | 1 | AoS pattern |
-| cloud computing | الحوسبة السحابية | 1.0 | 2 | Cloud infrastructure |
-| component | مكون | 1.0 | 2 | System component |
+| cloud computing | الحوسبة السحابية | 1.0 | 3 | Cloud infrastructure |
+| component | مكون | 1.0 | 3 | System component |
 | compiler | مترجم | 1.0 | 9 | Language compiler |
 | concurrent | متزامن | 1.0 | 1 | Concurrent execution |
 | concurrency | التزامن | 1.0 | 1 | Concurrent programming |
@@ -259,7 +259,7 @@
 | high-dimensional | عالية الأبعاد | 0.9 | 2 | High-dimensional data |
 | low-dimensional | منخفض الأبعاد | 0.9 | 1 | Low-dimensional representation |
 | probability distribution | توزيع الاحتمالات | 0.9 | 3 | Probability distribution |
-| complexity | التعقيد | 0.9 | 1 | Computational complexity |
+| complexity | التعقيد | 0.9 | 2 | Computational complexity |
 | latent space | الفضاء الكامن | 0.8 | 1 | Latent representation space |
 | machine translation | الترجمة الآلية | 0.9 | 2 | Automated translation |
 | speech recognition | التعرف على الكلام | 0.9 | 2 | Speech recognition systems |
@@ -403,4 +403,23 @@
 | robust | قوية | 0.9 | 1 | Robust features/models |
 | residual | متبقي | 0.9 | 1 | Residual learning/connections |
 | layer | طبقة | 1.0 | 1 | Neural network layer |
-| architecture | معمارية | 0.9 | 1 | Network architecture |
+| architecture | معمارية | 0.9 | 5 | Network architecture |
+| distributed system | نظام موزع | 1.0 | 5 | System with components on networked computers |
+| distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
+| network | شبكة | 1.0 | 2 | Computer network |
+| decentralization | اللامركزية | 0.9 | 1 | Distributed control/authority |
+| efficiency | كفاءة | 1.0 | 2 | System efficiency |
+| Byzantine agreement | الاتفاق البيزنطي | 0.9 | 1 | Fault-tolerant consensus protocol |
+| Paxos | باكسوس | 0.9 | 1 | Distributed consensus algorithm |
+| leader election | انتخاب القائد | 0.9 | 1 | Selecting coordinator in distributed system |
+| mutual exclusion | الاستبعاد المتبادل | 0.9 | 1 | Preventing concurrent resource access |
+| quorum | نصاب | 0.9 | 1 | Minimum members for valid operation |
+| self-stabilization | الاستقرار الذاتي | 0.9 | 1 | System recovering to valid state |
+| decentralized finance | التمويل اللامركزي | 0.9 | 1 | DeFi - blockchain-based finance |
+| distributed ledger technology | تقنية دفتر الأستاذ الموزع | 0.9 | 1 | DLT - distributed transaction database |
+| monolithic architecture | معمارية أحادية | 0.9 | 2 | Single-tier software architecture |
+| trade-off | مفاضلة | 0.9 | 2 | Balance between competing factors |
+| fintech | التكنولوجيا المالية | 1.0 | 1 | Financial technology |
+| fault tolerance | تحمل الأخطاء | 0.9 | 0 | Ability to continue despite failures |
+| synchronization | المزامنة | 0.9 | 0 | Coordinating concurrent operations |
+| asynchronous | لامتزامن | 0.9 | 0 | Not synchronized in time |
