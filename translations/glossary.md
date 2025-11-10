@@ -2,13 +2,13 @@
 
 | English | Arabic | Confidence | Usage Count | Notes |
 |---------|--------|------------|-------------|-------|
-| algorithm | خوارزمية | 1.0 | 7 | Standard term |
+| algorithm | خوارزمية | 1.0 | 8 | Standard term |
 | data structure | بنية البيانات | 1.0 | 16 | Standard term |
 | machine learning | تعلم الآلة | 1.0 | 12 | Standard term |
-| neural network | شبكة عصبية | 1.0 | 9 | Standard term |
-| deep learning | تعلم عميق | 1.0 | 13 | Standard term |
-| transformer | محول | 0.8 | 3 | Deep learning architecture |
-| attention mechanism | آلية الانتباه | 0.9 | 2 | Used in transformers |
+| neural network | شبكة عصبية | 1.0 | 14 | Standard term |
+| deep learning | تعلم عميق | 1.0 | 14 | Standard term |
+| transformer | محول | 0.8 | 4 | Deep learning architecture |
+| attention mechanism | آلية الانتباه | 0.9 | 3 | Used in transformers |
 | ontology | أنطولوجيا | 0.8 | 1 | Knowledge representation |
 | validation | التحقق من الصحة | 0.9 | 8 | Verification process |
 | model-driven engineering | الهندسة الموجهة بالنماذج | 0.8 | 1 | Software engineering approach |
@@ -17,11 +17,11 @@
 | swarm system | نظام سربي | 0.8 | 1 | Robotics/AI collective behavior |
 | simulation | محاكاة | 0.9 | 3 | Computational modeling |
 | mathematical model | نموذج رياضي | 0.9 | 3 | Abstract representation |
-| feed-forward network | شبكة التغذية الأمامية | 0.9 | 1 | Neural network type |
+| feed-forward network | شبكة التغذية الأمامية | 0.9 | 2 | Neural network type |
 | parameter | معامل | 1.0 | 5 | Model parameter |
-| benchmark | معيار | 0.9 | 1 | Performance evaluation |
-| image classification | تصنيف الصور | 0.9 | 3 | Computer vision task |
-| computer vision | رؤية حاسوبية | 1.0 | 1 | AI field |
+| benchmark | معيار | 0.9 | 2 | Performance evaluation |
+| image classification | تصنيف الصور | 0.9 | 4 | Computer vision task |
+| computer vision | رؤية حاسوبية | 1.0 | 2 | AI field |
 | encoder | مشفر | 0.9 | 1 | Neural network component |
 | decoder | فك التشفير | 0.9 | 1 | Neural network component |
 | embedding | التضمين | 0.9 | 3 | Representation learning |
@@ -108,7 +108,7 @@
 | controller | متحكم | 1.0 | 6 | Control system component |
 | deterministic | حتمي | 1.0 | 5 | Predictable behavior |
 | non-deterministic | غير حتمي | 0.9 | 4 | Multiple possible outcomes |
-| stochastic | عشوائي | 0.9 | 3 | Random/probabilistic |
+| stochastic | عشوائي | 0.9 | 4 | Random/probabilistic |
 | probabilistic | احتمالي | 0.9 | 4 | Based on probability |
 | uncertainty | عدم اليقين | 1.0 | 5 | Lack of certainty |
 | monitoring | المراقبة | 1.0 | 4 | Runtime observation |
@@ -134,9 +134,9 @@
 | computational model | نموذج حسابي | 0.9 | 3 | Model of computation |
 | support vector machine | آلة المتجهات الداعمة | 0.9 | 1 | ML classification algorithm |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
-| training | التدريب | 1.0 | 4 | ML model training |
+| training | التدريب | 1.0 | 9 | ML model training |
 | data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
-| optimization | التحسين | 1.0 | 34 | Making optimal |
+| optimization | التحسين | 1.0 | 36 | Making optimal |
 | counterexample | مثال مضاد | 0.9 | 3 | Example showing falsity |
 | metric temporal logic | منطق زمني متري | 0.8 | 1 | Time-constrained temporal logic |
 | smart grid | الشبكة الذكية | 0.8 | 1 | Intelligent electrical grid |
@@ -146,11 +146,11 @@
 | real-time | الوقت الفعلي | 1.0 | 3 | Immediate response systems |
 | embedded systems | أنظمة مدمجة | 1.0 | 4 | Integrated computing systems |
 | database | قاعدة بيانات | 1.0 | 12 | Data storage system |
-| memory | ذاكرة | 1.0 | 17 | Computer memory |
-| performance | أداء | 1.0 | 21 | System performance |
+| memory | ذاكرة | 1.0 | 18 | Computer memory |
+| performance | أداء | 1.0 | 22 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
-| framework | إطار العمل | 0.9 | 17 | Software framework |
+| framework | إطار العمل | 0.9 | 19 | Software framework |
 | Structure of Arrays | بنية المصفوفات | 0.9 | 1 | SoA pattern |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | lock-free | خالية من القفل | 0.8 | 1 | Concurrent programming technique |
@@ -258,15 +258,15 @@
 | manifold | متعدد | 0.8 | 4 | Mathematical manifold |
 | high-dimensional | عالية الأبعاد | 0.9 | 2 | High-dimensional data |
 | low-dimensional | منخفض الأبعاد | 0.9 | 1 | Low-dimensional representation |
-| probability distribution | توزيع الاحتمالات | 0.9 | 2 | Probability distribution |
+| probability distribution | توزيع الاحتمالات | 0.9 | 3 | Probability distribution |
 | complexity | التعقيد | 0.9 | 1 | Computational complexity |
 | latent space | الفضاء الكامن | 0.8 | 1 | Latent representation space |
-| machine translation | الترجمة الآلية | 0.9 | 1 | Automated translation |
-| speech recognition | التعرف على الكلام | 0.9 | 1 | Speech recognition systems |
+| machine translation | الترجمة الآلية | 0.9 | 2 | Automated translation |
+| speech recognition | التعرف على الكلام | 0.9 | 2 | Speech recognition systems |
 | Riemannian manifold | متعدد ريمان | 0.8 | 2 | Riemannian geometry manifold |
 | geometric optimization | التحسين الهندسي | 0.9 | 3 | Geometric optimization methods |
 | Euclidean space | الفضاء الإقليدي | 0.9 | 2 | Euclidean geometry space |
-| gradient | التدرجات | 0.9 | 2 | Gradient in optimization |
+| gradient | التدرجات | 0.9 | 3 | Gradient in optimization |
 | vanishing gradient | تلاشي التدرجات | 0.8 | 1 | Vanishing gradient problem |
 | exploding gradient | انفجار التدرجات | 0.8 | 1 | Exploding gradient problem |
 | convolutional neural network | الشبكة العصبية الالتفافية | 0.9 | 1 | CNN architecture |
@@ -388,3 +388,19 @@
 | biactegory | فئة الفعل الثنائية | 0.7 | 1 | Biaction category |
 | braided | مضفر | 0.8 | 1 | Braided monoidal structure |
 | probability | الاحتمال | 0.9 | 1 | Probability theory |
+| generative | توليدي | 0.9 | 1 | Generative models |
+| adversarial | تنافسي خصامي | 0.9 | 1 | Adversarial training |
+| discriminative | تمييزي | 0.9 | 1 | Discriminative models |
+| backpropagation | الانتشار العكسي | 0.9 | 1 | Gradient backpropagation |
+| adaptive | تكيفية | 0.9 | 1 | Adaptive methods |
+| convergence | تقارب | 0.9 | 1 | Algorithm convergence |
+| sparse | متفرقة | 0.9 | 1 | Sparse gradients/data |
+| objective function | دالة هدفية | 0.9 | 1 | Optimization objective |
+| overfitting | الإفراط في التدريب | 0.9 | 1 | Model overfitting |
+| dropout | dropout | 0.9 | 1 | Dropout regularization technique |
+| feature detector | كاشف الميزات | 0.8 | 1 | Neural network feature detector |
+| co-adaptation | التكيف المشترك | 0.8 | 1 | Feature co-adaptation |
+| robust | قوية | 0.9 | 1 | Robust features/models |
+| residual | متبقي | 0.9 | 1 | Residual learning/connections |
+| layer | طبقة | 1.0 | 1 | Neural network layer |
+| architecture | معمارية | 0.9 | 1 | Network architecture |
