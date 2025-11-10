@@ -2,9 +2,9 @@
 
 | English | Arabic | Confidence | Usage Count | Notes |
 |---------|--------|------------|-------------|-------|
-| algorithm | خوارزمية | 1.0 | 1 | Standard term |
-| data structure | بنية البيانات | 1.0 | 0 | Standard term |
-| machine learning | تعلم الآلة | 1.0 | 3 | Standard term |
+| algorithm | خوارزمية | 1.0 | 5 | Standard term |
+| data structure | بنية البيانات | 1.0 | 14 | Standard term |
+| machine learning | تعلم الآلة | 1.0 | 8 | Standard term |
 | neural network | شبكة عصبية | 1.0 | 1 | Standard term |
 | deep learning | تعلم عميق | 1.0 | 0 | Standard term |
 | transformer | محول | 0.8 | 3 | Deep learning architecture |
@@ -34,7 +34,7 @@
 | functional programming | البرمجة الوظيفية | 1.0 | 4 | Programming paradigm |
 | structured programming | البرمجة المنظمة | 0.9 | 1 | Programming paradigm |
 | monad | موناد | 0.8 | 1 | Functional programming concept |
-| parallelism | التوازي | 0.9 | 1 | Concurrent execution |
+| parallelism | التوازي | 0.9 | 7 | Concurrent execution |
 | syntax | بنية نحوية | 1.0 | 1 | Language grammar |
 | inference | استنتاج | 0.9 | 1 | Logical deduction |
 | search space | فضاء البحث | 0.9 | 1 | Problem solving domain |
@@ -42,7 +42,7 @@
 | transpiling | التحويل البرمجي | 0.8 | 1 | Source-to-source compilation |
 | computable function | دالة قابلة للحوسبة | 0.9 | 1 | Effectively calculable function |
 | answer set programming | برمجة مجموعة الإجابات | 0.8 | 1 | Declarative programming paradigm |
-| object-oriented programming | البرمجة الموجهة بالكائنات | 1.0 | 1 | Programming paradigm |
+| object-oriented programming | البرمجة الموجهة بالكائنات | 1.0 | 2 | Programming paradigm |
 | class | صنف | 1.0 | 1 | OOP construct |
 | subclass | صنف فرعي | 1.0 | 1 | Class inheritance |
 | function | دالة | 1.0 | 1 | Programming construct |
@@ -97,8 +97,8 @@
 | support vector machine | آلة المتجهات الداعمة | 0.9 | 1 | ML classification algorithm |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | training | التدريب | 1.0 | 2 | ML model training |
-| data preparation | إعداد البيانات | 0.9 | 1 | Preparing data for analysis |
-| optimization | التحسين | 1.0 | 4 | Making optimal |
+| data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
+| optimization | التحسين | 1.0 | 29 | Making optimal |
 | counterexample | مثال مضاد | 0.9 | 3 | Example showing falsity |
 | metric temporal logic | منطق زمني متري | 0.8 | 1 | Time-constrained temporal logic |
 | smart grid | الشبكة الذكية | 0.8 | 1 | Intelligent electrical grid |
@@ -107,3 +107,102 @@
 | mechanised | آلي | 0.9 | 2 | Automated/formalized |
 | real-time | الوقت الفعلي | 1.0 | 3 | Immediate response systems |
 | embedded systems | أنظمة مدمجة | 1.0 | 4 | Integrated computing systems |
+| database | قاعدة بيانات | 1.0 | 12 | Data storage system |
+| memory | ذاكرة | 1.0 | 17 | Computer memory |
+| performance | أداء | 1.0 | 20 | System performance |
+| SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
+| accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
+| framework | إطار العمل | 0.9 | 13 | Software framework |
+| Structure of Arrays | بنية المصفوفات | 0.9 | 1 | SoA pattern |
+| fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
+| lock-free | خالية من القفل | 0.8 | 1 | Concurrent programming technique |
+| bitmap | خريطة بت | 0.9 | 1 | Bit array data structure |
+| hierarchical | هرمي | 0.9 | 2 | Hierarchical organization |
+| columnar storage | التخزين العمودي | 0.9 | 6 | Column-oriented storage |
+| column-oriented | موجه نحو الأعمدة | 0.9 | 1 | Column-based approach |
+| graph database | قاعدة بيانات الرسوم البيانية | 0.9 | 3 | Graph-based database system |
+| list-based | قائم على القوائم | 0.8 | 1 | List-based approach |
+| query processor | معالج استعلامات | 0.9 | 5 | Query execution engine |
+| block-based | قائم على الكتل | 0.8 | 1 | Block-based approach |
+| join operation | عملية ربط | 0.9 | 1 | Database join |
+| many-to-many | من متعدد إلى متعدد | 0.9 | 1 | Many-to-many relationship |
+| indexing | فهرسة | 0.9 | 2 | Index creation |
+| edge | حافة | 0.9 | 1 | Graph edge |
+| compression | ضغط | 0.9 | 2 | Data compression |
+| bit vector | متجه البت | 0.9 | 2 | Bit array |
+| blockchain | البلوك تشين | 0.9 | 2 | Blockchain technology |
+| column-based | قائم على الأعمدة | 0.9 | 2 | Column-based design |
+| learned model | نموذج متعلم | 0.8 | 1 | Machine learning model |
+| index | فهرس | 1.0 | 1 | Data index |
+| Merkle Patricia Trie | شجرة باتريشيا ميركل | 0.7 | 1 | Merkle tree variant |
+| historical state | حالة تاريخية | 0.8 | 1 | Historical state data |
+| data retrieval | استرجاع البيانات | 0.9 | 2 | Data access |
+| provenance query | استعلام المصدر | 0.7 | 1 | Data provenance query |
+| throughput | إنتاجية | 1.0 | 2 | System throughput |
+| implementation | تطبيق | 1.0 | 1 | System implementation |
+| object storage | تخزين الكائنات | 0.9 | 1 | Object-based storage |
+| computation-enabled | ممكّن حسابياً | 0.7 | 1 | Computation-capable |
+| SQL query | استعلام SQL | 1.0 | 1 | SQL database query |
+| offloading | تفريغ | 0.8 | 1 | Computation offloading |
+| tabular workload | حمل عمل جدولي | 0.7 | 1 | Table-based workload |
+| columnar layout | تخطيط عمودي | 0.9 | 2 | Column layout |
+| operator | معامل | 1.0 | 1 | Query operator |
+| aggregation | تجميع | 0.9 | 1 | Data aggregation |
+| sorting | فرز | 1.0 | 1 | Data sorting |
+| execution path | مسار تنفيذ | 0.9 | 1 | Execution path |
+| storage hierarchy | تسلسل هرمي للتخزين | 0.8 | 1 | Storage tier hierarchy |
+| HPC | HPC | 1.0 | 1 | High Performance Computing |
+| graph | رسم بياني | 1.0 | 5 | Graph data structure |
+| graph-structured | ذات بنية رسومية بيانية | 0.8 | 1 | Graph-structured data |
+| memory hierarchy | التسلسل الهرمي للذاكرة | 0.9 | 5 | Memory hierarchy levels |
+| spatial locality | موضعية مكانية | 0.9 | 2 | Cache optimization |
+| hierarchical blocking | تجزئة هرمية | 0.7 | 1 | Hierarchical block organization |
+| node | عقدة | 1.0 | 1 | Graph or tree node |
+| breadth-first search | بحث بالعرض أولاً | 0.9 | 1 | BFS algorithm |
+| tree | شجرة | 1.0 | 1 | Tree data structure |
+| constant space | مساحة ثابتة | 0.9 | 1 | Constant space complexity |
+| dataflow | تدفق البيانات | 1.0 | 17 | Data flow architecture |
+| pipeline | خط أنابيب | 0.9 | 7 | Data pipeline |
+| FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 5 | Field-Programmable Gate Array |
+| GPU | وحدة معالجة الرسومات | 1.0 | 12 | Graphics Processing Unit |
+| CPU | وحدة المعالجة المركزية | 1.0 | 6 | Central Processing Unit |
+| tiling | تبليط | 0.8 | 1 | Loop tiling optimization |
+| buffering | تخزين مؤقت | 0.9 | 1 | Data buffering |
+| pattern matching | مطابقة الأنماط | 0.9 | 1 | Pattern matching technique |
+| control flow | تدفق التحكم | 0.9 | 1 | Program control flow |
+| intermediate representation | تمثيل وسيط | 0.9 | 1 | Compiler IR |
+| high-level synthesis | التوليف عالي المستوى | 0.8 | 1 | HLS for hardware design |
+| NPU | وحدة معالجة شبكية عصبية | 0.8 | 1 | Neural Processing Unit |
+| hardware utilization | استخدام الأجهزة | 0.9 | 3 | Hardware resource usage |
+| GEMM | ضرب المصفوفات العامة | 0.9 | 1 | General Matrix Multiply |
+| sharding | تجزئة | 0.9 | 1 | Data sharding |
+| task graph | رسم بياني للمهام | 0.8 | 1 | Task dependency graph |
+| attention kernel | نواة الانتباه | 0.8 | 1 | Attention mechanism kernel |
+| memory coalescing | دمج الذاكرة | 0.9 | 2 | GPU memory optimization |
+| thread | خيط | 1.0 | 1 | Thread of execution |
+| energy | طاقة | 1.0 | 1 | Energy consumption |
+| area overhead | زيادة المساحة | 0.8 | 1 | Hardware area overhead |
+| irregular access | وصول غير منتظم | 0.8 | 1 | Irregular memory access pattern |
+| ETL | ETL | 1.0 | 1 | Keep as acronym |
+| orchestration | تنسيق | 0.9 | 1 | Workflow orchestration |
+| workflow | سير العمل | 1.0 | 1 | Workflow process |
+| data wrangling | تنظيف البيانات | 0.8 | 1 | Data cleaning and preparation |
+| open-source | مفتوح المصدر | 1.0 | 1 | Open source software |
+| analysis | تحليل | 1.0 | 3 | Data analysis |
+| array-of-structs | مصفوفة البنى | 0.9 | 1 | AoS pattern |
+| cloud computing | الحوسبة السحابية | 1.0 | 2 | Cloud infrastructure |
+| component | مكون | 1.0 | 2 | System component |
+| compiler | مترجم | 1.0 | 8 | Language compiler |
+| concurrent | متزامن | 1.0 | 1 | Concurrent execution |
+| concurrency | التزامن | 1.0 | 1 | Concurrent programming |
+| data engineering | هندسة البيانات | 0.9 | 2 | Data engineering field |
+| edge computing | الحوسبة الطرفية | 0.9 | 1 | Edge computing paradigm |
+| entity | كيان | 1.0 | 2 | Data entity |
+| heterogeneous | غير متجانس | 0.9 | 3 | Heterogeneous systems |
+| latency | زمن الاستجابة | 0.9 | 2 | Response time metric |
+| memory layout | تخطيط الذاكرة | 0.9 | 4 | Memory organization |
+| pattern | نمط | 1.0 | 2 | Design pattern |
+| spatial database | قاعدة بيانات مكانية | 0.9 | 1 | Spatial data management |
+| stream processing | معالجة التدفقات | 0.9 | 5 | Stream data processing |
+| technique | تقنية | 1.0 | 5 | Computational technique |
+| vectorization | التمتير | 0.9 | 1 | SIMD vectorization |
