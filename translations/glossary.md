@@ -15,10 +15,10 @@
 | logic programming | البرمجة المنطقية | 0.9 | 2 | Programming paradigm |
 | meta-model | النموذج الفوقي | 0.8 | 1 | Model of models |
 | swarm system | نظام سربي | 0.8 | 1 | Robotics/AI collective behavior |
-| simulation | محاكاة | 0.9 | 2 | Computational modeling |
+| simulation | محاكاة | 0.9 | 3 | Computational modeling |
 | mathematical model | نموذج رياضي | 0.9 | 1 | Abstract representation |
 | feed-forward network | شبكة التغذية الأمامية | 0.9 | 1 | Neural network type |
-| parameter | معامل | 1.0 | 3 | Model parameter |
+| parameter | معامل | 1.0 | 4 | Model parameter |
 | benchmark | معيار | 0.9 | 1 | Performance evaluation |
 | image classification | تصنيف الصور | 0.9 | 3 | Computer vision task |
 | computer vision | رؤية حاسوبية | 1.0 | 1 | AI field |
@@ -34,7 +34,7 @@
 | functional programming | البرمجة الوظيفية | 1.0 | 4 | Programming paradigm |
 | structured programming | البرمجة المنظمة | 0.9 | 1 | Programming paradigm |
 | monad | موناد | 0.8 | 1 | Functional programming concept |
-| parallelism | التوازي | 0.9 | 7 | Concurrent execution |
+| parallelism | التوازي | 0.9 | 8 | Concurrent execution |
 | syntax | بنية نحوية | 1.0 | 1 | Language grammar |
 | inference | استنتاج | 0.9 | 1 | Logical deduction |
 | search space | فضاء البحث | 0.9 | 1 | Problem solving domain |
@@ -56,9 +56,9 @@
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
 | specification | مواصفة | 1.0 | 12 | Formal description of behavior |
 | model checking | فحص النماذج | 0.9 | 10 | Automated verification technique |
-| proof | برهان | 1.0 | 11 | Mathematical proof |
+| proof | برهان | 1.0 | 12 | Mathematical proof |
 | theorem | مبرهنة | 1.0 | 6 | Proven statement |
-| category | فئة | 1.0 | 5 | Category theory structure |
+| category | فئة | 1.0 | 7 | Category theory structure |
 | abelian | أبيلي | 0.9 | 2 | Abelian property |
 | functor | دالة تصنيفية | 0.9 | 3 | Category theory functor |
 | 2-category | فئة ثنائية | 0.8 | 1 | Higher category |
@@ -81,7 +81,7 @@
 | equivalent | مكافئ | 1.0 | 1 | Equivalence |
 | enriched category | فئة مُثرَى | 0.8 | 1 | Enriched category |
 | strictification | تصريم | 0.7 | 1 | Strictification process |
-| monoidal | أحادي | 0.9 | 1 | Monoidal structure |
+| monoidal | أحادي | 0.9 | 3 | Monoidal structure |
 | symmetric | متماثل | 1.0 | 1 | Symmetric property |
 | permutative | تبديلي | 0.8 | 1 | Permutative category |
 | bimonoidal | أحادي ثنائي | 0.7 | 1 | Bimonoidal structure |
@@ -136,7 +136,7 @@
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | training | التدريب | 1.0 | 4 | ML model training |
 | data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
-| optimization | التحسين | 1.0 | 31 | Making optimal |
+| optimization | التحسين | 1.0 | 32 | Making optimal |
 | counterexample | مثال مضاد | 0.9 | 3 | Example showing falsity |
 | metric temporal logic | منطق زمني متري | 0.8 | 1 | Time-constrained temporal logic |
 | smart grid | الشبكة الذكية | 0.8 | 1 | Intelligent electrical grid |
@@ -202,7 +202,7 @@
 | dataflow | تدفق البيانات | 1.0 | 17 | Data flow architecture |
 | pipeline | خط أنابيب | 0.9 | 7 | Data pipeline |
 | FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 5 | Field-Programmable Gate Array |
-| GPU | وحدة معالجة الرسومات | 1.0 | 12 | Graphics Processing Unit |
+| GPU | وحدة معالجة الرسومات | 1.0 | 13 | Graphics Processing Unit |
 | CPU | وحدة المعالجة المركزية | 1.0 | 6 | Central Processing Unit |
 | tiling | تبليط | 0.8 | 1 | Loop tiling optimization |
 | buffering | تخزين مؤقت | 0.9 | 1 | Data buffering |
@@ -323,3 +323,40 @@
 | knot | العُقد | 0.8 | 1 | Mathematical knot |
 | knot invariant | ثوابت للعُقد | 0.7 | 1 | Knot invariants |
 | generalization | تعميم | 0.9 | 1 | Model generalization |
+| quantum mechanics | الميكانيكا الكمومية | 1.0 | 4 | Quantum mechanics field |
+| quantum physics | الفيزياء الكمومية | 1.0 | 1 | Quantum physics field |
+| Hilbert space | فضاء هيلبرت | 0.9 | 1 | Mathematical foundation of quantum mechanics |
+| diagrammatic | رسومي بياني | 0.8 | 4 | Diagram-based representation |
+| quantum system | نظام كمومي | 0.9 | 1 | Quantum physical system |
+| no-cloning theorem | مبرهنة منع الاستنساخ | 0.8 | 1 | Fundamental quantum limitation |
+| quantum teleportation | النقل الكمومي الآني | 0.8 | 1 | Quantum information transfer |
+| quantum computing | الحوسبة الكمومية | 0.9 | 4 | Quantum computation |
+| quantum non-locality | اللاموضعية الكمومية | 0.8 | 1 | Non-local quantum correlations |
+| complex number | عدد مركب | 0.9 | 2 | Complex number (mathematics) |
+| formalism | شكلية | 0.9 | 4 | Mathematical formalism |
+| qubit | كيوبت | 0.9 | 1 | Quantum bit |
+| entanglement | التشابك | 0.9 | 1 | Quantum entanglement |
+| measurement | القياس | 0.9 | 1 | Quantum measurement |
+| mixed-state | حالة مختلطة | 0.8 | 1 | Mixed quantum state |
+| cognitive load | الحمل المعرفي | 0.8 | 1 | Mental processing burden |
+| matrix | مصفوفة | 1.0 | 1 | Mathematical matrix |
+| vector | متجه | 1.0 | 1 | Mathematical vector |
+| tensor | موتر | 0.9 | 1 | Mathematical tensor |
+| trigonometry | علم المثلثات | 1.0 | 1 | Trigonometry mathematics |
+| quantum information | المعلومات الكمومية | 0.9 | 1 | Quantum information science |
+| STEM | العلوم والتكنولوجيا والهندسة والرياضيات | 1.0 | 1 | Science, Technology, Engineering, Mathematics |
+| conceptual understanding | الفهم المفاهيمي | 0.9 | 1 | Conceptual comprehension |
+| ZX-calculus | حساب ZX | 0.9 | 3 | Graphical quantum calculus |
+| quantum circuit | دائرة كمومية | 0.9 | 3 | Quantum computing circuit |
+| rewrite rule | قاعدة إعادة كتابة | 0.8 | 1 | Transformation rule |
+| Clifford gate | بوابة كليفورد | 0.8 | 1 | Clifford quantum gate |
+| parametric | بارامتري | 0.8 | 1 | Parameter-based |
+| speedup | تسريع | 0.9 | 1 | Performance acceleration |
+| boolean | منطقي | 0.9 | 1 | Boolean logic |
+| classical simulation | محاكاة كلاسيكية | 0.9 | 1 | Classical computer simulation |
+| algebraic | جبري | 0.9 | 1 | Algebraic mathematics |
+| Dirac notation | ترميز ديراك | 0.9 | 1 | Dirac bra-ket notation |
+| pictorial | تصويري | 0.9 | 1 | Picture-based |
+| natural language | اللغة الطبيعية | 1.0 | 1 | Human language |
+| quantum compiler | مترجم كمومي | 0.8 | 1 | Quantum circuit compiler |
+| quantum hardware | أجهزة كمومية | 0.9 | 1 | Physical quantum devices |
