@@ -3,7 +3,7 @@
 | English | Arabic | Confidence | Usage Count | Notes |
 |---------|--------|------------|-------------|-------|
 | algorithm | خوارزمية | 1.0 | 9 | Standard term |
-| data structure | بنية البيانات | 1.0 | 16 | Standard term |
+| data structure | بنية البيانات | 1.0 | 18 | Standard term |
 | machine learning | تعلم الآلة | 1.0 | 12 | Standard term |
 | neural network | شبكة عصبية | 1.0 | 14 | Standard term |
 | deep learning | تعلم عميق | 1.0 | 14 | Standard term |
@@ -15,7 +15,7 @@
 | logic programming | البرمجة المنطقية | 0.9 | 2 | Programming paradigm |
 | meta-model | النموذج الفوقي | 0.8 | 1 | Model of models |
 | swarm system | نظام سربي | 0.8 | 1 | Robotics/AI collective behavior |
-| simulation | محاكاة | 0.9 | 3 | Computational modeling |
+| simulation | محاكاة | 0.9 | 4 | Computational modeling |
 | mathematical model | نموذج رياضي | 0.9 | 3 | Abstract representation |
 | feed-forward network | شبكة التغذية الأمامية | 0.9 | 2 | Neural network type |
 | parameter | معامل | 1.0 | 5 | Model parameter |
@@ -51,10 +51,10 @@
 | type system | نظام الأنواع | 0.9 | 1 | Type theory implementation |
 | reuse | إعادة الاستخدام | 1.0 | 1 | Code reusability |
 | modular | نمطي | 0.9 | 1 | Modular design |
-| formal methods | الأساليب الرسمية | 1.0 | 20 | Mathematical techniques for software/hardware |
+| formal methods | الأساليب الرسمية | 1.0 | 25 | Mathematical techniques for software/hardware |
 | formal verification | التحقق الرسمي | 1.0 | 15 | Proving correctness mathematically |
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
-| specification | مواصفة | 1.0 | 12 | Formal description of behavior |
+| specification | مواصفة | 1.0 | 13 | Formal description of behavior |
 | model checking | فحص النماذج | 0.9 | 10 | Automated verification technique |
 | proof | برهان | 1.0 | 12 | Mathematical proof |
 | theorem | مبرهنة | 1.0 | 6 | Proven statement |
@@ -106,7 +106,7 @@
 | correct-by-construction | صحيح بالبناء | 0.8 | 4 | Inherently correct design |
 | autonomous systems | الأنظمة المستقلة | 0.9 | 8 | Self-governing systems |
 | controller | متحكم | 1.0 | 6 | Control system component |
-| deterministic | حتمي | 1.0 | 5 | Predictable behavior |
+| deterministic | حتمي | 1.0 | 6 | Predictable behavior |
 | non-deterministic | غير حتمي | 0.9 | 4 | Multiple possible outcomes |
 | stochastic | عشوائي | 0.9 | 4 | Random/probabilistic |
 | probabilistic | احتمالي | 0.9 | 4 | Based on probability |
@@ -117,7 +117,7 @@
 | multi-agent | متعدد الوكلاء | 0.8 | 2 | Multiple autonomous entities |
 | requirements | متطلبات | 1.0 | 9 | System requirements |
 | formalization | الصياغة الرسمية | 0.9 | 6 | Making formal |
-| methodology | منهجية | 1.0 | 5 | Systematic approach |
+| methodology | منهجية | 1.0 | 6 | Systematic approach |
 | aerospace | الفضاء الجوي | 1.0 | 3 | Aviation and space |
 | avionics | إلكترونيات الطيران | 0.9 | 2 | Aircraft electronics |
 | railways | السكك الحديدية | 1.0 | 1 | Rail transport systems |
@@ -129,14 +129,14 @@
 | principles | مبادئ | 1.0 | 4 | Fundamental rules |
 | unlinkability | عدم الربط | 0.8 | 1 | Privacy property |
 | RFID | تحديد الترددات الراديوية | 0.9 | 1 | Radio-frequency identification |
-| hash function | دالة التجزئة | 0.9 | 2 | Cryptographic function |
+| hash function | دالة التجزئة | 0.9 | 3 | Cryptographic function |
 | axiom | بديهية | 1.0 | 3 | Self-evident truth |
 | computational model | نموذج حسابي | 0.9 | 3 | Model of computation |
 | support vector machine | آلة المتجهات الداعمة | 0.9 | 1 | ML classification algorithm |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | training | التدريب | 1.0 | 9 | ML model training |
 | data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
-| optimization | التحسين | 1.0 | 36 | Making optimal |
+| optimization | التحسين | 1.0 | 37 | Making optimal |
 | counterexample | مثال مضاد | 0.9 | 3 | Example showing falsity |
 | metric temporal logic | منطق زمني متري | 0.8 | 1 | Time-constrained temporal logic |
 | smart grid | الشبكة الذكية | 0.8 | 1 | Intelligent electrical grid |
@@ -150,7 +150,7 @@
 | performance | أداء | 1.0 | 24 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
-| framework | إطار العمل | 0.9 | 19 | Software framework |
+| framework | إطار العمل | 0.9 | 21 | Software framework |
 | Structure of Arrays | بنية المصفوفات | 0.9 | 1 | SoA pattern |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | lock-free | خالية من القفل | 0.8 | 1 | Concurrent programming technique |
@@ -168,7 +168,7 @@
 | edge | حافة | 0.9 | 2 | Graph edge |
 | compression | ضغط | 0.9 | 2 | Data compression |
 | bit vector | متجه البت | 0.9 | 2 | Bit array |
-| blockchain | البلوك تشين | 0.9 | 3 | Blockchain technology |
+| blockchain | البلوك تشين | 0.9 | 11 | Blockchain technology |
 | column-based | قائم على الأعمدة | 0.9 | 2 | Column-based design |
 | learned model | نموذج متعلم | 0.8 | 1 | Machine learning model |
 | index | فهرس | 1.0 | 1 | Data index |
@@ -176,7 +176,7 @@
 | historical state | حالة تاريخية | 0.8 | 1 | Historical state data |
 | data retrieval | استرجاع البيانات | 0.9 | 2 | Data access |
 | provenance query | استعلام المصدر | 0.7 | 1 | Data provenance query |
-| throughput | إنتاجية | 1.0 | 2 | System throughput |
+| throughput | إنتاجية | 1.0 | 4 | System throughput |
 | implementation | تطبيق | 1.0 | 1 | System implementation |
 | object storage | تخزين الكائنات | 0.9 | 1 | Object-based storage |
 | computation-enabled | ممكّن حسابياً | 0.7 | 1 | Computation-capable |
@@ -213,7 +213,7 @@
 | NPU | وحدة معالجة شبكية عصبية | 0.8 | 1 | Neural Processing Unit |
 | hardware utilization | استخدام الأجهزة | 0.9 | 3 | Hardware resource usage |
 | GEMM | ضرب المصفوفات العامة | 0.9 | 1 | General Matrix Multiply |
-| sharding | تجزئة | 0.9 | 1 | Data sharding |
+| sharding | تجزئة | 0.9 | 2 | Data sharding |
 | task graph | رسم بياني للمهام | 0.8 | 1 | Task dependency graph |
 | attention kernel | نواة الانتباه | 0.8 | 1 | Attention mechanism kernel |
 | memory coalescing | دمج الذاكرة | 0.9 | 2 | GPU memory optimization |
@@ -403,7 +403,7 @@
 | robust | قوية | 0.9 | 1 | Robust features/models |
 | residual | متبقي | 0.9 | 1 | Residual learning/connections |
 | layer | طبقة | 1.0 | 1 | Neural network layer |
-| architecture | معمارية | 0.9 | 5 | Network architecture |
+| architecture | معمارية | 0.9 | 6 | Network architecture |
 | distributed system | نظام موزع | 1.0 | 5 | System with components on networked computers |
 | distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
 | network | شبكة | 1.0 | 2 | Computer network |
@@ -444,3 +444,78 @@
 | geometric search | البحث الهندسي | 0.9 | 1 | Spatial/geometric searching |
 | intersection detection | اكتشاف التقاطع | 0.9 | 1 | Finding geometric intersections |
 | containment verification | التحقق من الاحتواء | 0.8 | 1 | Verifying spatial containment |
+| property-based testing | اختبار قائم على الخصائص | 0.9 | 6 | Testing based on properties |
+| spatio-temporal | زمكاني | 0.9 | 1 | Space and time combined |
+| formal analysis | التحليل الرسمي | 0.9 | 1 | Formal verification and analysis |
+| usability | قابلية الاستخدام | 0.9 | 1 | Ease of use |
+| practitioner | ممارس | 0.9 | 1 | Professional working in the field |
+| interplay | التفاعل | 0.9 | 1 | Interaction between components |
+| formal model | نموذج رسمي | 0.9 | 3 | Formally specified model |
+| temporal model | نموذج زمني | 0.9 | 2 | Model with time-based behavior |
+| software engineer | مهندس البرمجيات | 1.0 | 1 | Software engineering professional |
+| executable | قابل للتنفيذ | 0.9 | 1 | Can be executed/run |
+| functionality | وظيفة | 0.9 | 1 | System or component functionality |
+| construct | بنية | 0.9 | 1 | Programming or language construct |
+| metamorphic testing | اختبار تحولي | 0.9 | 3 | Testing using metamorphic relations |
+| test oracle | أوراكل الاختبار | 0.9 | 2 | Test oracle for validation |
+| test case | حالة اختبار | 0.9 | 3 | Individual test case |
+| test generation | توليد الاختبار | 0.9 | 1 | Automatic test generation |
+| software system | نظام برمجي | 1.0 | 1 | Software application or system |
+| testing | اختبار | 1.0 | 4 | Software testing |
+| automation | أتمتة | 0.9 | 1 | Process automation |
+| Merkle tree | شجرة ميركل | 0.9 | 11 | Hash tree data structure |
+| Internet of Things | إنترنت الأشياء | 0.9 | 2 | IoT - connected device network |
+| IoT | إنترنت الأشياء | 0.9 | 2 | Internet of Things acronym |
+| data integrity | سلامة البيانات | 0.9 | 4 | Data correctness and consistency |
+| falsification | تزييف | 0.9 | 2 | Data falsification or tampering |
+| decentralized | لامركزي | 0.9 | 2 | Without central authority |
+| security | أمان | 1.0 | 5 | System security |
+| empirical | تجريبي | 0.9 | 2 | Based on observation/experiment |
+| numerical analysis | تحليل عددي | 0.9 | 1 | Computational mathematics |
+| data protection | حماية البيانات | 0.9 | 1 | Protecting data from unauthorized access |
+| security vulnerability | ثغرة أمنية | 0.9 | 1 | Security weakness or flaw |
+| hash collision | تصادم تجزئة | 0.9 | 2 | Two inputs producing same hash |
+| collision | تصادم | 0.9 | 2 | Hash or data collision |
+| tree configuration | تكوين الشجرة | 0.9 | 1 | Structure of tree data structure |
+| developer | مطور | 1.0 | 1 | Software developer |
+| operational | تشغيلي | 0.9 | 2 | Related to operations |
+| dynamics | ديناميكيات | 0.9 | 1 | System behavior patterns |
+| private set intersection | تقاطع المجموعة الخاص | 0.9 | 2 | PSI cryptographic protocol |
+| PSI | تقاطع المجموعة الخاص | 0.9 | 3 | Private Set Intersection acronym |
+| privacy | خصوصية | 1.0 | 1 | Data privacy protection |
+| secure computation | حساب آمن | 0.9 | 1 | Cryptographic secure computation |
+| malicious | خبيث | 0.9 | 1 | Malicious actor or behavior |
+| communication complexity | تعقيد الاتصال | 0.9 | 1 | Complexity of communication |
+| computational cost | تكلفة حسابية | 0.9 | 1 | Cost of computation |
+| integrity verification | التحقق من السلامة | 0.9 | 1 | Verifying data integrity |
+| protocol | بروتوكول | 0.9 | 4 | Communication protocol |
+| overhead | عبء إضافي | 0.9 | 1 | Additional cost or burden |
+| multi-party | متعدد الأطراف | 0.9 | 1 | Multiple parties involved |
+| inclusion proof | برهان تضمين | 0.8 | 1 | Proof of inclusion in set |
+| Cartesian Merkle tree | شجرة ميركل الديكارتية | 0.9 | 1 | Merkle tree with BST and heap properties |
+| Binary Search Tree | شجرة البحث الثنائي | 0.9 | 1 | BST data structure |
+| heap | كومة | 0.9 | 1 | Heap data structure |
+| insertion | إدراج | 0.9 | 1 | Insert operation |
+| update | تحديث | 1.0 | 1 | Update operation |
+| removal | إزالة | 0.9 | 1 | Remove/delete operation |
+| membership proof | برهان العضوية | 0.9 | 1 | Proof element is in set |
+| non-membership proof | برهان عدم العضوية | 0.9 | 1 | Proof element is not in set |
+| authentication path | مسار المصادقة | 0.9 | 1 | Path for authentication |
+| zero-knowledge | معرفة صفرية | 0.9 | 1 | Zero-knowledge proof systems |
+| verifiable | قابل للتحقق | 0.9 | 2 | Can be verified |
+| efficient | فعال | 1.0 | 2 | Efficient performance |
+| public blockchain | بلوك تشين عام | 0.9 | 3 | Public blockchain system |
+| transaction | معاملة | 0.9 | 5 | Blockchain transaction |
+| I/O bottleneck | عنق زجاجة الإدخال/الإخراج | 0.8 | 2 | Input/output performance bottleneck |
+| processing | معالجة | 0.9 | 3 | Data processing |
+| smart contract | عقد ذكي | 0.9 | 1 | Self-executing blockchain contract |
+| geo-distributed | موزع جغرافياً | 0.9 | 1 | Geographically distributed |
+| critical path | المسار الحرج | 0.9 | 1 | Critical execution path |
+| amplification | تضخيم | 0.9 | 1 | Amplification effect |
+| untrusted | غير موثوق | 0.9 | 1 | Not trusted |
+| server | خادم | 1.0 | 1 | Computer server |
+| workload | حمل عمل | 0.9 | 2 | System workload |
+| trace | أثر | 0.9 | 1 | Execution trace |
+| state | حالة | 1.0 | 2 | System state |
+| novel | جديد | 1.0 | 2 | Novel/new approach |
+| variant | نوع | 0.9 | 1 | Variant or type |
