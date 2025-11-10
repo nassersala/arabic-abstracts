@@ -1,4 +1,5 @@
 Search arXiv for "SEARCH_QUERY_HERE" and get the top 5 papers.
+(Note: If you find some papers are already translated, you may want to fetch more results to get 5 new papers)
 
 FIRST: Check if translations/glossary.md exists. If not, create it with these default CS terms:
 
@@ -16,7 +17,14 @@ FIRST: Check if translations/glossary.md exists. If not, create it with these de
 | attention mechanism | آلية الانتباه | 0.9 | 0 | Used in transformers |
 ---
 
-Then for each paper:
+SECOND: Check for already-translated papers to avoid duplicates:
+- List all .md files in translations/ directory (except glossary.md)
+- Extract arXiv IDs from filenames (e.g., 1210.6111.md → 1210.6111)
+- Filter out papers from search results that already have translation files
+- If all 5 papers are already translated, inform the user and skip translation
+- Only process new papers that haven't been translated yet
+
+Then for each NEW paper (not already translated):
 
 1. Fetch the paper metadata (title, authors, abstract, year, arXiv ID)
 
@@ -76,5 +84,7 @@ Use this markdown format:
 ---
 
 Show me:
-- Summary table of all papers with quality scores
+- How many papers were already translated (skipped)
+- Summary table of newly translated papers with quality scores
 - Updated glossary statistics (new terms added, most used terms)
+- Total count of all translated papers in the repository
