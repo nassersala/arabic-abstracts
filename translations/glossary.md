@@ -4,11 +4,11 @@
 |---------|--------|------------|-------------|-------|
 | algorithm | خوارزمية | 1.0 | 9 | Standard term |
 | data structure | بنية البيانات | 1.0 | 18 | Standard term |
-| machine learning | تعلم الآلة | 1.0 | 12 | Standard term |
+| machine learning | تعلم الآلة | 1.0 | 17 | Standard term |
 | neural network | شبكة عصبية | 1.0 | 14 | Standard term |
-| deep learning | تعلم عميق | 1.0 | 14 | Standard term |
+| deep learning | تعلم عميق | 1.0 | 19 | Standard term |
 | transformer | محول | 0.8 | 4 | Deep learning architecture |
-| attention mechanism | آلية الانتباه | 0.9 | 3 | Used in transformers |
+| attention mechanism | آلية الانتباه | 0.9 | 6 | Used in transformers |
 | ontology | أنطولوجيا | 0.8 | 1 | Knowledge representation |
 | validation | التحقق من الصحة | 0.9 | 8 | Verification process |
 | model-driven engineering | الهندسة الموجهة بالنماذج | 0.8 | 1 | Software engineering approach |
@@ -21,7 +21,7 @@
 | parameter | معامل | 1.0 | 5 | Model parameter |
 | benchmark | معيار | 0.9 | 3 | Performance evaluation |
 | image classification | تصنيف الصور | 0.9 | 4 | Computer vision task |
-| computer vision | رؤية حاسوبية | 1.0 | 2 | AI field |
+| computer vision | رؤية حاسوبية | 1.0 | 5 | AI field |
 | encoder | مشفر | 0.9 | 1 | Neural network component |
 | decoder | فك التشفير | 0.9 | 1 | Neural network component |
 | embedding | التضمين | 0.9 | 3 | Representation learning |
@@ -134,7 +134,7 @@
 | computational model | نموذج حسابي | 0.9 | 6 | Model of computation |
 | support vector machine | آلة المتجهات الداعمة | 0.9 | 1 | ML classification algorithm |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
-| training | التدريب | 1.0 | 9 | ML model training |
+| training | التدريب | 1.0 | 14 | ML model training |
 | data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
 | optimization | التحسين | 1.0 | 37 | Making optimal |
 | counterexample | مثال مضاد | 0.9 | 3 | Example showing falsity |
@@ -147,7 +147,7 @@
 | embedded systems | أنظمة مدمجة | 1.0 | 4 | Integrated computing systems |
 | database | قاعدة بيانات | 1.0 | 12 | Data storage system |
 | memory | ذاكرة | 1.0 | 19 | Computer memory |
-| performance | أداء | 1.0 | 29 | System performance |
+| performance | أداء | 1.0 | 34 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
 | framework | إطار العمل | 0.9 | 21 | Software framework |
@@ -260,7 +260,7 @@
 | low-dimensional | منخفض الأبعاد | 0.9 | 1 | Low-dimensional representation |
 | probability distribution | توزيع الاحتمالات | 0.9 | 3 | Probability distribution |
 | complexity | التعقيد | 0.9 | 2 | Computational complexity |
-| latent space | الفضاء الكامن | 0.8 | 1 | Latent representation space |
+| latent space | الفضاء الكامن | 0.9 | 6 | Latent representation space |
 | machine translation | الترجمة الآلية | 0.9 | 2 | Automated translation |
 | speech recognition | التعرف على الكلام | 0.9 | 2 | Speech recognition systems |
 | Riemannian manifold | متعدد ريمان | 0.8 | 2 | Riemannian geometry manifold |
@@ -415,7 +415,7 @@
 | robust | قوية | 0.9 | 1 | Robust features/models |
 | residual | متبقي | 0.9 | 1 | Residual learning/connections |
 | layer | طبقة | 1.0 | 1 | Neural network layer |
-| architecture | معمارية | 0.9 | 6 | Network architecture |
+| architecture | معمارية | 0.9 | 11 | Network architecture |
 | distributed system | نظام موزع | 1.0 | 5 | System with components on networked computers |
 | distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
 | network | شبكة | 1.0 | 2 | Computer network |
@@ -531,3 +531,31 @@
 | state | حالة | 1.0 | 2 | System state |
 | novel | جديد | 1.0 | 2 | Novel/new approach |
 | variant | نوع | 0.9 | 1 | Variant or type |
+| diffusion model | نموذج الانتشار | 0.9 | 5 | Generative model using diffusion process |
+| latent diffusion | الانتشار الكامن | 0.9 | 5 | Diffusion in latent space |
+| denoising | إزالة الضوضاء | 0.9 | 2 | Noise removal process |
+| autoencoder | مشفر تلقائي | 0.9 | 3 | Auto-encoding neural network |
+| cross-attention | الانتباه المتقاطع | 0.9 | 3 | Cross-attention mechanism |
+| bounding box | صندوق التحديد | 0.9 | 1 | Object bounding box |
+| image inpainting | ملء الصور | 0.9 | 2 | Image inpainting task |
+| unconditional generation | التوليد غير المشروط | 0.8 | 2 | Generation without conditioning |
+| text-to-image | من النص إلى الصورة | 0.9 | 4 | Text-to-image synthesis |
+| image-to-video | من الصورة إلى الفيديو | 0.9 | 1 | Image-to-video generation |
+| UNet | يونت | 0.9 | 2 | U-shaped neural network architecture |
+| text encoder | مشفر نصي | 0.9 | 3 | Text encoding module |
+| conditioning | التكييف | 0.9 | 4 | Conditional input mechanism |
+| aspect ratio | نسبة الأبعاد | 0.9 | 1 | Image aspect ratio |
+| refinement model | نموذج التحسين | 0.9 | 2 | Model refinement stage |
+| visual fidelity | الدقة البصرية | 0.9 | 2 | Visual quality and accuracy |
+| video generation | توليد الفيديو | 0.9 | 3 | Video synthesis task |
+| multi-view | متعدد الرؤى | 0.9 | 2 | Multiple viewpoints |
+| likelihood estimation | تقدير الاحتمالية | 0.9 | 1 | Probability estimation |
+| temporal data | البيانات الزمنية | 0.9 | 2 | Time-series data |
+| defect detection | كشف العيوب | 0.9 | 1 | Detecting defects or anomalies |
+| image segmentation | تجزئة الصور | 0.9 | 2 | Image segmentation task |
+| topological | طوبولوجي | 0.8 | 1 | Topology-related |
+| synthetic data | بيانات صناعية | 0.9 | 2 | Artificially generated data |
+| pretrained | مدرب مسبقاً | 0.9 | 4 | Pretrained model |
+| pixel space | فضاء البكسل | 0.9 | 3 | Pixel-level representation |
+| computational resources | موارد حسابية | 1.0 | 2 | Computing resources |
+| convolutional | التفافي | 0.9 | 2 | Convolutional operation |
