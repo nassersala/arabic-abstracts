@@ -4,9 +4,9 @@
 |---------|--------|------------|-------------|-------|
 | algorithm | خوارزمية | 1.0 | 7 | Standard term |
 | data structure | بنية البيانات | 1.0 | 16 | Standard term |
-| machine learning | تعلم الآلة | 1.0 | 11 | Standard term |
-| neural network | شبكة عصبية | 1.0 | 6 | Standard term |
-| deep learning | تعلم عميق | 1.0 | 11 | Standard term |
+| machine learning | تعلم الآلة | 1.0 | 12 | Standard term |
+| neural network | شبكة عصبية | 1.0 | 9 | Standard term |
+| deep learning | تعلم عميق | 1.0 | 13 | Standard term |
 | transformer | محول | 0.8 | 3 | Deep learning architecture |
 | attention mechanism | آلية الانتباه | 0.9 | 2 | Used in transformers |
 | ontology | أنطولوجيا | 0.8 | 1 | Knowledge representation |
@@ -16,15 +16,15 @@
 | meta-model | النموذج الفوقي | 0.8 | 1 | Model of models |
 | swarm system | نظام سربي | 0.8 | 1 | Robotics/AI collective behavior |
 | simulation | محاكاة | 0.9 | 3 | Computational modeling |
-| mathematical model | نموذج رياضي | 0.9 | 1 | Abstract representation |
+| mathematical model | نموذج رياضي | 0.9 | 3 | Abstract representation |
 | feed-forward network | شبكة التغذية الأمامية | 0.9 | 1 | Neural network type |
-| parameter | معامل | 1.0 | 4 | Model parameter |
+| parameter | معامل | 1.0 | 5 | Model parameter |
 | benchmark | معيار | 0.9 | 1 | Performance evaluation |
 | image classification | تصنيف الصور | 0.9 | 3 | Computer vision task |
 | computer vision | رؤية حاسوبية | 1.0 | 1 | AI field |
 | encoder | مشفر | 0.9 | 1 | Neural network component |
 | decoder | فك التشفير | 0.9 | 1 | Neural network component |
-| embedding | التضمين | 0.9 | 2 | Representation learning |
+| embedding | التضمين | 0.9 | 3 | Representation learning |
 | forecasting | التنبؤ | 1.0 | 2 | Prediction task |
 | code intelligence | ذكاء الشفرة | 0.8 | 1 | AI for code understanding |
 | robustness | متانة | 0.9 | 2 | Model stability |
@@ -33,7 +33,7 @@
 | semantic | دلالي | 1.0 | 2 | Meaning-related |
 | functional programming | البرمجة الوظيفية | 1.0 | 4 | Programming paradigm |
 | structured programming | البرمجة المنظمة | 0.9 | 1 | Programming paradigm |
-| monad | موناد | 0.8 | 1 | Functional programming concept |
+| monad | موناد | 0.8 | 2 | Functional programming concept |
 | parallelism | التوازي | 0.9 | 9 | Concurrent execution |
 | syntax | بنية نحوية | 1.0 | 3 | Language grammar |
 | inference | استنتاج | 0.9 | 1 | Logical deduction |
@@ -58,10 +58,10 @@
 | model checking | فحص النماذج | 0.9 | 10 | Automated verification technique |
 | proof | برهان | 1.0 | 12 | Mathematical proof |
 | theorem | مبرهنة | 1.0 | 6 | Proven statement |
-| category | فئة | 1.0 | 7 | Category theory structure |
+| category | فئة | 1.0 | 12 | Category theory structure |
 | abelian | أبيلي | 0.9 | 2 | Abelian property |
-| functor | دالة تصنيفية | 0.9 | 3 | Category theory functor |
-| 2-category | فئة ثنائية | 0.8 | 1 | Higher category |
+| functor | دالة تصنيفية | 0.9 | 4 | Category theory functor |
+| 2-category | فئة ثنائية | 0.8 | 3 | Higher category |
 | anti-equivalence | تكافؤ عكسي | 0.8 | 1 | Categorical anti-equivalence |
 | definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
 | additive category | فئة جمعية | 0.9 | 1 | Additive category |
@@ -71,7 +71,7 @@
 | Hopf category | فئة هوبف | 0.8 | 1 | Hopf algebraic category |
 | Galois theory | نظرية جالوا | 0.9 | 1 | Galois theory |
 | linear category | فئة خطية | 0.9 | 1 | Linear category |
-| isomorphic | متشاكل | 0.9 | 1 | Isomorphism |
+| isomorphic | متشاكل | 0.9 | 2 | Isomorphism |
 | representation | تمثيل | 0.9 | 1 | Category representation |
 | dual | مزدوج | 1.0 | 1 | Dual structure |
 | groupoid | زمرة شبيهة | 0.8 | 1 | Groupoid |
@@ -81,8 +81,8 @@
 | equivalent | مكافئ | 1.0 | 1 | Equivalence |
 | enriched category | فئة مُثرَى | 0.8 | 1 | Enriched category |
 | strictification | تصريم | 0.7 | 1 | Strictification process |
-| monoidal | أحادي | 0.9 | 3 | Monoidal structure |
-| symmetric | متماثل | 1.0 | 1 | Symmetric property |
+| monoidal | أحادي | 0.9 | 5 | Monoidal structure |
+| symmetric | متماثل | 1.0 | 2 | Symmetric property |
 | permutative | تبديلي | 0.8 | 1 | Permutative category |
 | bimonoidal | أحادي ثنائي | 0.7 | 1 | Bimonoidal structure |
 | indexed | مفهرس | 0.9 | 1 | Indexed structure |
@@ -94,7 +94,7 @@
 | cofibration | ألياف مشتركة | 0.7 | 1 | Cofibration |
 | finite limit | حد منتهي | 0.9 | 1 | Finite limit |
 | simplicial | بسيط | 0.9 | 1 | Simplicial structure |
-| Cartesian closed | ديكارتي مغلق | 0.9 | 1 | Cartesian closed |
+| Cartesian closed | ديكارتي مغلق | 0.9 | 2 | Cartesian closed |
 | colimit | حد مشترك | 0.9 | 1 | Categorical colimit |
 | satisfiability | الإرضاء | 0.8 | 4 | Logical satisfiability |
 | SMT solver | حلال SMT | 0.8 | 3 | Satisfiability modulo theory solver |
@@ -130,13 +130,13 @@
 | unlinkability | عدم الربط | 0.8 | 1 | Privacy property |
 | RFID | تحديد الترددات الراديوية | 0.9 | 1 | Radio-frequency identification |
 | hash function | دالة التجزئة | 0.9 | 2 | Cryptographic function |
-| axiom | بديهية | 1.0 | 2 | Self-evident truth |
+| axiom | بديهية | 1.0 | 3 | Self-evident truth |
 | computational model | نموذج حسابي | 0.9 | 3 | Model of computation |
 | support vector machine | آلة المتجهات الداعمة | 0.9 | 1 | ML classification algorithm |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | training | التدريب | 1.0 | 4 | ML model training |
 | data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
-| optimization | التحسين | 1.0 | 33 | Making optimal |
+| optimization | التحسين | 1.0 | 34 | Making optimal |
 | counterexample | مثال مضاد | 0.9 | 3 | Example showing falsity |
 | metric temporal logic | منطق زمني متري | 0.8 | 1 | Time-constrained temporal logic |
 | smart grid | الشبكة الذكية | 0.8 | 1 | Intelligent electrical grid |
@@ -150,7 +150,7 @@
 | performance | أداء | 1.0 | 21 | System performance |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
 | accelerator | مسرّع | 0.9 | 8 | Hardware accelerator |
-| framework | إطار العمل | 0.9 | 15 | Software framework |
+| framework | إطار العمل | 0.9 | 17 | Software framework |
 | Structure of Arrays | بنية المصفوفات | 0.9 | 1 | SoA pattern |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | lock-free | خالية من القفل | 0.8 | 1 | Concurrent programming technique |
@@ -266,11 +266,11 @@
 | Riemannian manifold | متعدد ريمان | 0.8 | 2 | Riemannian geometry manifold |
 | geometric optimization | التحسين الهندسي | 0.9 | 3 | Geometric optimization methods |
 | Euclidean space | الفضاء الإقليدي | 0.9 | 2 | Euclidean geometry space |
-| gradient | التدرجات | 0.9 | 1 | Gradient in optimization |
+| gradient | التدرجات | 0.9 | 2 | Gradient in optimization |
 | vanishing gradient | تلاشي التدرجات | 0.8 | 1 | Vanishing gradient problem |
 | exploding gradient | انفجار التدرجات | 0.8 | 1 | Exploding gradient problem |
 | convolutional neural network | الشبكة العصبية الالتفافية | 0.9 | 1 | CNN architecture |
-| recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 1 | RNN architecture |
+| recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 2 | RNN architecture |
 | transfer learning | التعلم بالنقل | 0.9 | 1 | Transfer learning technique |
 | feature redundancy | التكرار في الميزات | 0.8 | 1 | Feature redundancy issue |
 | virtual reality | الواقع الافتراضي | 0.9 | 2 | VR technology |
@@ -285,7 +285,7 @@
 | high-fidelity | عالي الدقة | 0.9 | 1 | High-fidelity reconstruction |
 | rendering | التقديم | 0.9 | 1 | Graphics rendering |
 | surface normal | المعلومات السطحية العمودية | 0.7 | 1 | Surface normal vectors |
-| equivariance | التكافؤ | 0.8 | 1 | Equivariance property |
+| equivariance | التكافؤ | 0.8 | 2 | Equivariance property |
 | drug design | تصميم الأدوية | 0.9 | 1 | Drug design and discovery |
 | structure-based | القائم على البنية | 0.9 | 2 | Structure-based approach |
 | macromolecule | الجزيئات الكبيرة | 0.8 | 1 | Macromolecular structures |
@@ -341,7 +341,7 @@
 | cognitive load | الحمل المعرفي | 0.8 | 1 | Mental processing burden |
 | matrix | مصفوفة | 1.0 | 1 | Mathematical matrix |
 | vector | متجه | 1.0 | 1 | Mathematical vector |
-| tensor | موتر | 0.9 | 1 | Mathematical tensor |
+| tensor | موتر | 0.9 | 2 | Mathematical tensor |
 | trigonometry | علم المثلثات | 1.0 | 1 | Trigonometry mathematics |
 | quantum information | المعلومات الكمومية | 0.9 | 1 | Quantum information science |
 | STEM | العلوم والتكنولوجيا والهندسة والرياضيات | 1.0 | 1 | Science, Technology, Engineering, Mathematics |
@@ -354,7 +354,7 @@
 | speedup | تسريع | 0.9 | 1 | Performance acceleration |
 | boolean | منطقي | 0.9 | 1 | Boolean logic |
 | classical simulation | محاكاة كلاسيكية | 0.9 | 1 | Classical computer simulation |
-| algebraic | جبري | 0.9 | 1 | Algebraic mathematics |
+| algebraic | جبري | 0.9 | 2 | Algebraic mathematics |
 | Dirac notation | ترميز ديراك | 0.9 | 1 | Dirac bra-ket notation |
 | pictorial | تصويري | 0.9 | 1 | Picture-based |
 | natural language | اللغة الطبيعية | 1.0 | 1 | Human language |
@@ -376,3 +376,15 @@
 | n-ary relation | علاقة n-أرية | 0.8 | 1 | N-ary mathematical relation |
 | polynomial | كثير حدود | 0.9 | 1 | Polynomial expression |
 | image convolution | التفاف الصور | 0.9 | 1 | Convolution operation on images |
+| supervised learning | التعلم الموجه | 0.9 | 1 | Learning from labeled data |
+| optics | البصريات | 0.8 | 1 | Category theory optics |
+| lenses | العدسات | 0.8 | 1 | Category theory lenses |
+| bidirectional | ثنائي الاتجاه | 0.9 | 1 | Bidirectional data flow |
+| denotational | دلالي | 0.8 | 1 | Denotational semantics |
+| operational | تشغيلي | 0.8 | 1 | Operational semantics |
+| oplax | ضعيف اللاكس | 0.7 | 1 | Oplax functor |
+| adjunction | اقتران | 0.8 | 2 | Categorical adjunction |
+| actegory | فئة الفعل | 0.8 | 1 | Action category structure |
+| biactegory | فئة الفعل الثنائية | 0.7 | 1 | Biaction category |
+| braided | مضفر | 0.8 | 1 | Braided monoidal structure |
+| probability | الاحتمال | 0.9 | 1 | Probability theory |
