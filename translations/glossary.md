@@ -56,9 +56,9 @@
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
 | specification | مواصفة | 1.0 | 12 | Formal description of behavior |
 | model checking | فحص النماذج | 0.9 | 10 | Automated verification technique |
-| proof | برهان | 1.0 | 11 | Mathematical proof |
+| proof | برهان | 1.0 | 12 | Mathematical proof |
 | theorem | مبرهنة | 1.0 | 6 | Proven statement |
-| category | فئة | 1.0 | 5 | Category theory structure |
+| category | فئة | 1.0 | 7 | Category theory structure |
 | abelian | أبيلي | 0.9 | 2 | Abelian property |
 | functor | دالة تصنيفية | 0.9 | 3 | Category theory functor |
 | 2-category | فئة ثنائية | 0.8 | 1 | Higher category |
@@ -81,7 +81,7 @@
 | equivalent | مكافئ | 1.0 | 1 | Equivalence |
 | enriched category | فئة مُثرَى | 0.8 | 1 | Enriched category |
 | strictification | تصريم | 0.7 | 1 | Strictification process |
-| monoidal | أحادي | 0.9 | 1 | Monoidal structure |
+| monoidal | أحادي | 0.9 | 3 | Monoidal structure |
 | symmetric | متماثل | 1.0 | 1 | Symmetric property |
 | permutative | تبديلي | 0.8 | 1 | Permutative category |
 | bimonoidal | أحادي ثنائي | 0.7 | 1 | Bimonoidal structure |
@@ -323,3 +323,14 @@
 | knot | العُقد | 0.8 | 1 | Mathematical knot |
 | knot invariant | ثوابت للعُقد | 0.7 | 1 | Knot invariants |
 | generalization | تعميم | 0.9 | 1 | Model generalization |
+| quantum mechanics | الميكانيكا الكمومية | 1.0 | 1 | Quantum mechanics field |
+| quantum physics | الفيزياء الكمومية | 1.0 | 1 | Quantum physics field |
+| Hilbert space | فضاء هيلبرت | 0.9 | 1 | Mathematical foundation of quantum mechanics |
+| diagrammatic | رسومي بياني | 0.8 | 1 | Diagram-based representation |
+| quantum system | نظام كمومي | 0.9 | 1 | Quantum physical system |
+| no-cloning theorem | مبرهنة منع الاستنساخ | 0.8 | 1 | Fundamental quantum limitation |
+| quantum teleportation | النقل الكمومي الآني | 0.8 | 1 | Quantum information transfer |
+| quantum computing | الحوسبة الكمومية | 0.9 | 1 | Quantum computation |
+| quantum non-locality | اللاموضعية الكمومية | 0.8 | 1 | Non-local quantum correlations |
+| complex number | عدد مركب | 0.9 | 1 | Complex number (mathematics) |
+| formalism | شكلية | 0.9 | 1 | Mathematical formalism |
