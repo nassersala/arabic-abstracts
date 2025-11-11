@@ -30,7 +30,7 @@
 | anti-money laundering | مكافحة غسل الأموال | 0.9 | 1 | AML compliance |
 | applicability | قابلية التطبيق | 0.9 | 3 | Ability to be applied |
 | approximation | تقريب | 0.9 | 1 | Approximation algorithms |
-| architecture | معمارية | 0.9 | 15 | Network architecture |
+| architecture | معمارية | 0.9 | 16 | Network architecture |
 | area overhead | زيادة المساحة | 0.8 | 1 | Hardware area overhead |
 | array | مصفوفة | 1.0 | 5 | Array data structure |
 | array language | لغة المصفوفات | 0.9 | 5 | Programming language for array operations |
@@ -130,7 +130,7 @@
 | computer algebra | جبر حاسوبي | 0.9 | 1 | Computer algebra system |
 | computer vision | رؤية حاسوبية | 1.0 | 5 | AI field |
 | conceptual understanding | الفهم المفاهيمي | 0.9 | 1 | Conceptual comprehension |
-| concurrency | التزامن | 1.0 | 2 | Concurrent programming |
+| concurrency | التزامن | 1.0 | 3 | Concurrent programming |
 | concurrent | متزامن | 1.0 | 1 | Concurrent execution |
 | conditioning | التكييف | 0.9 | 4 | Conditional input mechanism |
 | consensus protocol | بروتوكول إجماع | 0.9 | 1 | Agreement protocol |
@@ -183,14 +183,14 @@
 | definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
 | defunctionalization | إزالة الوظيفية | 0.8 | 1 | Transformation to eliminate higher-order functions |
 | denoising | إزالة الضوضاء | 0.9 | 2 | Noise removal process |
-| denotational | دلالي | 0.8 | 6 | Denotational semantics |
+| denotational | دلالي | 0.8 | 10 | Denotational semantics |
 | density matrix | مصفوفة الكثافة | 0.9 | 1 | Quantum state representation |
 | dependency | اعتمادية | 0.9 | 2 | Relationship between elements |
 | dependent types | أنواع تابعة | 0.9 | 5 | Types that depend on values |
 | depth estimation | تقدير العمق | 0.8 | 2 | Depth prediction |
-| derivative | مشتقة | 1.0 | 2 | Mathematical derivative |
+| derivative | مشتقة | 1.0 | 3 | Mathematical derivative |
 | descent theory | نظرية النزول | 0.8 | 1 | Categorical descent |
-| deterministic | حتمي | 1.0 | 12 | Predictable behavior |
+| deterministic | حتمي | 1.0 | 13 | Predictable behavior |
 | developer | مطور | 1.0 | 1 | Software developer |
 | diagrammatic | رسومي بياني | 0.8 | 4 | Diagram-based representation |
 | diffusion model | نموذج الانتشار | 0.9 | 5 | Generative model using diffusion process |
@@ -200,7 +200,7 @@
 | distance-geometric | هندسية مسافية | 0.7 | 1 | Distance-geometric representation |
 | distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
 | distributed ledger technology | تقنية دفتر الأستاذ الموزع | 0.9 | 1 | DLT - distributed transaction database |
-| distributed system | نظام موزع | 1.0 | 6 | System with components on networked computers |
+| distributed system | نظام موزع | 1.0 | 7 | System with components on networked computers |
 | division gate | بوابة قسمة | 0.8 | 1 | Arithmetic circuit division operation |
 | domain-specific language | لغة خاصة بالمجال | 0.8 | 3 | Specialized programming language |
 | dropout | dropout | 0.9 | 1 | Dropout regularization technique |
@@ -229,7 +229,7 @@
 | entropy | إنتروبيا | 1.0 | 5 | Measure of uncertainty/disorder |
 | equational logic | المنطق المعادلاتي | 0.8 | 2 | Logic of equations |
 | equivalence class | صنف تكافؤ | 0.9 | 1 | Set of equivalent elements |
-| equivalent | مكافئ | 1.0 | 2 | Equivalence |
+| equivalent | مكافئ | 1.0 | 3 | Equivalence |
 | equivariance | التكافؤ | 0.8 | 2 | Equivariance property |
 | error-correcting code | شفرة تصحيح الأخطاء | 0.9 | 1 | Error-correcting codes |
 | ETL | ETL | 1.0 | 1 | Keep as acronym |
@@ -258,18 +258,18 @@
 | formal analysis | التحليل الرسمي | 0.9 | 1 | Formal verification and analysis |
 | formal methods | الأساليب الرسمية | 1.0 | 25 | Mathematical techniques for software/hardware |
 | formal model | نموذج رسمي | 0.9 | 3 | Formally specified model |
-| formal verification | التحقق الرسمي | 1.0 | 16 | Proving correctness mathematically |
+| formal verification | التحقق الرسمي | 1.0 | 17 | Proving correctness mathematically |
 | formalism | شكلية | 0.9 | 4 | Mathematical formalism |
 | formalization | الصياغة الرسمية | 0.9 | 11 | Making formal |
 | foundation | أساس | 0.9 | 2 | Foundational basis |
 | FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 10 | Field-Programmable Gate Array |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
-| framework | إطار العمل | 0.9 | 28 | Software framework |
+| framework | إطار العمل | 0.9 | 31 | Software framework |
 | free monad | موناد حر | 0.8 | 1 | Free monad structure |
 | function | دالة | 1.0 | 18 | Programming construct |
 | function approximation | تقريب الدوال | 0.9 | 1 | Function approximation theory |
 | function space | فضاء الدوال | 0.8 | 1 | Space of functions |
-| functional programming | البرمجة الوظيفية | 1.0 | 21 | Programming paradigm |
+| functional programming | البرمجة الوظيفية | 1.0 | 22 | Programming paradigm |
 | functionality | وظيفة | 0.9 | 1 | System or component functionality |
 | functor | دالة تصنيفية | 0.9 | 4 | Category theory functor |
 | Galois theory | نظرية جالوا | 0.9 | 1 | Galois theory |
@@ -294,7 +294,7 @@
 | guardedness | حراسة | 0.8 | 1 | Productivity guardedness |
 | Hadamard matrix | مصفوفة هادامارد | 0.9 | 1 | Hadamard matrix structure |
 | handler | معالج | 0.9 | 1 | Effect handler |
-| hardware | أجهزة | 1.0 | 7 | Computer hardware |
+| hardware | أجهزة | 1.0 | 8 | Computer hardware |
 | hardware utilization | استخدام الأجهزة | 0.9 | 3 | Hardware resource usage |
 | hash collision | تصادم تجزئة | 0.9 | 2 | Two inputs producing same hash |
 | hash function | دالة التجزئة | 0.9 | 3 | Cryptographic function |
@@ -306,7 +306,7 @@
 | high-fidelity | عالي الدقة | 0.9 | 1 | High-fidelity reconstruction |
 | high-level synthesis | التوليف عالي المستوى | 0.8 | 1 | HLS for hardware design |
 | higher-kinded | عالي النوع | 0.8 | 1 | Type constructor taking type constructors |
-| higher-order | من الرتبة العليا | 0.9 | 5 | Higher-order functions |
+| higher-order | من الرتبة العليا | 0.9 | 6 | Higher-order functions |
 | Hilbert space | فضاء هيلبرت | 0.9 | 1 | Mathematical foundation of quantum mechanics |
 | historical state | حالة تاريخية | 0.8 | 1 | Historical state data |
 | Hoare-style | بأسلوب هوير | 0.9 | 1 | Hoare logic style |
@@ -324,7 +324,7 @@
 | image segmentation | تجزئة الصور | 0.9 | 2 | Image segmentation task |
 | image-to-video | من الصورة إلى الفيديو | 0.9 | 1 | Image-to-video generation |
 | immutability | عدم القابلية للتغيير | 0.9 | 1 | Cannot be modified |
-| implementation | تطبيق | 1.0 | 16 | System implementation |
+| implementation | تطبيق | 1.0 | 17 | System implementation |
 | impredicative polymorphism | تعدد أشكال غير محصور | 0.7 | 1 | Polymorphism allowing quantification over all types |
 | inaccessible | غير قابل للوصول | 0.8 | 1 | Inaccessible patterns |
 | inclusion proof | برهان تضمين | 0.8 | 1 | Proof of inclusion in set |
@@ -387,7 +387,7 @@
 | manifold | متعدد | 0.8 | 4 | Mathematical manifold |
 | many-to-many | من متعدد إلى متعدد | 0.9 | 1 | Many-to-many relationship |
 | mathematical model | نموذج رياضي | 0.9 | 3 | Abstract representation |
-| matrix | مصفوفة | 1.0 | 4 | Mathematical matrix |
+| matrix | مصفوفة | 1.0 | 5 | Mathematical matrix |
 | measurement | القياس | 0.9 | 1 | Quantum measurement |
 | mechanised | آلي | 0.9 | 2 | Automated/formalized |
 | medicinal chemistry | الكيمياء الطبية | 0.9 | 1 | Medicinal chemistry field |
@@ -412,7 +412,7 @@
 | module | وحدة | 0.9 | 2 | Modular code unit |
 | molecular graph | الرسوم البيانية الجزيئية | 0.8 | 1 | Molecular graph structure |
 | molecular property | خصائص الجزيئات | 0.8 | 1 | Molecular properties |
-| monad | موناد | 0.8 | 9 | Functional programming concept |
+| monad | موناد | 0.8 | 10 | Functional programming concept |
 | monadic computation | حوسبة موناديّة | 0.8 | 1 | Computation in monadic form |
 | monitoring | المراقبة | 1.0 | 4 | Runtime observation |
 | monoidal | أحادي | 0.9 | 5 | Monoidal structure |
@@ -455,7 +455,7 @@
 | ontology | أنطولوجيا | 0.8 | 1 | Knowledge representation |
 | opacity | عتامة | 0.8 | 1 | Transactional opacity property |
 | open-source | مفتوح المصدر | 1.0 | 1 | Open source software |
-| operational | تشغيلي | 0.9 | 3 | Related to operations |
+| operational | تشغيلي | 0.9 | 4 | Related to operations |
 | operator | معامل | 1.0 | 4 | Query/mathematical operator |
 | opetope | أوبتوب | 0.7 | 1 | Opetope structure |
 | oplax | ضعيف اللاكس | 0.7 | 1 | Oplax functor |
@@ -465,7 +465,7 @@
 | overfitting | الإفراط في التدريب | 0.9 | 1 | Model overfitting |
 | overhead | عبء إضافي | 0.9 | 1 | Additional cost or burden |
 | parallel runtime | وقت تشغيل متوازي | 0.8 | 1 | Parallel execution runtime |
-| parallelism | التوازي | 0.9 | 15 | Concurrent execution |
+| parallelism | التوازي | 0.9 | 16 | Concurrent execution |
 | parameter | معامل | 1.0 | 5 | Model parameter |
 | parametric | بارامتري | 0.8 | 2 | Parameter-based |
 | parity | التكافؤ | 0.9 | 1 | Parity function |
@@ -486,7 +486,7 @@
 | point cloud | سحابة النقاط | 0.8 | 3 | Point cloud data |
 | polylogarithmic | لوغاريتمي متعدد | 0.9 | 1 | Polylogarithmic complexity |
 | polymorphic assertion | تأكيد متعدد الأشكال | 0.8 | 1 | Type-polymorphic assertion |
-| polymorphism | تعدد الأشكال | 0.9 | 5 | Type polymorphism |
+| polymorphism | تعدد الأشكال | 0.9 | 7 | Type polymorphism |
 | polynomial | كثير حدود | 0.9 | 6 | Polynomial expression |
 | portability | قابلية النقل | 0.9 | 1 | Code portability across platforms |
 | pose prediction | التنبؤ بالوضعية | 0.8 | 1 | Molecular pose prediction |
@@ -506,13 +506,13 @@
 | processing | معالجة | 0.9 | 4 | Data processing |
 | productivity | إنتاجية | 0.9 | 1 | Corecursive productivity |
 | program synthesis | توليد البرامج | 0.8 | 1 | Automatic program generation |
-| programming language | لغة البرمجة | 1.0 | 18 | Programming language |
+| programming language | لغة البرمجة | 1.0 | 20 | Programming language |
 | proof | برهان | 1.0 | 23 | Mathematical proof |
-| proof assistant | مساعد برهان | 0.9 | 6 | Interactive theorem proving system |
+| proof assistant | مساعد برهان | 0.9 | 7 | Interactive theorem proving system |
 | proof-of-work | إثبات العمل | 0.9 | 1 | Computational proof mechanism |
 | property-based testing | اختبار قائم على الخصائص | 0.9 | 6 | Testing based on properties |
 | protein | البروتينات | 1.0 | 1 | Protein molecules |
-| protocol | بروتوكول | 0.9 | 6 | Communication protocol |
+| protocol | بروتوكول | 0.9 | 7 | Communication protocol |
 | provenance query | استعلام المصدر | 0.7 | 1 | Data provenance query |
 | pseudodeterministic | شبه حتمي | 0.9 | 1 | Pseudodeterministic algorithm |
 | PSI | تقاطع المجموعة الخاص | 0.9 | 3 | Private Set Intersection acronym |
@@ -520,7 +520,7 @@
 | pullback | سحب | 0.9 | 1 | Pullback operation |
 | quantum circuit | دائرة كمومية | 0.9 | 3 | Quantum computing circuit |
 | quantum compiler | مترجم كمومي | 0.8 | 1 | Quantum circuit compiler |
-| quantum computing | الحوسبة الكمومية | 0.9 | 9 | Quantum computation |
+| quantum computing | الحوسبة الكمومية | 0.9 | 10 | Quantum computation |
 | quantum hardware | أجهزة كمومية | 0.9 | 1 | Physical quantum devices |
 | quantum information | المعلومات الكمومية | 0.9 | 2 | Quantum information science |
 | quantum mechanics | الميكانيكا الكمومية | 1.0 | 4 | Quantum mechanics field |
@@ -552,7 +552,7 @@
 | refinement model | نموذج التحسين | 0.9 | 2 | Model refinement stage |
 | registration | التسجيل | 0.8 | 2 | Point cloud registration |
 | regression | الانحدار | 0.9 | 1 | Statistical regression |
-| regular expression | تعبير نمطي | 0.9 | 2 | Pattern matching expression |
+| regular expression | تعبير نمطي | 0.9 | 3 | Pattern matching expression |
 | regular language | لغة نظامية | 1.0 | 1 | Formal language recognized by finite automaton |
 | relation | علاقة | 0.9 | 2 | Mathematical relation |
 | relational separation logic | منطق فصل علائقي | 0.8 | 1 | Logic for reasoning about programs |
@@ -579,7 +579,7 @@
 | security vulnerability | ثغرة أمنية | 0.9 | 1 | Security weakness or flaw |
 | self-authentication | المصادقة الذاتية | 0.9 | 1 | Self-verifying authentication |
 | self-stabilization | الاستقرار الذاتي | 0.9 | 1 | System recovering to valid state |
-| semantic | دلالي | 1.0 | 4 | Meaning-related |
+| semantic | دلالي | 1.0 | 5 | Meaning-related |
 | semimodule | وحدة شبه جمعية | 0.8 | 1 | Algebraic semimodule |
 | semiring | حلقة شبه جمعية | 0.8 | 1 | Algebraic semiring structure |
 | server | خادم | 1.0 | 1 | Computer server |
@@ -605,7 +605,7 @@
 | speech recognition | التعرف على الكلام | 0.9 | 2 | Speech recognition systems |
 | speedup | تسريع | 0.9 | 1 | Performance acceleration |
 | SQL query | استعلام SQL | 1.0 | 1 | SQL database query |
-| state | حالة | 1.0 | 4 | System state |
+| state | حالة | 1.0 | 5 | System state |
 | state transition system | نظام انتقال الحالة | 0.9 | 1 | System with states and transitions |
 | state-based | قائم على الحالة | 0.9 | 2 | Based on states |
 | statistical mechanics | الميكانيكا الإحصائية | 0.9 | 1 | Statistical physics |
@@ -629,7 +629,7 @@
 | symmetric | متماثل | 1.0 | 2 | Symmetric property |
 | synchronization | المزامنة | 0.9 | 0 | Coordinating concurrent operations |
 | syntactic derivative | مشتقة نحوية | 0.8 | 1 | Derivative of regular expression |
-| syntax | بنية نحوية | 1.0 | 4 | Language grammar |
+| syntax | بنية نحوية | 1.0 | 5 | Language grammar |
 | synthesis | التوليف | 0.9 | 5 | Automatic generation from specs |
 | synthetic data | بيانات صناعية | 0.9 | 2 | Artificially generated data |
 | synthetic Tait computability | القابلية للحوسبة التركيبية لتايت | 0.7 | 1 | Tait method in synthetic setting |
@@ -647,7 +647,7 @@
 | test case | حالة اختبار | 0.9 | 3 | Individual test case |
 | test generation | توليد الاختبار | 0.9 | 1 | Automatic test generation |
 | test oracle | أوراكل الاختبار | 0.9 | 2 | Test oracle for validation |
-| testing | اختبار | 1.0 | 5 | Software testing |
+| testing | اختبار | 1.0 | 6 | Software testing |
 | text encoder | مشفر نصي | 0.9 | 3 | Text encoding module |
 | text-to-image | من النص إلى الصورة | 0.9 | 4 | Text-to-image synthesis |
 | theorem | مبرهنة | 1.0 | 12 | Proven statement |
@@ -677,7 +677,7 @@
 | type abstraction | التجريد النوعي | 0.8 | 1 | Abstracting types for security |
 | type checker | مدقق الأنواع | 0.9 | 1 | Verifies type correctness |
 | type system | نظام الأنواع | 0.9 | 14 | Type theory implementation |
-| type theory | نظرية الأنواع | 0.9 | 7 | Type theory |
+| type theory | نظرية الأنواع | 0.9 | 8 | Type theory |
 | type variable | متغير نوع | 0.9 | 1 | Type variable |
 | uncertainty | عدم اليقين | 1.0 | 5 | Lack of certainty |
 | unconditional generation | التوليد غير المشروط | 0.8 | 2 | Generation without conditioning |
