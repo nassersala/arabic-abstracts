@@ -24,7 +24,7 @@
 | algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
 | algorithm | خوارزمية | 1.0 | 34 | Standard term |
 | amplification | تضخيم | 0.9 | 1 | Amplification effect |
-| analysis | تحليل | 1.0 | 4 | Data analysis |
+| analysis | تحليل | 1.0 | 5 | Data analysis |
 | anchor generation | توليد المراسي | 0.8 | 1 | Anchor box generation in object detection |
 | angle-geometric | هندسية زاوية | 0.7 | 1 | Angle-geometric representation |
 | annotation | تعليق توضيحي | 0.9 | 1 | Data annotation/labeling |
@@ -137,7 +137,7 @@
 | compact model | نموذج مدمج | 0.9 | 1 | Small-sized neural network model |
 | composable | قابل للتركيب | 0.9 | 1 | Can be combined/composed |
 | compositional semantics | الدلالات التركيبية | 0.9 | 1 | Compositional approach to semantics |
-| compression | ضغط | 0.9 | 3 | Data compression |
+| compression | ضغط | 0.9 | 4 | Data compression |
 | computable function | دالة قابلة للحوسبة | 0.9 | 1 | Effectively calculable function |
 | computation judgement | حكم حسابي | 0.8 | 1 | Judgement about computation |
 | computation-enabled | ممكّن حسابياً | 0.7 | 1 | Computation-capable |
@@ -177,7 +177,7 @@
 | cryptographic | تشفيري | 1.0 | 14 | Related to cryptography |
 | curvature | انحناءات | 0.8 | 1 | Geometric curvature |
 | cybersecurity | الأمن السيبراني | 1.0 | 2 | Computer security |
-| data | بيانات | 1.0 | 3 | Data |
+| data | بيانات | 1.0 | 5 | Data |
 | data augmentation | زيادة البيانات | 0.9 | 1 | Augmenting training data |
 | data engineering | هندسة البيانات | 0.9 | 2 | Data engineering field |
 | data integrity | سلامة البيانات | 0.9 | 4 | Data correctness and consistency |
@@ -187,7 +187,7 @@
 | data structure | بنية البيانات | 1.0 | 18 | Standard term |
 | data wrangling | تنظيف البيانات | 0.8 | 1 | Data cleaning and preparation |
 | data-driven | المدفوع بالبيانات | 0.9 | 2 | Data-driven approach |
-| database | قاعدة بيانات | 1.0 | 14 | Data storage system |
+| database | قاعدة بيانات | 1.0 | 16 | Data storage system |
 | dataflow | تدفق البيانات | 1.0 | 17 | Data flow architecture |
 | dataset | مجموعة بيانات | 0.9 | 8 | Collection of data |
 | de novo design | التصميم الجديد | 0.8 | 1 | De novo molecular design |
@@ -199,7 +199,7 @@
 | deep learning | تعلم عميق | 1.0 | 30 | Standard term |
 | defense | دفاع | 0.9 | 1 | Security defense mechanism |
 | defensive distillation | تقطير دفاعي | 0.8 | 1 | Defense technique for neural networks |
-| differential privacy | خصوصية تفاضلية | 0.9 | 1 | Mathematical framework for privacy |
+| differential privacy | خصوصية تفاضلية | 0.9 | 6 | Mathematical framework for privacy |
 | defect detection | كشف العيوب | 0.9 | 1 | Detecting defects or anomalies |
 | definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
 | defunctionalization | إزالة الوظيفية | 0.8 | 1 | Transformation to eliminate higher-order functions |
@@ -294,7 +294,7 @@
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | framework | إطار العمل | 0.9 | 31 | Software framework |
 | free monad | موناد حر | 0.8 | 1 | Free monad structure |
-| function | دالة | 1.0 | 18 | Programming construct |
+| function | دالة | 1.0 | 19 | Programming construct |
 | function approximation | تقريب الدوال | 0.9 | 1 | Function approximation theory |
 | function space | فضاء الدوال | 0.8 | 1 | Space of functions |
 | functional programming | البرمجة الوظيفية | 1.0 | 22 | Programming paradigm |
@@ -546,7 +546,7 @@
 | presheaf | حزمة أمامية | 0.8 | 1 | Presheaf |
 | pretrained | مدرب مسبقاً | 0.9 | 4 | Pretrained model |
 | principles | مبادئ | 1.0 | 8 | Fundamental rules |
-| privacy | خصوصية | 1.0 | 19 | Data privacy protection |
+| privacy | خصوصية | 1.0 | 24 | Data privacy protection |
 | private set intersection | تقاطع المجموعة الخاص | 0.9 | 2 | PSI cryptographic protocol |
 | probabilistic | احتمالي | 0.9 | 4 | Based on probability |
 | probability | الاحتمال | 0.9 | 1 | Probability theory |
@@ -603,7 +603,7 @@
 | Reed-Solomon codes | رموز ريد-سولومون | 0.9 | 1 | Error-correcting Reed-Solomon codes |
 | refinement model | نموذج التحسين | 0.9 | 2 | Model refinement stage |
 | registration | التسجيل | 0.8 | 2 | Point cloud registration |
-| regression | الانحدار | 0.9 | 1 | Statistical regression |
+| regression | الانحدار | 0.9 | 2 | Statistical regression |
 | regular expression | تعبير نمطي | 0.9 | 3 | Pattern matching expression |
 | regular language | لغة نظامية | 1.0 | 1 | Formal language recognized by finite automaton |
 | relation | علاقة | 0.9 | 2 | Mathematical relation |
@@ -655,7 +655,7 @@
 | software system | نظام برمجي | 1.0 | 1 | Software application or system |
 | solution map | خريطة الحلول | 0.8 | 1 | Solution mapping |
 | sorting | فرز | 1.0 | 1 | Data sorting |
-| sparse | متفرقة | 0.9 | 1 | Sparse gradients/data |
+| sparse | متفرقة | 0.9 | 2 | Sparse gradients/data |
 | spatial database | قاعدة بيانات مكانية | 0.9 | 1 | Spatial data management |
 | spatial locality | موضعية مكانية | 0.9 | 2 | Cache optimization |
 | spatio-temporal | زمكاني | 0.9 | 1 | Space and time combined |
@@ -690,7 +690,7 @@
 | syntactic derivative | مشتقة نحوية | 0.8 | 1 | Derivative of regular expression |
 | syntax | بنية نحوية | 1.0 | 5 | Language grammar |
 | synthesis | تخليق | 0.9 | 1 | Chemical synthesis |
-| synthetic data | بيانات صناعية | 0.9 | 2 | Artificially generated data |
+| synthetic data | بيانات صناعية | 0.9 | 3 | Artificially generated data |
 | synthetic Tait computability | القابلية للحوسبة التركيبية لتايت | 0.7 | 1 | Tait method in synthetic setting |
 | tabular workload | حمل عمل جدولي | 0.7 | 1 | Table-based workload |
 | tape | شريط | 0.8 | 1 | AD tape/trace |
@@ -776,3 +776,20 @@
 | workload | حمل عمل | 0.9 | 2 | System workload |
 | zero-knowledge | معرفة صفرية | 0.9 | 1 | Zero-knowledge proof systems |
 | ZX-calculus | حساب ZX | 0.9 | 3 | Graphical quantum calculus |
+| variants | متغيرات | 0.9 | 1 | Variations or variants |
+| taxonomy | تصنيف | 0.9 | 1 | Classification system |
+| post-processing | معالجة لاحقة | 0.9 | 1 | Post-processing property |
+| definition | تعريف | 1.0 | 1 | Formal definition |
+| data privacy | خصوصية البيانات | 1.0 | 1 | Protection of sensitive data |
+| mechanism | آلية | 0.9 | 1 | DP mechanism |
+| computation | حساب | 1.0 | 1 | Computation or calculation |
+| privacy loss | خسارة الخصوصية | 0.9 | 2 | Amount of privacy compromised |
+| pure differential privacy | خصوصية تفاضلية نقية | 0.9 | 1 | Strict DP without delta relaxation |
+| accuracy | دقة | 1.0 | 1 | Model accuracy metric |
+| sensitivity | حساسية | 0.9 | 1 | Query sensitivity in DP |
+| composition | تركيب | 0.9 | 3 | Composition of DP mechanisms |
+| histogram | رسم بياني هيستوغرامي | 0.8 | 1 | Histogram data structure |
+| covariance | تباين مشترك | 0.9 | 1 | Statistical covariance |
+| principal component analysis | تحليل المكونات الأساسية | 0.9 | 1 | PCA technique |
+| statistical learning | تعلم إحصائي | 0.9 | 1 | Statistical learning methods |
+| utility | فائدة | 0.9 | 1 | Usefulness of data/results |
