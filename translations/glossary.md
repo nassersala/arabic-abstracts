@@ -22,7 +22,7 @@
 | affine spline | شرائح أفينية | 0.7 | 1 | Affine spline functions |
 | aggregation | تجميع | 0.9 | 1 | Data aggregation |
 | algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
-| algorithm | خوارزمية | 1.0 | 35 | Standard term |
+| algorithm | خوارزمية | 1.0 | 38 | Standard term |
 | amplification | تضخيم | 0.9 | 1 | Amplification effect |
 | analysis | تحليل | 1.0 | 5 | Data analysis |
 | anchor generation | توليد المراسي | 0.8 | 1 | Anchor box generation in object detection |
@@ -34,7 +34,7 @@
 | applicability | قابلية التطبيق | 0.9 | 3 | Ability to be applied |
 | approximation | تقريب | 0.9 | 1 | Approximation algorithms |
 | arbitrary length | طول تعسفي | 0.75 | 1 | Sequence of any length |
-| architecture | معمارية | 0.9 | 26 | Network architecture | 
+| architecture | معمارية | 0.9 | 32 | Network architecture | 
 | attack | هجوم | 0.9 | 2 | Security attack |
 | area overhead | زيادة المساحة | 0.8 | 1 | Hardware area overhead |
 | array | مصفوفة | 1.0 | 5 | Array data structure |
@@ -207,7 +207,7 @@
 | decentralized finance | التمويل اللامركزي | 0.9 | 1 | DeFi - blockchain-based finance |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | decoder | فك التشفير | 0.9 | 3 | Neural network component |
-| deep learning | تعلم عميق | 1.0 | 33 | Standard term | 
+| deep learning | تعلم عميق | 1.0 | 37 | Standard term | 
 | defense | دفاع | 0.9 | 1 | Security defense mechanism |
 | defensive distillation | تقطير دفاعي | 0.8 | 1 | Defense technique for neural networks |
 | differential privacy | خصوصية تفاضلية | 0.9 | 6 | Mathematical framework for privacy |
@@ -501,7 +501,7 @@
 | natural language | اللغة الطبيعية | 1.0 | 10 | Human language |
 | near-linear | شبه خطي | 0.9 | 1 | Nearly linear complexity |
 | network | شبكة | 1.0 | 5 | Computer network | 
-| neural network | شبكة عصبية | 1.0 | 31 | Standard term | 
+| neural network | شبكة عصبية | 1.0 | 35 | Standard term | 
 | neural operator | معامل عصبي | 0.8 | 2 | Neural operator architecture |
 | no-cloning theorem | مبرهنة منع الاستنساخ | 0.8 | 1 | Fundamental quantum limitation |
 | node | عقدة | 1.0 | 3 | Graph or tree node |
@@ -635,7 +635,8 @@
 | Reed-Solomon codes | رموز ريد-سولومون | 0.9 | 1 | Error-correcting Reed-Solomon codes |
 | refinement model | نموذج التحسين | 0.9 | 2 | Model refinement stage |
 | registration | التسجيل | 0.8 | 2 | Point cloud registration |
-| regression | الانحدار | 0.9 | 3 | Statistical regression | 
+| regression | الانحدار | 0.9 | 3 | Statistical regression |
+| reinforcement learning | تعلم معزز | 0.9 | 3 | Learning through interaction with environment |
 | regular expression | تعبير نمطي | 0.9 | 3 | Pattern matching expression |
 | regular language | لغة نظامية | 1.0 | 1 | Formal language recognized by finite automaton |
 | release | إطلاق | 0.9 | 2 | Make publicly available (software/models) |
@@ -777,7 +778,7 @@
 | transfer learning | التعلم بالنقل | 0.9 | 2 | Transfer learning technique | 
 | transfer (ML) | نقل | 0.9 | 1 | Transfer of learned knowledge to new tasks |
 | transparency | الشفافية | 0.9 | 1 | Model transparency |
-| transformer | محول | 0.9 | 9 | Deep learning architecture |
+| transformer | محول | 0.9 | 10 | Deep learning architecture |
 | transpiling | التحويل البرمجي | 0.8 | 1 | Source-to-source compilation |
 | tree | شجرة | 1.0 | 1 | Tree data structure |
 | tree configuration | تكوين الشجرة | 0.9 | 1 | Structure of tree data structure |
