@@ -30,7 +30,7 @@
 | anti-money laundering | مكافحة غسل الأموال | 0.9 | 1 | AML compliance |
 | applicability | قابلية التطبيق | 0.9 | 3 | Ability to be applied |
 | approximation | تقريب | 0.9 | 1 | Approximation algorithms |
-| architecture | معمارية | 0.9 | 16 | Network architecture |
+| architecture | معمارية | 0.9 | 17 | Network architecture |
 | area overhead | زيادة المساحة | 0.8 | 1 | Hardware area overhead |
 | array | مصفوفة | 1.0 | 5 | Array data structure |
 | array language | لغة المصفوفات | 0.9 | 5 | Programming language for array operations |
@@ -59,7 +59,7 @@
 | baseline | خط الأساس | 0.9 | 1 | Reference point for comparison |
 | Bayesian inverse problem | مسألة بايزية عكسية | 0.8 | 1 | Bayesian inverse problems |
 | Bayesian optimization | التحسين البايزي | 0.8 | 1 | Bayesian optimization method |
-| benchmark | معيار | 0.9 | 3 | Performance evaluation |
+| benchmark | معيار | 0.9 | 4 | Performance evaluation |
 | biactegory | فئة الفعل الثنائية | 0.7 | 1 | Biaction category |
 | bidirectional | ثنائي الاتجاه | 0.9 | 1 | Bidirectional data flow |
 | bimonoidal | أحادي ثنائي | 0.7 | 1 | Bimonoidal structure |
@@ -310,7 +310,7 @@
 | hash function | دالة التجزئة | 0.9 | 3 | Cryptographic function |
 | heap | كومة | 0.9 | 1 | Heap data structure |
 | heterogeneous | غير متجانس | 0.9 | 3 | Heterogeneous systems |
-| hierarchical | هرمي | 0.9 | 2 | Hierarchical organization |
+| hierarchical | هرمي | 0.9 | 3 | Hierarchical organization |
 | hierarchical blocking | تجزئة هرمية | 0.7 | 1 | Hierarchical block organization |
 | high-dimensional | عالية الأبعاد | 0.9 | 2 | High-dimensional data |
 | high-fidelity | عالي الدقة | 0.9 | 1 | High-fidelity reconstruction |
@@ -447,7 +447,7 @@
 | natural language | اللغة الطبيعية | 1.0 | 2 | Human language |
 | near-linear | شبه خطي | 0.9 | 1 | Nearly linear complexity |
 | network | شبكة | 1.0 | 2 | Computer network |
-| neural network | شبكة عصبية | 1.0 | 19 | Standard term |
+| neural network | شبكة عصبية | 1.0 | 20 | Standard term |
 | neural operator | معامل عصبي | 0.8 | 2 | Neural operator architecture |
 | no-cloning theorem | مبرهنة منع الاستنساخ | 0.8 | 1 | Fundamental quantum limitation |
 | node | عقدة | 1.0 | 3 | Graph or tree node |
@@ -483,7 +483,7 @@
 | overhead | عبء إضافي | 0.9 | 1 | Additional cost or burden |
 | parallel runtime | وقت تشغيل متوازي | 0.8 | 1 | Parallel execution runtime |
 | parallelism | التوازي | 0.9 | 16 | Concurrent execution |
-| parameter | معامل | 1.0 | 5 | Model parameter |
+| parameter | معامل | 1.0 | 6 | Model parameter |
 | parametric | بارامتري | 0.8 | 2 | Parameter-based |
 | parity | التكافؤ | 0.9 | 1 | Parity function |
 | partial differential equation | المعادلات التفاضلية الجزئية | 0.9 | 1 | PDE systems |
@@ -494,7 +494,7 @@
 | pattern matching | مطابقة الأنماط | 0.9 | 3 | Pattern matching technique |
 | Paxos | باكسوس | 0.9 | 1 | Distributed consensus algorithm |
 | PCP | PCP | 0.9 | 1 | Probabilistically checkable proofs |
-| performance | أداء | 1.0 | 42 | System performance |
+| performance | أداء | 1.0 | 43 | System performance |
 | permutative | تبديلي | 0.8 | 1 | Permutative category |
 | pictorial | تصويري | 0.9 | 1 | Picture-based |
 | piecewise linear | خطية مجزأة | 0.8 | 1 | Piecewise linear functions |
@@ -537,6 +537,7 @@
 | PSI | تقاطع المجموعة الخاص | 0.9 | 3 | Private Set Intersection acronym |
 | public blockchain | بلوك تشين عام | 0.9 | 3 | Public blockchain system |
 | pullback | سحب | 0.9 | 1 | Pullback operation |
+| puzzle tasks | مهام الألغاز | 0.8 | 1 | Problem-solving puzzle tasks |
 | quantum circuit | دائرة كمومية | 0.9 | 3 | Quantum computing circuit |
 | quantum compiler | مترجم كمومي | 0.8 | 1 | Quantum circuit compiler |
 | quantum computing | الحوسبة الكمومية | 0.9 | 10 | Quantum computation |
@@ -565,7 +566,7 @@
 | reasoning | استدلال | 0.9 | 4 | Logical reasoning |
 | recall | الاستدعاء | 0.9 | 1 | ML recall metric |
 | recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 2 | RNN architecture |
-| recursive | عودية | 0.9 | 2 | Recursive definition |
+| recursive | عودية | 0.9 | 3 | Recursive definition |
 | reduction | اختزال | 0.9 | 1 | Complexity reduction |
 | representation learning | تعلم التمثيلات | 0.9 | 3 | Learning data representations |
 | Reed-Solomon codes | رموز ريد-سولومون | 0.9 | 1 | Error-correcting Reed-Solomon codes |
@@ -669,6 +670,7 @@
 | termination | إنهاء | 0.9 | 2 | Program termination |
 | tessellate | تبليط | 0.7 | 1 | Space tessellation |
 | test case | حالة اختبار | 0.9 | 3 | Individual test case |
+| test accuracy | دقة الاختبار | 0.9 | 1 | Model test accuracy metric |
 | test generation | توليد الاختبار | 0.9 | 1 | Automatic test generation |
 | test oracle | أوراكل الاختبار | 0.9 | 2 | Test oracle for validation |
 | testing | اختبار | 1.0 | 6 | Software testing |
@@ -699,6 +701,7 @@
 | tree configuration | تكوين الشجرة | 0.9 | 1 | Structure of tree data structure |
 | trie | شجرة بادئة | 0.9 | 1 | Prefix tree data structure |
 | trigonometry | علم المثلثات | 1.0 | 1 | Trigonometry mathematics |
+| tiny networks | شبكات صغيرة | 0.9 | 1 | Small neural networks with few parameters |
 | trust model | نموذج الثقة | 0.9 | 1 | Framework for trust relationships |
 | trustworthiness | الموثوقية | 1.0 | 1 | Quality of being trustworthy |
 | two-sided error | خطأ ثنائي الجانب | 0.9 | 1 | Two-sided error bound |
