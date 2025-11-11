@@ -24,7 +24,9 @@
 | algorithm | خوارزمية | 1.0 | 31 | Standard term |
 | amplification | تضخيم | 0.9 | 1 | Amplification effect |
 | analysis | تحليل | 1.0 | 4 | Data analysis |
+| anchor generation | توليد المراسي | 0.8 | 1 | Anchor box generation in object detection |
 | angle-geometric | هندسية زاوية | 0.7 | 1 | Angle-geometric representation |
+| annotation | تعليق توضيحي | 0.9 | 1 | Data annotation/labeling |
 | answer set programming | برمجة مجموعة الإجابات | 0.8 | 1 | Declarative programming paradigm |
 | anti-equivalence | تكافؤ عكسي | 0.8 | 1 | Categorical anti-equivalence |
 | anti-money laundering | مكافحة غسل الأموال | 0.9 | 1 | AML compliance |
@@ -52,7 +54,9 @@
 | automatic differentiation | التفاضل الآلي | 0.9 | 1 | Automatic computation of derivatives |
 | automation | أتمتة | 0.9 | 1 | Process automation |
 | automaton | آلية | 0.9 | 1 | Finite automaton |
+| autonomous driving | القيادة الذاتية | 1.0 | 5 | Self-driving vehicles |
 | autonomous systems | الأنظمة المستقلة | 0.9 | 8 | Self-governing systems |
+| autonomous vehicle | مركبة ذاتية القيادة | 0.9 | 1 | Self-driving car |
 | avionics | إلكترونيات الطيران | 0.9 | 2 | Aircraft electronics |
 | axiom | بديهية | 1.0 | 3 | Self-evident truth |
 | backpropagation | الانتشار العكسي | 0.9 | 1 | Gradient backpropagation |
@@ -63,6 +67,8 @@
 | biactegory | فئة الفعل الثنائية | 0.7 | 1 | Biaction category |
 | bidirectional | ثنائي الاتجاه | 0.9 | 1 | Bidirectional data flow |
 | bimonoidal | أحادي ثنائي | 0.7 | 1 | Bimonoidal structure |
+| bipartite matching | المطابقة الثنائية | 0.8 | 1 | Bipartite graph matching |
+| bird's eye view | منظور عين الطائر | 0.9 | 2 | Top-down view |
 | biomedical | طبي حيوي | 0.9 | 2 | Biomedical sciences |
 | Binary Search Tree | شجرة البحث الثنائي | 0.9 | 1 | BST data structure |
 | binding | ارتباط | 0.9 | 1 | Molecular binding |
@@ -77,7 +83,7 @@
 | blockweb | شبكة الكتل | 0.8 | 1 | Block-based web structure |
 | boolean | منطقي | 0.9 | 2 | Boolean logic |
 | bootstrapping | تمهيد ذاتي | 0.9 | 6 | FHE technique to refresh ciphertexts |
-| bounding box | صندوق التحديد | 0.9 | 1 | Object bounding box |
+| bounding box | صندوق التحديد | 0.9 | 6 | Object bounding box |
 | braided | مضفر | 0.8 | 1 | Braided monoidal structure |
 | breadth-first search | بحث بالعرض أولاً | 0.9 | 2 | BFS algorithm |
 | broadcasting | بث | 0.9 | 1 | Array broadcasting operation |
@@ -192,6 +198,7 @@
 | definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
 | defunctionalization | إزالة الوظيفية | 0.8 | 1 | Transformation to eliminate higher-order functions |
 | denoising | إزالة الضوضاء | 0.9 | 2 | Noise removal process |
+| detection | الكشف | 0.9 | 5 | Detection task |
 | denotational | دلالي | 0.8 | 10 | Denotational semantics |
 | density matrix | مصفوفة الكثافة | 0.9 | 1 | Quantum state representation |
 | dependency | اعتمادية | 0.9 | 2 | Relationship between elements |
@@ -265,6 +272,7 @@
 | finite field | حقل منتهي | 0.9 | 1 | Finite algebraic field |
 | finite limit | حد منتهي | 0.9 | 1 | Finite limit |
 | fine-tuning | ضبط دقيق | 0.9 | 1 | Model fine-tuning process |
+| fusion methods | طرق الدمج | 0.8 | 1 | Sensor fusion techniques |
 | fintech | التكنولوجيا المالية | 1.0 | 1 | Financial technology |
 | first-order logic | منطق من الدرجة الأولى | 0.9 | 5 | Predicate logic |
 | fixed-point | نقطة ثابتة | 0.9 | 1 | Fixed-point arithmetic |
@@ -297,6 +305,7 @@
 | GPU | وحدة معالجة الرسومات | 1.0 | 15 | Graphics Processing Unit |
 | graded | مدرج | 0.9 | 1 | Graded structure |
 | gradient | التدرجات | 0.9 | 4 | Gradient in optimization |
+| ground truth | الحقيقة الأرضية | 0.9 | 2 | Reference/gold standard data |
 | graph | رسم بياني | 1.0 | 11 | Graph data structure |
 | graph connectivity | اتصال الرسم البياني | 0.9 | 1 | Graph nodes connectivity |
 | graph convolution | التفافات الرسوم البيانية | 0.8 | 2 | Graph convolution operation |
@@ -372,6 +381,7 @@
 | knot | العُقد | 0.8 | 1 | Mathematical knot |
 | knot invariant | ثوابت للعُقد | 0.7 | 1 | Knot invariants |
 | knot theory | نظرية العُقد | 0.8 | 1 | Mathematical knot theory |
+| KITTI | KITTI | 1.0 | 3 | Autonomous driving benchmark dataset |
 | knowledge distillation | تقطير المعرفة | 0.9 | 1 | Transfer knowledge from large to small model |
 | Kullback-Leibler divergence | تباعد كولباك-ليبلر | 0.8 | 1 | KL divergence measure |
 | Laplace-Beltrami operator | معامل لابلاس-بلترامي | 0.7 | 1 | Laplace-Beltrami operator |
@@ -389,8 +399,10 @@
 | lifting | رفع | 0.8 | 3 | Lifting functions to operate on arrays |
 | lifecycle | دورة الحياة | 0.9 | 1 | System or model lifecycle |
 | ligand | الرابط | 0.8 | 2 | Molecular ligand |
+| lidar | ليدار | 1.0 | 4 | Light detection and ranging sensor |
 | likelihood estimation | تقدير الاحتمالية | 0.9 | 1 | Probability estimation |
 | linear category | فئة خطية | 0.9 | 1 | Linear category |
+| low-visibility | الرؤية المنخفضة | 0.8 | 1 | Low visibility conditions |
 | linear type | نوع خطي | 0.9 | 1 | Linear type system |
 | list decoding | فك الترميز بالقائمة | 0.9 | 1 | Error-correcting code decoding |
 | list-based | قائم على القوائم | 0.8 | 1 | List-based approach |
@@ -445,7 +457,8 @@
 | multi-layer perceptron | الشبكات الإدراكية متعددة الطبقات | 0.9 | 1 | MLP architecture |
 | multi-modal | متعدد الأنماط | 0.9 | 2 | Multiple data modalities |
 | multi-party | متعدد الأطراف | 0.9 | 1 | Multiple parties involved |
-| multi-view | متعدد الرؤى | 0.9 | 2 | Multiple viewpoints |
+| multi-view | متعدد الرؤى | 0.9 | 5 | Multiple viewpoints |
+| multimodal | متعدد الأنماط | 0.9 | 2 | Multiple modalities |
 | mutable | قابل للتغيير | 0.9 | 1 | Can be modified |
 | mutual exclusion | الاستبعاد المتبادل | 0.9 | 1 | Preventing concurrent resource access |
 | n-ary relation | علاقة n-أرية | 0.8 | 1 | N-ary mathematical relation |
@@ -459,6 +472,7 @@
 | node | عقدة | 1.0 | 3 | Graph or tree node |
 | nominal | اسمية | 0.8 | 1 | Nominal typing |
 | non-deterministic | غير حتمي | 0.9 | 4 | Multiple possible outcomes |
+| non-maximum suppression | قمع عدم الحد الأقصى | 0.8 | 2 | NMS post-processing technique |
 | Non-Euclidean | غير إقليدية | 0.8 | 1 | Non-Euclidean geometry |
 | non-guarded | غير محروس | 0.8 | 1 | Without guardedness restriction |
 | non-membership proof | برهان عدم العضوية | 0.9 | 1 | Proof element is not in set |
@@ -470,6 +484,7 @@
 | NPU | وحدة معالجة شبكية عصبية | 0.8 | 1 | Neural Processing Unit |
 | nucleic acid | الأحماض النووية | 0.9 | 1 | DNA/RNA |
 | numerical analysis | تحليل عددي | 0.9 | 1 | Computational mathematics |
+| object detection | كشف الأجسام | 0.9 | 5 | Detecting objects in images |
 | object storage | تخزين الكائنات | 0.9 | 1 | Object-based storage |
 | observational data | البيانات الرصدية | 0.9 | 1 | Data from observation |
 | object-oriented programming | البرمجة الموجهة بالكائنات | 1.0 | 2 | Programming paradigm |
@@ -487,6 +502,7 @@
 | orchestration | تنسيق | 0.9 | 1 | Workflow orchestration |
 | overfitting | الإفراط في التدريب | 0.9 | 1 | Model overfitting |
 | overhead | عبء إضافي | 0.9 | 1 | Additional cost or burden |
+| panoptic segmentation | التجزئة الشاملة | 0.8 | 1 | Unified segmentation task |
 | parallel runtime | وقت تشغيل متوازي | 0.8 | 1 | Parallel execution runtime |
 | parallelism | التوازي | 0.9 | 16 | Concurrent execution |
 | parameter | معامل | 1.0 | 7 | Model parameter |
@@ -562,6 +578,7 @@
 | query processor | معالج استعلامات | 0.9 | 5 | Query execution engine |
 | quorum | نصاب | 0.9 | 1 | Minimum members for valid operation |
 | race detection | اكتشاف سباق | 0.8 | 1 | Race condition detection |
+| radar | رادار | 1.0 | 1 | Radio detection and ranging |
 | railways | السكك الحديدية | 1.0 | 1 | Rail transport systems |
 | randomized | عشوائي | 0.9 | 1 | Randomized algorithm |
 | rank | رتبة | 0.9 | 4 | Array rank/dimensionality |
@@ -599,11 +616,14 @@
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
 | satisfiability | الإرضاء | 0.8 | 4 | Logical satisfiability |
 | scalability | قابلية التوسع | 0.9 | 4 | Ability to handle growth |
+| scene | مشهد | 0.9 | 2 | Scene in video/dataset |
 | score function | دالة النقاط | 0.8 | 1 | Scoring function |
 | search space | فضاء البحث | 0.9 | 1 | Problem solving domain |
 | secure computation | حساب آمن | 0.9 | 1 | Cryptographic secure computation |
 | self-supervised | ذاتي الإشراف | 0.9 | 1 | Self-supervised learning |
+| sensor | مستشعر | 0.9 | 2 | Sensor device |
 | security | أمان | 1.0 | 20 | System security |
+| set prediction | التنبؤ بالمجموعات | 0.8 | 1 | Predicting sets of objects |
 | security vulnerability | ثغرة أمنية | 0.9 | 1 | Security weakness or flaw |
 | self-authentication | المصادقة الذاتية | 0.9 | 1 | Self-verifying authentication |
 | self-stabilization | الاستقرار الذاتي | 0.9 | 1 | System recovering to valid state |
@@ -698,6 +718,7 @@
 | trace | أثر | 0.9 | 1 | Execution trace |
 | trace-based | قائم على الآثار | 0.8 | 1 | Based on execution traces |
 | trade-off | مفاضلة | 0.9 | 2 | Balance between competing factors |
+| tracking | التتبع | 0.9 | 3 | Object tracking over time |
 | training | التدريب | 1.0 | 19 | ML model training |
 | transaction | معاملة | 0.9 | 5 | Blockchain transaction |
 | transactional memory | ذاكرة معاملات | 0.9 | 2 | Transactional memory system |
@@ -734,6 +755,7 @@
 | vanishing gradient | تلاشي التدرجات | 0.8 | 1 | Vanishing gradient problem |
 | variant | نوع | 0.9 | 1 | Variant or type |
 | vector | متجه | 1.0 | 1 | Mathematical vector |
+| velocity estimation | تقدير السرعة | 0.8 | 1 | Estimating object velocity |
 | vector notation | ترميز المتجهات | 0.9 | 2 | Mathematical vector notation |
 | vectorization | التمتير | 0.9 | 1 | SIMD vectorization |
 | verifiable | قابل للتحقق | 0.9 | 2 | Can be verified |
