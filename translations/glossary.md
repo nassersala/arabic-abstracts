@@ -22,7 +22,7 @@
 | affine spline | شرائح أفينية | 0.7 | 1 | Affine spline functions |
 | aggregation | تجميع | 0.9 | 1 | Data aggregation |
 | algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
-| algorithm | خوارزمية | 1.0 | 34 | Standard term |
+| algorithm | خوارزمية | 1.0 | 35 | Standard term |
 | amplification | تضخيم | 0.9 | 1 | Amplification effect |
 | analysis | تحليل | 1.0 | 5 | Data analysis |
 | anchor generation | توليد المراسي | 0.8 | 1 | Anchor box generation in object detection |
@@ -33,7 +33,7 @@
 | anti-money laundering | مكافحة غسل الأموال | 0.9 | 1 | AML compliance |
 | applicability | قابلية التطبيق | 0.9 | 3 | Ability to be applied |
 | approximation | تقريب | 0.9 | 1 | Approximation algorithms |
-| architecture | معمارية | 0.9 | 18 | Network architecture |
+| architecture | معمارية | 0.9 | 19 | Network architecture |
 | attack | هجوم | 0.9 | 2 | Security attack |
 | area overhead | زيادة المساحة | 0.8 | 1 | Hardware area overhead |
 | array | مصفوفة | 1.0 | 5 | Array data structure |
@@ -108,10 +108,12 @@
 | circuit | دائرة | 0.9 | 2 | Boolean or arithmetic circuit |
 | class | صنف | 1.0 | 1 | OOP construct |
 | classical simulation | محاكاة كلاسيكية | 0.9 | 1 | Classical computer simulation |
+| client | عميل | 0.9 | 1 | Client device or participant in federated learning |
 | Clifford gate | بوابة كليفورد | 0.8 | 1 | Clifford quantum gate |
 | closed-term canonicity | الكنسية للحدود المغلقة | 0.7 | 1 | Canonical form for closed terms |
 | cloud computing | الحوسبة السحابية | 1.0 | 4 | Cloud infrastructure |
 | co-adaptation | التكيف المشترك | 0.8 | 1 | Feature co-adaptation |
+| collaborative | تعاوني | 0.9 | 2 | Working together cooperatively |
 | code completion | إكمال الشفرة | 0.9 | 1 | Programming assistance |
 | code generation | توليد الشفرة | 0.9 | 5 | Automatic code generation |
 | code intelligence | ذكاء الشفرة | 0.8 | 1 | AI for code understanding |
@@ -127,7 +129,7 @@
 | columnar layout | تخطيط عمودي | 0.9 | 2 | Column layout |
 | columnar storage | التخزين العمودي | 0.9 | 6 | Column-oriented storage |
 | combinatorial | تجميعي | 0.9 | 1 | Combinatorial methods |
-| communication | الاتصال | 0.9 | 1 | Information communication |
+| communication | الاتصال | 0.9 | 2 | Information communication |
 | communication complexity | تعقيد الاتصال | 0.9 | 2 | Complexity of communication |
 | compiler | مترجم | 1.0 | 16 | Language compiler |
 | complex number | عدد مركب | 0.9 | 2 | Complex number (mathematics) |
@@ -161,7 +163,7 @@
 | contract | عقد | 0.8 | 1 | Program contract |
 | control flow | تدفق التحكم | 0.9 | 1 | Program control flow |
 | controller | متحكم | 1.0 | 7 | Control system component |
-| convergence | تقارب | 0.9 | 1 | Algorithm convergence |
+| convergence | تقارب | 0.9 | 2 | Algorithm convergence |
 | convolution | التفاف | 0.9 | 1 | Mathematical convolution |
 | convolutional | التفافي | 0.9 | 2 | Convolutional operation |
 | convolutional neural network | الشبكة العصبية الالتفافية | 0.9 | 1 | CNN architecture |
@@ -184,19 +186,20 @@
 | data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
 | data protection | حماية البيانات | 0.9 | 1 | Protecting data from unauthorized access |
 | data retrieval | استرجاع البيانات | 0.9 | 2 | Data access |
+| data science | علم البيانات | 1.0 | 1 | Data science field |
 | data structure | بنية البيانات | 1.0 | 18 | Standard term |
 | data wrangling | تنظيف البيانات | 0.8 | 1 | Data cleaning and preparation |
 | data-driven | المدفوع بالبيانات | 0.9 | 2 | Data-driven approach |
 | database | قاعدة بيانات | 1.0 | 16 | Data storage system |
 | dataflow | تدفق البيانات | 1.0 | 17 | Data flow architecture |
-| dataset | مجموعة بيانات | 0.9 | 8 | Collection of data |
+| dataset | مجموعة بيانات | 0.9 | 9 | Collection of data |
 | de novo design | التصميم الجديد | 0.8 | 1 | De novo molecular design |
 | decentralization | اللامركزية | 0.9 | 1 | Distributed control/authority |
-| decentralized | لامركزي | 0.9 | 2 | Without central authority |
+| decentralized | لامركزي | 0.9 | 5 | Without central authority |
 | decentralized finance | التمويل اللامركزي | 0.9 | 1 | DeFi - blockchain-based finance |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | decoder | فك التشفير | 0.9 | 3 | Neural network component |
-| deep learning | تعلم عميق | 1.0 | 30 | Standard term |
+| deep learning | تعلم عميق | 1.0 | 32 | Standard term |
 | defense | دفاع | 0.9 | 1 | Security defense mechanism |
 | defensive distillation | تقطير دفاعي | 0.8 | 1 | Defense technique for neural networks |
 | differential privacy | خصوصية تفاضلية | 0.9 | 6 | Mathematical framework for privacy |
@@ -222,6 +225,7 @@
 | discriminative | تمييزي | 0.9 | 1 | Discriminative models |
 | distance-geometric | هندسية مسافية | 0.7 | 1 | Distance-geometric representation |
 | distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
+| distributed learning | تعلم موزع | 0.9 | 3 | Distributed machine learning |
 | distributed ledger technology | تقنية دفتر الأستاذ الموزع | 0.9 | 1 | DLT - distributed transaction database |
 | distributed system | نظام موزع | 1.0 | 7 | System with components on networked computers |
 | division gate | بوابة قسمة | 0.8 | 1 | Arithmetic circuit division operation |
@@ -239,8 +243,8 @@
 | edge distance | مسافة الحافة | 0.8 | 1 | Edge distance metric |
 | edge weight | وزن الحافة | 0.8 | 1 | Graph edge weight |
 | effect | تأثير | 0.9 | 1 | Computational effect |
-| effectiveness | فعالية | 1.0 | 3 | Being effective |
-| efficiency | كفاءة | 1.0 | 6 | System efficiency |
+| effectiveness | فعالية | 1.0 | 4 | Being effective |
+| efficiency | كفاءة | 1.0 | 7 | System efficiency |
 | efficient | فعال | 1.0 | 2 | Efficient performance |
 | embedded systems | أنظمة مدمجة | 1.0 | 4 | Integrated computing systems |
 | embedding | التضمين | 0.9 | 3 | Representation learning |
@@ -272,7 +276,7 @@
 | fault-tolerant | متحمل للأخطاء | 0.9 | 1 | Resilient to failures |
 | feature detector | كاشف الميزات | 0.8 | 1 | Neural network feature detector |
 | feature redundancy | التكرار في الميزات | 0.8 | 1 | Feature redundancy issue |
-| federated learning | تعلم اتحادي | 0.9 | 5 | Distributed machine learning approach |
+| federated learning | تعلم اتحادي | 0.9 | 9 | Distributed machine learning approach |
 | feed-forward network | شبكة التغذية الأمامية | 0.9 | 2 | Neural network type |
 | fibration | ألياف | 0.8 | 1 | Categorical fibration |
 | finite field | حقل منتهي | 0.9 | 1 | Finite algebraic field |
@@ -292,7 +296,7 @@
 | foundation | أساس | 0.9 | 2 | Foundational basis |
 | FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 10 | Field-Programmable Gate Array |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
-| framework | إطار العمل | 0.9 | 31 | Software framework |
+| framework | إطار العمل | 0.9 | 32 | Software framework |
 | free monad | موناد حر | 0.8 | 1 | Free monad structure |
 | function | دالة | 1.0 | 19 | Programming construct |
 | function approximation | تقريب الدوال | 0.9 | 1 | Function approximation theory |
@@ -328,7 +332,7 @@
 | hash collision | تصادم تجزئة | 0.9 | 2 | Two inputs producing same hash |
 | hash function | دالة التجزئة | 0.9 | 3 | Cryptographic function |
 | heap | كومة | 0.9 | 1 | Heap data structure |
-| heterogeneous | غير متجانس | 0.9 | 3 | Heterogeneous systems |
+| heterogeneous | غير متجانس | 0.9 | 5 | Heterogeneous systems |
 | hierarchical | هرمي | 0.9 | 3 | Hierarchical organization |
 | hierarchical blocking | تجزئة هرمية | 0.7 | 1 | Hierarchical block organization |
 | high-dimensional | عالية الأبعاد | 0.9 | 2 | High-dimensional data |
@@ -417,7 +421,7 @@
 | loss function | دالة الخسارة | 0.9 | 1 | Training loss function |
 | low-dimensional | منخفض الأبعاد | 0.9 | 1 | Low-dimensional representation |
 | lower bound | حد أدنى | 0.9 | 1 | Lower bound on complexity |
-| machine learning | تعلم الآلة | 1.0 | 40 | Standard term |
+| machine learning | تعلم الآلة | 1.0 | 44 | Standard term |
 | membership inference | استنتاج العضوية | 0.9 | 1 | Determining if data was in training set |
 | machine translation | الترجمة الآلية | 0.9 | 2 | Automated translation |
 | macromolecule | الجزيئات الكبيرة | 0.8 | 1 | Macromolecular structures |
@@ -505,8 +509,8 @@
 | opetope | أوبتوب | 0.7 | 1 | Opetope structure |
 | oplax | ضعيف اللاكس | 0.7 | 1 | Oplax functor |
 | optics | البصريات | 0.8 | 1 | Category theory optics |
-| optimization | التحسين | 1.0 | 43 | Making optimal |
-| orchestration | تنسيق | 0.9 | 1 | Workflow orchestration |
+| optimization | التحسين | 1.0 | 44 | Making optimal |
+| orchestration | تنسيق | 0.9 | 2 | Workflow orchestration |
 | overfitting | الإفراط في التدريب | 0.9 | 1 | Model overfitting |
 | overhead | عبء إضافي | 0.9 | 1 | Additional cost or burden |
 | panoptic segmentation | التجزئة الشاملة | 0.8 | 1 | Unified segmentation task |
@@ -546,7 +550,7 @@
 | presheaf | حزمة أمامية | 0.8 | 1 | Presheaf |
 | pretrained | مدرب مسبقاً | 0.9 | 4 | Pretrained model |
 | principles | مبادئ | 1.0 | 8 | Fundamental rules |
-| privacy | خصوصية | 1.0 | 24 | Data privacy protection |
+| privacy | خصوصية | 1.0 | 28 | Data privacy protection |
 | private set intersection | تقاطع المجموعة الخاص | 0.9 | 2 | PSI cryptographic protocol |
 | probabilistic | احتمالي | 0.9 | 4 | Based on probability |
 | probability | الاحتمال | 0.9 | 1 | Probability theory |
@@ -623,7 +627,7 @@
 | robustness | متانة | 0.9 | 4 | Model stability |
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
 | satisfiability | الإرضاء | 0.8 | 4 | Logical satisfiability |
-| scalability | قابلية التوسع | 0.9 | 4 | Ability to handle growth |
+| scalability | قابلية التوسع | 0.9 | 5 | Ability to handle growth |
 | scene | مشهد | 0.9 | 2 | Scene in video/dataset |
 | score function | دالة النقاط | 0.8 | 1 | Scoring function |
 | search space | فضاء البحث | 0.9 | 3 | Problem solving domain |
@@ -639,7 +643,7 @@
 | semantic cues | الإشارات الدلالية | 0.9 | 1 | Semantic signals or hints |
 | semimodule | وحدة شبه جمعية | 0.8 | 1 | Algebraic semimodule |
 | semiring | حلقة شبه جمعية | 0.8 | 1 | Algebraic semiring structure |
-| server | خادم | 1.0 | 1 | Computer server |
+| server | خادم | 1.0 | 2 | Computer server |
 | sharding | تجزئة | 0.9 | 2 | Data sharding |
 | shrinking | تقليص | 0.8 | 1 | Test case reduction |
 | SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
@@ -682,7 +686,7 @@
 | subclass | صنف فرعي | 1.0 | 1 | Class inheritance |
 | supervised learning | التعلم الموجه | 0.9 | 1 | Learning from labeled data |
 | support vector machine | آلة المتجهات الداعمة | 0.9 | 1 | ML classification algorithm |
-| survey | مسح شامل | 0.9 | 2 | Comprehensive survey or review |
+| survey | مسح شامل | 0.9 | 3 | Comprehensive survey or review |
 | surface normal | المعلومات السطحية العمودية | 0.7 | 1 | Surface normal vectors |
 | swarm system | نظام سربي | 0.8 | 1 | Robotics/AI collective behavior |
 | symmetric | متماثل | 1.0 | 2 | Symmetric property |
@@ -705,7 +709,7 @@
 | termination | إنهاء | 0.9 | 2 | Program termination |
 | tessellate | تبليط | 0.7 | 1 | Space tessellation |
 | test case | حالة اختبار | 0.9 | 3 | Individual test case |
-| test accuracy | دقة الاختبار | 0.9 | 1 | Model test accuracy metric |
+| test accuracy | دقة الاختبار | 0.9 | 2 | Model test accuracy metric |
 | test-time adaptation | التكيف أثناء الاختبار | 0.9 | 1 | Adapting models during test/inference time |
 | test generation | توليد الاختبار | 0.9 | 1 | Automatic test generation |
 | test oracle | أوراكل الاختبار | 0.9 | 2 | Test oracle for validation |
@@ -727,7 +731,7 @@
 | trace-based | قائم على الآثار | 0.8 | 1 | Based on execution traces |
 | trade-off | مفاضلة | 0.9 | 2 | Balance between competing factors |
 | tracking | التتبع | 0.9 | 3 | Object tracking over time |
-| training | التدريب | 1.0 | 27 | ML model training |
+| training | التدريب | 1.0 | 31 | ML model training |
 | transferability | قابلية النقل | 0.8 | 1 | Ability to transfer across contexts |
 | transaction | معاملة | 0.9 | 5 | Blockchain transaction |
 | transactional memory | ذاكرة معاملات | 0.9 | 2 | Transactional memory system |
@@ -785,7 +789,7 @@
 | computation | حساب | 1.0 | 1 | Computation or calculation |
 | privacy loss | خسارة الخصوصية | 0.9 | 2 | Amount of privacy compromised |
 | pure differential privacy | خصوصية تفاضلية نقية | 0.9 | 1 | Strict DP without delta relaxation |
-| accuracy | دقة | 1.0 | 1 | Model accuracy metric |
+| accuracy | دقة | 1.0 | 2 | Model accuracy metric |
 | sensitivity | حساسية | 0.9 | 1 | Query sensitivity in DP |
 | composition | تركيب | 0.9 | 3 | Composition of DP mechanisms |
 | histogram | رسم بياني هيستوغرامي | 0.8 | 1 | Histogram data structure |
