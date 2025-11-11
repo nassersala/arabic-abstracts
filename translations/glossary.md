@@ -31,7 +31,8 @@
 | answer set programming | برمجة مجموعة الإجابات | 0.8 | 1 | Declarative programming paradigm |
 | anti-equivalence | تكافؤ عكسي | 0.8 | 1 | Categorical anti-equivalence |
 | anti-money laundering | مكافحة غسل الأموال | 0.9 | 1 | AML compliance |
-| applicability | قابلية التطبيق | 0.9 | 3 | Ability to be applied |
+| agency | فاعلية | 0.8 | 1 | Human agency in quantum physics |
+| applicability | قابلية التطبيق | 0.9 | 5 | Ability to be applied |
 | approximation | تقريب | 0.9 | 1 | Approximation algorithms |
 | arbitrary length | طول تعسفي | 0.75 | 1 | Sequence of any length |
 | architecture | معمارية | 0.9 | 32 | Network architecture | 
@@ -42,7 +43,8 @@
 | array programming | برمجة المصفوفات | 0.9 | 5 | Array-oriented programming paradigm |
 | array shape | شكل المصفوفة | 0.9 | 3 | Shape/dimensions of array |
 | array-of-structs | مصفوفة البنى | 0.9 | 1 | AoS pattern |
-| artificial intelligence | الذكاء الاصطناعي | 1.0 | 6 | AI systems and techniques |
+| artificial intelligence | الذكاء الاصطناعي | 1.0 | 7 | AI systems and techniques |
+| automated theorem prover | مُثبِت النظريات الآلية | 0.8 | 1 | Automated theorem proving system |
 | aspect ratio | نسبة الأبعاد | 0.9 | 1 | Image aspect ratio |
 | assurance case | حالة ضمان | 0.8 | 1 | Safety argument structure |
 | asynchronous | لامتزامن | 0.9 | 0 | Not synchronized in time |
@@ -62,7 +64,7 @@
 | autonomous systems | الأنظمة المستقلة | 0.9 | 8 | Self-governing systems |
 | autonomous vehicle | مركبة ذاتية القيادة | 0.9 | 1 | Self-driving car |
 | avionics | إلكترونيات الطيران | 0.9 | 2 | Aircraft electronics |
-| axiom | بديهية | 1.0 | 3 | Self-evident truth |
+| axiom | بديهية | 1.0 | 4 | Self-evident truth |
 | backpropagation | الانتشار العكسي | 0.9 | 1 | Gradient backpropagation |
 | baseline | خط الأساس | 0.9 | 3 | Reference point for comparison | 
 | Bayesian inverse problem | مسألة بايزية عكسية | 0.8 | 1 | Bayesian inverse problems |
@@ -139,6 +141,7 @@
 | communication complexity | تعقيد الاتصال | 0.9 | 2 | Complexity of communication |
 | compiler | مترجم | 1.0 | 16 | Language compiler |
 | complex number | عدد مركب | 0.9 | 2 | Complex number (mathematics) |
+| completeness | اكتمال | 0.9 | 1 | Completeness in logic |
 | complexity | التعقيد | 0.9 | 7 | Computational complexity |
 | competitive | منافس | 0.9 | 1 | Competing with or rivaling in performance |
 | compound design | تصميم المركبات | 0.9 | 1 | Molecular compound design |
@@ -268,6 +271,7 @@
 | entanglement | التشابك | 0.9 | 2 | Quantum entanglement |
 | entity | كيان | 1.0 | 2 | Data entity |
 | entropy | إنتروبيا | 1.0 | 5 | Measure of uncertainty/disorder |
+| enumeration | تعداد | 0.8 | 1 | Recursive enumeration of theorems |
 | equational logic | المنطق المعادلاتي | 0.8 | 2 | Logic of equations |
 | equivalence class | صنف تكافؤ | 0.9 | 1 | Set of equivalent elements |
 | equivalent | مكافئ | 1.0 | 3 | Equivalence |
@@ -300,6 +304,7 @@
 | fusion methods | طرق الدمج | 0.8 | 1 | Sensor fusion techniques |
 | fintech | التكنولوجيا المالية | 1.0 | 1 | Financial technology |
 | first-order logic | منطق من الدرجة الأولى | 0.9 | 5 | Predicate logic |
+| formal logic | المنطق الصوري | 0.9 | 1 | Formal logic systems |
 | fixed-point | نقطة ثابتة | 0.9 | 1 | Fixed-point arithmetic |
 | forecasting | التنبؤ | 1.0 | 2 | Prediction task |
 | formal analysis | التحليل الرسمي | 0.9 | 1 | Formal verification and analysis |
@@ -378,6 +383,7 @@
 | immutability | عدم القابلية للتغيير | 0.9 | 1 | Cannot be modified |
 | implementation | تطبيق | 1.0 | 18 | System implementation | 
 | impredicative polymorphism | تعدد أشكال غير محصور | 0.7 | 1 | Polymorphism allowing quantification over all types |
+| incompleteness | عدم الاكتمال | 1.0 | 5 | Gödel's incompleteness theorems |
 | indication | دواعي الاستعمال | 0.9 | 1 | Drug therapeutic indication |
 | inaccessible | غير قابل للوصول | 0.8 | 1 | Inaccessible patterns |
 | inclusion proof | برهان تضمين | 0.8 | 1 | Proof of inclusion in set |
@@ -429,6 +435,7 @@
 | lazy evaluation | تقييم كسول | 0.9 | 4 | Lazy evaluation strategy |
 | leader election | انتخاب القائد | 0.9 | 1 | Selecting coordinator in distributed system |
 | learned model | نموذج متعلم | 0.8 | 1 | Machine learning model |
+| lemma | مبرهنة مساعدة | 0.9 | 1 | Auxiliary theorem in proofs |
 | lenses | العدسات | 0.8 | 1 | Category theory lenses |
 | lifting | رفع | 0.8 | 3 | Lifting functions to operate on arrays |
 | lifecycle | دورة الحياة | 0.9 | 1 | System or model lifecycle |
@@ -453,8 +460,9 @@
 | manifold | متعدد | 0.8 | 4 | Mathematical manifold |
 | many-to-many | من متعدد إلى متعدد | 0.9 | 1 | Many-to-many relationship |
 | mathematical model | نموذج رياضي | 0.9 | 3 | Abstract representation |
+| mathematical logic | المنطق الرياضي | 0.9 | 1 | Formal mathematical logic |
 | matrix | مصفوفة | 1.0 | 5 | Mathematical matrix |
-| measurement | القياس | 0.9 | 1 | Quantum measurement |
+| measurement | القياس | 0.9 | 2 | Quantum measurement |
 | mechanised | آلي | 0.9 | 2 | Automated/formalized |
 | medicinal chemistry | الكيمياء الطبية | 0.9 | 1 | Medicinal chemistry field |
 | membership proof | برهان العضوية | 0.9 | 1 | Proof element is in set |
@@ -542,11 +550,13 @@
 | panoptic segmentation | التجزئة الشاملة | 0.8 | 1 | Unified segmentation task |
 | parallel runtime | وقت تشغيل متوازي | 0.8 | 1 | Parallel execution runtime |
 | parallelism | التوازي | 0.9 | 16 | Concurrent execution |
+| paradox | مفارقة | 0.9 | 1 | Logical paradox |
 | parameter | معامل | 1.0 | 14 | Model parameter | 
 | parametric | بارامتري | 0.8 | 2 | Parameter-based |
 | parity | التكافؤ | 0.9 | 1 | Parity function |
 | partial differential equation | المعادلات التفاضلية الجزئية | 0.9 | 1 | PDE systems |
 | perturbation | اضطراب | 0.9 | 1 | Small change to input |
+| physics | فيزياء | 1.0 | 1 | Physics science |
 | partial function | دالة جزئية | 0.9 | 1 | Partially defined function |
 | partiality | جزئية | 0.8 | 1 | Partial function property |
 | path hash accumulator | مجمع تجزئة المسار | 0.8 | 1 | Cryptographic path verification tool |
@@ -586,7 +596,7 @@
 | productivity | إنتاجية | 0.9 | 1 | Corecursive productivity |
 | program synthesis | توليد البرامج | 0.9 | 6 | Automatic program generation |
 | programming language | لغة البرمجة | 1.0 | 26 | Programming language |
-| proof | برهان | 1.0 | 23 | Mathematical proof |
+| proof | برهان | 1.0 | 28 | Mathematical proof |
 | proof assistant | مساعد برهان | 0.9 | 7 | Interactive theorem proving system |
 | proof-of-work | إثبات العمل | 0.9 | 1 | Computational proof mechanism |
 | property-based testing | اختبار قائم على الخصائص | 0.9 | 6 | Testing based on properties |
@@ -609,6 +619,7 @@
 | quantum process tomography | التصوير المقطعي للعمليات الكمومية | 0.8 | 1 | Reconstruction of quantum process |
 | quantum state tomography | التصوير المقطعي للحالة الكمومية | 0.8 | 1 | Reconstruction of quantum state |
 | quantum subroutine | برنامج فرعي كمومي | 0.9 | 1 | Quantum program component |
+| quantum theory | نظرية الكم | 1.0 | 1 | Quantum theory of physics |
 | quantum system | نظام كمومي | 0.9 | 1 | Quantum physical system |
 | quantum teleportation | النقل الكمومي الآني | 0.8 | 1 | Quantum information transfer |
 | qubit | كيوبت | 0.9 | 1 | Quantum bit |
@@ -629,7 +640,7 @@
 | reasoning | استدلال | 0.9 | 8 | Logical reasoning |
 | recall | الاستدعاء | 0.9 | 1 | ML recall metric |
 | recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 2 | RNN architecture |
-| recursive | عودية | 0.9 | 3 | Recursive definition |
+| recursive | تكراري | 0.9 | 4 | Recursive definition |
 | reduction | اختزال | 0.9 | 1 | Complexity reduction |
 | representation learning | تعلم التمثيلات | 0.9 | 3 | Learning data representations |
 | Reed-Solomon codes | رموز ريد-سولومون | 0.9 | 1 | Error-correcting Reed-Solomon codes |
@@ -758,7 +769,7 @@
 | token | رمز | 0.9 | 1 | Basic unit of text in NLP (word, subword, or character) |
 | textual description | الوصف النصي | 0.9 | 1 | Text-based description |
 | text-to-image | من النص إلى الصورة | 0.9 | 4 | Text-to-image synthesis |
-| theorem | مبرهنة | 1.0 | 12 | Proven statement |
+| theorem | نظرية | 1.0 | 17 | Proven statement |
 | thermodynamics | الديناميكا الحرارية | 0.9 | 2 | Thermodynamics | 
 | thread | خيط | 1.0 | 1 | Thread of execution |
 | throughput | إنتاجية | 1.0 | 4 | System throughput |
@@ -828,12 +839,12 @@
 | zero-shot transfer | النقل بدون أمثلة | 0.9 | 1 | Transfer to new tasks without task-specific training |
 | ZX-calculus | حساب ZX | 0.9 | 3 | Graphical quantum calculus |
 | variants | متغيرات | 0.9 | 1 | Variations or variants |
-| taxonomy | تصنيف | 0.9 | 1 | Classification system |
+| taxonomy | تصنيف | 0.9 | 2 | Classification system |
 | post-processing | معالجة لاحقة | 0.9 | 1 | Post-processing property |
 | definition | تعريف | 1.0 | 1 | Formal definition |
 | data privacy | خصوصية البيانات | 1.0 | 1 | Protection of sensitive data |
 | mechanism | آلية | 0.9 | 1 | DP mechanism |
-| computation | حساب | 1.0 | 1 | Computation or calculation |
+| computation | حساب | 1.0 | 3 | Computation or calculation |
 | privacy loss | خسارة الخصوصية | 0.9 | 2 | Amount of privacy compromised |
 | pure differential privacy | خصوصية تفاضلية نقية | 0.9 | 1 | Strict DP without delta relaxation |
 | accuracy | دقة | 1.0 | 8 | Model accuracy metric | 
