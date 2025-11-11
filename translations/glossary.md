@@ -15,13 +15,14 @@
 | additive category | فئة جمعية | 0.9 | 1 | Additive category |
 | adjunction | اقتران | 0.8 | 2 | Categorical adjunction |
 | adoption | اعتماد | 1.0 | 4 | Taking into use |
-| adversarial | تنافسي خصامي | 0.9 | 1 | Adversarial training |
+| adversarial | تنافسي خصامي | 0.9 | 4 | Adversarial training |
+| adversarial examples | أمثلة خصامية | 0.9 | 3 | Adversarial inputs crafted to fool models |
 | aerospace | الفضاء الجوي | 1.0 | 3 | Aviation and space |
 | affine monad | موناد أفيني | 0.7 | 1 | Affine monad structure |
 | affine spline | شرائح أفينية | 0.7 | 1 | Affine spline functions |
 | aggregation | تجميع | 0.9 | 1 | Data aggregation |
 | algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
-| algorithm | خوارزمية | 1.0 | 31 | Standard term |
+| algorithm | خوارزمية | 1.0 | 34 | Standard term |
 | amplification | تضخيم | 0.9 | 1 | Amplification effect |
 | analysis | تحليل | 1.0 | 4 | Data analysis |
 | anchor generation | توليد المراسي | 0.8 | 1 | Anchor box generation in object detection |
@@ -32,7 +33,8 @@
 | anti-money laundering | مكافحة غسل الأموال | 0.9 | 1 | AML compliance |
 | applicability | قابلية التطبيق | 0.9 | 3 | Ability to be applied |
 | approximation | تقريب | 0.9 | 1 | Approximation algorithms |
-| architecture | معمارية | 0.9 | 17 | Network architecture |
+| architecture | معمارية | 0.9 | 18 | Network architecture |
+| attack | هجوم | 0.9 | 2 | Security attack |
 | area overhead | زيادة المساحة | 0.8 | 1 | Hardware area overhead |
 | array | مصفوفة | 1.0 | 5 | Array data structure |
 | array language | لغة المصفوفات | 0.9 | 5 | Programming language for array operations |
@@ -194,7 +196,10 @@
 | decentralized finance | التمويل اللامركزي | 0.9 | 1 | DeFi - blockchain-based finance |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | decoder | فك التشفير | 0.9 | 3 | Neural network component |
-| deep learning | تعلم عميق | 1.0 | 27 | Standard term |
+| deep learning | تعلم عميق | 1.0 | 30 | Standard term |
+| defense | دفاع | 0.9 | 1 | Security defense mechanism |
+| defensive distillation | تقطير دفاعي | 0.8 | 1 | Defense technique for neural networks |
+| differential privacy | خصوصية تفاضلية | 0.9 | 1 | Mathematical framework for privacy |
 | defect detection | كشف العيوب | 0.9 | 1 | Detecting defects or anomalies |
 | definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
 | defunctionalization | إزالة الوظيفية | 0.8 | 1 | Transformation to eliminate higher-order functions |
@@ -267,7 +272,7 @@
 | fault-tolerant | متحمل للأخطاء | 0.9 | 1 | Resilient to failures |
 | feature detector | كاشف الميزات | 0.8 | 1 | Neural network feature detector |
 | feature redundancy | التكرار في الميزات | 0.8 | 1 | Feature redundancy issue |
-| federated learning | تعلم اتحادي | 0.9 | 4 | Distributed machine learning approach |
+| federated learning | تعلم اتحادي | 0.9 | 5 | Distributed machine learning approach |
 | feed-forward network | شبكة التغذية الأمامية | 0.9 | 2 | Neural network type |
 | fibration | ألياف | 0.8 | 1 | Categorical fibration |
 | finite field | حقل منتهي | 0.9 | 1 | Finite algebraic field |
@@ -359,7 +364,7 @@
 | indexing | فهرسة | 0.9 | 2 | Index creation |
 | inductive programming | البرمجة الاستقرائية | 0.8 | 1 | Program synthesis approach |
 | inductive type | نوع استقرائي | 0.9 | 1 | Inductively defined type |
-| inference | استنتاج | 0.9 | 4 | Logical deduction |
+| inference | استنتاج | 0.9 | 6 | Logical deduction |
 | infinite field | حقل لامنتهي | 0.9 | 1 | Infinite algebraic field |
 | information theory | نظرية المعلومات | 1.0 | 5 | Shannon's theory of information |
 | input space | فضاء الإدخال | 0.9 | 1 | Model input space |
@@ -412,7 +417,8 @@
 | loss function | دالة الخسارة | 0.9 | 1 | Training loss function |
 | low-dimensional | منخفض الأبعاد | 0.9 | 1 | Low-dimensional representation |
 | lower bound | حد أدنى | 0.9 | 1 | Lower bound on complexity |
-| machine learning | تعلم الآلة | 1.0 | 35 | Standard term |
+| machine learning | تعلم الآلة | 1.0 | 40 | Standard term |
+| membership inference | استنتاج العضوية | 0.9 | 1 | Determining if data was in training set |
 | machine translation | الترجمة الآلية | 0.9 | 2 | Automated translation |
 | macromolecule | الجزيئات الكبيرة | 0.8 | 1 | Macromolecular structures |
 | malicious | خبيث | 0.9 | 1 | Malicious actor or behavior |
@@ -467,7 +473,7 @@
 | natural language | اللغة الطبيعية | 1.0 | 7 | Human language |
 | near-linear | شبه خطي | 0.9 | 1 | Nearly linear complexity |
 | network | شبكة | 1.0 | 2 | Computer network |
-| neural network | شبكة عصبية | 1.0 | 24 | Standard term |
+| neural network | شبكة عصبية | 1.0 | 29 | Standard term |
 | neural operator | معامل عصبي | 0.8 | 2 | Neural operator architecture |
 | no-cloning theorem | مبرهنة منع الاستنساخ | 0.8 | 1 | Fundamental quantum limitation |
 | node | عقدة | 1.0 | 3 | Graph or tree node |
@@ -510,6 +516,7 @@
 | parametric | بارامتري | 0.8 | 2 | Parameter-based |
 | parity | التكافؤ | 0.9 | 1 | Parity function |
 | partial differential equation | المعادلات التفاضلية الجزئية | 0.9 | 1 | PDE systems |
+| perturbation | اضطراب | 0.9 | 1 | Small change to input |
 | partial function | دالة جزئية | 0.9 | 1 | Partially defined function |
 | partiality | جزئية | 0.8 | 1 | Partial function property |
 | path hash accumulator | مجمع تجزئة المسار | 0.8 | 1 | Cryptographic path verification tool |
@@ -539,7 +546,7 @@
 | presheaf | حزمة أمامية | 0.8 | 1 | Presheaf |
 | pretrained | مدرب مسبقاً | 0.9 | 4 | Pretrained model |
 | principles | مبادئ | 1.0 | 8 | Fundamental rules |
-| privacy | خصوصية | 1.0 | 16 | Data privacy protection |
+| privacy | خصوصية | 1.0 | 19 | Data privacy protection |
 | private set intersection | تقاطع المجموعة الخاص | 0.9 | 2 | PSI cryptographic protocol |
 | probabilistic | احتمالي | 0.9 | 4 | Based on probability |
 | probability | الاحتمال | 0.9 | 1 | Probability theory |
@@ -603,7 +610,7 @@
 | relational separation logic | منطق فصل علائقي | 0.8 | 1 | Logic for reasoning about programs |
 | removal | إزالة | 0.9 | 1 | Remove/delete operation |
 | rendering | التقديم | 0.9 | 1 | Graphics rendering |
-| representation | تمثيل | 0.9 | 4 | Category representation |
+| representation | تمثيل | 0.9 | 5 | Category representation |
 | requirements | متطلبات | 1.0 | 9 | System requirements |
 | residual | متبقي | 0.9 | 1 | Residual learning/connections |
 | resource analysis | تحليل الموارد | 0.8 | 1 | Resource usage analysis |
@@ -613,7 +620,7 @@
 | RFID | تحديد الترددات الراديوية | 0.9 | 1 | Radio-frequency identification |
 | Riemannian manifold | متعدد ريمان | 0.8 | 2 | Riemannian geometry manifold |
 | robust | قوية | 0.9 | 1 | Robust features/models |
-| robustness | متانة | 0.9 | 2 | Model stability |
+| robustness | متانة | 0.9 | 4 | Model stability |
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
 | satisfiability | الإرضاء | 0.8 | 4 | Logical satisfiability |
 | scalability | قابلية التوسع | 0.9 | 4 | Ability to handle growth |
@@ -623,7 +630,7 @@
 | secure computation | حساب آمن | 0.9 | 1 | Cryptographic secure computation |
 | self-supervised | ذاتي الإشراف | 0.9 | 1 | Self-supervised learning |
 | sensor | مستشعر | 0.9 | 2 | Sensor device |
-| security | أمان | 1.0 | 22 | System security |
+| security | أمان | 1.0 | 24 | System security |
 | set prediction | التنبؤ بالمجموعات | 0.8 | 1 | Predicting sets of objects |
 | security vulnerability | ثغرة أمنية | 0.9 | 1 | Security weakness or flaw |
 | self-authentication | المصادقة الذاتية | 0.9 | 1 | Self-verifying authentication |
@@ -720,7 +727,8 @@
 | trace-based | قائم على الآثار | 0.8 | 1 | Based on execution traces |
 | trade-off | مفاضلة | 0.9 | 2 | Balance between competing factors |
 | tracking | التتبع | 0.9 | 3 | Object tracking over time |
-| training | التدريب | 1.0 | 22 | ML model training |
+| training | التدريب | 1.0 | 27 | ML model training |
+| transferability | قابلية النقل | 0.8 | 1 | Ability to transfer across contexts |
 | transaction | معاملة | 0.9 | 5 | Blockchain transaction |
 | transactional memory | ذاكرة معاملات | 0.9 | 2 | Transactional memory system |
 | transfer learning | التعلم بالنقل | 0.9 | 1 | Transfer learning technique |
