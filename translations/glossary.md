@@ -4,13 +4,13 @@
 |---------|--------|------------|-------------|-------|
 | algorithm | خوارزمية | 1.0 | 9 | Standard term |
 | data structure | بنية البيانات | 1.0 | 18 | Standard term |
-| machine learning | تعلم الآلة | 1.0 | 17 | Standard term |
-| neural network | شبكة عصبية | 1.0 | 14 | Standard term |
+| machine learning | تعلم الآلة | 1.0 | 19 | Standard term |
+| neural network | شبكة عصبية | 1.0 | 16 | Standard term |
 | deep learning | تعلم عميق | 1.0 | 19 | Standard term |
 | transformer | محول | 0.8 | 4 | Deep learning architecture |
 | attention mechanism | آلية الانتباه | 0.9 | 6 | Used in transformers |
 | ontology | أنطولوجيا | 0.8 | 1 | Knowledge representation |
-| validation | التحقق من الصحة | 0.9 | 8 | Verification process |
+| validation | التحقق من الصحة | 0.9 | 9 | Verification process |
 | model-driven engineering | الهندسة الموجهة بالنماذج | 0.8 | 1 | Software engineering approach |
 | logic programming | البرمجة المنطقية | 0.9 | 2 | Programming paradigm |
 | meta-model | النموذج الفوقي | 0.8 | 1 | Model of models |
@@ -31,33 +31,33 @@
 | abstract syntax tree | شجرة البنية التركيبية المجردة | 0.9 | 1 | Code representation |
 | code completion | إكمال الشفرة | 0.9 | 1 | Programming assistance |
 | semantic | دلالي | 1.0 | 2 | Meaning-related |
-| functional programming | البرمجة الوظيفية | 1.0 | 9 | Programming paradigm |
+| functional programming | البرمجة الوظيفية | 1.0 | 10 | Programming paradigm |
 | structured programming | البرمجة المنظمة | 0.9 | 1 | Programming paradigm |
 | monad | موناد | 0.8 | 2 | Functional programming concept |
 | parallelism | التوازي | 0.9 | 14 | Concurrent execution |
 | syntax | بنية نحوية | 1.0 | 3 | Language grammar |
-| inference | استنتاج | 0.9 | 2 | Logical deduction |
+| inference | استنتاج | 0.9 | 3 | Logical deduction |
 | search space | فضاء البحث | 0.9 | 1 | Problem solving domain |
-| dependency | اعتمادية | 0.9 | 1 | Relationship between elements |
+| dependency | اعتمادية | 0.9 | 2 | Relationship between elements |
 | transpiling | التحويل البرمجي | 0.8 | 1 | Source-to-source compilation |
 | computable function | دالة قابلة للحوسبة | 0.9 | 1 | Effectively calculable function |
 | answer set programming | برمجة مجموعة الإجابات | 0.8 | 1 | Declarative programming paradigm |
 | object-oriented programming | البرمجة الموجهة بالكائنات | 1.0 | 2 | Programming paradigm |
 | class | صنف | 1.0 | 1 | OOP construct |
 | subclass | صنف فرعي | 1.0 | 1 | Class inheritance |
-| function | دالة | 1.0 | 8 | Programming construct |
+| function | دالة | 1.0 | 13 | Programming construct |
 | inductive programming | البرمجة الاستقرائية | 0.8 | 1 | Program synthesis approach |
 | program synthesis | توليد البرامج | 0.8 | 1 | Automatic program generation |
-| type system | نظام الأنواع | 0.9 | 4 | Type theory implementation |
+| type system | نظام الأنواع | 0.9 | 9 | Type theory implementation |
 | reuse | إعادة الاستخدام | 1.0 | 1 | Code reusability |
-| modular | نمطي | 0.9 | 1 | Modular design |
+| modular | نمطي | 0.9 | 2 | Modular design |
 | formal methods | الأساليب الرسمية | 1.0 | 25 | Mathematical techniques for software/hardware |
 | formal verification | التحقق الرسمي | 1.0 | 15 | Proving correctness mathematically |
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
 | specification | مواصفة | 1.0 | 13 | Formal description of behavior |
 | model checking | فحص النماذج | 0.9 | 10 | Automated verification technique |
-| proof | برهان | 1.0 | 12 | Mathematical proof |
-| theorem | مبرهنة | 1.0 | 6 | Proven statement |
+| proof | برهان | 1.0 | 22 | Mathematical proof |
+| theorem | مبرهنة | 1.0 | 12 | Proven statement |
 | category | فئة | 1.0 | 12 | Category theory structure |
 | abelian | أبيلي | 0.9 | 2 | Abelian property |
 | functor | دالة تصنيفية | 0.9 | 4 | Category theory functor |
@@ -66,7 +66,7 @@
 | definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
 | additive category | فئة جمعية | 0.9 | 1 | Additive category |
 | coherent | متماسك | 0.9 | 1 | Coherent structure |
-| morphism | تشاكل | 0.9 | 1 | Category morphism |
+| morphism | تشاكل | 0.9 | 2 | Category morphism |
 | descent theory | نظرية النزول | 0.8 | 1 | Categorical descent |
 | Hopf category | فئة هوبف | 0.8 | 1 | Hopf algebraic category |
 | Galois theory | نظرية جالوا | 0.9 | 1 | Galois theory |
@@ -87,7 +87,7 @@
 | bimonoidal | أحادي ثنائي | 0.7 | 1 | Bimonoidal structure |
 | indexed | مفهرس | 0.9 | 1 | Indexed structure |
 | contextual | سياقي | 0.9 | 1 | Contextual category |
-| type theory | نظرية الأنواع | 0.9 | 1 | Type theory |
+| type theory | نظرية الأنواع | 0.9 | 6 | Type theory |
 | fibration | ألياف | 0.8 | 1 | Categorical fibration |
 | model category | فئة نموذجية | 0.9 | 1 | Model category |
 | pullback | سحب | 0.9 | 1 | Pullback operation |
@@ -100,7 +100,7 @@
 | SMT solver | حلال SMT | 0.8 | 3 | Satisfiability modulo theory solver |
 | abstract interpretation | التفسير المجرد | 0.8 | 3 | Static analysis technique |
 | temporal logic | منطق زمني | 0.9 | 6 | Logic for reasoning about time |
-| first-order logic | منطق من الدرجة الأولى | 0.9 | 4 | Predicate logic |
+| first-order logic | منطق من الدرجة الأولى | 0.9 | 5 | Predicate logic |
 | hybrid logic | منطق هجين | 0.8 | 2 | Combining logical systems |
 | synthesis | التوليف | 0.9 | 5 | Automatic generation from specs |
 | correct-by-construction | صحيح بالبناء | 0.8 | 4 | Inherently correct design |
@@ -116,7 +116,7 @@
 | scalability | قابلية التوسع | 0.9 | 4 | Ability to handle growth |
 | multi-agent | متعدد الوكلاء | 0.8 | 2 | Multiple autonomous entities |
 | requirements | متطلبات | 1.0 | 9 | System requirements |
-| formalization | الصياغة الرسمية | 0.9 | 6 | Making formal |
+| formalization | الصياغة الرسمية | 0.9 | 11 | Making formal |
 | methodology | منهجية | 1.0 | 6 | Systematic approach |
 | aerospace | الفضاء الجوي | 1.0 | 3 | Aviation and space |
 | avionics | إلكترونيات الطيران | 0.9 | 2 | Aircraft electronics |
@@ -126,7 +126,7 @@
 | adoption | اعتماد | 1.0 | 4 | Taking into use |
 | applicability | قابلية التطبيق | 0.9 | 3 | Ability to be applied |
 | effectiveness | فعالية | 1.0 | 3 | Being effective |
-| principles | مبادئ | 1.0 | 4 | Fundamental rules |
+| principles | مبادئ | 1.0 | 8 | Fundamental rules |
 | unlinkability | عدم الربط | 0.8 | 1 | Privacy property |
 | RFID | تحديد الترددات الراديوية | 0.9 | 1 | Radio-frequency identification |
 | hash function | دالة التجزئة | 0.9 | 3 | Cryptographic function |
@@ -177,7 +177,7 @@
 | data retrieval | استرجاع البيانات | 0.9 | 2 | Data access |
 | provenance query | استعلام المصدر | 0.7 | 1 | Data provenance query |
 | throughput | إنتاجية | 1.0 | 4 | System throughput |
-| implementation | تطبيق | 1.0 | 1 | System implementation |
+| implementation | تطبيق | 1.0 | 4 | System implementation |
 | object storage | تخزين الكائنات | 0.9 | 1 | Object-based storage |
 | computation-enabled | ممكّن حسابياً | 0.7 | 1 | Computation-capable |
 | SQL query | استعلام SQL | 1.0 | 1 | SQL database query |
@@ -206,7 +206,7 @@
 | CPU | وحدة المعالجة المركزية | 1.0 | 6 | Central Processing Unit |
 | tiling | تبليط | 0.8 | 1 | Loop tiling optimization |
 | buffering | تخزين مؤقت | 0.9 | 1 | Data buffering |
-| pattern matching | مطابقة الأنماط | 0.9 | 1 | Pattern matching technique |
+| pattern matching | مطابقة الأنماط | 0.9 | 3 | Pattern matching technique |
 | control flow | تدفق التحكم | 0.9 | 1 | Program control flow |
 | intermediate representation | تمثيل وسيط | 0.9 | 1 | Compiler IR |
 | high-level synthesis | التوليف عالي المستوى | 0.8 | 1 | HLS for hardware design |
@@ -350,11 +350,11 @@
 | quantum circuit | دائرة كمومية | 0.9 | 3 | Quantum computing circuit |
 | rewrite rule | قاعدة إعادة كتابة | 0.8 | 1 | Transformation rule |
 | Clifford gate | بوابة كليفورد | 0.8 | 1 | Clifford quantum gate |
-| parametric | بارامتري | 0.8 | 1 | Parameter-based |
+| parametric | بارامتري | 0.8 | 2 | Parameter-based |
 | speedup | تسريع | 0.9 | 1 | Performance acceleration |
 | boolean | منطقي | 0.9 | 1 | Boolean logic |
 | classical simulation | محاكاة كلاسيكية | 0.9 | 1 | Classical computer simulation |
-| algebraic | جبري | 0.9 | 2 | Algebraic mathematics |
+| algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
 | Dirac notation | ترميز ديراك | 0.9 | 1 | Dirac bra-ket notation |
 | pictorial | تصويري | 0.9 | 1 | Picture-based |
 | natural language | اللغة الطبيعية | 1.0 | 1 | Human language |
@@ -366,7 +366,7 @@
 | mutable | قابل للتغيير | 0.9 | 1 | Can be modified |
 | tape | شريط | 0.8 | 1 | AD tape/trace |
 | correctness by construction | الصحة بالبناء | 0.8 | 1 | Correct-by-construction approach |
-| programming language | لغة البرمجة | 1.0 | 6 | Programming language |
+| programming language | لغة البرمجة | 1.0 | 11 | Programming language |
 | array programming | برمجة المصفوفات | 0.9 | 5 | Array-oriented programming paradigm |
 | array language | لغة المصفوفات | 0.9 | 5 | Programming language for array operations |
 | array | مصفوفة | 1.0 | 5 | Array data structure |
@@ -415,7 +415,7 @@
 | robust | قوية | 0.9 | 1 | Robust features/models |
 | residual | متبقي | 0.9 | 1 | Residual learning/connections |
 | layer | طبقة | 1.0 | 1 | Neural network layer |
-| architecture | معمارية | 0.9 | 11 | Network architecture |
+| architecture | معمارية | 0.9 | 14 | Network architecture |
 | distributed system | نظام موزع | 1.0 | 5 | System with components on networked computers |
 | distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
 | network | شبكة | 1.0 | 2 | Computer network |
@@ -460,7 +460,7 @@
 | spatio-temporal | زمكاني | 0.9 | 1 | Space and time combined |
 | formal analysis | التحليل الرسمي | 0.9 | 1 | Formal verification and analysis |
 | usability | قابلية الاستخدام | 0.9 | 1 | Ease of use |
-| practitioner | ممارس | 0.9 | 1 | Professional working in the field |
+| practitioner | ممارس | 0.9 | 2 | Professional working in the field |
 | interplay | التفاعل | 0.9 | 1 | Interaction between components |
 | formal model | نموذج رسمي | 0.9 | 3 | Formally specified model |
 | temporal model | نموذج زمني | 0.9 | 2 | Model with time-based behavior |
@@ -528,8 +528,8 @@
 | server | خادم | 1.0 | 1 | Computer server |
 | workload | حمل عمل | 0.9 | 2 | System workload |
 | trace | أثر | 0.9 | 1 | Execution trace |
-| state | حالة | 1.0 | 2 | System state |
-| novel | جديد | 1.0 | 2 | Novel/new approach |
+| state | حالة | 1.0 | 3 | System state |
+| novel | جديد | 1.0 | 5 | Novel/new approach |
 | variant | نوع | 0.9 | 1 | Variant or type |
 | diffusion model | نموذج الانتشار | 0.9 | 5 | Generative model using diffusion process |
 | latent diffusion | الانتشار الكامن | 0.9 | 5 | Diffusion in latent space |
@@ -559,3 +559,35 @@
 | pixel space | فضاء البكسل | 0.9 | 3 | Pixel-level representation |
 | computational resources | موارد حسابية | 1.0 | 2 | Computing resources |
 | convolutional | التفافي | 0.9 | 2 | Convolutional operation |
+| dependent types | أنواع تابعة | 0.9 | 5 | Types that depend on values |
+| proof assistant | مساعد برهان | 0.9 | 5 | Interactive theorem proving system |
+| dataset | مجموعة بيانات | 0.9 | 1 | Collection of data |
+| premise selection | اختيار المقدمات | 0.8 | 1 | Selecting premises for proofs |
+| baseline | خط الأساس | 0.9 | 1 | Reference point for comparison |
+| natural deduction | الاستنتاج الطبيعي | 0.9 | 2 | Proof system in logic |
+| intuitionistic | حدسية | 0.8 | 1 | Intuitionistic logic |
+| type checker | مدقق الأنواع | 0.9 | 1 | Verifies type correctness |
+| constructive | بنائية | 0.9 | 2 | Constructive mathematics |
+| universal algebra | الجبر العام | 0.9 | 3 | Branch of abstract algebra |
+| equational logic | المنطق المعادلاتي | 0.8 | 2 | Logic of equations |
+| homomorphism | تشاكل | 0.9 | 1 | Structure-preserving map |
+| term | حد | 0.9 | 2 | Mathematical or logical term |
+| subalgebra | جبر فرعي | 0.8 | 1 | Subset with algebraic structure |
+| relation | علاقة | 0.9 | 2 | Mathematical relation |
+| module | وحدة | 0.9 | 2 | Modular code unit |
+| foundation | أساس | 0.9 | 2 | Foundational basis |
+| sized types | أنواع محجمة | 0.8 | 1 | Types with size information |
+| termination | إنهاء | 0.9 | 2 | Program termination |
+| productivity | إنتاجية | 0.9 | 1 | Corecursive productivity |
+| corecursive | متبادلة عودية | 0.8 | 1 | Dual to recursive |
+| guardedness | حراسة | 0.8 | 1 | Productivity guardedness |
+| higher-order | من الرتبة العليا | 0.9 | 1 | Higher-order functions |
+| polymorphism | تعدد الأشكال | 0.9 | 1 | Type polymorphism |
+| inaccessible | غير قابل للوصول | 0.8 | 1 | Inaccessible patterns |
+| function space | فضاء الدوال | 0.8 | 1 | Space of functions |
+| core language | لغة أساسية | 0.8 | 1 | Minimal language implementation |
+| reasoning | استدلال | 0.9 | 2 | Logical reasoning |
+| structural | بنيوية | 0.9 | 1 | Structural principles |
+| nominal | اسمية | 0.8 | 1 | Nominal typing |
+| recursive | عودية | 0.9 | 2 | Recursive definition |
+| ecosystem | نظام بيئي | 0.9 | 1 | Software ecosystem |
