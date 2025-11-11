@@ -44,7 +44,7 @@
 | array shape | شكل المصفوفة | 0.9 | 3 | Shape/dimensions of array |
 | array-of-structs | مصفوفة البنى | 0.9 | 1 | AoS pattern |
 | artificial intelligence | الذكاء الاصطناعي | 1.0 | 7 | AI systems and techniques |
-| automated theorem prover | مُثبِت النظريات الآلية | 0.8 | 1 | Automated theorem proving system |
+| automated theorem prover | مُثبِّت النظريات الآلي | 0.8 | 1 | Automated theorem proving system |
 | aspect ratio | نسبة الأبعاد | 0.9 | 1 | Image aspect ratio |
 | assurance case | حالة ضمان | 0.8 | 1 | Safety argument structure |
 | asynchronous | لامتزامن | 0.9 | 0 | Not synchronized in time |
@@ -304,7 +304,7 @@
 | fusion methods | طرق الدمج | 0.8 | 1 | Sensor fusion techniques |
 | fintech | التكنولوجيا المالية | 1.0 | 1 | Financial technology |
 | first-order logic | منطق من الدرجة الأولى | 0.9 | 5 | Predicate logic |
-| formal logic | المنطق الصوري | 0.9 | 1 | Formal logic systems |
+| formal logic | المنطق الرسمي | 0.9 | 1 | Formal logic systems |
 | fixed-point | نقطة ثابتة | 0.9 | 1 | Fixed-point arithmetic |
 | forecasting | التنبؤ | 1.0 | 2 | Prediction task |
 | formal analysis | التحليل الرسمي | 0.9 | 1 | Formal verification and analysis |
@@ -640,7 +640,7 @@
 | reasoning | استدلال | 0.9 | 8 | Logical reasoning |
 | recall | الاستدعاء | 0.9 | 1 | ML recall metric |
 | recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 2 | RNN architecture |
-| recursive | تكراري | 0.9 | 4 | Recursive definition |
+| recursive | العودي | 0.9 | 4 | Recursive definition |
 | reduction | اختزال | 0.9 | 1 | Complexity reduction |
 | representation learning | تعلم التمثيلات | 0.9 | 3 | Learning data representations |
 | Reed-Solomon codes | رموز ريد-سولومون | 0.9 | 1 | Error-correcting Reed-Solomon codes |
