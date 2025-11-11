@@ -81,6 +81,7 @@
 | call-by-need | استدعاء بالحاجة | 0.8 | 1 | Call-by-need semantics |
 | call-by-value | استدعاء بالقيمة | 0.8 | 1 | Call-by-value semantics |
 | camera pose | وضعية الكاميرا | 0.8 | 1 | Camera pose estimation |
+| channel capacity | سعة القناة | 0.9 | 3 | Information transmission capacity |
 | Cartesian closed | ديكارتي مغلق | 0.9 | 2 | Cartesian closed |
 | Cartesian Merkle tree | شجرة ميركل الديكارتية | 0.9 | 1 | Merkle tree with BST and heap properties |
 | category | فئة | 1.0 | 12 | Category theory structure |
@@ -99,10 +100,12 @@
 | colimit | حد مشترك | 0.9 | 1 | Categorical colimit |
 | collision | تصادم | 0.9 | 2 | Hash or data collision |
 | collision-resistant | مقاوم للتصادم | 0.9 | 1 | Cryptographic collision resistance |
+| combinatorial | تجميعي | 0.9 | 1 | Combinatorial methods |
 | column-based | قائم على الأعمدة | 0.9 | 2 | Column-based design |
 | column-oriented | موجه نحو الأعمدة | 0.9 | 1 | Column-based approach |
 | columnar layout | تخطيط عمودي | 0.9 | 2 | Column layout |
 | columnar storage | التخزين العمودي | 0.9 | 6 | Column-oriented storage |
+| communication | الاتصال | 0.9 | 1 | Information communication |
 | communication complexity | تعقيد الاتصال | 0.9 | 1 | Complexity of communication |
 | compiler | مترجم | 1.0 | 16 | Language compiler |
 | complex number | عدد مركب | 0.9 | 2 | Complex number (mathematics) |
@@ -168,7 +171,7 @@
 | defect detection | كشف العيوب | 0.9 | 1 | Detecting defects or anomalies |
 | definable | قابل للتعريف | 0.9 | 1 | Definable in logic |
 | denoising | إزالة الضوضاء | 0.9 | 2 | Noise removal process |
-| denotational | دلالي | 0.8 | 1 | Denotational semantics |
+| denotational | دلالي | 0.8 | 2 | Denotational semantics |
 | dependency | اعتمادية | 0.9 | 2 | Relationship between elements |
 | dependent types | أنواع تابعة | 0.9 | 5 | Types that depend on values |
 | depth estimation | تقدير العمق | 0.8 | 2 | Depth prediction |
@@ -206,8 +209,9 @@
 | encryption | تشفير | 1.0 | 13 | General encryption term |
 | energy | طاقة | 1.0 | 1 | Energy consumption |
 | enriched category | فئة مُثرَى | 0.8 | 1 | Enriched category |
-| entanglement | التشابك | 0.9 | 1 | Quantum entanglement |
+| entanglement | التشابك | 0.9 | 2 | Quantum entanglement |
 | entity | كيان | 1.0 | 2 | Data entity |
+| entropy | إنتروبيا | 1.0 | 5 | Measure of uncertainty/disorder |
 | equational logic | المنطق المعادلاتي | 0.8 | 2 | Logic of equations |
 | equivalent | مكافئ | 1.0 | 1 | Equivalence |
 | equivariance | التكافؤ | 0.8 | 2 | Equivariance property |
@@ -304,6 +308,7 @@
 | indexing | فهرسة | 0.9 | 2 | Index creation |
 | inductive programming | البرمجة الاستقرائية | 0.8 | 1 | Program synthesis approach |
 | inference | استنتاج | 0.9 | 3 | Logical deduction |
+| information theory | نظرية المعلومات | 1.0 | 5 | Shannon's theory of information |
 | input space | فضاء الإدخال | 0.9 | 1 | Model input space |
 | insertion | إدراج | 0.9 | 1 | Insert operation |
 | integrity verification | التحقق من السلامة | 0.9 | 1 | Verifying data integrity |
@@ -355,7 +360,7 @@
 | mechanised | آلي | 0.9 | 2 | Automated/formalized |
 | medicinal chemistry | الكيمياء الطبية | 0.9 | 1 | Medicinal chemistry field |
 | membership proof | برهان العضوية | 0.9 | 1 | Proof element is in set |
-| memory | ذاكرة | 1.0 | 19 | Computer memory |
+| memory | ذاكرة | 1.0 | 20 | Computer memory |
 | memory coalescing | دمج الذاكرة | 0.9 | 2 | GPU memory optimization |
 | memory corruption | تلف الذاكرة | 0.9 | 1 | Memory integrity violation |
 | memory hierarchy | التسلسل الهرمي للذاكرة | 0.9 | 5 | Memory hierarchy levels |
@@ -453,7 +458,7 @@
 | probabilistic | احتمالي | 0.9 | 4 | Based on probability |
 | probability | الاحتمال | 0.9 | 1 | Probability theory |
 | probability distribution | توزيع الاحتمالات | 0.9 | 3 | Probability distribution |
-| processing | معالجة | 0.9 | 3 | Data processing |
+| processing | معالجة | 0.9 | 4 | Data processing |
 | productivity | إنتاجية | 0.9 | 1 | Corecursive productivity |
 | program synthesis | توليد البرامج | 0.8 | 1 | Automatic program generation |
 | programming language | لغة البرمجة | 1.0 | 16 | Programming language |
@@ -471,7 +476,7 @@
 | quantum compiler | مترجم كمومي | 0.8 | 1 | Quantum circuit compiler |
 | quantum computing | الحوسبة الكمومية | 0.9 | 8 | Quantum computation |
 | quantum hardware | أجهزة كمومية | 0.9 | 1 | Physical quantum devices |
-| quantum information | المعلومات الكمومية | 0.9 | 1 | Quantum information science |
+| quantum information | المعلومات الكمومية | 0.9 | 2 | Quantum information science |
 | quantum mechanics | الميكانيكا الكمومية | 1.0 | 4 | Quantum mechanics field |
 | quantum non-locality | اللاموضعية الكمومية | 0.8 | 1 | Non-local quantum correlations |
 | quantum physics | الفيزياء الكمومية | 1.0 | 1 | Quantum physics field |
@@ -519,7 +524,7 @@
 | security vulnerability | ثغرة أمنية | 0.9 | 1 | Security weakness or flaw |
 | self-authentication | المصادقة الذاتية | 0.9 | 1 | Self-verifying authentication |
 | self-stabilization | الاستقرار الذاتي | 0.9 | 1 | System recovering to valid state |
-| semantic | دلالي | 1.0 | 2 | Meaning-related |
+| semantic | دلالي | 1.0 | 3 | Meaning-related |
 | semimodule | وحدة شبه جمعية | 0.8 | 1 | Algebraic semimodule |
 | semiring | حلقة شبه جمعية | 0.8 | 1 | Algebraic semiring structure |
 | server | خادم | 1.0 | 1 | Computer server |
@@ -547,6 +552,7 @@
 | SQL query | استعلام SQL | 1.0 | 1 | SQL database query |
 | state | حالة | 1.0 | 3 | System state |
 | state-based | قائم على الحالة | 0.9 | 2 | Based on states |
+| statistical mechanics | الميكانيكا الإحصائية | 0.9 | 1 | Statistical physics |
 | STEM | العلوم والتكنولوجيا والهندسة والرياضيات | 1.0 | 1 | Science, Technology, Engineering, Mathematics |
 | STM | ذاكرة معاملات برمجية | 0.9 | 2 | Software Transactional Memory |
 | stochastic | عشوائي | 0.9 | 4 | Random/probabilistic |
@@ -587,6 +593,7 @@
 | text encoder | مشفر نصي | 0.9 | 3 | Text encoding module |
 | text-to-image | من النص إلى الصورة | 0.9 | 4 | Text-to-image synthesis |
 | theorem | مبرهنة | 1.0 | 12 | Proven statement |
+| thermodynamics | الديناميكا الحرارية | 0.9 | 1 | Thermodynamics |
 | thread | خيط | 1.0 | 1 | Thread of execution |
 | throughput | إنتاجية | 1.0 | 4 | System throughput |
 | tiling | تبليط | 0.8 | 1 | Loop tiling optimization |
