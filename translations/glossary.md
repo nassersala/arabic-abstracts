@@ -31,9 +31,9 @@
 | abstract syntax tree | شجرة البنية التركيبية المجردة | 0.9 | 1 | Code representation |
 | code completion | إكمال الشفرة | 0.9 | 1 | Programming assistance |
 | semantic | دلالي | 1.0 | 2 | Meaning-related |
-| functional programming | البرمجة الوظيفية | 1.0 | 10 | Programming paradigm |
+| functional programming | البرمجة الوظيفية | 1.0 | 20 | Programming paradigm |
 | structured programming | البرمجة المنظمة | 0.9 | 1 | Programming paradigm |
-| monad | موناد | 0.8 | 2 | Functional programming concept |
+| monad | موناد | 0.8 | 8 | Functional programming concept |
 | parallelism | التوازي | 0.9 | 14 | Concurrent execution |
 | syntax | بنية نحوية | 1.0 | 3 | Language grammar |
 | inference | استنتاج | 0.9 | 3 | Logical deduction |
@@ -48,7 +48,7 @@
 | function | دالة | 1.0 | 13 | Programming construct |
 | inductive programming | البرمجة الاستقرائية | 0.8 | 1 | Program synthesis approach |
 | program synthesis | توليد البرامج | 0.8 | 1 | Automatic program generation |
-| type system | نظام الأنواع | 0.9 | 9 | Type theory implementation |
+| type system | نظام الأنواع | 0.9 | 14 | Type theory implementation |
 | reuse | إعادة الاستخدام | 1.0 | 1 | Code reusability |
 | modular | نمطي | 0.9 | 2 | Modular design |
 | formal methods | الأساليب الرسمية | 1.0 | 25 | Mathematical techniques for software/hardware |
@@ -230,7 +230,7 @@
 | array-of-structs | مصفوفة البنى | 0.9 | 1 | AoS pattern |
 | cloud computing | الحوسبة السحابية | 1.0 | 3 | Cloud infrastructure |
 | component | مكون | 1.0 | 3 | System component |
-| compiler | مترجم | 1.0 | 11 | Language compiler |
+| compiler | مترجم | 1.0 | 14 | Language compiler |
 | concurrent | متزامن | 1.0 | 1 | Concurrent execution |
 | concurrency | التزامن | 1.0 | 1 | Concurrent programming |
 | data engineering | هندسة البيانات | 0.9 | 2 | Data engineering field |
@@ -366,7 +366,7 @@
 | mutable | قابل للتغيير | 0.9 | 1 | Can be modified |
 | tape | شريط | 0.8 | 1 | AD tape/trace |
 | correctness by construction | الصحة بالبناء | 0.8 | 1 | Correct-by-construction approach |
-| programming language | لغة البرمجة | 1.0 | 11 | Programming language |
+| programming language | لغة البرمجة | 1.0 | 16 | Programming language |
 | array programming | برمجة المصفوفات | 0.9 | 5 | Array-oriented programming paradigm |
 | array language | لغة المصفوفات | 0.9 | 5 | Programming language for array operations |
 | array | مصفوفة | 1.0 | 5 | Array data structure |
@@ -581,8 +581,8 @@
 | productivity | إنتاجية | 0.9 | 1 | Corecursive productivity |
 | corecursive | متبادلة عودية | 0.8 | 1 | Dual to recursive |
 | guardedness | حراسة | 0.8 | 1 | Productivity guardedness |
-| higher-order | من الرتبة العليا | 0.9 | 1 | Higher-order functions |
-| polymorphism | تعدد الأشكال | 0.9 | 1 | Type polymorphism |
+| higher-order | من الرتبة العليا | 0.9 | 4 | Higher-order functions |
+| polymorphism | تعدد الأشكال | 0.9 | 3 | Type polymorphism |
 | inaccessible | غير قابل للوصول | 0.8 | 1 | Inaccessible patterns |
 | function space | فضاء الدوال | 0.8 | 1 | Space of functions |
 | core language | لغة أساسية | 0.8 | 1 | Minimal language implementation |
@@ -591,3 +591,30 @@
 | nominal | اسمية | 0.8 | 1 | Nominal typing |
 | recursive | عودية | 0.9 | 2 | Recursive definition |
 | ecosystem | نظام بيئي | 0.9 | 1 | Software ecosystem |
+| lazy evaluation | تقييم كسول | 0.9 | 4 | Lazy evaluation strategy |
+| code refactoring | إعادة هيكلة الشفرة | 0.9 | 2 | Code restructuring |
+| evaluation strategy | استراتيجية التقييم | 0.8 | 1 | Evaluation order strategy |
+| free monad | موناد حر | 0.8 | 1 | Free monad structure |
+| affine monad | موناد أفيني | 0.7 | 1 | Affine monad structure |
+| linear type | نوع خطي | 0.9 | 1 | Linear type system |
+| computer algebra | جبر حاسوبي | 0.9 | 1 | Computer algebra system |
+| resource analysis | تحليل الموارد | 0.8 | 1 | Resource usage analysis |
+| homomorphic encryption | تشفير متماثل | 0.9 | 1 | Fully homomorphic encryption |
+| circuit | دائرة | 0.9 | 1 | Boolean or arithmetic circuit |
+| parallel runtime | وقت تشغيل متوازي | 0.8 | 1 | Parallel execution runtime |
+| shrinking | تقليص | 0.8 | 1 | Test case reduction |
+| indexed state monad | موناد حالة مفهرسة | 0.8 | 1 | Indexed state monad |
+| transactional memory | ذاكرة معاملات | 0.9 | 2 | Transactional memory system |
+| STM | ذاكرة معاملات برمجية | 0.9 | 2 | Software Transactional Memory |
+| atomicity | ذرية | 0.9 | 1 | Atomic operation property |
+| opacity | عتامة | 0.8 | 1 | Transactional opacity property |
+| contract | عقد | 0.8 | 1 | Program contract |
+| race detection | اكتشاف سباق | 0.8 | 1 | Race condition detection |
+| interpreter | مفسر | 0.9 | 1 | Programming language interpreter |
+| existential type | نوع وجودي | 0.8 | 1 | Existential type |
+| type variable | متغير نوع | 0.9 | 1 | Type variable |
+| call-by-value | استدعاء بالقيمة | 0.8 | 1 | Call-by-value semantics |
+| call-by-name | استدعاء بالاسم | 0.8 | 1 | Call-by-name semantics |
+| call-by-need | استدعاء بالحاجة | 0.8 | 1 | Call-by-need semantics |
+| partiality | جزئية | 0.8 | 1 | Partial function property |
+| container | حاوية | 0.9 | 1 | Data container structure |
