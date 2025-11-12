@@ -270,9 +270,10 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - 3D scene representation
     - AI + graphics
 
-- [ ] 55. **Gaussian Splatting for Real-Time Radiance Field Rendering** (2023)
+- [x] 55. **Gaussian Splatting for Real-Time Radiance Field Rendering** (2023)
     - Latest 3D rendering
     - Real-time performance
+    - ✓ Translated (arXiv:2308.04079)
 
 ---
 
@@ -439,9 +440,10 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Industrial-scale recommendations
     - Real-world ML system
 
-- [ ] 90. **Neural Collaborative Filtering** (2017)
+- [x] 90. **Neural Collaborative Filtering** (2017)
     - Deep learning for RecSys
     - Modern approach
+    - ✓ Translated (arXiv:1708.05031)
 
 ---
 
