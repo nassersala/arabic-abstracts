@@ -1,367 +1,508 @@
 # Suggested Papers for Arabic Translation
+## Based on Gap Analysis of 266 Existing Translations
 
-## Recent AI Breakthroughs (2024-2025)
+**Analysis Date**: November 2025
+**Current Collection Size**: 266 papers
+**Focus**: Filling underrepresented domains
 
-### Language Models & Foundation Models
-1. **Constitutional AI: Harmlessness from AI Feedback** (2212.08073)
-   - Foundational work on AI safety and alignment
-   - High citation count and practical impact
+---
 
-2. **Visual Instruction Tuning** (2304.08485) - LLaVA
-   - Pioneering multimodal vision-language model
-   - Major breakthrough in vision-language understanding
+## CRITICAL GAPS - High Priority
 
-3. **Gemini: A Family of Highly Capable Multimodal Models** (2312.11805)
-   - State-of-the-art multimodal capabilities
-   - Important for understanding latest LLM developments
+### Operating Systems (Currently: ~0 papers)
 
-4. **Mixtral of Experts** (2401.04088)
-   - High-performance sparse mixture of experts
-   - Important architecture innovation
+1. **The THE Multiprogramming System** (Edsger Dijkstra, 1968)
+   - Classic OS design principles
+   - Layered architecture foundation
 
-5. **Direct Preference Optimization** (2305.18290)
-   - Alternative to RLHF for alignment
-   - Simpler and more stable training method
+2. **The UNIX Time-Sharing System** (Ritchie & Thompson, 1974)
+   - Most influential OS design
+   - Foundation for Linux/macOS
 
-### Reasoning & Agents
-6. **Tree of Thoughts: Deliberate Problem Solving with LLMs** (2305.10601)
-   - Novel reasoning framework
-   - Improves LLM problem-solving capabilities
+3. **Exokernel: An Operating System Architecture for Application-Level Resource Management** (1995)
+   - Alternative OS architecture
+   - MIT research breakthrough
 
-7. **ReAct: Synergizing Reasoning and Acting in Language Models** (2210.03629)
-   - Influential agent framework
-   - Combines reasoning with tool use
+4. **Mach: A New Kernel Foundation for UNIX Development** (1986)
+   - Microkernel architecture
+   - Influenced macOS/iOS
 
-8. **Toolformer: Language Models Can Teach Themselves to Use Tools** (2302.04761)
-   - Self-supervised tool learning
-   - Important for autonomous agents
+5. **Lottery Scheduling: Flexible Proportional-Share Resource Management** (1994)
+   - CPU scheduling innovation
+   - Practical resource allocation
 
-### Diffusion Models & Generative AI
-9. **Denoising Diffusion Probabilistic Models** (2006.11239)
-   - Foundational diffusion model paper
-   - Basis for Stable Diffusion and DALL-E
+6. **Virtual Memory, Processes, and Sharing in MULTICS** (1967)
+   - Virtual memory foundations
+   - Influenced modern OS design
 
-10. **Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding** (2205.11487) - Imagen
-    - High-quality text-to-image generation
-    - Important Google Research contribution
+---
 
-11. **High-Resolution Image Synthesis with Latent Diffusion Models** (2112.10752)
-    - Stable Diffusion architecture
-    - Revolutionary impact on image generation
+### Database Systems (Currently: 1 Relational Model paper only)
 
-12. **Scalable Diffusion Models with Transformers** (2212.09748) - DiT
-    - Combines transformers with diffusion
-    - New architectural direction
+7. **The Google File System** (2003)
+   - Distributed file system
+   - Foundation for big data
 
-### Efficient AI & Optimization
-13. **LoRA: Low-Rank Adaptation of Large Language Models** (2106.09685)
-    - Efficient fine-tuning method
-    - Widely adopted in practice
+8. **Bigtable: A Distributed Storage System for Structured Data** (2006)
+   - NoSQL pioneer
+   - Wide-column store design
 
-14. **QLoRA: Efficient Finetuning of Quantized LLMs** (2305.14314)
-    - Memory-efficient training
-    - Enables LLM fine-tuning on consumer hardware
+9. **Dynamo: Amazon's Highly Available Key-value Store** (2007)
+   - Eventually consistent DB
+   - Influenced DynamoDB, Cassandra
 
-15. **FlashAttention: Fast and Memory-Efficient Exact Attention** (2205.14135)
-    - Critical optimization for transformers
-    - Major performance improvement
+10. **Spanner: Google's Globally-Distributed Database** (2012)
+    - Distributed SQL at scale
+    - TrueTime innovation
 
-16. **FlashAttention-2: Faster Attention with Better Parallelism** (2307.08691)
-    - Further improvements to attention
-    - State-of-the-art efficiency
+11. **TAO: Facebook's Distributed Data Store for the Social Graph** (2013)
+    - Social network data storage
+    - Graph database at scale
 
-## Classic AI/ML Papers (High Citation Count)
+12. **Calvin: Fast Distributed Transactions for Partitioned Database Systems** (2012)
+    - Deterministic database protocol
+    - Transaction processing innovation
 
-### Deep Learning Foundations
-17. **Deep Residual Learning for Image Recognition** (1512.03385) - ResNet
-    - 100k+ citations
-    - Foundational CNN architecture
+13. **ARIES: A Transaction Recovery Method Supporting Fine-Granularity Locking** (1992)
+    - Database recovery algorithm
+    - Foundation for modern DBs
 
-18. **ImageNet Classification with Deep CNNs** (1202.4736) - AlexNet
-    - Started deep learning revolution
-    - Historical importance
+14. **R-Trees: A Dynamic Index Structure for Spatial Searching** (1984)
+    - Spatial data indexing
+    - Geographic databases
 
-19. **Batch Normalization: Accelerating Deep Network Training** (1502.03167)
-    - Essential training technique
-    - Used in almost all modern networks
+---
 
-20. **Dropout: A Simple Way to Prevent Neural Networks from Overfitting** (1207.0580)
-    - Fundamental regularization technique
-    - Highly cited and widely used
+### Compilers & Programming Language Implementation (Currently: ~2 papers)
 
-### NLP & Transformers
-21. **BERT: Pre-training of Deep Bidirectional Transformers** (1810.04805)
-    - Revolutionary NLP model
-    - 80k+ citations
+15. **LLVM: A Compilation Framework for Lifelong Program Analysis & Transformation** (2004)
+    - Modern compiler infrastructure
+    - Used by Apple, Google, etc.
 
-22. **GPT-3: Language Models are Few-Shot Learners** (2005.14165)
-    - Demonstrated scale and few-shot learning
-    - Major milestone in LLM development
+16. **A Unified Theory of Garbage Collection** (2004)
+    - Memory management theory
+    - Connects tracing & reference counting
 
-23. **T5: Exploring the Limits of Transfer Learning** (1910.10683)
-    - Unified text-to-text framework
-    - Important architectural insights
+17. **Dynamo: A Transparent Dynamic Optimization System** (2000)
+    - Runtime optimization
+    - Dynamic binary translation
 
-24. **Sequence to Sequence Learning with Neural Networks** (1409.3215)
-    - Foundational seq2seq architecture
-    - Basis for modern translation systems
+18. **Superword Level Parallelism** (2000)
+    - SIMD optimization in compilers
+    - Auto-vectorization
 
-### Computer Vision
-25. **You Only Look Once: Unified Real-Time Object Detection** (1506.02640) - YOLO
-    - Real-time object detection
-    - Widely deployed in applications
+19. **Fast and Accurate Flow-Sensitive Points-To Analysis** (1997)
+    - Compiler optimization technique
+    - Pointer analysis
 
-26. **Mask R-CNN** (1703.06870)
-    - Instance segmentation
-    - State-of-the-art vision framework
+20. **Polyhedral Model for Compiler Optimization** (1988+)
+    - Loop optimization framework
+    - High-performance computing
 
-27. **Vision Transformer (ViT)** (2010.11929)
-    - Transformers for vision
-    - Paradigm shift in computer vision
+---
 
-28. **CLIP: Learning Transferable Visual Models From Natural Language** (2103.00020)
-    - Vision-language alignment
-    - Foundation for many multimodal systems
+### Networking & Internet Architecture (Currently: 1 packet protocol paper)
 
-## Systems & Infrastructure
+21. **The Design Philosophy of the DARPA Internet Protocols** (1988)
+    - TCP/IP design principles
+    - Internet foundation
 
-### Distributed Systems
-29. **MapReduce: Simplified Data Processing on Large Clusters** (Google, 2004)
-    - Foundational big data processing
-    - Historical and practical importance
+22. **Development of the Domain Name System** (1988)
+    - DNS architecture
+    - Critical internet infrastructure
 
-30. **The Google File System** (2003)
-    - Distributed file system
-    - Influenced modern storage systems
+23. **Chord: A Scalable Peer-to-peer Lookup Service** (2001)
+    - Distributed hash table
+    - P2P networking foundation
 
-31. **Dynamo: Amazon's Highly Available Key-value Store** (2007)
-    - Eventually consistent distributed DB
-    - Basis for many NoSQL systems
+24. **A Protocol for Packet Network Intercommunication** (already have - Cerf & Kahn)
+    - ✓ Already translated
 
-32. **Raft Consensus Algorithm** (2013)
-    - Understandable consensus protocol
-    - Alternative to Paxos
+25. **The SSL Protocol Version 3.0** (1996)
+    - Secure communication
+    - Foundation for TLS
 
-### Machine Learning Systems
-33. **TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems** (2015)
-    - Dominant ML framework
-    - System design for ML
+26. **HTTP/2: A New Hypertext Transfer Protocol** (2015)
+    - Web protocol evolution
+    - Performance improvements
 
-34. **PyTorch: An Imperative Style, High-Performance Deep Learning Library** (1912.01703)
-    - Most popular research framework
-    - Dynamic computation graphs
+27. **Congestion Avoidance and Control** (Jacobson, 1988)
+    - TCP congestion control
+    - Network stability
 
-35. **Parameter Server for Distributed Machine Learning** (2014)
-    - Distributed training architecture
-    - Foundation for large-scale ML
+28. **Software-Defined Networking** (2008)
+    - SDN architecture
+    - Network programmability
 
-## Algorithms & Theory
+---
 
-### Classic Algorithms
-36. **The PageRank Citation Ranking** (1999)
-    - Google's original algorithm
-    - Web graph and importance
+### Natural Language Processing (Currently: ~4 papers, missing foundational work)
 
-37. **Probabilistic Counting Algorithms** - HyperLogLog
-    - Efficient cardinality estimation
+29. **Word2Vec: Efficient Estimation of Word Representations** (2013)
+    - Word embeddings foundation
+    - Pre-transformer NLP
+
+30. **GloVe: Global Vectors for Word Representation** (2014)
+    - Alternative word embeddings
     - Widely used in practice
 
-38. **Bloom Filters** - Original paper
-    - Space-efficient probabilistic data structure
-    - Fundamental CS contribution
+31. **ELMo: Deep Contextualized Word Representations** (2018)
+    - Contextual embeddings
+    - Pre-BERT breakthrough
 
-### Optimization & Learning Theory
-39. **Adam: A Method for Stochastic Optimization** (1412.6980)
-    - Most popular optimizer
-    - 100k+ citations
+32. **XLNet: Generalized Autoregressive Pretraining** (2019)
+    - Alternative to BERT
+    - Permutation language modeling
 
-40. **Understanding the difficulty of training deep feedforward neural networks** (2010)
-    - Xavier initialization
-    - Training theory
+33. **T5: Exploring the Limits of Transfer Learning** (2019)
+    - Text-to-text framework
+    - Unified NLP approach
 
-41. **On the importance of initialization and momentum in deep learning** (2013)
-    - Training dynamics
-    - Momentum methods
+34. **RoBERTa: A Robustly Optimized BERT Pretraining Approach** (2019)
+    - BERT improvement
+    - Training methodology
 
-## Security & Privacy
+35. **Neural Machine Translation by Jointly Learning to Align and Translate** (2014) - Attention Mechanism
+    - Attention mechanism origin
+    - Before transformers
 
-### Privacy-Preserving ML
-42. **Deep Learning with Differential Privacy** (1607.00133)
-    - DP in neural networks
-    - Privacy-preserving training
+36. **Sequence to Sequence Learning with Neural Networks** (2014)
+    - Seq2seq foundation
+    - Encoder-decoder architecture
 
-43. **The Algorithmic Foundations of Differential Privacy** (2014)
-    - Foundational DP theory
-    - Comprehensive treatment
+---
 
-44. **SecureBoost: A Lossless Federated Learning Framework** (2019)
-    - Secure multi-party learning
-    - Practical privacy preservation
+### Robotics & Control Systems (Currently: ~0 papers)
 
-### Cryptography Applications
-45. **Practical Secure Aggregation for Privacy-Preserving ML** (2017)
-    - Federated learning security
-    - Deployed in production
+37. **SLAM: Simultaneous Localization and Mapping** (FastSLAM 2.0, 2003)
+    - Robot navigation
+    - Autonomous vehicles
 
-46. **CryptoNets: Applying Neural Networks to Encrypted Data** (2016)
-    - Inference on encrypted data
-    - Homomorphic encryption for ML
+38. **Real-time Optimal Control for Autonomous Helicopters** (2008)
+    - Control theory application
+    - Robot dynamics
 
-## Robotics & Embodied AI
+39. **Robot Manipulation with Multimodal LLMs** (2023)
+    - Modern robotics + AI
+    - Embodied intelligence
 
-47. **RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control** (2307.15818)
-    - VLMs for robotics
-    - Recent breakthrough
+40. **Learning Dexterous Manipulation from Suboptimal Experts** (2023)
+    - Robot learning
+    - Imitation learning
 
-48. **PaLM-E: An Embodied Multimodal Language Model** (2303.03378)
-    - Embodied AI with LLMs
-    - Multimodal robotics
+41. **Inverse Kinematics via Optimization** (Classic)
+    - Robot motion planning
+    - Mathematical foundations
 
-49. **Robotic Manipulation Datasets** (2020)
-    - Important for robotics research
-    - Real-world learning
+42. **Model Predictive Control** (Survey)
+    - Control theory
+    - Real-time systems
 
-## Quantum Computing
+---
 
-50. **Quantum Machine Learning** (2016)
-    - Intersection of quantum and ML
-    - Future directions
+### Quantum Computing (Currently: 3-4 papers)
 
-51. **Variational Quantum Eigensolver** (2014)
+43. **Quantum Computation and Quantum Information** (Nielsen & Chuang - key chapters)
+    - Quantum computing textbook
+    - Comprehensive introduction
+
+44. **Shor's Algorithm for Factoring** (1994)
+    - Quantum algorithm breakthrough
+    - Cryptographic implications
+
+45. **Grover's Search Algorithm** (1996)
+    - Quantum search
+    - Quadratic speedup
+
+46. **Quantum Error Correction** (1995)
+    - Fault-tolerant quantum computing
+    - Essential for scaling
+
+47. **Variational Quantum Eigensolver** (2014)
     - Near-term quantum algorithm
-    - Practical applications
+    - Chemistry applications
 
-## Recommender Systems
+48. **Quantum Approximate Optimization Algorithm (QAOA)** (2014)
+    - Combinatorial optimization
+    - Practical quantum applications
 
-52. **Neural Collaborative Filtering** (2017)
-    - Deep learning for recommendations
-    - Widely deployed
+49. **Quantum Supremacy Using a Programmable Superconducting Processor** (2019)
+    - Google's quantum breakthrough
+    - Experimental milestone
 
-53. **Deep Neural Networks for YouTube Recommendations** (2016)
+---
+
+### Computer Graphics & Visualization (Currently: ~3 papers)
+
+50. **A Characterization of Ten Hidden-Surface Algorithms** (already have)
+    - ✓ Already translated
+
+51. **Marching Cubes: A High Resolution 3D Surface Construction Algorithm** (1987)
+    - 3D reconstruction
+    - Medical imaging, CAD
+
+52. **The Rendering Equation** (Kajiya, 1986)
+    - Physically-based rendering
+    - Graphics foundation
+
+53. **Ray Tracing in One Weekend** (concepts)
+    - Practical ray tracing
+    - Educational value
+
+54. **NeRF: Neural Radiance Fields** (2020)
+    - 3D scene representation
+    - AI + graphics
+
+55. **Gaussian Splatting for Real-Time Radiance Field Rendering** (2023)
+    - Latest 3D rendering
+    - Real-time performance
+
+---
+
+### Human-Computer Interaction (Currently: ~0 papers)
+
+56. **Direct Manipulation Interfaces** (Shneiderman, 1983)
+    - HCI principles
+    - UI design foundation
+
+57. **The Psychology of Human-Computer Interaction** (Card, Moran, Newell - key concepts)
+    - Cognitive modeling
+    - HCI theory
+
+58. **Designing the User Interface** (Shneiderman - key chapters)
+    - UI/UX principles
+    - Practical design
+
+59. **Gestural Interaction Design** (2009)
+    - Touch interfaces
+    - Mobile/tablet design
+
+60. **The Eight Golden Rules of Interface Design**
+    - Design principles
+    - Usability guidelines
+
+---
+
+### Scientific Computing & Numerical Methods (Currently: ~2 papers)
+
+61. **LINPACK: A Portable Linear Algebra Library** (1979)
+    - Numerical computing foundation
+    - Scientific software
+
+62. **LAPACK: Linear Algebra Package** (1992)
+    - Modern linear algebra
+    - Used everywhere in science
+
+63. **The Fast Fourier Transform** (Cooley-Tukey, 1965)
+    - FFT algorithm
+    - Signal processing
+
+64. **Conjugate Gradient Method** (1952)
+    - Iterative solver
+    - Large-scale optimization
+
+65. **Finite Element Method Introduction** (Classic)
+    - Numerical simulation
+    - Engineering applications
+
+66. **BLAS: Basic Linear Algebra Subprograms** (1979)
+    - Performance primitives
+    - Numerical computing standard
+
+67. **Sparse Matrix Computations** (Survey)
+    - Efficient matrix operations
+    - Graph algorithms, ML
+
+---
+
+### Algorithms & Data Structures - Classics (Currently: scattered coverage)
+
+68. **Introduction to Algorithms (CLRS) - Key Chapters**
+    - Algorithm fundamentals
+    - Standard textbook
+
+69. **Skip Lists: A Probabilistic Alternative to Balanced Trees** (1990)
+    - Simple data structure
+    - Widely used (Redis, LevelDB)
+
+70. **Cuckoo Hashing** (2001)
+    - Hash table variant
+    - Worst-case O(1) lookup
+
+71. **The Art of Computer Programming Vol 1-4 - Selected Algorithms** (Knuth)
+    - Classic algorithms
+    - Foundational knowledge
+
+72. **B-Trees** (Bayer & McCreight, 1972)
+    - Database indexing
+    - File system structure
+
+73. **Bloom Filter** (1970)
+    - Space-efficient probabilistic structure
+    - Cache systems, databases
+
+74. **HyperLogLog: Cardinality Estimation** (2007)
+    - Approximate counting
+    - Big data analytics
+
+75. **Count-Min Sketch** (2003)
+    - Frequency estimation
+    - Streaming algorithms
+
+---
+
+### Embedded Systems & Real-Time Computing (Currently: ~0 papers)
+
+76. **Rate Monotonic Analysis** (Liu & Layland, 1973)
+    - Real-time scheduling theory
+    - Embedded systems foundation
+
+77. **Real-Time Systems** (Classic concepts)
+    - Hard vs soft real-time
+    - Scheduling algorithms
+
+78. **TinyOS: An Operating System for Sensor Networks** (2005)
+    - Embedded OS
+    - IoT foundation
+
+79. **FreeRTOS Architecture** (Documentation)
+    - Popular RTOS
+    - Practical embedded development
+
+---
+
+### Information Retrieval & Search (Currently: minimal)
+
+80. **PageRank: The PageRank Citation Ranking** (1998)
+    - Web search foundation
+    - Google's original algorithm
+
+81. **Inverted Index for Full-Text Search** (Classic)
+    - IR foundation
+    - Search engines
+
+82. **BM25: Best Match 25** (1994)
+    - Ranking function
+    - Search relevance
+
+83. **Latent Semantic Indexing** (1990)
+    - Semantic search
+    - Pre-neural IR
+
+---
+
+### Blockchain & Decentralized Systems (Currently: Bitcoin only)
+
+84. **Bitcoin: A Peer-to-Peer Electronic Cash System** (already have)
+    - ✓ Already translated
+
+85. **Ethereum Yellow Paper** (2014)
+    - Smart contracts
+    - Blockchain 2.0
+
+86. **Practical Byzantine Fault Tolerance (PBFT)** (1999)
+    - Consensus algorithm
+    - Blockchain foundation
+
+87. **The Bitcoin Lightning Network** (2016)
+    - Layer-2 scaling
+    - Payment channels
+
+---
+
+### Recommender Systems (Currently: ~0 papers)
+
+88. **Matrix Factorization Techniques for Recommender Systems** (2009)
+    - Collaborative filtering
+    - Netflix Prize era
+
+89. **Deep Neural Networks for YouTube Recommendations** (2016)
     - Industrial-scale recommendations
-    - System design insights
+    - Real-world ML system
 
-## Graph Neural Networks
-
-54. **Graph Attention Networks** (1710.10903)
-    - Attention for graphs
-    - Influential architecture
-
-55. **Inductive Representation Learning on Large Graphs** (1706.02216) - GraphSAGE
-    - Scalable GNN
-    - Important for large graphs
-
-56. **How Powerful are Graph Neural Networks?** (1810.00826) - GIN
-    - Theoretical understanding of GNNs
-    - Expressiveness analysis
-
-## Time Series & Forecasting
-
-57. **Informer: Beyond Efficient Transformer for Long Sequence Time-Series** (2012.07436)
-    - Efficient time series modeling
-    - Practical applications
-
-58. **Temporal Fusion Transformers** (1912.09363)
-    - Interpretable forecasting
-    - Multi-horizon prediction
-
-## Reinforcement Learning
-
-59. **Proximal Policy Optimization** (1707.06347) - PPO
-    - Most popular RL algorithm
-    - Stable and effective
-
-60. **Mastering the game of Go with deep neural networks** (2016) - AlphaGo
-    - Historic achievement
-    - Deep RL milestone
-
-61. **Decision Transformer: Reinforcement Learning via Sequence Modeling** (2106.01345)
-    - RL as sequence modeling
-    - Novel perspective
-
-## Self-Supervised Learning
-
-62. **Momentum Contrast for Unsupervised Visual Representation Learning** (1911.05722) - MoCoA Simple Framework for Contrastive Learning of Visual Representations** (2002.05709) - SimCLR
-    - Self-supervised vision
-    - Important pre-training method
-
-64. **Bootstrap your own latent** (2006.07733) - BYOL
-    - Self-supervised without negatives
-    - Novel approach
-
-## AutoML & Neural Architecture Search
-
-65. **Neural Architecture Search with Reinforcement Learning** (2016)
-    - Automated architecture design
-    - Started NAS research
-
-66. **EfficientNet: Rethinking Model Scaling** (1905.11946)
-    - Efficient architecture family
-    - Compound scaling
-
-## Explainability & Interpretability
-
-67. **LIME: Local Interpretable Model-Agnostic Explanations** (2016)
-    - Model explanation method
-    - Widely used in practice
-
-68. **SHAP: A Unified Approach to Interpreting Model Predictions** (2017)
-    - Shapley values for ML
-    - Theoretical foundation
-
-69. **Attention is Not Explanation** (2019)
-    - Critical analysis
-    - Important debate
-
-## Fairness & Bias
-
-70. **Fairness and Machine Learning: Limitations and Opportunities** (2019)
-    - Comprehensive fairness survey
-    - Important for ethical AI
-
-## Program Synthesis & Code Generation
-
-71. **Codex: Evaluating Large Language Models Trained on Code** (2107.03374)
-    - Foundation of GitHub Copilot
-    - Code generation breakthrough
-
-72. **AlphaCode: Competition-Level Code Generation** (2203.07814)
-    - Competitive programming
-    - Advanced reasoning
+90. **Neural Collaborative Filtering** (2017)
+    - Deep learning for RecSys
+    - Modern approach
 
 ---
 
-## Recommendation Priority
+### Information Theory (Currently: 1 Shannon intro)
 
-### Tier 1 (Must Have - Foundational & Highly Cited):
-- Attention Is All You Need (if not already included)
-- BERT, GPT-3, ResNet, AlexNet
-- Adam optimizer, LoRA
-- Diffusion models (DDPM)
-- FlashAttention
+91. **A Mathematical Theory of Communication** (Shannon, 1948) [already have brief intro]
+    - Expand to full paper
+    - Communication theory
 
-### Tier 2 (High Impact Recent Work):
-- Constitutional AI, DPO
-- Gemini, Mixtral
-- Visual instruction tuning (LLaVA)
-- RT-2, PaLM-E
-- Tree of Thoughts, ReAct
+92. **Error Detecting and Correcting Codes** (Hamming, 1950)
+    - Error correction
+    - Digital communication
 
-### Tier 3 (Classic Systems & Theory):
-- MapReduce, GFS, Dynamo
+93. **Reed-Solomon Codes** (1960)
+    - Error correction in practice
+    - CDs, DVDs, QR codes
+
+---
+
+## AVOID - Already Well Covered
+
+- Machine learning basics (50+ papers)
+- Deep learning architectures (ResNet, transformers, etc.)
+- Cryptography & privacy (20+ papers)
+- Formal methods & type systems (25+ papers)
+- Category theory (10+ papers)
+- Distributed consensus (well covered)
+- Adversarial ML & robustness (well covered)
+
+---
+
+## Priority Rankings
+
+**Tier 1 - Fill Critical Gaps** (20-25 papers):
+- UNIX paper, GFS, Bigtable, Dynamo
+- LLVM compiler
+- DNS, TCP design philosophy
 - PageRank
-- TensorFlow, PyTorch
+- Word2Vec, Seq2seq
+- SLAM for robotics
+- Shor's & Grover's algorithms
+- Marching cubes, NeRF
+- Skip lists, B-trees, Bloom filters
 
-### Tier 4 (Specialized but Important):
-- Graph neural networks
-- Differential privacy
-- Neural architecture search
-- Fairness and interpretability
+**Tier 2 - Strengthen Underrepresented** (20-25 papers):
+- Additional OS papers (Mach, Exokernel)
+- More databases (Spanner, Calvin)
+- Additional NLP (T5, RoBERTa)
+- Quantum error correction
+- Scientific computing (BLAS, LAPACK, FFT)
+- HCI fundamentals
+
+**Tier 3 - Round Out Collection** (remaining):
+- Embedded systems
+- Graphics rendering
+- Information retrieval
+- RecSys papers
+- Additional compilers
 
 ---
 
-## Notes:
-- Papers are selected based on citation count, impact, and relevance to Arabic-speaking researchers
-- Mix of foundational classics and recent breakthroughs
-- Coverage across multiple CS domains
-- Emphasis on practical impact and widespread adoption
+## Summary Statistics
+
+**Current Collection** (266 papers):
+- ML/AI: ~50 papers (19%)
+- PL/Formal: ~50 papers (19%)
+- Crypto/Security: ~20 papers (8%)
+- Theory: ~30 papers (11%)
+- Others: ~116 papers (43%)
+
+**Missing Domains**:
+- OS/Systems: ~0%
+- Databases: ~0.4%
+- Compilers: ~1%
+- Networking: ~0.4%
+- HCI: 0%
+- Embedded: 0%
+- Quantum: ~1.5%
+
+**Target After This Round** (+90 papers = 356 total):
+- Better balance across all CS domains
+- Foundation for systems engineers
+- Essential classics for CS education
