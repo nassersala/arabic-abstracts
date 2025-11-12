@@ -29,15 +29,15 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
    - Alternative OS architecture
    - MIT research breakthrough
 
-- [ ] 4. **Mach: A New Kernel Foundation for UNIX Development** (1986)
+- [x] 4. **Mach: A New Kernel Foundation for UNIX Development** (1986)
    - Microkernel architecture
    - Influenced macOS/iOS
 
-- [ ] 5. **Lottery Scheduling: Flexible Proportional-Share Resource Management** (1994)
+- [x] 5. **Lottery Scheduling: Flexible Proportional-Share Resource Management** (1994)
    - CPU scheduling innovation
    - Practical resource allocation
 
-- [ ] 6. **Virtual Memory, Processes, and Sharing in MULTICS** (1967)
+- [x] 6. **Virtual Memory, Processes, and Sharing in MULTICS** (1967)
    - Virtual memory foundations
    - Influenced modern OS design
 
@@ -61,11 +61,11 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Distributed SQL at scale
     - TrueTime innovation
 
-- [ ] 11. **TAO: Facebook's Distributed Data Store for the Social Graph** (2013)
+- [x] 11. **TAO: Facebook's Distributed Data Store for the Social Graph** (2013)
     - Social network data storage
     - Graph database at scale
 
-- [ ] 12. **Calvin: Fast Distributed Transactions for Partitioned Database Systems** (2012)
+- [x] 12. **Calvin: Fast Distributed Transactions for Partitioned Database Systems** (2012)
     - Deterministic database protocol
     - Transaction processing innovation
 
@@ -73,7 +73,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Database recovery algorithm
     - Foundation for modern DBs
 
-- [ ] 14. **R-Trees: A Dynamic Index Structure for Spatial Searching** (1984)
+- [x] 14. **R-Trees: A Dynamic Index Structure for Spatial Searching** (1984)
     - Spatial data indexing
     - Geographic databases
 
@@ -85,15 +85,15 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Modern compiler infrastructure
     - Used by Apple, Google, etc.
 
-- [ ] 16. **A Unified Theory of Garbage Collection** (2004)
+- [x] 16. **A Unified Theory of Garbage Collection** (2004)
     - Memory management theory
     - Connects tracing & reference counting
 
-- [ ] 17. **Dynamo: A Transparent Dynamic Optimization System** (2000)
+- [x] 17. **Dynamo: A Transparent Dynamic Optimization System** (2000)
     - Runtime optimization
     - Dynamic binary translation
 
-- [ ] 18. **Superword Level Parallelism** (2000)
+- [x] 18. **Superword Level Parallelism** (2000)
     - SIMD optimization in compilers
     - Auto-vectorization
 
@@ -117,7 +117,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - DNS architecture
     - Critical internet infrastructure
 
-- [ ] 23. **Chord: A Scalable Peer-to-peer Lookup Service** (2001)
+- [x] 23. **Chord: A Scalable Peer-to-peer Lookup Service** (2001)
     - Distributed hash table
     - P2P networking foundation
 
