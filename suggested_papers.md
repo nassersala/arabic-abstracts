@@ -17,7 +17,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
 
 ### Operating Systems (Currently: ~0 papers)
 
-- [ ] 1. **The THE Multiprogramming System** (Edsger Dijkstra, 1968)
+- [x] 1. **The THE Multiprogramming System** (Edsger Dijkstra, 1968)
    - Classic OS design principles
    - Layered architecture foundation
 
@@ -25,7 +25,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
    - Most influential OS design
    - Foundation for Linux/macOS
 
-- [ ] 3. **Exokernel: An Operating System Architecture for Application-Level Resource Management** (1995)
+- [x] 3. **Exokernel: An Operating System Architecture for Application-Level Resource Management** (1995)
    - Alternative OS architecture
    - MIT research breakthrough
 
@@ -57,7 +57,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
    - Eventually consistent DB
    - Influenced DynamoDB, Cassandra
 
-- [ ] 10. **Spanner: Google's Globally-Distributed Database** (2012)
+- [x] 10. **Spanner: Google's Globally-Distributed Database** (2012)
     - Distributed SQL at scale
     - TrueTime innovation
 
@@ -69,7 +69,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Deterministic database protocol
     - Transaction processing innovation
 
-- [ ] 13. **ARIES: A Transaction Recovery Method Supporting Fine-Granularity Locking** (1992)
+- [x] 13. **ARIES: A Transaction Recovery Method Supporting Fine-Granularity Locking** (1992)
     - Database recovery algorithm
     - Foundation for modern DBs
 
@@ -148,7 +148,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Word embeddings foundation
     - Pre-transformer NLP
 
-- [ ] 30. **GloVe: Global Vectors for Word Representation** (2014)
+- [x] 30. **GloVe: Global Vectors for Word Representation** (2014)
     - Alternative word embeddings
     - Widely used in practice
 
@@ -180,7 +180,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
 
 ### Robotics & Control Systems (Currently: ~0 papers)
 
-- [ ] 37. **SLAM: Simultaneous Localization and Mapping** (FastSLAM 2.0, 2003)
+- [x] 37. **SLAM: Simultaneous Localization and Mapping** (FastSLAM 2.0, 2003)
     - Robot navigation
     - Autonomous vehicles
 
@@ -243,7 +243,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
 - [x] 50. **A Characterization of Ten Hidden-Surface Algorithms**
     - ✓ Already translated
 
-- [ ] 51. **Marching Cubes: A High Resolution 3D Surface Construction Algorithm** (1987)
+- [x] 51. **Marching Cubes: A High Resolution 3D Surface Construction Algorithm** (1987)
     - 3D reconstruction
     - Medical imaging, CAD
 
@@ -299,7 +299,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Modern linear algebra
     - Used everywhere in science
 
-- [ ] 63. **The Fast Fourier Transform** (Cooley-Tukey, 1965)
+- [x] 63. **The Fast Fourier Transform** (Cooley-Tukey, 1965)
     - FFT algorithm
     - Signal processing
 
@@ -347,7 +347,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Space-efficient probabilistic structure
     - Cache systems, databases
 
-- [ ] 74. **HyperLogLog: Cardinality Estimation** (2007)
+- [x] 74. **HyperLogLog: Cardinality Estimation** (2007)
     - Approximate counting
     - Big data analytics
 
@@ -381,7 +381,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
 
 ### Information Retrieval & Search (Currently: minimal)
 
-- [ ] 80. **PageRank: The PageRank Citation Ranking** (1998)
+- [x] 80. **PageRank: The PageRank Citation Ranking** (1998)
     - Web search foundation
     - Google's original algorithm
 
