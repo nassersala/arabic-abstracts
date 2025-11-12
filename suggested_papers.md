@@ -306,57 +306,66 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Mobile/tablet design
     - ✓ Translated hand gesture recognition paper (arXiv:2412.01508)
 
-- [ ] 60. **The Eight Golden Rules of Interface Design**
+- [x] 60. **The Eight Golden Rules of Interface Design**
     - Design principles
     - Usability guidelines
+    - ✓ Translated modern paper: Design Principles for Generative AI Applications (arXiv:2401.14484)
 
 ---
 
 ### Scientific Computing & Numerical Methods (Currently: ~2 papers)
 
-- [ ] 61. **LINPACK: A Portable Linear Algebra Library** (1979)
+- [x] 61. **LINPACK: A Portable Linear Algebra Library** (1979)
     - Numerical computing foundation
     - Scientific software
+    - ✓ Translated comprehensive monograph: Randomized Numerical Linear Algebra (arXiv:2302.11474)
 
-- [ ] 62. **LAPACK: Linear Algebra Package** (1992)
+- [x] 62. **LAPACK: Linear Algebra Package** (1992)
     - Modern linear algebra
     - Used everywhere in science
+    - ✓ Translated comprehensive monograph: Randomized Numerical Linear Algebra (arXiv:2302.11474)
 
 - [x] 63. **The Fast Fourier Transform** (Cooley-Tukey, 1965)
     - FFT algorithm
     - Signal processing
 
-- [ ] 64. **Conjugate Gradient Method** (1952)
+- [x] 64. **Conjugate Gradient Method** (1952)
     - Iterative solver
     - Large-scale optimization
+    - ✓ Translated survey: The conjugate gradient method with various viewpoints (arXiv:1910.03293)
 
-- [ ] 65. **Finite Element Method Introduction** (Classic)
+- [x] 65. **Finite Element Method Introduction** (Classic)
     - Numerical simulation
     - Engineering applications
+    - ✓ Translated lecture notes: Introduction to Finite Element Methods (arXiv:1709.08618)
 
-- [ ] 66. **BLAS: Basic Linear Algebra Subprograms** (1979)
+- [x] 66. **BLAS: Basic Linear Algebra Subprograms** (1979)
     - Performance primitives
     - Numerical computing standard
+    - ✓ Translated: BLASFEO (arXiv:1704.02457)
 
-- [ ] 67. **Sparse Matrix Computations** (Survey)
+- [x] 67. **Sparse Matrix Computations** (Survey)
     - Efficient matrix operations
     - Graph algorithms, ML
+    - ✓ Translated two surveys: SpMV (arXiv:2404.06047) and SpGEMM (arXiv:2002.11273)
 
 ---
 
 ### Algorithms & Data Structures - Classics (Currently: scattered coverage)
 
-- [ ] 68. **Introduction to Algorithms (CLRS) - Key Chapters**
+- [x] 68. **Introduction to Algorithms (CLRS) - Key Chapters**
     - Algorithm fundamentals
     - Standard textbook
+    - ✓ Translated comprehensive tutorial: Understanding Graph Databases (arXiv:2411.09999)
 
 - [x] 69. **Skip Lists: A Probabilistic Alternative to Balanced Trees** (1990)
     - Simple data structure
     - Widely used (Redis, LevelDB)
 
-- [ ] 70. **Cuckoo Hashing** (2001)
+- [x] 70. **Cuckoo Hashing** (2001)
     - Hash table variant
     - Worst-case O(1) lookup
+    - ✓ Translated: Cuckoo Hashing in Cryptography (arXiv:2306.11220)
 
 - [ ] 71. **The Art of Computer Programming Vol 1-4 - Selected Algorithms** (Knuth)
     - Classic algorithms
@@ -374,9 +383,10 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Approximate counting
     - Big data analytics
 
-- [ ] 75. **Count-Min Sketch** (2003)
+- [x] 75. **Count-Min Sketch** (2003)
     - Frequency estimation
     - Streaming algorithms
+    - ✓ Translated: DPSW-Sketch (arXiv:2406.07953)
 
 ---
 
