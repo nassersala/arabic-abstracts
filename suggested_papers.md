@@ -144,7 +144,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
 
 ### Natural Language Processing (Currently: ~4 papers, missing foundational work)
 
-- [ ] 29. **Word2Vec: Efficient Estimation of Word Representations** (2013)
+- [x] 29. **Word2Vec: Efficient Estimation of Word Representations** (2013)
     - Word embeddings foundation
     - Pre-transformer NLP
 
@@ -152,27 +152,27 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Alternative word embeddings
     - Widely used in practice
 
-- [ ] 31. **ELMo: Deep Contextualized Word Representations** (2018)
+- [x] 31. **ELMo: Deep Contextualized Word Representations** (2018)
     - Contextual embeddings
     - Pre-BERT breakthrough
 
-- [ ] 32. **XLNet: Generalized Autoregressive Pretraining** (2019)
+- [x] 32. **XLNet: Generalized Autoregressive Pretraining** (2019)
     - Alternative to BERT
     - Permutation language modeling
 
-- [ ] 33. **T5: Exploring the Limits of Transfer Learning** (2019)
+- [x] 33. **T5: Exploring the Limits of Transfer Learning** (2019)
     - Text-to-text framework
     - Unified NLP approach
 
-- [ ] 34. **RoBERTa: A Robustly Optimized BERT Pretraining Approach** (2019)
+- [x] 34. **RoBERTa: A Robustly Optimized BERT Pretraining Approach** (2019)
     - BERT improvement
     - Training methodology
 
-- [ ] 35. **Neural Machine Translation by Jointly Learning to Align and Translate** (2014) - Attention Mechanism
+- [x] 35. **Neural Machine Translation by Jointly Learning to Align and Translate** (2014) - Attention Mechanism
     - Attention mechanism origin
     - Before transformers
 
-- [ ] 36. **Sequence to Sequence Learning with Neural Networks** (2014)
+- [x] 36. **Sequence to Sequence Learning with Neural Networks** (2014)
     - Seq2seq foundation
     - Encoder-decoder architecture
 
@@ -212,11 +212,11 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Quantum computing textbook
     - Comprehensive introduction
 
-- [ ] 44. **Shor's Algorithm for Factoring** (1994)
+- [x] 44. **Shor's Algorithm for Factoring** (1994)
     - Quantum algorithm breakthrough
     - Cryptographic implications
 
-- [ ] 45. **Grover's Search Algorithm** (1996)
+- [x] 45. **Grover's Search Algorithm** (1996)
     - Quantum search
     - Quadratic speedup
 
@@ -255,7 +255,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Practical ray tracing
     - Educational value
 
-- [ ] 54. **NeRF: Neural Radiance Fields** (2020)
+- [x] 54. **NeRF: Neural Radiance Fields** (2020)
     - 3D scene representation
     - AI + graphics
 
