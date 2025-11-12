@@ -21,7 +21,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
    - Classic OS design principles
    - Layered architecture foundation
 
-- [ ] 2. **The UNIX Time-Sharing System** (Ritchie & Thompson, 1974)
+- [x] 2. **The UNIX Time-Sharing System** (Ritchie & Thompson, 1974)
    - Most influential OS design
    - Foundation for Linux/macOS
 
@@ -45,15 +45,15 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
 
 ### Database Systems (Currently: 1 Relational Model paper only)
 
-- [ ] 7. **The Google File System** (2003)
+- [x] 7. **The Google File System** (2003)
    - Distributed file system
    - Foundation for big data
 
-- [ ] 8. **Bigtable: A Distributed Storage System for Structured Data** (2006)
+- [x] 8. **Bigtable: A Distributed Storage System for Structured Data** (2006)
    - NoSQL pioneer
    - Wide-column store design
 
-- [ ] 9. **Dynamo: Amazon's Highly Available Key-value Store** (2007)
+- [x] 9. **Dynamo: Amazon's Highly Available Key-value Store** (2007)
    - Eventually consistent DB
    - Influenced DynamoDB, Cassandra
 
@@ -81,7 +81,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
 
 ### Compilers & Programming Language Implementation (Currently: ~2 papers)
 
-- [ ] 15. **LLVM: A Compilation Framework for Lifelong Program Analysis & Transformation** (2004)
+- [x] 15. **LLVM: A Compilation Framework for Lifelong Program Analysis & Transformation** (2004)
     - Modern compiler infrastructure
     - Used by Apple, Google, etc.
 
@@ -109,11 +109,11 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
 
 ### Networking & Internet Architecture (Currently: 1 packet protocol paper)
 
-- [ ] 21. **The Design Philosophy of the DARPA Internet Protocols** (1988)
+- [x] 21. **The Design Philosophy of the DARPA Internet Protocols** (1988)
     - TCP/IP design principles
     - Internet foundation
 
-- [ ] 22. **Development of the Domain Name System** (1988)
+- [x] 22. **Development of the Domain Name System** (1988)
     - DNS architecture
     - Critical internet infrastructure
 
@@ -327,7 +327,7 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Algorithm fundamentals
     - Standard textbook
 
-- [ ] 69. **Skip Lists: A Probabilistic Alternative to Balanced Trees** (1990)
+- [x] 69. **Skip Lists: A Probabilistic Alternative to Balanced Trees** (1990)
     - Simple data structure
     - Widely used (Redis, LevelDB)
 
@@ -339,11 +339,11 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Classic algorithms
     - Foundational knowledge
 
-- [ ] 72. **B-Trees** (Bayer & McCreight, 1972)
+- [x] 72. **B-Trees** (Bayer & McCreight, 1972)
     - Database indexing
     - File system structure
 
-- [ ] 73. **Bloom Filter** (1970)
+- [x] 73. **Bloom Filter** (1970)
     - Space-efficient probabilistic structure
     - Cache systems, databases
 
