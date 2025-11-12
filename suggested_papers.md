@@ -228,17 +228,20 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Quantum search
     - Quadratic speedup
 
-- [ ] 46. **Quantum Error Correction** (1995)
+- [x] 46. **Quantum Error Correction** (1995)
     - Fault-tolerant quantum computing
     - Essential for scaling
+    - ✓ Translated Steane's "Simple Quantum Error Correcting Codes" (quant-ph/9605021) and Shor's "Fault-tolerant quantum computation" (quant-ph/9605011)
 
-- [ ] 47. **Variational Quantum Eigensolver** (2014)
+- [x] 47. **Variational Quantum Eigensolver** (2014)
     - Near-term quantum algorithm
     - Chemistry applications
+    - ✓ Translated (arXiv:1304.3061)
 
-- [ ] 48. **Quantum Approximate Optimization Algorithm (QAOA)** (2014)
+- [x] 48. **Quantum Approximate Optimization Algorithm (QAOA)** (2014)
     - Combinatorial optimization
     - Practical quantum applications
+    - ✓ Translated (arXiv:1411.4028)
 
 - [ ] 49. **Quantum Supremacy Using a Programmable Superconducting Processor** (2019)
     - Google's quantum breakthrough
@@ -267,9 +270,10 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - 3D scene representation
     - AI + graphics
 
-- [ ] 55. **Gaussian Splatting for Real-Time Radiance Field Rendering** (2023)
+- [x] 55. **Gaussian Splatting for Real-Time Radiance Field Rendering** (2023)
     - Latest 3D rendering
     - Real-time performance
+    - ✓ Translated (arXiv:2308.04079)
 
 ---
 
@@ -436,9 +440,10 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Industrial-scale recommendations
     - Real-world ML system
 
-- [ ] 90. **Neural Collaborative Filtering** (2017)
+- [x] 90. **Neural Collaborative Filtering** (2017)
     - Deep learning for RecSys
     - Modern approach
+    - ✓ Translated (arXiv:1708.05031)
 
 ---
 
