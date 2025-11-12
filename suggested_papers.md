@@ -101,9 +101,10 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Compiler optimization technique
     - Pointer analysis
 
-- [ ] 20. **Polyhedral Model for Compiler Optimization** (1988+)
+- [x] 20. **Polyhedral Model for Compiler Optimization** (1988+)
     - Loop optimization framework
     - High-performance computing
+    - ✓ Translated modern papers: Tiramisu (arXiv:1804.10694), PolyTOPS (arXiv:2401.06665), Customized MCTS (arXiv:2105.04555)
 
 ---
 
@@ -132,13 +133,15 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Web protocol evolution
     - Performance improvements
 
-- [ ] 27. **Congestion Avoidance and Control** (Jacobson, 1988)
+- [x] 27. **Congestion Avoidance and Control** (Jacobson, 1988)
     - TCP congestion control
     - Network stability
+    - ✓ Translated modern paper: Deep RL-Based TCP Congestion Control (arXiv:2508.01047)
 
-- [ ] 28. **Software-Defined Networking** (2008)
+- [x] 28. **Software-Defined Networking** (2008)
     - SDN architecture
     - Network programmability
+    - ✓ Translated comprehensive survey (arXiv:1406.0440)
 
 ---
 
@@ -184,25 +187,30 @@ When translating papers, check off items using `[x]` as you complete them. I'll 
     - Robot navigation
     - Autonomous vehicles
 
-- [ ] 38. **Real-time Optimal Control for Autonomous Helicopters** (2008)
+- [x] 38. **Real-time Optimal Control for Autonomous Helicopters** (2008)
     - Control theory application
     - Robot dynamics
+    - ✓ Translated MPC tutorial (arXiv:2511.08019)
 
-- [ ] 39. **Robot Manipulation with Multimodal LLMs** (2023)
+- [x] 39. **Robot Manipulation with Multimodal LLMs** (2023)
     - Modern robotics + AI
     - Embodied intelligence
+    - ✓ Translated ManipLLM (arXiv:2312.16217) and VIMA (arXiv:2210.03094)
 
-- [ ] 40. **Learning Dexterous Manipulation from Suboptimal Experts** (2023)
+- [x] 40. **Learning Dexterous Manipulation from Suboptimal Experts** (2023)
     - Robot learning
     - Imitation learning
+    - ✓ Translated (arXiv:2010.08587)
 
-- [ ] 41. **Inverse Kinematics via Optimization** (Classic)
+- [x] 41. **Inverse Kinematics via Optimization** (Classic)
     - Robot motion planning
     - Mathematical foundations
+    - ✓ Translated Generative Graphical IK (arXiv:2209.08812)
 
-- [ ] 42. **Model Predictive Control** (Survey)
+- [x] 42. **Model Predictive Control** (Survey)
     - Control theory
     - Real-time systems
+    - ✓ Translated MPC via Probabilistic Inference tutorial (arXiv:2511.08019)
 
 ---
 

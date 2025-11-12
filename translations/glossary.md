@@ -2,18 +2,20 @@
 
 | English | Arabic | Confidence | Usage Count | Notes |
 |---------|--------|------------|-------------|-------|
-
 | 2-category | فئة ثنائية | 0.8 | 3 | Higher category |
 | 3D reconstruction | إعادة البناء ثلاثي الأبعاد | 0.9 | 2 | 3D scene reconstruction |
 | abelian | أبيلي | 0.9 | 2 | Abelian property |
 | abstract interpretation | التفسير المجرد | 0.8 | 3 | Static analysis technique |
 | abstract syntax tree | شجرة البنية التركيبية المجردة | 0.9 | 1 | Code representation |
-| abstraction | التجريد | 1.0 | 11 | Simplified representation |
+| abstraction | التجريد | 1.0 | 14 | Simplified representation |
 | accelerator | مسرّع | 0.9 | 13 | Hardware accelerator |
 | accuracy | دقة | 1.0 | 10 | Model accuracy metric |
+| ACID | خصائص ACID | 0.9 | 1 | Atomicity, Consistency, Isolation, Durability |
 | actegory | فئة الفعل | 0.8 | 1 | Action category structure |
 | adaptive | تكيفية | 0.9 | 1 | Adaptive methods |
+| adaptive optimization | تحسين تكيفي | 0.9 | 1 | Runtime adaptive optimization |
 | additive category | فئة جمعية | 0.9 | 1 | Additive category |
+| address space | فضاء عنونة | 0.9 | 2 | Virtual memory addressing |
 | adjunction | اقتران | 0.8 | 2 | Categorical adjunction |
 | adoption | اعتماد | 1.0 | 4 | Taking into use |
 | adversarial | تنافسي خصامي | 0.9 | 5 | Adversarial training |
@@ -21,12 +23,14 @@
 | aerospace | الفضاء الجوي | 1.0 | 3 | Aviation and space |
 | affine monad | موناد أفيني | 0.7 | 1 | Affine monad structure |
 | affine spline | شرائح أفينية | 0.7 | 1 | Affine spline functions |
+| affordance | إمكانات | 0.8 | 1 | Action affordances |
 | agency | فاعلية | 0.8 | 1 | Human agency in quantum physics |
 | aggregation | تجميع | 0.9 | 1 | Data aggregation |
 | algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
-| algorithm | خوارزمية | 1.0 | 58 | Standard term |
-| alternating optimization | تحسين متناوب | 0.9 | 1 | Optimization method alternating between steps |
+| algorithm | خوارزمية | 1.0 | 68 | Standard term |
 | allocation | تخصيص | 1.0 | 1 | Resource allocation |
+| alternating optimization | تحسين متناوب | 0.9 | 1 | Optimization method alternating between steps |
+| AltiVec | ألتي فيك | 1.0 | 1 | Motorola SIMD instruction set |
 | amplification | تضخيم | 0.9 | 1 | Amplification effect |
 | analysis | تحليل | 1.0 | 6 | Data analysis |
 | anchor generation | توليد المراسي | 0.8 | 1 | Anchor box generation in object detection |
@@ -35,21 +39,22 @@
 | answer set programming | برمجة مجموعة الإجابات | 0.8 | 1 | Declarative programming paradigm |
 | anti-equivalence | تكافؤ عكسي | 0.8 | 1 | Categorical anti-equivalence |
 | anti-money laundering | مكافحة غسل الأموال | 0.9 | 1 | AML compliance |
-| API | واجهة برمجة التطبيقات | 1.0 | 1 | Application Programming Interface |
+| API | واجهة برمجة التطبيقات | 1.0 | 3 | Application Programming Interface |
 | applicability | قابلية التطبيق | 0.9 | 5 | Ability to be applied |
 | application | تطبيق | 1.0 | 1 | Software application or program |
 | application-level | مستوى التطبيقات | 0.9 | 1 | Application-level operations |
 | approximation | تقريب | 0.9 | 1 | Approximation algorithms |
 | arbitrary length | طول تعسفي | 0.75 | 1 | Sequence of any length |
-| architecture | معمارية | 1.0 | 35 | System/network architecture |
+| architecture | معمارية | 1.0 | 40 | System/network architecture |
 | area overhead | زيادة المساحة | 0.8 | 1 | Hardware area overhead |
 | array | مصفوفة | 1.0 | 7 | Array data structure |
 | array language | لغة المصفوفات | 0.9 | 5 | Programming language for array operations |
 | array programming | برمجة المصفوفات | 0.9 | 5 | Array-oriented programming paradigm |
 | array shape | شكل المصفوفة | 0.9 | 3 | Shape/dimensions of array |
 | array-of-structs | مصفوفة البنى | 0.9 | 1 | AoS pattern |
-| artificial intelligence | الذكاء الاصطناعي | 1.0 | 7 | AI systems and techniques |
+| artificial intelligence | الذكاء الاصطناعي | 1.0 | 12 | AI systems and techniques |
 | aspect ratio | نسبة الأبعاد | 0.9 | 1 | Image aspect ratio |
+| association | اقتران | 0.9 | 1 | Graph edge/relationship |
 | assurance case | حالة ضمان | 0.8 | 1 | Safety argument structure |
 | asynchronous | لامتزامن | 0.9 | 0 | Not synchronized in time |
 | atomicity | ذرية | 0.9 | 2 | Atomic operation property |
@@ -60,9 +65,11 @@
 | augmented reality | الواقع المعزز | 0.9 | 1 | AR technology |
 | authenticated data structure | بنية بيانات مصادق عليها | 0.9 | 5 | Data structure with cryptographic authentication |
 | authentication path | مسار المصادقة | 0.9 | 1 | Path for authentication |
+| auto-vectorization | تمتيه تلقائي | 0.9 | 2 | Automatic SIMD vectorization |
 | autoencoder | مشفر تلقائي | 0.9 | 3 | Auto-encoding neural network |
 | automated theorem prover | مُثبِّت النظريات الآلي | 0.8 | 1 | Automated theorem proving system |
 | automatic differentiation | التفاضل الآلي | 0.9 | 1 | Automatic computation of derivatives |
+| automatic memory management | إدارة ذاكرة آلية | 0.9 | 1 | Garbage collection |
 | automation | أتمتة | 0.9 | 1 | Process automation |
 | automaton | آلية | 0.9 | 1 | Finite automaton |
 | autonomous driving | القيادة الذاتية | 1.0 | 5 | Self-driving vehicles |
@@ -72,6 +79,7 @@
 | auxiliary | مساعد | 0.9 | 1 | Auxiliary or helper component |
 | avionics | إلكترونيات الطيران | 0.9 | 2 | Aircraft electronics |
 | axiom | بديهية | 1.0 | 4 | Self-evident truth |
+| B-tree | شجرة B | 0.95 | 1 | Balanced tree data structure |
 | backpropagation | الانتشار العكسي | 0.9 | 1 | Gradient backpropagation |
 | baseline | خط الأساس | 0.9 | 3 | Reference point for comparison |
 | Bayesian inverse problem | مسألة بايزية عكسية | 0.8 | 1 | Bayesian inverse problems |
@@ -80,8 +88,10 @@
 | Bessel function | دالة بيسل | 0.9 | 1 | Mathematical Bessel functions |
 | biactegory | فئة الفعل الثنائية | 0.7 | 1 | Biaction category |
 | bidirectional | ثنائي الاتجاه | 0.9 | 2 | Bidirectional data flow |
+| bimanual robot | روبوت ثنائي اليد | 0.9 | 1 | Two-handed robot |
 | bimonoidal | أحادي ثنائي | 0.7 | 1 | Bimonoidal structure |
 | Binary Search Tree | شجرة البحث الثنائي | 0.9 | 1 | BST data structure |
+| binary translation | ترجمة ثنائية | 0.9 | 1 | Dynamic binary translation |
 | binding | ارتباط | 0.9 | 2 | Resource/molecular binding |
 | binding site | موقع ارتباط | 0.8 | 1 | Ligand binding site |
 | biological activity | نشاط البيولوجي | 0.8 | 1 | Biological activity |
@@ -104,16 +114,18 @@
 | buffering | تخزين مؤقت | 0.9 | 1 | Data buffering |
 | Byzantine | بيزنطي | 0.9 | 1 | Byzantine fault tolerance |
 | Byzantine agreement | الاتفاق البيزنطي | 0.9 | 1 | Fault-tolerant consensus protocol |
+| cache | ذاكرة تخزين مؤقت | 1.0 | 3 | Cache memory |
 | call-by-name | استدعاء بالاسم | 0.8 | 1 | Call-by-name semantics |
 | call-by-need | استدعاء بالحاجة | 0.8 | 1 | Call-by-need semantics |
 | call-by-value | استدعاء بالقيمة | 0.8 | 1 | Call-by-value semantics |
 | call/cc | استدعاء الاستمرار | 0.8 | 1 | Call with current continuation |
 | camera pose | وضعية الكاميرا | 0.8 | 1 | Camera pose estimation |
 | caption | تسمية نصية | 0.85 | 1 | Text caption for images |
-| case table | جدول حالات | 0.85 | 1 | Lookup table for algorithm cases |
+| cardinality | العددية | 0.9 | 1 | Number of distinct elements in a set |
 | Cartesian closed | ديكارتي مغلق | 0.9 | 2 | Cartesian closed |
 | Cartesian Merkle tree | شجرة ميركل الديكارتية | 0.9 | 1 | Merkle tree with BST and heap properties |
-| cardinality | العددية | 0.9 | 1 | Number of distinct elements in a set |
+| case table | جدول حالات | 0.85 | 1 | Lookup table for algorithm cases |
+| case table | جدول حالات | 0.85 | 1 | Lookup table for algorithm cases |
 | category | فئة | 1.0 | 13 | Category theory structure |
 | causal discovery | الاكتشاف السببي | 0.9 | 1 | Discovering cause-effect relationships |
 | caustics | ظواهر كاوية | 0.8 | 1 | Light patterns from reflection/refraction |
@@ -129,6 +141,7 @@
 | client | عميل | 0.9 | 1 | Client device or participant in federated learning |
 | Clifford gate | بوابة كليفورد | 0.8 | 1 | Clifford quantum gate |
 | clock | ساعة | 1.0 | 1 | Time-keeping mechanism |
+| closed-loop control | تحكم حلقة مغلقة | 0.9 | 2 | Closed-loop control |
 | closed-source | مغلق المصدر | 0.9 | 1 | Proprietary software with restricted access |
 | closed-term canonicity | الكنسية للحدود المغلقة | 0.7 | 1 | Canonical form for closed terms |
 | cloud computing | الحوسبة السحابية | 1.0 | 4 | Cloud infrastructure |
@@ -136,6 +149,7 @@
 | co-adaptation | التكيف المشترك | 0.8 | 1 | Feature co-adaptation |
 | co-occurrence | التواجد المشترك | 0.9 | 1 | Word co-occurrence in NLP |
 | codata | بيانات مشتركة | 0.8 | 1 | Potentially infinite data (coinductive types) |
+| code cache | ذاكرة تخزين مؤقت للشيفرة | 0.9 | 1 | Cached compiled code |
 | code completion | إكمال الشفرة | 0.9 | 1 | Programming assistance |
 | code generation | توليد الشفرة | 0.9 | 6 | Automatic code generation |
 | code intelligence | ذكاء الشفرة | 0.8 | 1 | AI for code understanding |
@@ -146,6 +160,7 @@
 | coherent | متماسك | 0.9 | 1 | Coherent structure |
 | colimit | حد مشترك | 0.9 | 1 | Categorical colimit |
 | collaborative | تعاوني | 0.9 | 2 | Working together cooperatively |
+| collector | مُجمِّع | 0.9 | 2 | Garbage collector |
 | collision | تصادم | 0.9 | 2 | Hash or data collision |
 | collision-resistant | مقاوم للتصادم | 0.9 | 1 | Cryptographic collision resistance |
 | column-based | قائم على الأعمدة | 0.9 | 2 | Column-based design |
@@ -159,7 +174,8 @@
 | communication complexity | تعقيد الاتصال | 0.9 | 2 | Complexity of communication |
 | compact model | نموذج مدمج | 0.9 | 1 | Small-sized neural network model |
 | competitive | منافس | 0.9 | 1 | Competing with or rivaling in performance |
-| compiler | مترجم | 1.0 | 16 | Language compiler |
+| compiler | مترجم | 1.0 | 22 | Language compiler |
+| compiler optimization | تحسين المترجم | 0.95 | 2 | Compiler optimization technique |
 | completeness | اكتمال | 0.9 | 1 | Completeness in logic |
 | complex number | عدد مركب | 0.9 | 2 | Complex number (mathematics) |
 | complexity | التعقيد | 0.9 | 8 | Computational complexity |
@@ -169,7 +185,6 @@
 | compositional semantics | الدلالات التركيبية | 0.9 | 1 | Compositional approach to semantics |
 | compound design | تصميم المركبات | 0.9 | 1 | Molecular compound design |
 | compression | ضغط | 0.9 | 4 | Data compression |
-| computed tomography | التصوير المقطعي المحوسب | 0.95 | 1 | CT medical imaging |
 | computable function | دالة قابلة للحوسبة | 0.9 | 1 | Effectively calculable function |
 | computable number | عدد قابل للحوسبة | 0.9 | 1 | Numbers calculable by algorithm |
 | computation | حساب | 1.0 | 8 | Computation or calculation |
@@ -178,15 +193,24 @@
 | computational cost | تكلفة حسابية | 0.9 | 1 | Cost of computation |
 | computational model | نموذج حسابي | 0.9 | 6 | Model of computation |
 | computational resources | موارد حسابية | 1.0 | 2 | Computing resources |
+| computed tomography | التصوير المقطعي المحوسب | 0.95 | 1 | CT medical imaging |
+| computed tomography (CT) | التصوير المقطعي المحوسب (CT) | 0.95 | 1 | CT medical imaging |
 | computer algebra | جبر حاسوبي | 0.9 | 1 | Computer algebra system |
 | computer vision | رؤية حاسوبية | 1.0 | 6 | AI field |
 | conceptual understanding | الفهم المفاهيمي | 0.9 | 1 | Conceptual comprehension |
 | concurrency | التزامن | 1.0 | 4 | Concurrent programming |
+| concurrency control | التحكم في التزامن | 0.9 | 1 | Database concurrency control |
 | concurrent | متزامن | 1.0 | 1 | Concurrent execution |
 | conditioning | التكييف | 0.9 | 5 | Conditional input mechanism |
-| consensus protocol | بروتوكول إجماع | 0.9 | 1 | Agreement protocol |
+| congestion control | تحكم في الازدحام | 0.9 | 2 | TCP congestion control |
+| congestion window | نافذة الازدحام | 0.9 | 1 | TCP window |
 | connectivity | اتصالية | 0.9 | 1 | Topological or network connectivity |
+| connectivity | اتصالية | 0.9 | 1 | Topological or network connectivity |
+| consensus | إجماع | 0.9 | 1 | Distributed consensus |
+| consensus protocol | بروتوكول إجماع | 0.9 | 1 | Agreement protocol |
 | consistency | الاتساق | 1.0 | 2 | Data consistency property |
+| consistent hashing | تجزئة متسقة | 0.9 | 1 | Load balancing technique |
+| constant density | كثافة ثابتة | 0.9 | 1 | Uniform density value |
 | constant density | كثافة ثابتة | 0.9 | 1 | Uniform density value |
 | constant space | مساحة ثابتة | 0.9 | 1 | Constant space complexity |
 | constraint | قيد | 0.9 | 1 | Physical or mathematical constraint |
@@ -200,11 +224,12 @@
 | continuum mechanics | ميكانيكا الاستمرارية | 0.9 | 1 | Physics of continuous materials |
 | contract | عقد | 0.8 | 1 | Program contract |
 | control flow | تدفق التحكم | 0.9 | 1 | Program control flow |
-| controller | متحكم | 1.0 | 7 | Control system component |
+| controller | متحكم | 1.0 | 11 | Control system component |
 | convergence | تقارب | 0.9 | 3 | Algorithm convergence |
 | convolution | التفاف | 0.9 | 1 | Mathematical convolution |
 | convolutional | التفافي | 0.9 | 4 | Convolutional operation |
 | convolutional neural network | الشبكة العصبية الالتفافية | 0.9 | 3 | CNN architecture |
+| copying collector | مُجمِّع النسخ | 0.85 | 1 | Copying garbage collector |
 | core calculus | حساب أساسي | 0.9 | 1 | Minimal formal system |
 | core language | لغة أساسية | 0.8 | 1 | Minimal language implementation |
 | corecursive | متبادلة عودية | 0.8 | 1 | Dual to recursive |
@@ -212,6 +237,7 @@
 | correct-by-construction | صحيح بالبناء | 0.8 | 4 | Inherently correct design |
 | correctness | صحة | 1.0 | 1 | Correctness or validity |
 | correctness by construction | الصحة بالبناء | 0.8 | 1 | Correct-by-construction approach |
+| cost function | دالة التكلفة | 0.9 | 2 | Cost function |
 | counterexample | مثال مضاد | 0.9 | 3 | Example showing falsity |
 | covariance | تباين مشترك | 0.9 | 1 | Statistical covariance |
 | CPU | وحدة المعالجة المركزية | 1.0 | 6 | Central Processing Unit |
@@ -222,28 +248,33 @@
 | cybersecurity | الأمن السيبراني | 1.0 | 2 | Computer security |
 | data | بيانات | 1.0 | 7 | Data |
 | data augmentation | زيادة البيانات | 0.9 | 2 | Augmenting training data |
+| data dependency | تبعية البيانات | 0.9 | 1 | Data flow dependency |
+| data efficiency | كفاءة البيانات | 0.9 | 2 | Data efficiency |
 | data engineering | هندسة البيانات | 0.9 | 2 | Data engineering field |
 | data integrity | سلامة البيانات | 0.9 | 4 | Data correctness and consistency |
+| data point | نقطة بيانات | 0.9 | 1 | Individual data point |
 | data preparation | إعداد البيانات | 0.9 | 2 | Preparing data for analysis |
 | data privacy | خصوصية البيانات | 1.0 | 1 | Protection of sensitive data |
 | data protection | حماية البيانات | 0.9 | 1 | Protecting data from unauthorized access |
 | data retrieval | استرجاع البيانات | 0.9 | 2 | Data access |
 | data science | علم البيانات | 1.0 | 1 | Data science field |
+| data store | مخزن بيانات | 0.95 | 1 | Data storage system |
 | data structure | بنية البيانات | 1.0 | 18 | Standard term |
 | data wrangling | تنظيف البيانات | 0.8 | 1 | Data cleaning and preparation |
 | data-driven | المدفوع بالبيانات | 0.9 | 2 | Data-driven approach |
-| data point | نقطة بيانات | 0.9 | 1 | Individual data point |
 | database | قاعدة بيانات | 1.0 | 19 | Data storage system |
 | dataflow | تدفق البيانات | 1.0 | 17 | Data flow architecture |
 | dataset | مجموعة بيانات | 0.9 | 13 | Collection of data |
 | de novo design | التصميم الجديد | 0.8 | 1 | De novo molecular design |
+| dead object | كائن ميت | 0.85 | 1 | Unreachable object |
 | decentralization | اللامركزية | 0.9 | 1 | Distributed control/authority |
 | decentralized | لامركزي | 0.9 | 5 | Without central authority |
 | decentralized finance | التمويل اللامركزي | 0.9 | 1 | DeFi - blockchain-based finance |
 | decision tree | شجرة القرار | 0.9 | 2 | ML model type |
 | declarative | تصريحي | 0.9 | 1 | Declarative programming style |
 | decoder | فك التشفير | 0.9 | 3 | Neural network component |
-| deep learning | تعلم عميق | 1.0 | 37 | Standard term |
+| deep learning | تعلم عميق | 1.0 | 45 | Standard term |
+| Deep Q-Network | شبكة-Q عميقة | 0.9 | 1 | DQN algorithm |
 | defect detection | كشف العيوب | 0.9 | 1 | Detecting defects or anomalies |
 | defense | دفاع | 0.9 | 1 | Security defense mechanism |
 | defensive distillation | تقطير دفاعي | 0.8 | 1 | Defense technique for neural networks |
@@ -251,9 +282,11 @@
 | definable number | عدد قابل للتعريف | 0.8 | 1 | Numbers that can be formally defined |
 | definition | تعريف | 1.0 | 1 | Formal definition |
 | defunctionalization | إزالة الوظيفية | 0.8 | 1 | Transformation to eliminate higher-order functions |
+| deletion | حذف | 1.0 | 1 | Delete operation |
 | denoising | إزالة الضوضاء | 0.9 | 4 | Noise removal process |
 | denotational | دلالي | 0.8 | 14 | Denotational semantics |
 | density matrix | مصفوفة الكثافة | 0.9 | 1 | Quantum state representation |
+| dependability | موثوقية | 0.9 | 1 | System dependability |
 | dependency | اعتمادية | 0.9 | 2 | Relationship between elements |
 | dependent types | أنواع تابعة | 0.9 | 5 | Types that depend on values |
 | deployment | النشر | 0.9 | 1 | System deployment |
@@ -261,9 +294,12 @@
 | derivative | مشتقة | 1.0 | 4 | Mathematical derivative |
 | descent theory | نظرية النزول | 0.8 | 1 | Categorical descent |
 | detection | الكشف | 0.9 | 5 | Detection task |
-| deterministic | حتمي | 1.0 | 14 | Predictable behavior |
+| deterministic | حتمي | 0.9 | 1 | Deterministic execution |
+| deterministic | حتمي | 0.9 | 1 | Deterministic execution |
 | developer | مطور | 1.0 | 1 | Software developer |
 | development | التطوير | 0.95 | 2 | System or software development |
+| dexterous manipulation | تلاعب بارع | 0.9 | 1 | Dexterous manipulation |
+| DHT | جدول تجزئة موزع | 0.9 | 1 | Distributed Hash Table |
 | diagrammatic | رسومي بياني | 0.8 | 4 | Diagram-based representation |
 | dialogue | الحوار | 0.9 | 1 | Dialogue or conversation |
 | differential privacy | خصوصية تفاضلية | 0.9 | 6 | Mathematical framework for privacy |
@@ -271,12 +307,15 @@
 | Dirac notation | ترميز ديراك | 0.9 | 1 | Dirac bra-ket notation |
 | directed acyclic graph | رسم بياني لا دوري موجه | 0.9 | 1 | DAG structure |
 | discriminative | تمييزي | 0.9 | 1 | Discriminative models |
-| distinct elements | عناصر متمايزة | 0.9 | 1 | Unique elements in a collection |
 | distance-geometric | هندسية مسافية | 0.7 | 1 | Distance-geometric representation |
+| distinct elements | عناصر متمايزة | 0.9 | 1 | Unique elements in a collection |
 | distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
+| distributed hash table | جدول تجزئة موزع | 0.95 | 2 | DHT data structure |
 | distributed learning | تعلم موزع | 0.9 | 3 | Distributed machine learning |
 | distributed ledger technology | تقنية دفتر الأستاذ الموزع | 0.9 | 1 | DLT - distributed transaction database |
 | distributed system | نظام موزع | 1.0 | 11 | System with components on networked computers |
+| distributed transaction | معاملة موزعة | 0.95 | 2 | Multi-node transaction |
+| divide-and-conquer | فرِّق تَسُد | 0.95 | 1 | Algorithmic design paradigm |
 | divide-and-conquer | فرِّق تَسُد | 0.95 | 1 | Algorithmic design paradigm |
 | division gate | بوابة قسمة | 0.8 | 1 | Arithmetic circuit division operation |
 | domain adaptation | تكيف مع المجال | 0.8 | 1 | Adapting model to new domain |
@@ -288,6 +327,7 @@
 | drug discovery | اكتشاف الأدوية | 0.9 | 7 | Drug discovery process |
 | drug molecule | جزيئات الأدوية | 0.9 | 1 | Pharmaceutical molecules |
 | dual | مزدوج | 1.0 | 1 | Dual structure |
+| dynamic optimization | تحسين ديناميكي | 0.95 | 2 | Runtime optimization |
 | dynamics | ديناميكيات | 0.9 | 2 | System behavior patterns |
 | ecosystem | نظام بيئي | 0.9 | 1 | Software ecosystem |
 | edge | حافة | 0.9 | 2 | Graph edge |
@@ -304,6 +344,7 @@
 | enable | تمكين | 0.9 | 1 | Make possible or allow |
 | encoder | مشفر | 0.9 | 4 | Neural network component |
 | encryption | تشفير | 1.0 | 13 | General encryption term |
+| end-effector | مؤثر نهائي | 0.9 | 2 | Robot end-effector |
 | energy | طاقة | 1.0 | 1 | Energy consumption |
 | enriched category | فئة مُثرَى | 0.8 | 1 | Enriched category |
 | ensemble | مجموعات | 0.9 | 1 | Collection or set of data |
@@ -321,17 +362,19 @@
 | ETL | ETL | 1.0 | 1 | Keep as acronym |
 | Euclidean space | الفضاء الإقليدي | 0.9 | 2 | Euclidean geometry space |
 | evaluation strategy | استراتيجية التقييم | 0.8 | 1 | Evaluation order strategy |
+| eventual consistency | اتساق نهائي | 0.9 | 1 | Weak consistency model |
 | executable | قابل للتنفيذ | 0.9 | 1 | Can be executed/run |
 | execution path | مسار تنفيذ | 0.9 | 1 | Execution path |
 | existential type | نوع وجودي | 0.8 | 1 | Existential type |
+| experiment | تجربة | 1.0 | 1 | Scientific experiment |
 | explainable AI | الذكاء الاصطناعي القابل للتفسير | 0.9 | 1 | Interpretable AI systems |
 | exploding gradient | انفجار التدرجات | 0.8 | 1 | Exploding gradient problem |
-| experiment | تجربة | 1.0 | 1 | Scientific experiment |
 | exponential separation | فصل أسي | 0.9 | 1 | Exponential gap between complexity classes |
 | export | تصدير | 0.9 | 1 | Exporting resources or interfaces |
 | expose | يكشف | 0.9 | 1 | Reveal or make visible |
 | external consistency | الاتساق الخارجي | 0.9 | 1 | Externally-consistent property in distributed systems |
 | factorization | تحليل | 0.9 | 3 | Polynomial or integer factorization |
+| fairness | عدالة | 0.9 | 1 | Scheduling fairness |
 | falsification | تزييف | 0.9 | 2 | Data falsification or tampering |
 | fault tolerance | تحمل الأخطاء | 0.9 | 0 | Ability to continue despite failures |
 | fault-tolerant | متحمل للأخطاء | 0.9 | 1 | Resilient to failures |
@@ -343,18 +386,22 @@
 | few-shot | أمثلة قليلة | 0.9 | 1 | Learning from few examples |
 | few-shot learning | التعلم من أمثلة قليلة | 0.9 | 1 | Learning approach with minimal examples |
 | fibration | ألياف | 0.8 | 1 | Categorical fibration |
-| fine-grained | دقيق | 0.85 | 1 | Fine-grained or detailed classification/analysis |
+| file system | نظام ملفات | 1.0 | 1 | File system |
+| fine-grained | دقيق التفاصيل | 0.9 | 1 | Fine-grained or detailed |
 | fine-grained | دقيق التفاصيل | 0.9 | 1 | Fine-grained or detailed |
 | fine-granularity locking | قفل دقيق التفصيل | 0.9 | 1 | Fine-grained lock mechanism |
+| fine-tune | ضبط دقيق | 0.9 | 2 | Fine-tuning process |
 | fine-tuning | ضبط دقيق | 0.9 | 10 | Model fine-tuning process |
+| finger table | جدول إصبع | 0.85 | 1 | Chord routing table |
 | finite element | عناصر محدودة | 0.9 | 1 | Numerical method for PDEs |
 | finite field | حقل منتهي | 0.9 | 1 | Finite algebraic field |
+| finite horizon | أفق محدود | 0.8 | 1 | Finite horizon |
 | finite limit | حد منتهي | 0.9 | 1 | Finite limit |
 | finite means | وسائل منتهية | 0.8 | 1 | Finite computational resources |
 | fintech | التكنولوجيا المالية | 1.0 | 1 | Financial technology |
 | first-order logic | منطق من الدرجة الأولى | 0.9 | 5 | Predicate logic |
-| flexibility | مرونة | 1.0 | 1 | System flexibility |
 | fixed-point | نقطة ثابتة | 0.9 | 1 | Fixed-point arithmetic |
+| flexibility | مرونة | 1.0 | 1 | System flexibility |
 | flow control | تحكم في التدفق | 0.9 | 1 | Network flow control mechanism |
 | forecasting | التنبؤ | 1.0 | 2 | Prediction task |
 | formal analysis | التحليل الرسمي | 0.9 | 1 | Formal verification and analysis |
@@ -365,11 +412,12 @@
 | formalism | شكلية | 0.9 | 4 | Mathematical formalism |
 | formalization | الصياغة الرسمية | 0.9 | 11 | Making formal |
 | foundation | أساس | 0.9 | 4 | Foundational basis |
+| Fourier series | متسلسلة فورييه | 0.9 | 1 | Complex Fourier series |
 | FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 10 | Field-Programmable Gate Array |
+| fragment | جزء | 0.9 | 2 | Code fragment |
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | framework | إطار العمل | 0.9 | 35 | Software framework |
 | free monad | موناد حر | 0.8 | 1 | Free monad structure |
-| Fourier series | متسلسلة فورييه | 0.9 | 1 | Complex Fourier series |
 | function | دالة | 1.0 | 22 | Programming construct |
 | function approximation | تقريب الدوال | 0.9 | 1 | Function approximation theory |
 | function space | فضاء الدوال | 0.8 | 1 | Space of functions |
@@ -378,19 +426,23 @@
 | functor | دالة تصنيفية | 0.9 | 4 | Category theory functor |
 | fusion methods | طرق الدمج | 0.8 | 1 | Sensor fusion techniques |
 | Galois theory | نظرية جالوا | 0.9 | 1 | Galois theory |
+| garbage collection | جمع القمامة | 0.95 | 3 | Automatic memory reclamation |
 | GCD | القاسم المشترك الأكبر | 0.9 | 1 | Greatest common divisor |
 | GEMM | ضرب المصفوفات العامة | 0.9 | 1 | General Matrix Multiply |
 | generalization | تعميم | 0.9 | 1 | Model generalization |
+| generational | أجيال | 0.85 | 1 | Generational GC |
 | generative | توليدي | 0.9 | 3 | Generative models |
 | geo-distributed | موزع جغرافياً | 0.9 | 1 | Geographically distributed |
 | geo-localization | التوطين الجغرافي | 0.85 | 1 | Geographic localization task |
+| geometric | هندسي | 0.95 | 1 | Geometric operations |
 | geometric optimization | التحسين الهندسي | 0.9 | 3 | Geometric optimization methods |
 | geometric search | البحث الهندسي | 0.9 | 1 | Spatial/geometric searching |
 | global illumination | إضاءة شاملة | 0.9 | 2 | Comprehensive lighting simulation |
 | globally | عالمياً | 1.0 | 1 | At global scale |
-| GPU | وحدة معالجة الرسومات | 1.0 | 16 | Graphics Processing Unit |
+| GPU | وحدة معالجة الرسومات | 1.0 | 20 | Graphics Processing Unit |
 | graded | مدرج | 0.9 | 1 | Graded structure |
 | gradient | التدرجات | 0.9 | 6 | Gradient in optimization |
+| gradient-based optimization | تحسين قائم على التدرج | 0.9 | 1 | Gradient-based |
 | graph | رسم بياني | 1.0 | 11 | Graph data structure |
 | graph connectivity | اتصال الرسم البياني | 0.9 | 1 | Graph nodes connectivity |
 | graph convolution | التفافات الرسوم البيانية | 0.8 | 2 | Graph convolution operation |
@@ -410,10 +462,13 @@
 | hash function | دالة التجزئة | 0.9 | 3 | Cryptographic function |
 | heap | كومة | 0.9 | 1 | Heap data structure |
 | heterogeneous | غير متجانس | 0.9 | 5 | Heterogeneous systems |
+| heterogeneous architecture | معمارية متباينة | 0.9 | 1 | Heterogeneous system |
+| heuristic optimization | تحسين استدلالي | 0.9 | 2 | Heuristic method |
 | hidden surface | سطح مخفي | 0.9 | 2 | Surface occluded from view |
 | hierarchical | هرمي | 0.9 | 5 | Hierarchical organization |
 | hierarchical blocking | تجزئة هرمية | 0.7 | 1 | Hierarchical block organization |
 | hierarchical sampling | عينات هرمية | 0.8 | 1 | Hierarchical variance reduction technique |
+| hierarchy | تسلسل هرمي | 0.95 | 1 | Hierarchical structure |
 | high-dimensional | عالية الأبعاد | 0.9 | 2 | High-dimensional data |
 | high-fidelity | عالي الدقة | 0.9 | 1 | High-fidelity reconstruction |
 | high-level synthesis | التوليف عالي المستوى | 0.8 | 1 | HLS for hardware design |
@@ -426,6 +481,7 @@
 | homomorphic encryption | تشفير متماثل | 1.0 | 31 | Fully homomorphic encryption |
 | homomorphism | تشاكل | 0.9 | 1 | Structure-preserving map |
 | Hopf category | فئة هوبف | 0.8 | 1 | Hopf algebraic category |
+| hot path | مسار ساخن | 0.9 | 1 | Frequently executed code |
 | HPC | HPC | 1.0 | 1 | High Performance Computing |
 | human evaluation | تقييم بشري | 0.9 | 1 | Evaluation performed by human judges |
 | hybrid | هجين | 0.9 | 1 | Hybrid encryption approach |
@@ -439,14 +495,17 @@
 | image segmentation | تجزئة الصور | 0.9 | 3 | Image segmentation task |
 | image-text pair | زوج صورة ونص | 0.85 | 1 | Paired image and text for training |
 | image-to-video | من الصورة إلى الفيديو | 0.9 | 1 | Image-to-video generation |
+| imitation learning | تعلم بالتقليد | 0.9 | 2 | Learning from demos |
 | immutability | عدم القابلية للتغيير | 0.9 | 1 | Cannot be modified |
 | imperative | أمري | 0.9 | 1 | Imperative programming style |
 | implementation | تطبيق | 1.0 | 24 | System implementation |
+| importance sampling | أخذ العينات بالأهمية | 0.8 | 1 | Importance sampling |
 | impredicative polymorphism | تعدد أشكال غير محصور | 0.7 | 1 | Polymorphism allowing quantification over all types |
 | inaccessible | غير قابل للوصول | 0.8 | 1 | Inaccessible patterns |
 | inclusion proof | برهان تضمين | 0.8 | 1 | Proof of inclusion in set |
 | incompleteness | عدم الاكتمال | 1.0 | 5 | Gödel's incompleteness theorems |
 | index | فهرس | 1.0 | 1 | Data index |
+| index structure | بنية فهرسة | 0.95 | 2 | Database index |
 | indexed | مفهرس | 0.9 | 1 | Indexed structure |
 | indexed state monad | موناد حالة مفهرسة | 0.8 | 1 | Indexed state monad |
 | indexing | فهرسة | 0.9 | 2 | Index creation |
@@ -457,9 +516,14 @@
 | infinite field | حقل لامنتهي | 0.9 | 1 | Infinite algebraic field |
 | information theory | نظرية المعلومات | 1.0 | 5 | Shannon's theory of information |
 | input space | فضاء الإدخال | 0.9 | 1 | Model input space |
-| insertion | إدراج | 0.9 | 1 | Insert operation |
+| insertion | إدراج | 1.0 | 1 | Insert operation |
+| insertion | إدراج | 1.0 | 1 | Insert operation |
+| instruction cache | ذاكرة تخزين مؤقت للتعليمات | 0.9 | 1 | CPU instruction cache |
 | instruction-following | اتباع التعليمات | 0.8 | 1 | Model capability to follow instructions |
+| instruction-level parallelism | التوازي على مستوى التعليمات | 0.9 | 1 | ILP in processors |
 | integrity verification | التحقق من السلامة | 0.9 | 1 | Verifying data integrity |
+| inter-process communication | الاتصال بين العمليات | 0.95 | 2 | IPC mechanism |
+| inter-slice | بين الشرائح | 0.9 | 1 | Between slices in 3D data |
 | interaction tree | شجرة التفاعل | 0.8 | 1 | Denotational semantics using interaction trees |
 | interest | اهتمام | 1.0 | 1 | Human interest or attention |
 | intermediate representation | تمثيل وسيط | 0.9 | 1 | Compiler IR |
@@ -470,11 +534,16 @@
 | intersection detection | اكتشاف التقاطع | 0.9 | 1 | Finding geometric intersections |
 | introspection | تأمل ذاتي | 0.8 | 1 | Self-reflection and analysis |
 | intuitionistic | حدسية | 0.8 | 1 | Intuitionistic logic |
+| inverse kinematics | حركيات عكسية | 0.9 | 3 | IK for robotics |
 | IoT | إنترنت الأشياء | 0.9 | 2 | Internet of Things acronym |
 | irregular access | وصول غير منتظم | 0.8 | 1 | Irregular memory access pattern |
 | isomorphic | متشاكل | 0.9 | 2 | Isomorphism |
 | join operation | عملية ربط | 0.9 | 1 | Database join |
+| joint limit | حد المفصل | 0.9 | 1 | Joint constraints |
 | judgementally | حكمياً | 0.8 | 1 | At the judgement level |
+| just-in-time compilation | ترجمة في الوقت المناسب | 0.9 | 1 | JIT compilation |
+| kernel | نواة | 1.0 | 3 | Operating system kernel |
+| key-value store | مخزن مفتاح-قيمة | 0.95 | 1 | Key-value database |
 | key/value pair | زوج مفتاح/قيمة | 0.9 | 1 | Key-value data pair |
 | KITTI | KITTI | 1.0 | 3 | Autonomous driving benchmark dataset |
 | knot | العُقد | 0.8 | 1 | Mathematical knot |
@@ -498,38 +567,53 @@
 | lazy evaluation | تقييم كسول | 0.9 | 5 | Lazy evaluation strategy |
 | leader election | انتخاب القائد | 0.9 | 1 | Selecting coordinator in distributed system |
 | learned model | نموذج متعلم | 0.8 | 1 | Machine learning model |
+| learning-based approach | نهج قائم على التعلم | 0.9 | 3 | Learning-based method |
 | lemma | مبرهنة مساعدة | 0.9 | 1 | Auxiliary theorem in proofs |
 | lenses | العدسات | 0.8 | 1 | Category theory lenses |
 | level | مستوى | 1.0 | 2 | Hierarchical level or layer |
-| lidar | ليدار | 1.0 | 4 | Light detection and ranging sensor |
 | library | مكتبة | 1.0 | 1 | Software library |
+| lidar | ليدار | 1.0 | 4 | Light detection and ranging sensor |
 | lifecycle | دورة الحياة | 0.9 | 1 | System or model lifecycle |
 | lifting | رفع | 0.8 | 3 | Lifting functions to operate on arrays |
 | ligand | الرابط | 0.8 | 2 | Molecular ligand |
 | likelihood estimation | تقدير الاحتمالية | 0.9 | 1 | Probability estimation |
 | linear category | فئة خطية | 0.9 | 1 | Linear category |
+| linear interpolation | استيفاء خطي | 0.9 | 1 | Linear interpolation method |
 | linear type | نوع خطي | 0.9 | 1 | Linear type system |
 | list comprehension | استيعاب القوائم | 0.9 | 2 | Syntactic construct for creating lists |
 | list decoding | فك الترميز بالقائمة | 0.9 | 1 | Error-correcting code decoding |
 | list-based | قائم على القوائم | 0.8 | 1 | List-based approach |
+| live object | كائن حي | 0.85 | 1 | Reachable object |
+| load balancing | موازنة الحمل | 0.95 | 2 | Load distribution |
+| lock manager | مدير الأقفال | 0.9 | 1 | Concurrency control |
 | lock-free | خالية من القفل | 0.8 | 2 | Concurrent programming technique |
 | Log Sequence Number (LSN) | رقم تسلسل السجل | 0.9 | 1 | Unique identifier for log records |
 | log-bilinear | لوغاريتمي ثنائي الخطية | 0.8 | 1 | Log-bilinear regression model |
+| logarithmic | لوغاريتمي | 0.95 | 1 | Log complexity |
 | logic programming | البرمجة المنطقية | 0.9 | 2 | Programming paradigm |
 | logical clock | ساعة منطقية | 0.9 | 1 | Lamport logical clock |
 | logical soundness | السلامة المنطقية | 0.9 | 1 | Logical correctness and consistency |
+| lookup | بحث | 0.95 | 2 | Lookup operation |
+| loop optimization | تحسين الحلقات | 0.9 | 4 | Loop optimization |
+| loop transformation | تحويل الحلقات | 0.9 | 4 | Loop transformation |
+| loop unrolling | فك الحلقات | 0.9 | 1 | Compiler optimization |
 | loss function | دالة الخسارة | 0.9 | 1 | Training loss function |
+| lottery | يانصيب | 0.9 | 1 | Lottery scheduling |
 | low-dimensional | منخفض الأبعاد | 0.9 | 1 | Low-dimensional representation |
 | low-visibility | الرؤية المنخفضة | 0.8 | 1 | Low visibility conditions |
 | lower bound | حد أدنى | 0.9 | 1 | Lower bound on complexity |
+| machine calculation | حساب آلي | 0.9 | 1 | Automated calculation by machine |
 | machine learning | تعلم الآلة | 1.0 | 44 | Standard term |
 | machine translation | الترجمة الآلية | 0.9 | 3 | Automated translation |
-| machine calculation | حساب آلي | 0.9 | 1 | Automated calculation by machine |
 | macromolecule | الجزيئات الكبيرة | 0.8 | 1 | Macromolecular structures |
+| magnetic resonance (MR) | الرنين المغناطيسي | 0.95 | 1 | MR medical imaging |
 | malicious | خبيث | 0.9 | 1 | Malicious actor or behavior |
 | management | إدارة | 1.0 | 1 | Resource or system management |
 | manifold | متعدد | 0.8 | 4 | Mathematical manifold |
+| manipulator arm | ذراع متلاعب | 0.9 | 3 | Robot manipulator |
 | many-to-many | من متعدد إلى متعدد | 0.9 | 1 | Many-to-many relationship |
+| marching cubes | مكعبات المسيرة | 0.95 | 1 | 3D surface construction algorithm |
+| mark-sweep | مسح-وسم | 0.85 | 1 | GC algorithm |
 | mathematical logic | المنطق الرياضي | 0.9 | 1 | Formal mathematical logic |
 | mathematical model | نموذج رياضي | 0.9 | 3 | Abstract representation |
 | matrix | مصفوفة | 1.0 | 11 | Mathematical matrix |
@@ -544,16 +628,21 @@
 | memory corruption | تلف الذاكرة | 0.9 | 1 | Memory integrity violation |
 | memory hierarchy | التسلسل الهرمي للذاكرة | 0.9 | 5 | Memory hierarchy levels |
 | memory layout | تخطيط الذاكرة | 0.9 | 4 | Memory organization |
+| memory management | إدارة الذاكرة | 0.95 | 3 | Memory management |
 | Merkle Patricia Trie | شجرة باتريشيا ميركل | 0.7 | 1 | Merkle tree variant |
 | Merkle tree | شجرة ميركل | 0.9 | 11 | Hash tree data structure |
+| message passing | تمرير الرسائل | 0.95 | 1 | IPC technique |
 | meta-model | النموذج الفوقي | 0.8 | 1 | Model of models |
 | metamorphic testing | اختبار تحولي | 0.9 | 3 | Testing using metamorphic relations |
 | method | طريقة | 1.0 | 4 | Approach or technique |
 | methodology | منهجية | 1.0 | 6 | Systematic approach |
 | metric temporal logic | منطق زمني متري | 0.8 | 1 | Time-constrained temporal logic |
+| microkernel | نواة دقيقة | 0.95 | 2 | Microkernel architecture |
 | mixed-state | حالة مختلطة | 0.8 | 1 | Mixed quantum state |
+| model | نموذج | 1.0 | 1 | General model or representation |
 | model category | فئة نموذجية | 0.9 | 1 | Model category |
 | model checking | فحص النماذج | 0.9 | 10 | Automated verification technique |
+| Model Predictive Control | التحكم التنبؤي بالنموذج | 0.9 | 2 | MPC method |
 | model-driven engineering | الهندسة الموجهة بالنماذج | 0.8 | 1 | Software engineering approach |
 | modular | نمطي | 0.9 | 2 | Modular design |
 | modular composition | التركيب المعياري | 0.9 | 1 | Polynomial composition modulo another polynomial |
@@ -570,36 +659,49 @@
 | monolithic architecture | معمارية أحادية | 0.9 | 2 | Single-tier software architecture |
 | monotonicity | رتابة | 0.9 | 1 | Monotonic function property |
 | monte carlo | مونت كارلو | 0.9 | 1 | Stochastic simulation method |
+| Monte Carlo Tree Search | بحث شجرة مونت كارلو | 0.9 | 1 | MCTS algorithm |
 | morphism | تشاكل | 0.9 | 2 | Category morphism |
 | multi-agent | متعدد الوكلاء | 0.8 | 3 | Multiple autonomous entities |
 | multi-key | متعدد المفاتيح | 0.9 | 1 | Multi-key homomorphic encryption |
 | multi-layer perceptron | الشبكات الإدراكية متعددة الطبقات | 0.9 | 1 | MLP architecture |
 | multi-modal | متعدد الأنماط | 0.9 | 2 | Multiple data modalities |
 | multi-party | متعدد الأطراف | 0.9 | 1 | Multiple parties involved |
+| multi-processor | متعدد المعالجات | 0.95 | 1 | Multiprocessor system |
 | multi-version | متعدد الإصدارات | 0.9 | 1 | Multiple versions capability |
 | multi-view | متعدد الرؤى | 0.9 | 5 | Multiple viewpoints |
+| multidimensional | متعدد الأبعاد | 0.95 | 1 | Multidimensional data |
+| multimedia extensions | امتدادات الوسائط المتعددة | 0.9 | 1 | SIMD extensions |
 | multimodal | متعدد الأنماط | 0.9 | 2 | Multiple modalities |
 | multimodality | التعددية | 0.9 | 1 | Multiple modalities (vision, language, etc.) |
 | multiplex | تعدد إرسال | 0.9 | 1 | Resource multiplexing |
 | multiprogramming | البرمجة المتعددة | 0.9 | 1 | Running multiple programs concurrently |
 | mutable | قابل للتغيير | 0.9 | 1 | Can be modified |
+| mutator | مُطفِّر | 0.8 | 1 | Application code in GC |
 | mutual exclusion | الاستبعاد المتبادل | 0.9 | 1 | Preventing concurrent resource access |
 | n-ary relation | علاقة n-ارية | 0.9 | 1 | Relation with n attributes |
 | named entity recognition | التعرف على الكيانات المسماة | 0.9 | 1 | NER task in NLP |
+| native code | شيفرة أصلية | 0.95 | 1 | Machine code |
 | natural deduction | الاستنتاج الطبيعي | 0.9 | 2 | Proof system in logic |
 | natural language | اللغة الطبيعية | 1.0 | 10 | Human language |
 | navigation | تصفح | 0.9 | 1 | Web or user navigation |
 | near-linear | شبه خطي | 0.9 | 1 | Nearly linear complexity |
 | near-optimal | شبه مثالي | 0.9 | 1 | Close to optimal performance |
+| nearest neighbor | الجار الأقرب | 0.95 | 1 | Nearest neighbor query |
 | network | شبكة | 1.0 | 5 | Computer network |
+| network latency | زمن استجابة الشبكة | 0.9 | 2 | Network latency |
+| network throughput | إنتاجية الشبكة | 0.9 | 2 | Network throughput |
+| network virtualization | افتراض الشبكة | 0.9 | 1 | Network virtualization |
 | neural network | شبكة عصبية | 1.0 | 35 | Standard term |
 | neural operator | معامل عصبي | 0.8 | 2 | Neural operator architecture |
+| Neural Processing Unit | وحدة المعالجة العصبية | 0.9 | 2 | NPU processor |
 | no-cloning theorem | مبرهنة منع الاستنساخ | 0.8 | 1 | Fundamental quantum limitation |
 | No-Force policy | سياسة عدم الإجبار | 0.8 | 1 | Database policy not forcing writes at commit |
 | node | عقدة | 1.0 | 3 | Graph or tree node |
+| node splitting | تقسيم العُقد | 0.9 | 1 | Tree node split |
 | nominal | اسمية | 0.8 | 1 | Nominal typing |
 | non-determinism | عدم الحتمية | 0.9 | 2 | Non-deterministic computation |
 | non-deterministic | غير حتمي | 0.9 | 4 | Multiple possible outcomes |
+| non-differentiable | غير قابل للاشتقاق | 0.8 | 1 | Non-differentiable |
 | Non-Euclidean | غير إقليدية | 0.8 | 1 | Non-Euclidean geometry |
 | non-guarded | غير محروس | 0.8 | 1 | Without guardedness restriction |
 | non-maximum suppression | قمع عدم الحد الأقصى | 0.8 | 2 | NMS post-processing technique |
@@ -609,6 +711,7 @@
 | nonzero | غير صفري | 0.9 | 1 | Nonzero elements |
 | norm | معيار | 0.9 | 1 | Mathematical norm |
 | normal form | شكل طبيعي | 0.9 | 1 | Database normal form |
+| normalization | تطبيع | 0.95 | 1 | Normalizing data or vectors |
 | normalized | مُنَمَّط | 0.9 | 1 | In normalized/canonical form |
 | notation | ترميز | 0.9 | 2 | Mathematical or programming notation |
 | novel | جديد | 1.0 | 5 | Novel/new approach |
@@ -617,13 +720,15 @@
 | NPU | وحدة معالجة شبكية عصبية | 0.8 | 1 | Neural Processing Unit |
 | nucleic acid | الأحماض النووية | 0.9 | 1 | DNA/RNA |
 | numerical analysis | تحليل عددي | 0.9 | 1 | Computational mathematics |
+| numerical solver | محلل رقمي | 0.9 | 1 | Numerical solver |
 | object detection | كشف الأجسام | 0.9 | 9 | Detecting objects in images |
 | object storage | تخزين الكائنات | 0.9 | 1 | Object-based storage |
 | object-oriented programming | البرمجة الموجهة بالكائنات | 1.0 | 2 | Programming paradigm |
 | objective | موضوعي | 1.0 | 1 | Objective, unbiased |
 | objective function | دالة هدفية | 0.9 | 1 | Optimization objective |
-| observational data | البيانات الرصدية | 0.9 | 1 | Data from observation |
 | observation | ملاحظة | 0.9 | 1 | Sensor observation or measurement |
+| observational data | البيانات الرصدية | 0.9 | 1 | Data from observation |
+| off-policy learning | تعلم خارج السياسة | 0.8 | 2 | Off-policy RL |
 | offloading | تفريغ | 0.8 | 1 | Computation offloading |
 | on-the-fly | فوري | 0.8 | 1 | Done in real-time or dynamically |
 | ontology | أنطولوجيا | 0.8 | 1 | Knowledge representation |
@@ -631,20 +736,24 @@
 | opaque | غامض | 0.9 | 1 | Not transparent or clear |
 | open-source | مفتوح المصدر | 1.0 | 2 | Open source software |
 | operating system | نظام تشغيل | 1.0 | 1 | OS software |
-| operational | تشغيلي | 0.9 | 5 | Related to operations |
 | operation | عملية | 0.9 | 1 | Mathematical or computational operation |
+| operational | تشغيلي | 0.9 | 5 | Related to operations |
 | operator | معامل | 1.0 | 4 | Query/mathematical operator |
 | opetope | أوبتوب | 0.7 | 1 | Opetope structure |
 | oplax | ضعيف اللاكس | 0.7 | 1 | Oplax functor |
 | optical phenomena | ظواهر بصرية | 0.9 | 1 | Visual effects from light interaction |
 | optics | البصريات | 0.8 | 1 | Category theory optics |
+| optimal control | تحكم أمثل | 0.9 | 3 | Optimal control |
 | optimization | التحسين | 1.0 | 45 | Making optimal |
-| order of magnitude | رتبة قدرية | 0.8 | 1 | Multiplicative scale factor of 10 |
 | orchestration | تنسيق | 0.9 | 2 | Workflow orchestration |
+| order of magnitude | رتبة قدرية | 0.8 | 1 | Multiplicative scale factor of 10 |
 | outperform | يتفوق | 0.9 | 3 | Perform better than |
 | overfitting | الإفراط في التدريب | 0.9 | 1 | Model overfitting |
 | overhead | عبء إضافي | 0.9 | 1 | Additional cost or burden |
+| overlay network | شبكة تراكبية | 0.9 | 1 | P2P overlay |
+| packed data | بيانات معبأة | 0.85 | 1 | SIMD packed data |
 | packet switching | تبديل الحزم | 0.9 | 1 | Packet-based network routing |
+| paging | ترحيل | 0.9 | 2 | Memory paging |
 | panoptic segmentation | التجزئة الشاملة | 0.8 | 1 | Unified segmentation task |
 | paradox | مفارقة | 0.9 | 1 | Logical paradox |
 | parallel runtime | وقت تشغيل متوازي | 0.8 | 1 | Parallel execution runtime |
@@ -658,13 +767,16 @@
 | partial function | دالة جزئية | 0.9 | 1 | Partially defined function |
 | partial rollback | تراجع جزئي | 0.9 | 1 | Rollback part of a transaction |
 | partiality | جزئية | 0.8 | 1 | Partial function property |
+| particle filter | مرشح الجسيمات | 0.8 | 1 | Particle filtering algorithm for state estimation |
+| partitioning | تجزئة | 0.95 | 2 | Data partitioning |
 | path hash accumulator | مجمع تجزئة المسار | 0.8 | 1 | Cryptographic path verification tool |
 | pattern | نمط | 1.0 | 2 | Design pattern |
 | pattern matching | مطابقة الأنماط | 0.9 | 3 | Pattern matching technique |
-| particle filter | مرشح الجسيمات | 0.8 | 1 | Particle filtering algorithm for state estimation |
 | Paxos | باكسوس | 0.9 | 1 | Distributed consensus algorithm |
 | PCP | PCP | 0.9 | 1 | Probabilistically checkable proofs |
+| peer-to-peer | نظير إلى نظير | 0.95 | 2 | P2P networking |
 | performance | أداء | 1.0 | 55 | System performance |
+| performance speedup | تسريع الأداء | 0.9 | 3 | Speedup |
 | permutative | تبديلي | 0.8 | 1 | Permutative category |
 | persistent (language) | دائم | 0.9 | 1 | Persistent object-oriented language |
 | perturbation | اضطراب | 0.9 | 1 | Small change to input |
@@ -679,12 +791,15 @@
 | pixel space | فضاء البكسل | 0.9 | 3 | Pixel-level representation |
 | platform | منصة | 1.0 | 1 | Hardware or software platform |
 | point cloud | سحابة النقاط | 0.8 | 3 | Point cloud data |
+| policy iteration | تكرار السياسة | 0.8 | 1 | Policy iteration |
+| polyhedral scheduler | جدولة متعددة السطوح | 0.9 | 3 | Polyhedral scheduler |
 | polylogarithmic | لوغاريتمي متعدد | 0.9 | 1 | Polylogarithmic complexity |
 | polymorphic assertion | تأكيد متعدد الأشكال | 0.8 | 1 | Type-polymorphic assertion |
 | polymorphism | تعدد الأشكال | 0.9 | 9 | Type polymorphism |
 | polynomial | كثير حدود | 0.9 | 6 | Polynomial expression |
 | polynomial time | زمن متعدد حدود | 0.9 | 1 | Polynomial time complexity |
-| portability | قابلية النقل | 0.9 | 1 | Code portability across platforms |
+| portability | قابلية النقل | 0.95 | 1 | Software portability |
+| portability | قابلية النقل | 0.95 | 1 | Software portability |
 | pose | وضعية | 0.9 | 1 | Position and orientation |
 | pose prediction | التنبؤ بالوضعية | 0.8 | 1 | Molecular pose prediction |
 | position based dynamics | ديناميكيات قائمة على الموضع | 0.9 | 1 | Physics simulation method |
@@ -693,7 +808,9 @@
 | post-quantum | ما بعد الكمومي | 0.9 | 1 | Post-quantum cryptography |
 | potential energy | طاقة كامنة | 0.9 | 1 | Stored energy in a system |
 | practitioner | ممارس | 0.9 | 2 | Professional working in the field |
-| precision | التحديد | 0.9 | 1 | ML precision metric |
+| pragma directive | توجيه pragma | 0.8 | 2 | Compiler pragma |
+| precision | دقة | 1.0 | 1 | Accuracy/precision |
+| precision | دقة | 1.0 | 1 | Accuracy/precision |
 | premise selection | اختيار المقدمات | 0.8 | 1 | Selecting premises for proofs |
 | presheaf | حزمة أمامية | 0.8 | 1 | Presheaf |
 | pretrained | مدرب مسبقاً | 0.9 | 7 | Pretrained model |
@@ -704,24 +821,30 @@
 | privacy loss | خسارة الخصوصية | 0.9 | 2 | Amount of privacy compromised |
 | private set intersection | تقاطع المجموعة الخاص | 0.9 | 2 | PSI cryptographic protocol |
 | probabilistic | احتمالي | 0.9 | 7 | Based on probability |
+| probabilistic inference | استدلال احتمالي | 0.9 | 2 | Probabilistic inference |
 | probability | الاحتمال | 0.9 | 1 | Probability theory |
 | probability distribution | توزيع الاحتمالات | 0.9 | 3 | Probability distribution |
-| proposal distribution | توزيع الاقتراح | 0.8 | 1 | Proposal distribution in particle filtering |
-| process | عملية | 1.0 | 2 | Computational process or procedure |
 | procedure | إجراء | 0.9 | 1 | Algorithm or computational procedure |
+| process | عملية | 1.0 | 2 | Computational process or procedure |
 | processing | معالجة | 0.9 | 4 | Data processing |
 | productivity | إنتاجية | 0.9 | 1 | Corecursive productivity |
+| profiling | تحليل الأداء | 0.95 | 1 | Performance profiling |
 | program synthesis | توليد البرامج | 0.9 | 6 | Automatic program generation |
 | programming language | لغة البرمجة | 1.0 | 34 | Programming language |
+| prompt-based learning | تعلم قائم على الموجهات | 0.9 | 2 | Prompt-based learning |
+| promptness | فورية | 0.85 | 1 | Timeliness |
 | proof | برهان | 1.0 | 28 | Mathematical proof |
 | proof assistant | مساعد برهان | 0.9 | 8 | Interactive theorem proving system |
-| prototype | نموذج أولي | 1.0 | 1 | System prototype |
 | proof-of-work | إثبات العمل | 0.9 | 1 | Computational proof mechanism |
 | property prediction | التنبؤ بالخصائص | 0.9 | 2 | Predicting molecular properties |
 | property-based testing | اختبار قائم على الخصائص | 0.9 | 6 | Testing based on properties |
+| proportional | متناسب | 0.9 | 1 | Proportional relationship |
+| proportional-share | مشاركة نسبية | 0.9 | 1 | Proportional resource sharing |
+| proposal distribution | توزيع الاقتراح | 0.8 | 1 | Proposal distribution in particle filtering |
+| protection | حماية | 0.95 | 1 | Memory protection |
 | protein | البروتينات | 1.0 | 1 | Protein molecules |
 | protocol | بروتوكول | 0.9 | 8 | Communication protocol |
-| proportional | متناسب | 0.9 | 1 | Proportional relationship |
+| prototype | نموذج أولي | 1.0 | 1 | System prototype |
 | provenance query | استعلام المصدر | 0.7 | 1 | Data provenance query |
 | pseudodeterministic | شبه حتمي | 0.9 | 1 | Pseudodeterministic algorithm |
 | PSI | تقاطع المجموعة الخاص | 0.9 | 3 | Private Set Intersection acronym |
@@ -744,6 +867,7 @@
 | quantum teleportation | النقل الكمومي الآني | 0.8 | 1 | Quantum information transfer |
 | quantum theory | نظرية الكم | 1.0 | 1 | Quantum theory of physics |
 | qubit | كيوبت | 0.9 | 1 | Quantum bit |
+| query | استعلام | 1.0 | 2 | Database query |
 | query complexity | تعقيد استعلام | 0.9 | 1 | Query complexity measure |
 | query processor | معالج استعلامات | 0.9 | 5 | Query execution engine |
 | question-answering | الإجابة على الأسئلة | 0.9 | 1 | Task of answering questions based on text |
@@ -752,14 +876,18 @@
 | radar | رادار | 1.0 | 1 | Radio detection and ranging |
 | railways | السكك الحديدية | 1.0 | 1 | Rail transport systems |
 | randomized | عشوائي | 0.9 | 2 | Randomized algorithm |
-| Rao-Blackwellized | راو-بلاكويلي | 0.8 | 1 | Rao-Blackwellized particle filter technique |
+| randomized algorithm | خوارزمية عشوائية | 0.9 | 1 | Randomized algorithm |
+| range query | استعلام نطاق | 0.9 | 1 | Range search |
 | rank | رتبة | 0.9 | 4 | Array rank/dimensionality |
 | rank polymorphism | تعدد الأشكال حسب الرتبة | 0.8 | 4 | Lifting functions to higher-rank arrays |
+| Rao-Blackwellized | راو-بلاكويلي | 0.8 | 1 | Rao-Blackwellized particle filter technique |
 | rating | تقييم | 1.0 | 1 | Evaluation or rating |
 | rationale | الأساس المنطقي | 0.9 | 1 | Reasoning behind decisions |
 | raw text | نص خام | 0.85 | 1 | Unprocessed text data |
 | ray tracing | تتبع الأشعة | 0.9 | 3 | Rendering technique following light rays |
+| reachability | قابلية الوصول | 0.9 | 1 | Object reachability |
 | reactivity | تفاعل | 0.9 | 1 | Chemical reactivity |
+| read-heavy workload | حمل عمل ثقيل على القراءة | 0.9 | 1 | Read-intensive workload |
 | read-only | للقراءة فقط | 0.9 | 1 | Read-only access/transaction |
 | real number | عدد حقيقي | 1.0 | 1 | Real numbers in mathematics |
 | real-time | الوقت الفعلي | 1.0 | 5 | Immediate response systems |
@@ -768,11 +896,13 @@
 | recall | الاستدعاء | 0.9 | 1 | ML recall metric |
 | recoverable | قابل للاسترداد | 0.9 | 1 | Can be recovered after failure |
 | recovery (database) | استرداد | 0.9 | 1 | Database recovery process |
+| rectangle | مستطيل | 1.0 | 2 | Geometric rectangle |
 | recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 2 | RNN architecture |
 | recursive | عودي | 0.9 | 1 | Recursive function or definition |
 | redo | إعادة | 0.9 | 1 | Redo operation in recovery |
 | reduction | اختزال | 0.9 | 1 | Complexity reduction |
 | Reed-Solomon codes | رموز ريد-سولومون | 0.9 | 1 | Error-correcting Reed-Solomon codes |
+| reference counting | عد المراجع | 0.9 | 2 | GC technique |
 | refinement model | نموذج التحسين | 0.9 | 2 | Model refinement stage |
 | reflection | انعكاس | 0.9 | 2 | Light bouncing off surfaces |
 | refraction | انكسار | 0.9 | 1 | Light bending through media |
@@ -796,7 +926,9 @@
 | research community | مجتمع الأبحاث | 0.85 | 1 | Scientific research community |
 | residual | متبقي | 0.9 | 1 | Residual learning/connections |
 | resource | مورد | 1.0 | 1 | System resource |
+| resource abstraction | تجريد الموارد | 0.85 | 1 | Resource abstraction |
 | resource analysis | تحليل الموارد | 0.8 | 1 | Resource usage analysis |
+| resource management | إدارة الموارد | 0.95 | 2 | Resource management |
 | responsible | مسؤول | 0.9 | 1 | Responsible or accountable |
 | restart | إعادة التشغيل | 1.0 | 1 | System restart after failure |
 | reuse | إعادة الاستخدام | 1.0 | 1 | Code reusability |
@@ -807,21 +939,29 @@
 | robust | قوية | 0.9 | 2 | Robust features/models |
 | robustness | متانة | 0.9 | 4 | Model stability |
 | rollback | تراجع | 0.9 | 1 | Transaction rollback operation |
+| routing | توجيه | 0.95 | 2 | Network routing |
 | row | صف | 1.0 | 1 | Table row |
+| runtime optimization | تحسين وقت التشغيل | 0.95 | 1 | Dynamic optimization |
 | S-expression | تعبير S | 0.9 | 1 | Symbolic expression in Lisp |
 | safety | السلامة | 0.95 | 1 | Safety in AI systems |
 | safety-critical | حرجة من حيث السلامة | 0.9 | 8 | Systems where failure is catastrophic |
 | sampling | أخذ عينات | 0.9 | 1 | Drawing samples from a distribution |
+| sampling-based method | طريقة قائمة على أخذ العينات | 0.8 | 2 | Sampling-based |
 | satisfiability | الإرضاء | 0.8 | 4 | Logical satisfiability |
-| scalability | قابلية التوسع | 0.9 | 5 | Ability to handle growth |
+| scalability | قابلية التوسع | 0.9 | 9 | Ability to handle growth |
 | scalable | قابل للتوسع | 0.9 | 2 | Can scale to handle more data/load |
+| scan-line | خط المسح | 0.85 | 1 | Scan-line processing order |
 | scene | مشهد | 0.9 | 2 | Scene in video/dataset |
+| scheduling | جدولة | 0.95 | 3 | Task scheduling |
+| scheduling language | لغة الجدولة | 0.9 | 2 | Scheduling language |
 | schema | مخطط | 0.9 | 1 | Database schema |
 | score function | دالة النقاط | 0.8 | 1 | Scoring function |
+| search | بحث | 1.0 | 1 | Search operation |
 | search space | فضاء البحث | 0.9 | 3 | Problem solving domain |
 | secure computation | حساب آمن | 0.9 | 1 | Cryptographic secure computation |
 | security | أمان | 1.0 | 26 | System security |
 | security vulnerability | ثغرة أمنية | 0.9 | 1 | Security weakness or flaw |
+| segment | مقطع | 0.95 | 2 | Memory segment |
 | self-authentication | المصادقة الذاتية | 0.9 | 1 | Self-verifying authentication |
 | self-stabilization | الاستقرار الذاتي | 0.9 | 1 | System recovering to valid state |
 | self-supervised | ذاتي الإشراف | 0.9 | 1 | Self-supervised learning |
@@ -834,48 +974,61 @@
 | sequence | تسلسل | 0.9 | 1 | Ordered data sequence |
 | sequential | تسلسلي | 1.0 | 2 | Sequential or ordered execution |
 | sequential state machine | آلة حالة تسلسلية | 0.9 | 1 | Sequential state automaton |
+| serializable | قابل للتسلسل | 0.9 | 1 | Serializability |
 | server | خادم | 1.0 | 2 | Computer server |
 | set prediction | التنبؤ بالمجموعات | 0.8 | 1 | Predicting sets of objects |
 | shader | مظلل | 0.9 | 2 | Program calculating surface appearance |
 | shading | تظليل | 0.9 | 5 | Surface appearance calculation |
 | shadow | ظل | 0.9 | 1 | Darkened area from blocked light |
-| sharding | تجزئة | 0.9 | 2 | Data sharding |
+| sharding | تجزئة | 0.95 | 1 | Database sharding |
+| sharding | تجزئة | 0.95 | 1 | Database sharding |
+| sharing | مشاركة | 0.95 | 2 | Resource sharing |
 | shrinking | تقليص | 0.8 | 1 | Test case reduction |
-| SIMD | SIMD | 1.0 | 8 | Single Instruction Multiple Data |
+| SIMD | SIMD | 1.0 | 2 | Single Instruction Multiple Data |
+| SIMD | SIMD | 1.0 | 2 | Single Instruction Multiple Data |
 | similarity task | مهمة التشابه | 0.9 | 1 | Similarity evaluation task |
-| single pass | ممر واحد | 0.9 | 1 | Processing data in one pass |
 | simplicial | بسيط | 0.9 | 1 | Simplicial structure |
 | simulation | محاكاة | 0.9 | 7 | Computational modeling |
+| single pass | ممر واحد | 0.9 | 1 | Processing data in one pass |
 | sized types | أنواع محجمة | 0.8 | 1 | Types with size information |
 | SLAM | التوطين والرسم الخرائطي المتزامن | 0.8 | 2 | Simultaneous localization and mapping |
+| slice | شريحة | 0.9 | 1 | Cross-section of 3D data |
 | sliding window | نافذة منزلقة | 0.9 | 1 | Sliding window technique |
 | sliding window attention | انتباه النافذة المنزلقة | 0.75 | 1 | SWA - attention for long sequences |
 | smart contract | عقد ذكي | 0.9 | 1 | Self-executing blockchain contract |
 | smart grid | الشبكة الذكية | 0.8 | 1 | Intelligent electrical grid |
 | SMILES | SMILES | 1.0 | 1 | Molecular notation system |
 | SMT solver | حلال SMT | 0.8 | 3 | Satisfiability modulo theory solver |
+| social graph | رسم بياني اجتماعي | 0.95 | 2 | Social network graph |
 | software engineer | مهندس البرمجيات | 1.0 | 1 | Software engineering professional |
 | software system | نظام برمجي | 1.0 | 1 | Software application or system |
+| software-defined networking | الشبكات المعرّفة بالبرمجيات | 0.9 | 2 | SDN paradigm |
 | solution map | خريطة الحلول | 0.8 | 1 | Solution mapping |
 | solver | حلّال | 0.9 | 2 | Algorithm solving equations |
 | sorting | فرز | 1.0 | 1 | Data sorting |
 | sparse | متفرقة | 0.9 | 4 | Sparse gradients/data/matrices |
+| spatial data | بيانات مكانية | 0.95 | 1 | Geographic/spatial data |
 | spatial database | قاعدة بيانات مكانية | 0.9 | 1 | Spatial data management |
 | spatial locality | موضعية مكانية | 0.9 | 2 | Cache optimization |
 | spatio-temporal | زمكاني | 0.9 | 1 | Space and time combined |
 | specification | مواصفة | 1.0 | 13 | Formal description of behavior |
+| SPECT | التصوير المقطعي بالإصدار الفوتوني الأحادي | 0.9 | 1 | Single-photon emission computed tomography |
 | speech recognition | التعرف على الكلام | 0.9 | 2 | Speech recognition systems |
 | speedup | تسريع | 0.9 | 1 | Performance acceleration |
 | SQL query | استعلام SQL | 1.0 | 1 | SQL database query |
+| SSE | SSE | 1.0 | 1 | Streaming SIMD Extensions |
+| standard error | خطأ معياري | 0.9 | 1 | Statistical standard error measure |
+| starvation | تجويع | 0.9 | 1 | Resource starvation |
 | state | حالة | 1.0 | 10 | System state |
 | state transition system | نظام انتقال الحالة | 0.9 | 2 | System with states and transitions |
+| state-action space | فضاء الحالة-الفعل | 0.9 | 1 | State-action space |
 | state-based | قائم على الحالة | 0.9 | 2 | Based on states |
 | state-of-the-art | متقدم | 0.9 | 6 | Best performing or cutting-edge results |
-| standard error | خطأ معياري | 0.9 | 1 | Statistical standard error measure |
 | statistical learning | تعلم إحصائي | 0.9 | 1 | Statistical learning methods |
 | statistical mechanics | الميكانيكا الإحصائية | 0.9 | 1 | Statistical physics |
 | Steal policy | سياسة السرقة | 0.8 | 1 | Database policy allowing dirty page writes |
 | STEM | العلوم والتكنولوجيا والهندسة والرياضيات | 1.0 | 1 | Science, Technology, Engineering, Mathematics |
+| stencil computation | حساب القالب | 0.8 | 2 | Stencil pattern |
 | STM | ذاكرة معاملات برمجية | 0.9 | 2 | Software Transactional Memory |
 | stochastic | عشوائي | 0.9 | 4 | Random/probabilistic |
 | storage hierarchy | تسلسل هرمي للتخزين | 0.8 | 1 | Storage tier hierarchy |
@@ -892,8 +1045,11 @@
 | subjective | ذاتي | 1.0 | 1 | Subjective, personal |
 | substitute | بديل | 0.9 | 1 | Replacement or alternative |
 | substructure | بنية فرعية | 0.9 | 1 | Substructure or sub-pattern |
+| successor | خلف | 0.9 | 1 | Chord successor |
+| superblock | كتلة فائقة | 0.85 | 1 | Optimization unit |
 | supervised learning | التعلم الموجه | 0.9 | 2 | Learning from labeled data |
 | support vector machine | آلة المتجهات الداعمة | 0.9 | 1 | ML classification algorithm |
+| surface | سطح | 0.95 | 1 | 2D manifold in 3D space |
 | surface normal | المعلومات السطحية العمودية | 0.7 | 1 | Surface normal vectors |
 | survey | مسح شامل | 0.9 | 3 | Comprehensive survey or review |
 | swarm system | نظام سربي | 0.8 | 1 | Robotics/AI collective behavior |
@@ -911,6 +1067,7 @@
 | tabular workload | حمل عمل جدولي | 0.7 | 1 | Table-based workload |
 | tape | شريط | 0.8 | 1 | AD tape/trace |
 | target identification | تحديد الأهداف | 0.9 | 1 | Identifying drug targets |
+| task | مهمة | 0.95 | 2 | OS task |
 | task graph | رسم بياني للمهام | 0.8 | 1 | Task dependency graph |
 | task-agnostic | مستقل عن المهمة | 0.9 | 1 | Not dependent on specific task |
 | tautology | حقيقة منطقية | 0.9 | 1 | Logical tautology |
@@ -937,15 +1094,18 @@
 | thermodynamics | الديناميكا الحرارية | 0.9 | 2 | Thermodynamics |
 | thread | خيط | 1.0 | 1 | Thread of execution |
 | throughput | إنتاجية | 1.0 | 4 | System throughput |
+| ticket | تذكرة | 0.9 | 1 | Lottery ticket |
 | tiling | تبليط | 0.8 | 1 | Loop tiling optimization |
 | time complexity | تعقيد زمني | 0.9 | 1 | Time complexity measure |
 | tiny networks | شبكات صغيرة | 0.9 | 1 | Small neural networks with few parameters |
 | token | رمز | 0.9 | 1 | Basic unit of text in NLP (word, subword, or character) |
 | topological | طوبولوجي | 0.8 | 1 | Topology-related |
+| topology | طوبولوجيا | 0.95 | 1 | Topological structure |
 | total function | دالة كلية | 0.9 | 1 | Totally defined function |
 | toxicity prediction | التنبؤ بالسمية | 0.9 | 1 | Predicting molecular toxicity |
 | trace | أثر | 0.9 | 1 | Execution trace |
 | trace-based | قائم على الآثار | 0.8 | 1 | Based on execution traces |
+| tracing | تتبع | 0.95 | 2 | Tracing GC |
 | tracking | التتبع | 0.9 | 3 | Object tracking over time |
 | trade-off | مفاضلة | 0.9 | 2 | Balance between competing factors |
 | traditional | تقليدي | 1.0 | 1 | Traditional or conventional |
@@ -956,15 +1116,19 @@
 | transfer (ML) | نقل | 0.9 | 1 | Transfer of learned knowledge to new tasks |
 | transfer learning | التعلم بالنقل | 0.9 | 2 | Transfer learning technique |
 | transferability | قابلية النقل | 0.8 | 1 | Ability to transfer across contexts |
-| transformer | محول | 0.9 | 10 | Deep learning architecture |
+| transformer | محول | 0.9 | 14 | Deep learning architecture |
 | transparency | الشفافية | 0.9 | 1 | Model transparency |
 | transpiling | التحويل البرمجي | 0.8 | 1 | Source-to-source compilation |
 | tree | شجرة | 1.0 | 1 | Tree data structure |
 | tree configuration | تكوين الشجرة | 0.9 | 1 | Structure of tree data structure |
+| triangle | مثلث | 0.95 | 1 | Three-sided polygon |
+| triangular topology | طوبولوجيا مثلثية | 0.9 | 1 | Triangle-based topological structure |
 | trie | شجرة بادئة | 0.9 | 1 | Prefix tree data structure |
 | trigonometry | علم المثلثات | 1.0 | 1 | Trigonometry mathematics |
+| troubleshooting | استكشاف الأخطاء | 0.9 | 1 | Troubleshooting |
 | trust model | نموذج الثقة | 0.9 | 1 | Framework for trust relationships |
 | trustworthiness | الموثوقية | 1.0 | 1 | Quality of being trustworthy |
+| two-phase commit | الالتزام ثنائي الطور | 0.9 | 1 | 2PC protocol |
 | two-sided error | خطأ ثنائي الجانب | 0.9 | 1 | Two-sided error bound |
 | type abstraction | التجريد النوعي | 0.8 | 1 | Abstracting types for security |
 | type checker | مدقق الأنواع | 0.9 | 1 | Verifies type correctness |
@@ -979,6 +1143,7 @@
 | univariate | أحادي المتغير | 0.9 | 1 | Single variable |
 | universal algebra | الجبر العام | 0.9 | 4 | Branch of abstract algebra |
 | universal machine | آلة عامة | 0.9 | 1 | Universal computing machine |
+| Unix | يونكس | 1.0 | 1 | Unix operating system |
 | unlabeled | غير موسوم | 0.9 | 1 | Without labels or annotations |
 | unlinkability | عدم الربط | 0.8 | 1 | Privacy property |
 | untrusted | غير موثوق | 0.9 | 1 | Not trusted |
@@ -997,10 +1162,14 @@
 | vector arithmetic | حساب المتجهات | 0.9 | 1 | Vector arithmetic operations |
 | vector notation | ترميز المتجهات | 0.9 | 2 | Mathematical vector notation |
 | vector space | فضاء المتجهات | 0.9 | 1 | Vector space in mathematics |
-| vectorization | التمتير | 0.9 | 1 | SIMD vectorization |
+| vectorization | تمتيه | 0.9 | 2 | SIMD vectorization |
+| vectorization | تمتيه | 0.9 | 2 | SIMD vectorization |
 | velocity estimation | تقدير السرعة | 0.8 | 1 | Estimating object velocity |
 | verifiable | قابل للتحقق | 0.9 | 2 | Can be verified |
+| vertex | رأس | 0.95 | 1 | Point in 3D space (plural: رؤوس) |
+| vertices | رؤوس | 0.95 | 1 | Plural of vertex |
 | video generation | توليد الفيديو | 0.9 | 3 | Video synthesis task |
+| virtual memory | ذاكرة افتراضية | 0.95 | 3 | Virtual memory system |
 | virtual reality | الواقع الافتراضي | 0.9 | 2 | VR technology |
 | visual concept | مفهوم بصري | 0.85 | 1 | Visual concept or feature learned by model |
 | visual fidelity | الدقة البصرية | 0.9 | 2 | Visual quality and accuracy |
@@ -1013,139 +1182,8 @@
 | workflow | سير العمل | 1.0 | 1 | Workflow process |
 | workload | حمل عمل | 0.9 | 2 | System workload |
 | write-ahead logging | التسجيل المسبق للكتابة | 0.9 | 1 | WAL protocol for database recovery |
+| write-through cache | ذاكرة تخزين مؤقت بآلية الكتابة المباشرة | 0.85 | 1 | Write-through caching |
 | zero-knowledge | معرفة صفرية | 0.9 | 1 | Zero-knowledge proof systems |
 | zero-shot | بدون أمثلة | 0.9 | 1 | Learning/inference without training examples |
+| zero-shot generalization | تعميم بدون أمثلة | 0.8 | 2 | Zero-shot learning |
 | zero-shot transfer | النقل بدون أمثلة | 0.9 | 1 | Transfer to new tasks without task-specific training |
-| computed tomography (CT) | التصوير المقطعي المحوسب (CT) | 0.95 | 1 | CT medical imaging |
-| inter-slice | بين الشرائح | 0.9 | 1 | Between slices in 3D data |
-| linear interpolation | استيفاء خطي | 0.9 | 1 | Linear interpolation method |
-| magnetic resonance (MR) | الرنين المغناطيسي | 0.95 | 1 | MR medical imaging |
-| marching cubes | مكعبات المسيرة | 0.95 | 1 | 3D surface construction algorithm |
-| model | نموذج | 1.0 | 1 | General model or representation |
-| normalization | تطبيع | 0.95 | 1 | Normalizing data or vectors |
-| scan-line | خط المسح | 0.85 | 1 | Scan-line processing order |
-| slice | شريحة | 0.9 | 1 | Cross-section of 3D data |
-| SPECT | التصوير المقطعي بالإصدار الفوتوني الأحادي | 0.9 | 1 | Single-photon emission computed tomography |
-| surface | سطح | 0.95 | 1 | 2D manifold in 3D space |
-| topology | طوبولوجيا | 0.95 | 1 | Topological structure |
-| triangle | مثلث | 0.95 | 1 | Three-sided polygon |
-| triangular topology | طوبولوجيا مثلثية | 0.9 | 1 | Triangle-based topological structure |
-| vertex | رأس | 0.95 | 1 | Point in 3D space (plural: رؤوس) |
-| vertices | رؤوس | 0.95 | 1 | Plural of vertex |
-| case table | جدول حالات | 0.85 | 1 | Lookup table for algorithm cases |
-| connectivity | اتصالية | 0.9 | 1 | Topological or network connectivity |
-| constant density | كثافة ثابتة | 0.9 | 1 | Uniform density value |
-| divide-and-conquer | فرِّق تَسُد | 0.95 | 1 | Algorithmic design paradigm |
-
-## New Terms Added (2025-11-12 - From Suggested Papers Translation Batch)
-
-| English | Arabic | Confidence | Usage Count | Notes |
-|---------|--------|------------|-------------|-------|
-| ACID | خصائص ACID | 0.9 | 1 | Atomicity, Consistency, Isolation, Durability |
-| address space | فضاء عنونة | 0.9 | 2 | Virtual memory addressing |
-| adaptive optimization | تحسين تكيفي | 0.9 | 1 | Runtime adaptive optimization |
-| AltiVec | ألتي فيك | 1.0 | 1 | Motorola SIMD instruction set |
-| association | اقتران | 0.9 | 1 | Graph edge/relationship |
-| auto-vectorization | تمتيه تلقائي | 0.9 | 2 | Automatic SIMD vectorization |
-| automatic memory management | إدارة ذاكرة آلية | 0.9 | 1 | Garbage collection |
-| B-tree | شجرة B | 0.95 | 1 | Balanced tree data structure |
-| binary translation | ترجمة ثنائية | 0.9 | 1 | Dynamic binary translation |
-| cache | ذاكرة تخزين مؤقت | 1.0 | 3 | Cache memory |
-| code cache | ذاكرة تخزين مؤقت للشيفرة | 0.9 | 1 | Cached compiled code |
-| collector | مُجمِّع | 0.9 | 2 | Garbage collector |
-| compiler optimization | تحسين المترجم | 0.95 | 2 | Compiler optimization technique |
-| concurrency control | التحكم في التزامن | 0.9 | 1 | Database concurrency control |
-| consensus | إجماع | 0.9 | 1 | Distributed consensus |
-| consistent hashing | تجزئة متسقة | 0.9 | 1 | Load balancing technique |
-| copying collector | مُجمِّع النسخ | 0.85 | 1 | Copying garbage collector |
-| data dependency | تبعية البيانات | 0.9 | 1 | Data flow dependency |
-| data store | مخزن بيانات | 0.95 | 1 | Data storage system |
-| dead object | كائن ميت | 0.85 | 1 | Unreachable object |
-| deletion | حذف | 1.0 | 1 | Delete operation |
-| deterministic | حتمي | 0.9 | 1 | Deterministic execution |
-| DHT | جدول تجزئة موزع | 0.9 | 1 | Distributed Hash Table |
-| distributed hash table | جدول تجزئة موزع | 0.95 | 2 | DHT data structure |
-| distributed transaction | معاملة موزعة | 0.95 | 2 | Multi-node transaction |
-| dynamic optimization | تحسين ديناميكي | 0.95 | 2 | Runtime optimization |
-| eventual consistency | اتساق نهائي | 0.9 | 1 | Weak consistency model |
-| fairness | عدالة | 0.9 | 1 | Scheduling fairness |
-| file system | نظام ملفات | 1.0 | 1 | File system |
-| finger table | جدول إصبع | 0.85 | 1 | Chord routing table |
-| fragment | جزء | 0.9 | 2 | Code fragment |
-| garbage collection | جمع القمامة | 0.95 | 3 | Automatic memory reclamation |
-| generational | أجيال | 0.85 | 1 | Generational GC |
-| geometric | هندسي | 0.95 | 1 | Geometric operations |
-| hierarchy | تسلسل هرمي | 0.95 | 1 | Hierarchical structure |
-| hot path | مسار ساخن | 0.9 | 1 | Frequently executed code |
-| index structure | بنية فهرسة | 0.95 | 2 | Database index |
-| insertion | إدراج | 1.0 | 1 | Insert operation |
-| instruction cache | ذاكرة تخزين مؤقت للتعليمات | 0.9 | 1 | CPU instruction cache |
-| instruction-level parallelism | التوازي على مستوى التعليمات | 0.9 | 1 | ILP in processors |
-| inter-process communication | الاتصال بين العمليات | 0.95 | 2 | IPC mechanism |
-| just-in-time compilation | ترجمة في الوقت المناسب | 0.9 | 1 | JIT compilation |
-| kernel | نواة | 1.0 | 3 | Operating system kernel |
-| key-value store | مخزن مفتاح-قيمة | 0.95 | 1 | Key-value database |
-| live object | كائن حي | 0.85 | 1 | Reachable object |
-| load balancing | موازنة الحمل | 0.95 | 2 | Load distribution |
-| lock manager | مدير الأقفال | 0.9 | 1 | Concurrency control |
-| logarithmic | لوغاريتمي | 0.95 | 1 | Log complexity |
-| lookup | بحث | 0.95 | 2 | Lookup operation |
-| loop unrolling | فك الحلقات | 0.9 | 1 | Compiler optimization |
-| lottery | يانصيب | 0.9 | 1 | Lottery scheduling |
-| mark-sweep | مسح-وسم | 0.85 | 1 | GC algorithm |
-| memory management | إدارة الذاكرة | 0.95 | 3 | Memory management |
-| message passing | تمرير الرسائل | 0.95 | 1 | IPC technique |
-| microkernel | نواة دقيقة | 0.95 | 2 | Microkernel architecture |
-| multi-processor | متعدد المعالجات | 0.95 | 1 | Multiprocessor system |
-| multidimensional | متعدد الأبعاد | 0.95 | 1 | Multidimensional data |
-| multimedia extensions | امتدادات الوسائط المتعددة | 0.9 | 1 | SIMD extensions |
-| mutator | مُطفِّر | 0.8 | 1 | Application code in GC |
-| native code | شيفرة أصلية | 0.95 | 1 | Machine code |
-| nearest neighbor | الجار الأقرب | 0.95 | 1 | Nearest neighbor query |
-| node splitting | تقسيم العُقد | 0.9 | 1 | Tree node split |
-| overlay network | شبكة تراكبية | 0.9 | 1 | P2P overlay |
-| packed data | بيانات معبأة | 0.85 | 1 | SIMD packed data |
-| paging | ترحيل | 0.9 | 2 | Memory paging |
-| partitioning | تجزئة | 0.95 | 2 | Data partitioning |
-| peer-to-peer | نظير إلى نظير | 0.95 | 2 | P2P networking |
-| portability | قابلية النقل | 0.95 | 1 | Software portability |
-| precision | دقة | 1.0 | 1 | Accuracy/precision |
-| profiling | تحليل الأداء | 0.95 | 1 | Performance profiling |
-| proportional-share | مشاركة نسبية | 0.9 | 1 | Proportional resource sharing |
-| protection | حماية | 0.95 | 1 | Memory protection |
-| promptness | فورية | 0.85 | 1 | Timeliness |
-| query | استعلام | 1.0 | 2 | Database query |
-| randomized algorithm | خوارزمية عشوائية | 0.9 | 1 | Randomized algorithm |
-| range query | استعلام نطاق | 0.9 | 1 | Range search |
-| reachability | قابلية الوصول | 0.9 | 1 | Object reachability |
-| read-heavy workload | حمل عمل ثقيل على القراءة | 0.9 | 1 | Read-intensive workload |
-| rectangle | مستطيل | 1.0 | 2 | Geometric rectangle |
-| reference counting | عد المراجع | 0.9 | 2 | GC technique |
-| resource abstraction | تجريد الموارد | 0.85 | 1 | Resource abstraction |
-| resource management | إدارة الموارد | 0.95 | 2 | Resource management |
-| routing | توجيه | 0.95 | 2 | Network routing |
-| runtime optimization | تحسين وقت التشغيل | 0.95 | 1 | Dynamic optimization |
-| scheduling | جدولة | 0.95 | 3 | Task scheduling |
-| search | بحث | 1.0 | 1 | Search operation |
-| segment | مقطع | 0.95 | 2 | Memory segment |
-| serializable | قابل للتسلسل | 0.9 | 1 | Serializability |
-| sharing | مشاركة | 0.95 | 2 | Resource sharing |
-| sharding | تجزئة | 0.95 | 1 | Database sharding |
-| SIMD | SIMD | 1.0 | 2 | Single Instruction Multiple Data |
-| social graph | رسم بياني اجتماعي | 0.95 | 2 | Social network graph |
-| spatial data | بيانات مكانية | 0.95 | 1 | Geographic/spatial data |
-| SSE | SSE | 1.0 | 1 | Streaming SIMD Extensions |
-| starvation | تجويع | 0.9 | 1 | Resource starvation |
-| successor | خلف | 0.9 | 1 | Chord successor |
-| superblock | كتلة فائقة | 0.85 | 1 | Optimization unit |
-| task | مهمة | 0.95 | 2 | OS task |
-| ticket | تذكرة | 0.9 | 1 | Lottery ticket |
-| tracing | تتبع | 0.95 | 2 | Tracing GC |
-| two-phase commit | الالتزام ثنائي الطور | 0.9 | 1 | 2PC protocol |
-| Unix | يونكس | 1.0 | 1 | Unix operating system |
-| vectorization | تمتيه | 0.9 | 2 | SIMD vectorization |
-| virtual memory | ذاكرة افتراضية | 0.95 | 3 | Virtual memory system |
-| write-through cache | ذاكرة تخزين مؤقت بآلية الكتابة المباشرة | 0.85 | 1 | Write-through caching |
-
-**Note**: Usage counts shown are from this batch only. These terms should be merged with existing glossary entries if they exist.
-
