@@ -1036,3 +1036,116 @@
 | connectivity | اتصالية | 0.9 | 1 | Topological or network connectivity |
 | constant density | كثافة ثابتة | 0.9 | 1 | Uniform density value |
 | divide-and-conquer | فرِّق تَسُد | 0.95 | 1 | Algorithmic design paradigm |
+
+## New Terms Added (2025-11-12 - From Suggested Papers Translation Batch)
+
+| English | Arabic | Confidence | Usage Count | Notes |
+|---------|--------|------------|-------------|-------|
+| ACID | خصائص ACID | 0.9 | 1 | Atomicity, Consistency, Isolation, Durability |
+| address space | فضاء عنونة | 0.9 | 2 | Virtual memory addressing |
+| adaptive optimization | تحسين تكيفي | 0.9 | 1 | Runtime adaptive optimization |
+| AltiVec | ألتي فيك | 1.0 | 1 | Motorola SIMD instruction set |
+| association | اقتران | 0.9 | 1 | Graph edge/relationship |
+| auto-vectorization | تمتيه تلقائي | 0.9 | 2 | Automatic SIMD vectorization |
+| automatic memory management | إدارة ذاكرة آلية | 0.9 | 1 | Garbage collection |
+| B-tree | شجرة B | 0.95 | 1 | Balanced tree data structure |
+| binary translation | ترجمة ثنائية | 0.9 | 1 | Dynamic binary translation |
+| cache | ذاكرة تخزين مؤقت | 1.0 | 3 | Cache memory |
+| code cache | ذاكرة تخزين مؤقت للشيفرة | 0.9 | 1 | Cached compiled code |
+| collector | مُجمِّع | 0.9 | 2 | Garbage collector |
+| compiler optimization | تحسين المترجم | 0.95 | 2 | Compiler optimization technique |
+| concurrency control | التحكم في التزامن | 0.9 | 1 | Database concurrency control |
+| consensus | إجماع | 0.9 | 1 | Distributed consensus |
+| consistent hashing | تجزئة متسقة | 0.9 | 1 | Load balancing technique |
+| copying collector | مُجمِّع النسخ | 0.85 | 1 | Copying garbage collector |
+| data dependency | تبعية البيانات | 0.9 | 1 | Data flow dependency |
+| data store | مخزن بيانات | 0.95 | 1 | Data storage system |
+| dead object | كائن ميت | 0.85 | 1 | Unreachable object |
+| deletion | حذف | 1.0 | 1 | Delete operation |
+| deterministic | حتمي | 0.9 | 1 | Deterministic execution |
+| DHT | جدول تجزئة موزع | 0.9 | 1 | Distributed Hash Table |
+| distributed hash table | جدول تجزئة موزع | 0.95 | 2 | DHT data structure |
+| distributed transaction | معاملة موزعة | 0.95 | 2 | Multi-node transaction |
+| dynamic optimization | تحسين ديناميكي | 0.95 | 2 | Runtime optimization |
+| eventual consistency | اتساق نهائي | 0.9 | 1 | Weak consistency model |
+| fairness | عدالة | 0.9 | 1 | Scheduling fairness |
+| file system | نظام ملفات | 1.0 | 1 | File system |
+| finger table | جدول إصبع | 0.85 | 1 | Chord routing table |
+| fragment | جزء | 0.9 | 2 | Code fragment |
+| garbage collection | جمع القمامة | 0.95 | 3 | Automatic memory reclamation |
+| generational | أجيال | 0.85 | 1 | Generational GC |
+| geometric | هندسي | 0.95 | 1 | Geometric operations |
+| hierarchy | تسلسل هرمي | 0.95 | 1 | Hierarchical structure |
+| hot path | مسار ساخن | 0.9 | 1 | Frequently executed code |
+| index structure | بنية فهرسة | 0.95 | 2 | Database index |
+| insertion | إدراج | 1.0 | 1 | Insert operation |
+| instruction cache | ذاكرة تخزين مؤقت للتعليمات | 0.9 | 1 | CPU instruction cache |
+| instruction-level parallelism | التوازي على مستوى التعليمات | 0.9 | 1 | ILP in processors |
+| inter-process communication | الاتصال بين العمليات | 0.95 | 2 | IPC mechanism |
+| just-in-time compilation | ترجمة في الوقت المناسب | 0.9 | 1 | JIT compilation |
+| kernel | نواة | 1.0 | 3 | Operating system kernel |
+| key-value store | مخزن مفتاح-قيمة | 0.95 | 1 | Key-value database |
+| live object | كائن حي | 0.85 | 1 | Reachable object |
+| load balancing | موازنة الحمل | 0.95 | 2 | Load distribution |
+| lock manager | مدير الأقفال | 0.9 | 1 | Concurrency control |
+| logarithmic | لوغاريتمي | 0.95 | 1 | Log complexity |
+| lookup | بحث | 0.95 | 2 | Lookup operation |
+| loop unrolling | فك الحلقات | 0.9 | 1 | Compiler optimization |
+| lottery | يانصيب | 0.9 | 1 | Lottery scheduling |
+| mark-sweep | مسح-وسم | 0.85 | 1 | GC algorithm |
+| memory management | إدارة الذاكرة | 0.95 | 3 | Memory management |
+| message passing | تمرير الرسائل | 0.95 | 1 | IPC technique |
+| microkernel | نواة دقيقة | 0.95 | 2 | Microkernel architecture |
+| multi-processor | متعدد المعالجات | 0.95 | 1 | Multiprocessor system |
+| multidimensional | متعدد الأبعاد | 0.95 | 1 | Multidimensional data |
+| multimedia extensions | امتدادات الوسائط المتعددة | 0.9 | 1 | SIMD extensions |
+| mutator | مُطفِّر | 0.8 | 1 | Application code in GC |
+| native code | شيفرة أصلية | 0.95 | 1 | Machine code |
+| nearest neighbor | الجار الأقرب | 0.95 | 1 | Nearest neighbor query |
+| node splitting | تقسيم العُقد | 0.9 | 1 | Tree node split |
+| overlay network | شبكة تراكبية | 0.9 | 1 | P2P overlay |
+| packed data | بيانات معبأة | 0.85 | 1 | SIMD packed data |
+| paging | ترحيل | 0.9 | 2 | Memory paging |
+| partitioning | تجزئة | 0.95 | 2 | Data partitioning |
+| peer-to-peer | نظير إلى نظير | 0.95 | 2 | P2P networking |
+| portability | قابلية النقل | 0.95 | 1 | Software portability |
+| precision | دقة | 1.0 | 1 | Accuracy/precision |
+| profiling | تحليل الأداء | 0.95 | 1 | Performance profiling |
+| proportional-share | مشاركة نسبية | 0.9 | 1 | Proportional resource sharing |
+| protection | حماية | 0.95 | 1 | Memory protection |
+| promptness | فورية | 0.85 | 1 | Timeliness |
+| query | استعلام | 1.0 | 2 | Database query |
+| randomized algorithm | خوارزمية عشوائية | 0.9 | 1 | Randomized algorithm |
+| range query | استعلام نطاق | 0.9 | 1 | Range search |
+| reachability | قابلية الوصول | 0.9 | 1 | Object reachability |
+| read-heavy workload | حمل عمل ثقيل على القراءة | 0.9 | 1 | Read-intensive workload |
+| rectangle | مستطيل | 1.0 | 2 | Geometric rectangle |
+| reference counting | عد المراجع | 0.9 | 2 | GC technique |
+| resource abstraction | تجريد الموارد | 0.85 | 1 | Resource abstraction |
+| resource management | إدارة الموارد | 0.95 | 2 | Resource management |
+| routing | توجيه | 0.95 | 2 | Network routing |
+| runtime optimization | تحسين وقت التشغيل | 0.95 | 1 | Dynamic optimization |
+| scheduling | جدولة | 0.95 | 3 | Task scheduling |
+| search | بحث | 1.0 | 1 | Search operation |
+| segment | مقطع | 0.95 | 2 | Memory segment |
+| serializable | قابل للتسلسل | 0.9 | 1 | Serializability |
+| sharing | مشاركة | 0.95 | 2 | Resource sharing |
+| sharding | تجزئة | 0.95 | 1 | Database sharding |
+| SIMD | SIMD | 1.0 | 2 | Single Instruction Multiple Data |
+| social graph | رسم بياني اجتماعي | 0.95 | 2 | Social network graph |
+| spatial data | بيانات مكانية | 0.95 | 1 | Geographic/spatial data |
+| SSE | SSE | 1.0 | 1 | Streaming SIMD Extensions |
+| starvation | تجويع | 0.9 | 1 | Resource starvation |
+| successor | خلف | 0.9 | 1 | Chord successor |
+| superblock | كتلة فائقة | 0.85 | 1 | Optimization unit |
+| task | مهمة | 0.95 | 2 | OS task |
+| ticket | تذكرة | 0.9 | 1 | Lottery ticket |
+| tracing | تتبع | 0.95 | 2 | Tracing GC |
+| two-phase commit | الالتزام ثنائي الطور | 0.9 | 1 | 2PC protocol |
+| Unix | يونكس | 1.0 | 1 | Unix operating system |
+| vectorization | تمتيه | 0.9 | 2 | SIMD vectorization |
+| virtual memory | ذاكرة افتراضية | 0.95 | 3 | Virtual memory system |
+| write-through cache | ذاكرة تخزين مؤقت بآلية الكتابة المباشرة | 0.85 | 1 | Write-through caching |
+
+**Note**: Usage counts shown are from this batch only. These terms should be merged with existing glossary entries if they exist.
+
