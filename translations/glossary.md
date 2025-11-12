@@ -24,7 +24,7 @@
 | agency | فاعلية | 0.8 | 1 | Human agency in quantum physics |
 | aggregation | تجميع | 0.9 | 1 | Data aggregation |
 | algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
-| algorithm | خوارزمية | 1.0 | 44 | Standard term |
+| algorithm | خوارزمية | 1.0 | 53 | Standard term |
 | alternating optimization | تحسين متناوب | 0.9 | 1 | Optimization method alternating between steps |
 | amplification | تضخيم | 0.9 | 1 | Amplification effect |
 | analysis | تحليل | 1.0 | 5 | Data analysis |
@@ -87,7 +87,7 @@
 | bitmap | خريطة بت | 0.9 | 1 | Bit array data structure |
 | bivariate | ثنائي المتغيرات | 0.9 | 1 | Two variables |
 | block-based | قائم على الكتل | 0.8 | 1 | Block-based approach |
-| blockchain | البلوك تشين | 0.9 | 14 | Blockchain technology |
+| blockchain | البلوك تشين | 0.9 | 15 | Blockchain technology |
 | blockweb | شبكة الكتل | 0.8 | 1 | Block-based web structure |
 | boolean | منطقي | 0.9 | 2 | Boolean logic |
 | bootstrapping | تمهيد ذاتي | 0.9 | 6 | FHE technique to refresh ciphertexts |
@@ -150,7 +150,7 @@
 | compiler | مترجم | 1.0 | 16 | Language compiler |
 | completeness | اكتمال | 0.9 | 1 | Completeness in logic |
 | complex number | عدد مركب | 0.9 | 2 | Complex number (mathematics) |
-| complexity | التعقيد | 0.9 | 7 | Computational complexity |
+| complexity | التعقيد | 0.9 | 8 | Computational complexity |
 | component | مكون | 1.0 | 3 | System component |
 | composable | قابل للتركيب | 0.9 | 1 | Can be combined/composed |
 | composition | تركيب | 0.9 | 3 | Composition of DP mechanisms |
@@ -158,7 +158,7 @@
 | compound design | تصميم المركبات | 0.9 | 1 | Molecular compound design |
 | compression | ضغط | 0.9 | 4 | Data compression |
 | computable function | دالة قابلة للحوسبة | 0.9 | 1 | Effectively calculable function |
-| computation | حساب | 1.0 | 3 | Computation or calculation |
+| computation | حساب | 1.0 | 6 | Computation or calculation |
 | computation judgement | حكم حسابي | 0.8 | 1 | Judgement about computation |
 | computation-enabled | ممكّن حسابياً | 0.7 | 1 | Computation-capable |
 | computational cost | تكلفة حسابية | 0.9 | 1 | Cost of computation |
@@ -214,7 +214,7 @@
 | data structure | بنية البيانات | 1.0 | 18 | Standard term |
 | data wrangling | تنظيف البيانات | 0.8 | 1 | Data cleaning and preparation |
 | data-driven | المدفوع بالبيانات | 0.9 | 2 | Data-driven approach |
-| database | قاعدة بيانات | 1.0 | 16 | Data storage system |
+| database | قاعدة بيانات | 1.0 | 17 | Data storage system |
 | dataflow | تدفق البيانات | 1.0 | 17 | Data flow architecture |
 | dataset | مجموعة بيانات | 0.9 | 13 | Collection of data |
 | de novo design | التصميم الجديد | 0.8 | 1 | De novo molecular design |
@@ -254,7 +254,7 @@
 | distributed computing | الحوسبة الموزعة | 1.0 | 2 | Computing paradigm across multiple nodes |
 | distributed learning | تعلم موزع | 0.9 | 3 | Distributed machine learning |
 | distributed ledger technology | تقنية دفتر الأستاذ الموزع | 0.9 | 1 | DLT - distributed transaction database |
-| distributed system | نظام موزع | 1.0 | 7 | System with components on networked computers |
+| distributed system | نظام موزع | 1.0 | 9 | System with components on networked computers |
 | division gate | بوابة قسمة | 0.8 | 1 | Arithmetic circuit division operation |
 | domain adaptation | تكيف مع المجال | 0.8 | 1 | Adapting model to new domain |
 | domain-specific language | لغة خاصة بالمجال | 0.8 | 3 | Specialized programming language |
@@ -332,7 +332,7 @@
 | fragmentation | تجزئة | 0.9 | 1 | Memory fragmentation |
 | framework | إطار العمل | 0.9 | 32 | Software framework |
 | free monad | موناد حر | 0.8 | 1 | Free monad structure |
-| function | دالة | 1.0 | 19 | Programming construct |
+| function | دالة | 1.0 | 22 | Programming construct |
 | function approximation | تقريب الدوال | 0.9 | 1 | Function approximation theory |
 | function space | فضاء الدوال | 0.8 | 1 | Space of functions |
 | functional programming | البرمجة الوظيفية | 1.0 | 28 | Programming paradigm |
@@ -886,4 +886,35 @@
 | zero-knowledge | معرفة صفرية | 0.9 | 1 | Zero-knowledge proof systems |
 | zero-shot | بدون أمثلة | 0.9 | 1 | Learning/inference without training examples |
 | zero-shot transfer | النقل بدون أمثلة | 0.9 | 1 | Transfer to new tasks without task-specific training |
-| ZX-calculus | حساب ZX | 0.9 | 3 | Graphical quantum calculus |
+| ZX-calculus | حساب ZX | 0.9 | 3 | Graphical quantum calculus || algebraic number | عدد جبري | 0.9 | 1 | Algebraic numbers in mathematics |
+| Bessel function | دالة بيسل | 0.9 | 1 | Mathematical Bessel functions |
+| commodity machine | جهاز تجاري | 0.9 | 1 | Commercial off-the-shelf computer |
+| computable number | عدد قابل للحوسبة | 0.9 | 1 | Numbers calculable by algorithm |
+| declarative | تصريحي | 0.9 | 1 | Declarative programming style |
+| definable number | عدد قابل للتعريف | 0.8 | 1 | Numbers that can be formally defined |
+| double-spending | إنفاق مزدوج | 0.9 | 1 | Spending same digital token twice |
+| Entscheidungsproblem | مسألة القرار | 0.9 | 1 | Hilbert's decision problem |
+| finite means | وسائل منتهية | 0.8 | 1 | Finite computational resources |
+| flow control | تحكم في التدفق | 0.9 | 1 | Network flow control mechanism |
+| imperative | أمري | 0.9 | 1 | Imperative programming style |
+| key/value pair | زوج مفتاح/قيمة | 0.9 | 1 | Key-value data pair |
+| logical clock | ساعة منطقية | 0.9 | 1 | Lamport logical clock |
+| n-ary relation | علاقة n-ارية | 0.9 | 1 | Relation with n attributes |
+| nondeterministic | لا حتمي | 0.9 | 1 | Nondeterministic computation |
+| normal form | شكل طبيعي | 0.9 | 1 | Database normal form |
+| NP-completeness | اكتمال NP | 0.9 | 1 | Complexity class property |
+| packet switching | تبديل الحزم | 0.9 | 1 | Packet-based network routing |
+| petabyte | بيتابايت | 0.9 | 1 | 10^15 bytes |
+| polynomial time | زمن متعدد حدود | 0.9 | 1 | Polynomial time complexity |
+| proof-of-work | إثبات العمل | 0.9 | 1 | Computational proof mechanism |
+| real number | عدد حقيقي | 1.0 | 1 | Real numbers in mathematics |
+| recursive | عودي | 0.9 | 1 | Recursive function or definition |
+| relational model | نموذج علائقي | 0.9 | 1 | Database relational model |
+| row | صف | 1.0 | 1 | Table row |
+| S-expression | تعبير S | 0.9 | 1 | Symbolic expression in Lisp |
+| sequential state machine | آلة حالة تسلسلية | 0.9 | 1 | Sequential state automaton |
+| structured programming | برمجة مهيكلة | 0.9 | 1 | Structured programming paradigm |
+| subgraph | رسم بياني فرعي | 0.9 | 1 | Graph subset |
+| symbolic form | صورة رمزية | 0.9 | 1 | Symbolic representation |
+| tautology | حقيقة منطقية | 0.9 | 1 | Logical tautology |
+| universal machine | آلة عامة | 0.9 | 1 | Universal computing machine |
