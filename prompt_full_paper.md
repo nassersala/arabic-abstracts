@@ -26,8 +26,10 @@ Start with the most influential papers from our existing abstracts. These are fo
 
 ### Tier 1A: Foundational Systems (Translate First)
 - [x] **classic-dijkstra-1968** - Dijkstra's "Go To Statement Considered Harmful" - COMPLETED ✅ (0.89 quality)
+- [x] **google-file-system-2003** - The Google File System (GFS) - COMPLETED ✅ (0.90 quality)
 - [ ] **classic-nakamoto-2008** - Bitcoin: A Peer-to-Peer Electronic Cash System
-- [ ] Add GFS, MapReduce, Dynamo if in abstracts
+- [ ] **classic-dean-2004** - MapReduce: Simplified Data Processing on Large Clusters
+- [ ] **dynamo-2007** - Dynamo: Amazon's Highly Available Key-value Store
 - [ ] Add UNIX, TCP/IP papers if available
 
 ### Tier 1B: Deep Learning Foundations
@@ -330,6 +332,6 @@ Show me:
 ---
 
 **Last Updated:** 2025-11-14
-**Papers Completed:** 6 (GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra Go To)
+**Papers Completed:** 7 (GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra Go To, Google File System)
 **Papers In Progress:** 0
-**Next Up:** Bitcoin paper (classic-nakamoto-2008) or other Tier 1A papers
+**Next Up:** MapReduce (classic-dean-2004), Dynamo (dynamo-2007), or Bitcoin (classic-nakamoto-2008)
