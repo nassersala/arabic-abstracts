@@ -34,7 +34,8 @@ Start with the most influential papers from our existing abstracts. These are fo
 - [x] **1406.2661** - Generative Adversarial Networks (GANs) - COMPLETED
 - [x] **1706.03762** - Transformer paper (Attention Is All You Need) - COMPLETED
 - [x] **1512.03385** - ResNet (Deep Residual Learning for Image Recognition) - COMPLETED ✅
-- [ ] BERT, GPT papers if available
+- [x] **1810.04805** - BERT (Pre-training of Deep Bidirectional Transformers) - COMPLETED ✅
+- [ ] GPT papers if available
 
 ### Tier 2: Influential Modern Papers
 - [ ] Check translations/ for highly-cited papers (2015-2020)
@@ -329,6 +330,6 @@ Show me:
 ---
 
 **Last Updated:** 2025-11-14
-**Papers Completed:** 3 (GANs, Transformer, ResNet)
+**Papers Completed:** 4 (GANs, Transformer, ResNet, BERT)
 **Papers In Progress:** 0
-**Next Up:** Dijkstra (classic-dijkstra-1968) or BERT/GPT papers
+**Next Up:** Dijkstra (classic-dijkstra-1968) or GPT papers
