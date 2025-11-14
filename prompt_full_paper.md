@@ -25,7 +25,7 @@ arabic-abstracts/
 Start with the most influential papers from our existing abstracts. These are foundational papers that CS students should read:
 
 ### Tier 1A: Foundational Systems (Translate First)
-- [~] **classic-dijkstra-1968** - Dijkstra's "Go To Statement Considered Harmful" - IN PROGRESS (10% complete)
+- [x] **classic-dijkstra-1968** - Dijkstra's "Go To Statement Considered Harmful" - COMPLETED ✅ (0.89 quality)
 - [ ] **classic-nakamoto-2008** - Bitcoin: A Peer-to-Peer Electronic Cash System
 - [ ] Add GFS, MapReduce, Dynamo if in abstracts
 - [ ] Add UNIX, TCP/IP papers if available
@@ -330,6 +330,6 @@ Show me:
 ---
 
 **Last Updated:** 2025-11-14
-**Papers Completed:** 5 (GANs, Transformer, ResNet, BERT, GPT-3)
-**Papers In Progress:** 1 (Dijkstra "Go To Statement" - 10% complete, awaiting source text)
-**Next Up:** Complete Dijkstra paper, then Bitcoin or other Tier 1 papers
+**Papers Completed:** 6 (GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra Go To)
+**Papers In Progress:** 0
+**Next Up:** Bitcoin paper (classic-nakamoto-2008) or other Tier 1A papers
