@@ -31,9 +31,9 @@ Start with the most influential papers from our existing abstracts. These are fo
 - [ ] Add UNIX, TCP/IP papers if available
 
 ### Tier 1B: Deep Learning Foundations
-- [ ] **1406.2661** - Generative Adversarial Networks (GANs)
-- [ ] Transformer paper if available (Attention Is All You Need)
-- [ ] ResNet, BERT, GPT papers if available
+- [x] **1406.2661** - Generative Adversarial Networks (GANs) - COMPLETED
+- [x] **1706.03762** - Transformer paper (Attention Is All You Need) - COMPLETED
+- [ ] ResNet (1512.03385), BERT, GPT papers if available
 
 ### Tier 2: Influential Modern Papers
 - [ ] Check translations/ for highly-cited papers (2015-2020)
@@ -328,6 +328,6 @@ Show me:
 ---
 
 **Last Updated:** 2025-11-14
-**Papers Completed:** 0
+**Papers Completed:** 2 (GANs, Transformer)
 **Papers In Progress:** 0
-**Next Up:** Select from Tier 1A above
+**Next Up:** ResNet (1512.03385) or Dijkstra (classic-dijkstra-1968)
