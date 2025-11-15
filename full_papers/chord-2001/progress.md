@@ -6,7 +6,7 @@
 
 ## Sections
 
-- [x] 00-abstract.md (exists in translations/)
+- [x] 00-abstract.md
 - [x] 01-introduction.md
 - [x] 02-related-work.md
 - [x] 03-system-model.md

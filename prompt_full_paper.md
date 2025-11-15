@@ -28,16 +28,21 @@ Start with the most influential papers from our existing abstracts. These are fo
 - [x] **classic-dijkstra-1968** - Dijkstra's "Go To Statement Considered Harmful" - COMPLETED ✅ (0.89 quality)
 - [x] **google-file-system-2003** - The Google File System (GFS) - COMPLETED ✅ (0.90 quality)
 - [x] **classic-dean-2004** - MapReduce: Simplified Data Processing on Large Clusters - COMPLETED ✅ (0.874 quality)
+- [x] **dynamo-2007** - Dynamo: Amazon's Highly Available Key-value Store - COMPLETED ✅ (0.875 quality)
+- [x] **chord-2001** - Chord: A Scalable Peer-to-peer Lookup Service - COMPLETED ✅ (0.89 quality)
 - [ ] **classic-nakamoto-2008** - Bitcoin: A Peer-to-Peer Electronic Cash System
-- [ ] **dynamo-2007** - Dynamo: Amazon's Highly Available Key-value Store
 - [ ] Add UNIX, TCP/IP papers if available
 
 ### Tier 1B: Deep Learning Foundations
-- [x] **1406.2661** - Generative Adversarial Networks (GANs) - COMPLETED
-- [x] **1706.03762** - Transformer paper (Attention Is All You Need) - COMPLETED
+- [x] **1406.2661** - Generative Adversarial Networks (GANs) - COMPLETED ✅
+- [x] **1706.03762** - Transformer paper (Attention Is All You Need) - COMPLETED ✅
 - [x] **1512.03385** - ResNet (Deep Residual Learning for Image Recognition) - COMPLETED ✅
 - [x] **1810.04805** - BERT (Pre-training of Deep Bidirectional Transformers) - COMPLETED ✅
 - [x] **2005.14165** - GPT-3 (Language Models are Few-Shot Learners) - COMPLETED ✅
+- [x] **alexnet-2012** - ImageNet Classification with Deep CNNs (AlexNet) - COMPLETED ✅ (0.90 quality)
+- [x] **1409.1556** - Very Deep Convolutional Networks (VGGNet) - COMPLETED ✅ (0.88 quality)
+- [x] **batchnorm-2015** - Batch Normalization - COMPLETED ✅ (0.876 quality)
+- [x] **adam-2014** - Adam: A Method for Stochastic Optimization - COMPLETED ✅ (0.88 quality)
 
 ### Tier 2: Influential Modern Papers
 - [ ] Check translations/ for highly-cited papers (2015-2020)
@@ -331,7 +336,7 @@ Show me:
 
 ---
 
-**Last Updated:** 2025-11-14
-**Papers Completed:** 8 (GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra Go To, Google File System, MapReduce)
+**Last Updated:** 2025-11-15
+**Papers Completed:** 14 (GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra Go To, Google File System, MapReduce, Dynamo, Chord, AlexNet, VGGNet, Batch Normalization, Adam)
 **Papers In Progress:** 0
-**Next Up:** Bitcoin (classic-nakamoto-2008) or Dynamo (dynamo-2007)
+**Next Up:** Bitcoin (classic-nakamoto-2008) or BigTable (bigtable-2006)
