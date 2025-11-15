@@ -10,7 +10,7 @@
 **PDF:** https://arxiv.org/pdf/1603.01887.pdf
 
 **Abstract Translation Quality:** 0.96 (from translations/)
-**Full Paper Translation Quality:** TBD
+**Full Paper Translation Quality:** 0.88
 
 ## Citation
 
@@ -27,7 +27,7 @@
 - Translator: Claude Code (Session 2025-11-15)
 - Reviewer: TBD
 - Started: 2025-11-15
-- Completed: TBD
+- Completed: 2025-11-15
 
 ## Paper Overview
 
