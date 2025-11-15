@@ -1,0 +1,233 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{krizhevsky_imagenet_2012}
+\bibinfo{author}{Krizhevsky, A.}, \bibinfo{author}{Sutskever, I.} \&
+  \bibinfo{author}{Hinton, G.~E.}
+\newblock \bibinfo{title}{Imagenet classification with deep convolutional
+  neural networks}.
+\newblock In \emph{\bibinfo{booktitle}{Advances in neural information
+  processing systems}}, \bibinfo{pages}{1097--1105} (\bibinfo{year}{2012}).
+\newblock \urlprefix\url{http://papers.nips.cc/paper/4824-imagenet}.
+
+\bibitem{taigman_deepface:_2014}
+\bibinfo{author}{Taigman, Y.}, \bibinfo{author}{Yang, M.},
+  \bibinfo{author}{Ranzato, M.} \& \bibinfo{author}{Wolf, L.}
+\newblock \bibinfo{title}{Deepface: {Closing} the gap to human-level
+  performance in face verification}.
+\newblock In \emph{\bibinfo{booktitle}{Computer {Vision} and {Pattern}
+  {Recognition} ({CVPR}), 2014 {IEEE} {Conference} on}},
+  \bibinfo{pages}{1701--1708} (\bibinfo{publisher}{IEEE},
+  \bibinfo{year}{2014}).
+\newblock
+  \urlprefix\url{http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6909616}.
+
+\bibitem{guclu_deep_2015}
+\bibinfo{author}{G{\"u}{\c c}l{\"u}, U.} \& \bibinfo{author}{Gerven, M. A.
+  J.~v.}
+\newblock \bibinfo{title}{Deep {Neural} {Networks} {Reveal} a {Gradient} in the
+  {Complexity} of {Neural} {Representations} across the {Ventral} {Stream}}.
+\newblock \emph{\bibinfo{journal}{The Journal of Neuroscience}}
+  \textbf{\bibinfo{volume}{35}}, \bibinfo{pages}{10005--10014}
+  (\bibinfo{year}{2015}).
+\newblock \urlprefix\url{http://www.jneurosci.org/content/35/27/10005}.
+
+\bibitem{yamins_performance-optimized_2014}
+\bibinfo{author}{Yamins, D. L.~K.} \emph{et~al.}
+\newblock \bibinfo{title}{Performance-optimized hierarchical models predict
+  neural responses in higher visual cortex}.
+\newblock \emph{\bibinfo{journal}{Proceedings of the National Academy of
+  Sciences}} \bibinfo{pages}{201403112} (\bibinfo{year}{2014}).
+\newblock
+  \urlprefix\url{http://www.pnas.org/content/early/2014/05/08/1403112111}.
+
+\bibitem{cadieu_deep_2014}
+\bibinfo{author}{Cadieu, C.~F.} \emph{et~al.}
+\newblock \bibinfo{title}{Deep {Neural} {Networks} {Rival} the {Representation}
+  of {Primate} {IT} {Cortex} for {Core} {Visual} {Object} {Recognition}}.
+\newblock \emph{\bibinfo{journal}{PLoS Comput Biol}}
+  \textbf{\bibinfo{volume}{10}}, \bibinfo{pages}{e1003963}
+  (\bibinfo{year}{2014}).
+\newblock \urlprefix\url{http://dx.doi.org/10.1371/journal.pcbi.1003963}.
+
+\bibitem{kummerer_deep_2015}
+\bibinfo{author}{K{\"u}mmerer, M.}, \bibinfo{author}{Theis, L.} \&
+  \bibinfo{author}{Bethge, M.}
+\newblock \bibinfo{title}{Deep {Gaze} {I}: {Boosting} {Saliency} {Prediction}
+  with {Feature} {Maps} {Trained} on {ImageNet}}.
+\newblock In \emph{\bibinfo{booktitle}{{ICLR} {Workshop}}}
+  (\bibinfo{year}{2015}).
+\newblock \urlprefix\url{/media/publications/1411.1045v4.pdf}.
+
+\bibitem{khaligh-razavi_deep_2014}
+\bibinfo{author}{Khaligh-Razavi, S.-M.} \& \bibinfo{author}{Kriegeskorte, N.}
+\newblock \bibinfo{title}{Deep {Supervised}, but {Not} {Unsupervised}, {Models}
+  {May} {Explain} {IT} {Cortical} {Representation}}.
+\newblock \emph{\bibinfo{journal}{PLoS Comput Biol}}
+  \textbf{\bibinfo{volume}{10}}, \bibinfo{pages}{e1003915}
+  (\bibinfo{year}{2014}).
+\newblock \urlprefix\url{http://dx.doi.org/10.1371/journal.pcbi.1003915}.
+
+\bibitem{gatys_texture_2015}
+\bibinfo{author}{Gatys, L.~A.}, \bibinfo{author}{Ecker, A.~S.} \&
+  \bibinfo{author}{Bethge, M.}
+\newblock \bibinfo{title}{Texture synthesis and the controlled generation of
+  natural stimuli using convolutional neural networks}.
+\newblock \emph{\bibinfo{journal}{arXiv:1505.07376 [cs, q-bio]}}
+  (\bibinfo{year}{2015}).
+\newblock \urlprefix\url{http://arxiv.org/abs/1505.07376}.
+\newblock \bibinfo{note}{ArXiv: 1505.07376}.
+
+\bibitem{mahendran_understanding_2014}
+\bibinfo{author}{Mahendran, A.} \& \bibinfo{author}{Vedaldi, A.}
+\newblock \bibinfo{title}{Understanding {Deep} {Image} {Representations} by
+  {Inverting} {Them}}.
+\newblock \emph{\bibinfo{journal}{arXiv:1412.0035 [cs]}}
+  (\bibinfo{year}{2014}).
+\newblock \urlprefix\url{http://arxiv.org/abs/1412.0035}.
+\newblock \bibinfo{note}{ArXiv: 1412.0035}.
+
+\bibitem{heeger_pyramid-based_1995}
+\bibinfo{author}{Heeger, D.~J.} \& \bibinfo{author}{Bergen, J.~R.}
+\newblock \bibinfo{title}{Pyramid-based {Texture} {Analysis}/{Synthesis}}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 22Nd {Annual}
+  {Conference} on {Computer} {Graphics} and {Interactive} {Techniques}}},
+  {SIGGRAPH} '95, \bibinfo{pages}{229--238} (\bibinfo{publisher}{ACM},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{year}{1995}).
+\newblock \urlprefix\url{http://doi.acm.org/10.1145/218380.218446}.
+
+\bibitem{portilla_parametric_2000}
+\bibinfo{author}{Portilla, J.} \& \bibinfo{author}{Simoncelli, E.~P.}
+\newblock \bibinfo{title}{A {Parametric} {Texture} {Model} {Based} on {Joint}
+  {Statistics} of {Complex} {Wavelet} {Coefficients}}.
+\newblock \emph{\bibinfo{journal}{International Journal of Computer Vision}}
+  \textbf{\bibinfo{volume}{40}}, \bibinfo{pages}{49--70}
+  (\bibinfo{year}{2000}).
+\newblock
+  \urlprefix\url{http://link.springer.com/article/10.1023/A%3A1026553619983}.
+
+\bibitem{tenenbaum_separating_2000}
+\bibinfo{author}{Tenenbaum, J.~B.} \& \bibinfo{author}{Freeman, W.~T.}
+\newblock \bibinfo{title}{Separating style and content with bilinear models}.
+\newblock \emph{\bibinfo{journal}{Neural computation}}
+  \textbf{\bibinfo{volume}{12}}, \bibinfo{pages}{1247--1283}
+  (\bibinfo{year}{2000}).
+\newblock
+  \urlprefix\url{http://www.mitpressjournals.org/doi/abs/10.1162/089976600300015349}.
+
+\bibitem{elgammal_separating_2004}
+\bibinfo{author}{Elgammal, A.} \& \bibinfo{author}{Lee, C.-S.}
+\newblock \bibinfo{title}{Separating style and content on a nonlinear
+  manifold}.
+\newblock In \emph{\bibinfo{booktitle}{Computer {Vision} and {Pattern}
+  {Recognition}, 2004. {CVPR} 2004. {Proceedings} of the 2004 {IEEE} {Computer}
+  {Society} {Conference} on}}, vol.~\bibinfo{volume}{1},
+  \bibinfo{pages}{I--478} (\bibinfo{publisher}{IEEE}, \bibinfo{year}{2004}).
+\newblock
+  \urlprefix\url{http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=1315070}.
+
+\bibitem{kyprianidis_state_2013}
+\bibinfo{author}{Kyprianidis, J.~E.}, \bibinfo{author}{Collomosse, J.},
+  \bibinfo{author}{Wang, T.} \& \bibinfo{author}{Isenberg, T.}
+\newblock \bibinfo{title}{State of the "{Art}": {A} {Taxonomy} of {Artistic}
+  {Stylization} {Techniques} for {Images} and {Video}}.
+\newblock \emph{\bibinfo{journal}{Visualization and Computer Graphics, IEEE
+  Transactions on}} \textbf{\bibinfo{volume}{19}}, \bibinfo{pages}{866--885}
+  (\bibinfo{year}{2013}).
+\newblock
+  \urlprefix\url{http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6243138}.
+
+\bibitem{hertzmann_image_2001}
+\bibinfo{author}{Hertzmann, A.}, \bibinfo{author}{Jacobs, C.~E.},
+  \bibinfo{author}{Oliver, N.}, \bibinfo{author}{Curless, B.} \&
+  \bibinfo{author}{Salesin, D.~H.}
+\newblock \bibinfo{title}{Image analogies}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 28th annual
+  conference on {Computer} graphics and interactive techniques}},
+  \bibinfo{pages}{327--340} (\bibinfo{publisher}{ACM}, \bibinfo{year}{2001}).
+\newblock \urlprefix\url{http://dl.acm.org/citation.cfm?id=383295}.
+
+\bibitem{ashikhmin_fast_2003}
+\bibinfo{author}{Ashikhmin, N.}
+\newblock \bibinfo{title}{Fast texture transfer}.
+\newblock \emph{\bibinfo{journal}{IEEE Computer Graphics and Applications}}
+  \textbf{\bibinfo{volume}{23}}, \bibinfo{pages}{38--43}
+  (\bibinfo{year}{2003}).
+
+\bibitem{efros_image_2001}
+\bibinfo{author}{Efros, A.~A.} \& \bibinfo{author}{Freeman, W.~T.}
+\newblock \bibinfo{title}{Image quilting for texture synthesis and transfer}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 28th annual
+  conference on {Computer} graphics and interactive techniques}},
+  \bibinfo{pages}{341--346} (\bibinfo{publisher}{ACM}, \bibinfo{year}{2001}).
+\newblock \urlprefix\url{http://dl.acm.org/citation.cfm?id=383296}.
+
+\bibitem{lee_directional_2010}
+\bibinfo{author}{Lee, H.}, \bibinfo{author}{Seo, S.}, \bibinfo{author}{Ryoo,
+  S.} \& \bibinfo{author}{Yoon, K.}
+\newblock \bibinfo{title}{Directional {Texture} {Transfer}}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 8th {International}
+  {Symposium} on {Non}-{Photorealistic} {Animation} and {Rendering}}}, {NPAR}
+  '10, \bibinfo{pages}{43--48} (\bibinfo{publisher}{ACM}, \bibinfo{address}{New
+  York, NY, USA}, \bibinfo{year}{2010}).
+\newblock \urlprefix\url{http://doi.acm.org/10.1145/1809939.1809945}.
+
+\bibitem{xie_feature_2007}
+\bibinfo{author}{Xie, X.}, \bibinfo{author}{Tian, F.} \& \bibinfo{author}{Seah,
+  H.~S.}
+\newblock \bibinfo{title}{Feature {Guided} {Texture} {Synthesis} ({FGTS}) for
+  {Artistic} {Style} {Transfer}}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 2Nd {International}
+  {Conference} on {Digital} {Interactive} {Media} in {Entertainment} and
+  {Arts}}}, {DIMEA} '07, \bibinfo{pages}{44--49} (\bibinfo{publisher}{ACM},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{year}{2007}).
+\newblock \urlprefix\url{http://doi.acm.org/10.1145/1306813.1306830}.
+
+\bibitem{karayev_recognizing_2013}
+\bibinfo{author}{Karayev, S.} \emph{et~al.}
+\newblock \bibinfo{title}{Recognizing image style}.
+\newblock \emph{\bibinfo{journal}{arXiv preprint arXiv:1311.3715}}
+  (\bibinfo{year}{2013}).
+\newblock \urlprefix\url{http://arxiv.org/abs/1311.3715}.
+
+\bibitem{adelson_spatiotemporal_1985}
+\bibinfo{author}{Adelson, E.~H.} \& \bibinfo{author}{Bergen, J.~R.}
+\newblock \bibinfo{title}{Spatiotemporal energy models for the perception of
+  motion}.
+\newblock \emph{\bibinfo{journal}{JOSA A}} \textbf{\bibinfo{volume}{2}},
+  \bibinfo{pages}{284--299} (\bibinfo{year}{1985}).
+\newblock
+  \urlprefix\url{http://www.opticsinfobase.org/josaa/fulltext.cfm?uri=josaa-2-2-284}.
+
+\bibitem{simonyan_very_2014}
+\bibinfo{author}{Simonyan, K.} \& \bibinfo{author}{Zisserman, A.}
+\newblock \bibinfo{title}{Very {Deep} {Convolutional} {Networks} for
+  {Large}-{Scale} {Image} {Recognition}}.
+\newblock \emph{\bibinfo{journal}{arXiv:1409.1556 [cs]}}
+  (\bibinfo{year}{2014}).
+\newblock \urlprefix\url{http://arxiv.org/abs/1409.1556}.
+\newblock \bibinfo{note}{ArXiv: 1409.1556}.
+
+\bibitem{russakovsky_imagenet_2014}
+\bibinfo{author}{Russakovsky, O.} \emph{et~al.}
+\newblock \bibinfo{title}{{ImageNet} {Large} {Scale} {Visual} {Recognition}
+  {Challenge}}.
+\newblock \emph{\bibinfo{journal}{arXiv:1409.0575 [cs]}}
+  (\bibinfo{year}{2014}).
+\newblock \urlprefix\url{http://arxiv.org/abs/1409.0575}.
+\newblock \bibinfo{note}{ArXiv: 1409.0575}.
+
+\bibitem{jia_caffe:_2014}
+\bibinfo{author}{Jia, Y.} \emph{et~al.}
+\newblock \bibinfo{title}{Caffe: {Convolutional} architecture for fast feature
+  embedding}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the {ACM} {International}
+  {Conference} on {Multimedia}}}, \bibinfo{pages}{675--678}
+  (\bibinfo{publisher}{ACM}, \bibinfo{year}{2014}).
+\newblock \urlprefix\url{http://dl.acm.org/citation.cfm?id=2654889}.
+
+\end{thebibliography}

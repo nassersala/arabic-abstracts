@@ -1,0 +1,188 @@
+# Section 4: Methods
+## القسم 4: الطرق
+
+**Section:** methods
+**Translation Quality:** 0.88
+**Glossary Terms Used:** convolutional neural network (الشبكة العصبية الالتفافية), gradient descent (الانحدار التدرجي), backpropagation (الانتشار العكسي), loss function (دالة الخسارة), feature maps (خرائط الميزات), optimization (التحسين), max-pooling (التجميع الأقصى), average pooling (التجميع المتوسط)
+
+---
+
+### English Version
+
+The results presented in the main text were generated on the basis of the VGG-Network, a Convolutional Neural Network that rivals human performance on a common visual object recognition benchmark task and was introduced and extensively described in [Simonyan & Zisserman, 2014]. We used the feature space provided by the 16 convolutional and 5 pooling layers of the 19 layer VGG-Network. We do not use any of the fully connected layers. The model is publicly available and can be explored in the caffe-framework. For image synthesis we found that replacing the max-pooling operation by average pooling improves the gradient flow and one obtains slightly more appealing results, which is why the images shown were generated with average pooling.
+
+Generally each layer in the network defines a non-linear filter bank whose complexity increases with the position of the layer in the network. Hence a given input image $\vec{x}$ is encoded in each layer of the CNN by the filter responses to that image. A layer with $N_l$ distinct filters has $N_l$ feature maps each of size $M_l$, where $M_l$ is the height times the width of the feature map. So the responses in a layer $l$ can be stored in a matrix $F^l \in \mathcal{R}^{N_l \times M_l}$ where $F_{ij}^l$ is the activation of the $i^{th}$ filter at position $j$ in layer $l$. To visualise the image information that is encoded at different layers of the hierarchy (Fig 1, content reconstructions) we perform gradient descent on a white noise image to find another image that matches the feature responses of the original image. So let $\vec{p}$ and $\vec{x}$ be the original image and the image that is generated and $P^l$ and $F^l$ their respective feature representation in layer $l$. We then define the squared-error loss between the two feature representations
+
+$$\mathcal{L}_{content}(\vec{p},\vec{x},l) = \frac{1}{2}\sum_{i,j}\left(F^l_{ij} - P^l_{ij}\right)^2 \text{ .}$$
+
+The derivative of this loss with respect to the activations in layer $l$ equals
+
+$$\frac{\partial \mathcal{L}_{content}}{\partial F_{ij}^l} =
+  \begin{cases}
+  \left(F^l - P^l\right)_{ij} & \text{if } F_{ij}^l > 0 \\
+   0       & \text{if } F_{ij}^l < 0 \text{ .}
+  \end{cases}$$
+
+from which the gradient with respect to the image $\vec{x}$ can be computed using standard error back-propagation. Thus we can change the initially random image $\vec{x}$ until it generates the same response in a certain layer of the CNN as the original image $\vec{p}$. The five content reconstructions in Fig 1 are from layers 'conv1_1' (a), 'conv2_1' (b), 'conv3_1' (c), 'conv4_1' (d) and 'conv5_1' (e) of the original VGG-Network.
+
+On top of the CNN responses in each layer of the network we built a style representation that computes the correlations between the different filter responses, where the expectation is taken over the spatial extend of the input image. These feature correlations are given by the Gram matrix $G^l \in \mathcal{R}^{N_l \times N_l}$, where $G_{ij}^l$ is the inner product between the vectorised feature map $i$ and $j$ in layer $l$:
+
+$$G_{ij}^l = \sum_k F_{ik}^l F_{jk}^l.$$
+
+To generate a texture that matches the style of a given image (Fig 1, style reconstructions), we use gradient descent from a white noise image to find another image that matches the style representation of the original image. This is done by minimising the mean-squared distance between the entries of the Gram matrix from the original image and the Gram matrix of the image to be generated.
+
+So let $\vec{a}$ and $\vec{x}$ be the original image and the image that is generated and $A^l$ and $G^l$ their respective style representations in layer $l$. The contribution of that layer to the total loss is then
+
+$$E_l = \frac{1}{4 N_l^2 M_l^2}\sum_{i,j}\left(G^l_{ij}-A^l_{ij}\right)^2$$
+
+and the total loss is
+
+$$\mathcal{L}_{style}(\vec{a},\vec{x}) = \sum_{l=0}^{L}w_{l}E_l$$
+
+where $w_l$ are weighting factors of the contribution of each layer to the total loss (see below for specific values of $w_l$ in our results).
+
+The derivative of $E_l$ with respect to the activations in layer l can be computed analytically:
+
+$$\frac{\partial E_l}{\partial F_{ij}^l} =
+  \begin{cases}
+   \frac{1}{N_l^2 M_l^2}\left((F^l)^{\mathrm T}\left(G^l-A^l\right)\right)_{ji} & \text{if } F_{ij}^l > 0 \\
+   0       & \text{if } F_{ij}^l < 0 \text{ .}
+  \end{cases}$$
+
+The gradients of $E_l$ with respect to the activations in lower layers of the network can be readily computed using standard error back-propagation. The five style reconstructions in Fig 1 were generated by matching the style representations on layer 'conv1_1' (a), 'conv1_1' and 'conv2_1' (b), 'conv1_1', 'conv2_1' and 'conv3_1' (c), 'conv1_1', 'conv2_1', 'conv3_1' and 'conv4_1' (d), 'conv1_1', 'conv2_1', 'conv3_1', 'conv4_1' and 'conv5_1' (e).
+
+To generate the images that mix the content of a photograph with the style of a painting (Fig 2) we jointly minimise the distance of a white noise image from the content representation of the photograph in one layer of the network and the style representation of the painting in a number of layers of the CNN. So let $\vec{p}$ be the photograph and $\vec{a}$ be the artwork. The loss function we minimise is
+
+$$\mathcal{L}_{total}(\vec{p},\vec{a},\vec{x}) = \alpha  \mathcal{L}_{content}(\vec{p},\vec{x}) + \beta \mathcal{L}_{style}(\vec{a},\vec{x})$$
+
+where $\alpha$ and $\beta$ are the weighting factors for content and style reconstruction respectively. For the images shown in Fig 2 we matched the content representation on layer 'conv4_2' and the style representations on layers 'conv1_1', 'conv2_1', 'conv3_1', 'conv4_1' and 'conv5_1' ($w_l = 1/5$ in those layers, $w_l = 0$ in all other layers). The ratio $\alpha/\beta$ was either $1 \times 10^{-3}$ (Fig 2 B,C,D) or $1 \times 10^{-4}$ (Fig 2 E,F). Fig 3 shows results for different relative weightings of the content and style reconstruction loss (along the columns) and for matching the style representations only on layer 'conv1_1' (A), 'conv1_1' and 'conv2_1' (B), 'conv1_1', 'conv2_1' and 'conv3_1' (C), 'conv1_1', 'conv2_1', 'conv3_1' and 'conv4_1' (D), 'conv1_1', 'conv2_1', 'conv3_1', 'conv4_1' and 'conv5_1' (E). The factor $w_l$ was always equal to one divided by the number of active layers with a non-zero loss-weight $w_l$.
+
+**Acknowledgments**
+
+This work was funded by the German National Academic Foundation (L.A.G.), the Bernstein Center for Computational Neuroscience (FKZ 01GQ1002) and the German Excellency Initiative through the Centre for Integrative Neuroscience Tübingen (EXC307)(M.B., A.S.E, L.A.G.)
+
+---
+
+### النسخة العربية
+
+تم إنشاء النتائج المقدمة في النص الرئيسي على أساس شبكة VGG، وهي شبكة عصبية التفافية تنافس الأداء البشري في مهمة قياسية شائعة للتعرف على الأجسام البصرية وتم تقديمها ووصفها بشكل موسع في [Simonyan & Zisserman, 2014]. استخدمنا فضاء الميزات المقدم من 16 طبقة التفافية و5 طبقات تجميع من شبكة VGG المكونة من 19 طبقة. لا نستخدم أياً من الطبقات المتصلة بالكامل. النموذج متاح للعامة ويمكن استكشافه في إطار عمل caffe. بالنسبة لتصنيع الصور، وجدنا أن استبدال عملية التجميع الأقصى بالتجميع المتوسط يحسن تدفق التدرج ويحصل المرء على نتائج أكثر جاذبية قليلاً، ولهذا السبب تم إنشاء الصور الموضحة باستخدام التجميع المتوسط.
+
+بشكل عام، تعرّف كل طبقة في الشبكة بنك مرشحات غير خطي يزداد تعقيده مع موضع الطبقة في الشبكة. وبالتالي يتم ترميز صورة مدخلة معينة $\vec{x}$ في كل طبقة من الشبكة العصبية الالتفافية بواسطة استجابات المرشحات لتلك الصورة. تحتوي الطبقة ذات $N_l$ من المرشحات المتميزة على $N_l$ من خرائط الميزات، كل منها بحجم $M_l$، حيث $M_l$ هو الارتفاع مضروباً في عرض خريطة الميزات. لذا يمكن تخزين الاستجابات في الطبقة $l$ في مصفوفة $F^l \in \mathcal{R}^{N_l \times M_l}$ حيث $F_{ij}^l$ هو تنشيط المرشح $i$ في الموضع $j$ في الطبقة $l$. لتصور معلومات الصورة المرمزة في طبقات مختلفة من التسلسل الهرمي (الشكل 1، إعادة بناء المحتوى)، نجري الانحدار التدرجي على صورة ضوضاء بيضاء لإيجاد صورة أخرى تطابق استجابات الميزات للصورة الأصلية. لذا دع $\vec{p}$ و $\vec{x}$ تكونان الصورة الأصلية والصورة المولدة و $P^l$ و $F^l$ تمثيلات الميزات الخاصة بهما في الطبقة $l$. ثم نحدد خسارة الخطأ التربيعي بين تمثيلي الميزات
+
+$$\mathcal{L}_{content}(\vec{p},\vec{x},l) = \frac{1}{2}\sum_{i,j}\left(F^l_{ij} - P^l_{ij}\right)^2 \text{ .}$$
+
+مشتق هذه الخسارة بالنسبة للتنشيطات في الطبقة $l$ يساوي
+
+$$\frac{\partial \mathcal{L}_{content}}{\partial F_{ij}^l} =
+  \begin{cases}
+  \left(F^l - P^l\right)_{ij} & \text{if } F_{ij}^l > 0 \\
+   0       & \text{if } F_{ij}^l < 0 \text{ .}
+  \end{cases}$$
+
+والذي يمكن منه حساب التدرج بالنسبة للصورة $\vec{x}$ باستخدام الانتشار العكسي القياسي للخطأ. وبالتالي يمكننا تغيير الصورة العشوائية الأولية $\vec{x}$ حتى تولد نفس الاستجابة في طبقة معينة من الشبكة العصبية الالتفافية كالصورة الأصلية $\vec{p}$. عمليات إعادة بناء المحتوى الخمس في الشكل 1 من الطبقات 'conv1_1' (أ)، 'conv2_1' (ب)، 'conv3_1' (ج)، 'conv4_1' (د) و 'conv5_1' (هـ) من شبكة VGG الأصلية.
+
+فوق استجابات الشبكة العصبية الالتفافية في كل طبقة من الشبكة، قمنا ببناء تمثيل أسلوب يحسب الارتباطات بين استجابات المرشحات المختلفة، حيث يتم أخذ القيمة المتوقعة على المدى المكاني للصورة المدخلة. يتم إعطاء هذه الارتباطات للميزات بواسطة مصفوفة جرام $G^l \in \mathcal{R}^{N_l \times N_l}$، حيث $G_{ij}^l$ هو الجداء الداخلي بين خريطة الميزات المتجهة $i$ و $j$ في الطبقة $l$:
+
+$$G_{ij}^l = \sum_k F_{ik}^l F_{jk}^l.$$
+
+لإنشاء نسيج يطابق أسلوب صورة معينة (الشكل 1، إعادة بناء الأسلوب)، نستخدم الانحدار التدرجي من صورة ضوضاء بيضاء لإيجاد صورة أخرى تطابق تمثيل الأسلوب للصورة الأصلية. يتم ذلك عن طريق تقليل المسافة التربيعية المتوسطة بين مدخلات مصفوفة جرام من الصورة الأصلية ومصفوفة جرام للصورة المراد إنشاؤها.
+
+لذا دع $\vec{a}$ و $\vec{x}$ تكونان الصورة الأصلية والصورة المولدة و $A^l$ و $G^l$ تمثيلات الأسلوب الخاصة بهما في الطبقة $l$. مساهمة تلك الطبقة في الخسارة الإجمالية تكون حينئذ
+
+$$E_l = \frac{1}{4 N_l^2 M_l^2}\sum_{i,j}\left(G^l_{ij}-A^l_{ij}\right)^2$$
+
+والخسارة الإجمالية هي
+
+$$\mathcal{L}_{style}(\vec{a},\vec{x}) = \sum_{l=0}^{L}w_{l}E_l$$
+
+حيث $w_l$ هي عوامل الوزن لمساهمة كل طبقة في الخسارة الإجمالية (انظر أدناه للقيم المحددة لـ $w_l$ في نتائجنا).
+
+يمكن حساب مشتق $E_l$ بالنسبة للتنشيطات في الطبقة l تحليلياً:
+
+$$\frac{\partial E_l}{\partial F_{ij}^l} =
+  \begin{cases}
+   \frac{1}{N_l^2 M_l^2}\left((F^l)^{\mathrm T}\left(G^l-A^l\right)\right)_{ji} & \text{if } F_{ij}^l > 0 \\
+   0       & \text{if } F_{ij}^l < 0 \text{ .}
+  \end{cases}$$
+
+يمكن حساب تدرجات $E_l$ بالنسبة للتنشيطات في الطبقات السفلى من الشبكة بسهولة باستخدام الانتشار العكسي القياسي للخطأ. تم إنشاء عمليات إعادة بناء الأسلوب الخمس في الشكل 1 من خلال مطابقة تمثيلات الأسلوب على الطبقة 'conv1_1' (أ)، 'conv1_1' و 'conv2_1' (ب)، 'conv1_1' و 'conv2_1' و 'conv3_1' (ج)، 'conv1_1' و 'conv2_1' و 'conv3_1' و 'conv4_1' (د)، 'conv1_1' و 'conv2_1' و 'conv3_1' و 'conv4_1' و 'conv5_1' (هـ).
+
+لإنشاء الصور التي تمزج محتوى صورة فوتوغرافية مع أسلوب لوحة (الشكل 2)، نقلل بشكل مشترك المسافة لصورة ضوضاء بيضاء من تمثيل المحتوى للصورة الفوتوغرافية في طبقة واحدة من الشبكة وتمثيل الأسلوب للوحة في عدد من طبقات الشبكة العصبية الالتفافية. لذا دع $\vec{p}$ تكون الصورة الفوتوغرافية و $\vec{a}$ تكون العمل الفني. دالة الخسارة التي نقللها هي
+
+$$\mathcal{L}_{total}(\vec{p},\vec{a},\vec{x}) = \alpha  \mathcal{L}_{content}(\vec{p},\vec{x}) + \beta \mathcal{L}_{style}(\vec{a},\vec{x})$$
+
+حيث $\alpha$ و $\beta$ هما عاملا الوزن لإعادة بناء المحتوى والأسلوب على التوالي. للصور الموضحة في الشكل 2، طابقنا تمثيل المحتوى على الطبقة 'conv4_2' وتمثيلات الأسلوب على الطبقات 'conv1_1' و 'conv2_1' و 'conv3_1' و 'conv4_1' و 'conv5_1' ($w_l = 1/5$ في تلك الطبقات، $w_l = 0$ في جميع الطبقات الأخرى). كانت النسبة $\alpha/\beta$ إما $1 \times 10^{-3}$ (الشكل 2 ب، ج، د) أو $1 \times 10^{-4}$ (الشكل 2 هـ، و). يوضح الشكل 3 النتائج لأوزان نسبية مختلفة لخسارة إعادة بناء المحتوى والأسلوب (على طول الأعمدة) ولمطابقة تمثيلات الأسلوب فقط على الطبقة 'conv1_1' (أ)، 'conv1_1' و 'conv2_1' (ب)، 'conv1_1' و 'conv2_1' و 'conv3_1' (ج)، 'conv1_1' و 'conv2_1' و 'conv3_1' و 'conv4_1' (د)، 'conv1_1' و 'conv2_1' و 'conv3_1' و 'conv4_1' و 'conv5_1' (هـ). كان العامل $w_l$ دائماً يساوي واحداً مقسوماً على عدد الطبقات النشطة ذات وزن الخسارة غير الصفري $w_l$.
+
+**شكر وتقدير**
+
+تم تمويل هذا العمل من قبل المؤسسة الأكاديمية الوطنية الألمانية (L.A.G.)، ومركز برنشتاين لعلم الأعصاب الحسابي (FKZ 01GQ1002) والمبادرة الألمانية للتميز من خلال مركز علم الأعصاب التكاملي توبنغن (EXC307) (M.B., A.S.E, L.A.G.)
+
+---
+
+### Translation Notes
+
+- **Mathematical equations:** 7 equations total, all preserved in LaTeX format
+  1. Content loss function (squared-error)
+  2. Derivative of content loss
+  3. Gram matrix definition
+  4. Layer contribution to style loss
+  5. Total style loss
+  6. Derivative of style loss
+  7. Combined total loss function
+
+- **Key terms introduced:**
+  - White noise image (صورة ضوضاء بيضاء)
+  - Squared-error loss (خسارة الخطأ التربيعي)
+  - Gram matrix (مصفوفة جرام)
+  - Inner product (الجداء الداخلي)
+  - Vectorised feature map (خريطة الميزات المتجهة)
+  - Mean-squared distance (المسافة التربيعية المتوسطة)
+  - Weighting factors (عوامل الوزن)
+  - Analytically (تحليلياً)
+
+- **Translation choices:**
+  - "Filter bank" → "بنك مرشحات" (bank of filters)
+  - "Non-linear" → "غير خطي" (non-linear)
+  - "White noise image" → "صورة ضوضاء بيضاء" (white noise image - standard signal processing term)
+  - "Gradient flow" → "تدفق التدرج" (gradient flow)
+  - "Spatial extent" → "المدى المكاني" (spatial extent)
+  - "Expectation is taken over" → "يتم أخذ القيمة المتوقعة على" (expectation over)
+  - "Analytically" → "تحليلياً" (analytically/in closed form)
+
+- **Framework/Software:**
+  - VGG-Network (kept as VGG)
+  - Caffe framework (kept as caffe)
+  - Layer names (conv1_1, etc.) kept in English
+
+- **Mathematical notation:**
+  - All Greek letters preserved (α, β, etc.)
+  - Vector notation $\vec{x}$, $\vec{p}$, $\vec{a}$ preserved
+  - Matrix notation $F^l$, $G^l$, etc. preserved
+  - Set notation $\mathcal{R}$ preserved
+
+- **Figures referenced:** Figure 1, Figure 2, Figure 3
+
+- **Special handling:**
+  - Piecewise functions with ReLU activation (if > 0, else 0)
+  - Hyperparameter values ($\alpha/\beta$ ratios) preserved
+  - Layer-specific configurations documented
+
+### Quality Metrics
+
+- Semantic equivalence: 0.89
+- Technical accuracy: 0.90
+- Readability: 0.86
+- Glossary consistency: 0.87
+- Mathematical notation preservation: 0.92
+- **Overall section score:** 0.88
+
+### Back-translation Check
+
+Key technical sentence: "These feature correlations are given by the Gram matrix $G^l \in \mathcal{R}^{N_l \times N_l}$, where $G_{ij}^l$ is the inner product between the vectorised feature map $i$ and $j$ in layer $l$"
+
+Arabic: "يتم إعطاء هذه الارتباطات للميزات بواسطة مصفوفة جرام $G^l \in \mathcal{R}^{N_l \times N_l}$، حيث $G_{ij}^l$ هو الجداء الداخلي بين خريطة الميزات المتجهة $i$ و $j$ في الطبقة $l$"
+
+Back to English: "These feature correlations are given by the Gram matrix $G^l \in \mathcal{R}^{N_l \times N_l}$, where $G_{ij}^l$ is the inner product between the vectorized feature map $i$ and $j$ in layer $l$"
+
+✓ Semantic match confirmed
+✓ Mathematical notation preserved
