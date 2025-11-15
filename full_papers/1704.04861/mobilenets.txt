@@ -1,0 +1,567 @@
+                                                MobileNets: Efficient Convolutional Neural Networks for Mobile Vision
+                                                                            Applications
+
+                                                      Andrew G. Howard    Menglong Zhu   Bo Chen       Dmitry Kalenichenko
+                                                       Weijun Wang     Tobias Weyand   Marco Andreetto    Hartwig Adam
+
+                                                                                                 Google Inc.
+arXiv:1704.04861v1 [cs.CV] 17 Apr 2017
+
+
+
+
+                                                     {howarda,menglong,bochen,dkalenichenko,weijunw,weyand,anm,hadam}@google.com
+
+
+
+                                                                 Abstract                                    models. Section 3 describes the MobileNet architecture and
+                                                                                                             two hyper-parameters width multiplier and resolution mul-
+                                            We present a class of efficient models called MobileNets         tiplier to define smaller and more efficient MobileNets. Sec-
+                                         for mobile and embedded vision applications. MobileNets             tion 4 describes experiments on ImageNet as well a variety
+                                         are based on a streamlined architecture that uses depth-            of different applications and use cases. Section 5 closes
+                                         wise separable convolutions to build light weight deep              with a summary and conclusion.
+                                         neural networks. We introduce two simple global hyper-
+                                         parameters that efficiently trade off between latency and           2. Prior Work
+                                         accuracy. These hyper-parameters allow the model builder
+                                         to choose the right sized model for their application based             There has been rising interest in building small and effi-
+                                         on the constraints of the problem. We present extensive             cient neural networks in the recent literature, e.g. [16, 34,
+                                         experiments on resource and accuracy tradeoffs and show             12, 36, 22]. Many different approaches can be generally
+                                         strong performance compared to other popular models on              categorized into either compressing pretrained networks or
+                                         ImageNet classification. We then demonstrate the effective-         training small networks directly. This paper proposes a
+                                         ness of MobileNets across a wide range of applications and          class of network architectures that allows a model devel-
+                                         use cases including object detection, finegrain classifica-         oper to specifically choose a small network that matches
+                                         tion, face attributes and large scale geo-localization.             the resource restrictions (latency, size) for their application.
+                                                                                                             MobileNets primarily focus on optimizing for latency but
+                                                                                                             also yield small networks. Many papers on small networks
+                                         1. Introduction                                                     focus only on size but do not consider speed.
+                                                                                                                 MobileNets are built primarily from depthwise separable
+                                             Convolutional neural networks have become ubiquitous            convolutions initially introduced in [26] and subsequently
+                                         in computer vision ever since AlexNet [19] popularized              used in Inception models [13] to reduce the computation in
+                                         deep convolutional neural networks by winning the Ima-              the first few layers. Flattened networks [16] build a network
+                                         geNet Challenge: ILSVRC 2012 [24]. The general trend                out of fully factorized convolutions and showed the poten-
+                                         has been to make deeper and more complicated networks               tial of extremely factorized networks. Independent of this
+                                         in order to achieve higher accuracy [27, 31, 29, 8]. How-           current paper, Factorized Networks[34] introduces a similar
+                                         ever, these advances to improve accuracy are not necessar-          factorized convolution as well as the use of topological con-
+                                         ily making networks more efficient with respect to size and         nections. Subsequently, the Xception network [3] demon-
+                                         speed. In many real world applications such as robotics,            strated how to scale up depthwise separable filters to out
+                                         self-driving car and augmented reality, the recognition tasks       perform Inception V3 networks. Another small network is
+                                         need to be carried out in a timely fashion on a computation-        Squeezenet [12] which uses a bottleneck approach to design
+                                         ally limited platform.                                              a very small network. Other reduced computation networks
+                                             This paper describes an efficient network architecture          include structured transform networks [28] and deep fried
+                                         and a set of two hyper-parameters in order to build very            convnets [37].
+                                         small, low latency models that can be easily matched to the             A different approach for obtaining small networks is
+                                         design requirements for mobile and embedded vision ap-              shrinking, factorizing or compressing pretrained networks.
+                                         plications. Section 2 reviews prior work in building small          Compression based on product quantization [36], hashing
+
+
+                                                                                                         1
+                                                                                                                                  Proprietary + Confidential
+
+
+
+
+               Object Detection                                                                                  Finegrain Classification
+
+
+
+
+            Photo by Juanedc (CC BY 2.0)                                                                      Photo by HarshLight (CC BY 2.0)
+
+
+               Face Attributes                                                                                  Landmark Recognition
+
+                                                             MobileNets
+
+
+
+          Google Doodle by Sarah Harrison                                                                   Photo by Sharon VanderKaay (CC BY 2.0)
+
+
+                Figure 1. MobileNet models can be applied to various recognition tasks for efficient on device intelligence.
+
+
+[2], and pruning, vector quantization and Huffman coding                 DF × M feature map F and produces a DF × DF × N
+[5] have been proposed in the literature. Additionally var-              feature map G where DF is the spatial width and height
+ious factorizations have been proposed to speed up pre-                  of a square input feature map1 , M is the number of input
+trained networks [14, 20]. Another method for training                   channels (input depth), DG is the spatial width and height of
+small networks is distillation [9] which uses a larger net-              a square output feature map and N is the number of output
+work to teach a smaller network. It is complementary to                  channel (output depth).
+our approach and is covered in some of our use cases in                      The standard convolutional layer is parameterized by
+section 4. Another emerging approach is low bit networks                 convolution kernel K of size DK ×DK ×M ×N where DK
+[4, 22, 11].                                                             is the spatial dimension of the kernel assumed to be square
+                                                                         and M is number of input channels and N is the number of
+3. MobileNet Architecture                                                output channels as defined previously.
+                                                                             The output feature map for standard convolution assum-
+   In this section we first describe the core layers that Mo-
+                                                                         ing stride one and padding is computed as:
+bileNet is built on which are depthwise separable filters.
+We then describe the MobileNet network structure and con-                                       X
+clude with descriptions of the two model shrinking hyper-                          Gk,l,n =             Ki,j,m,n · Fk+i−1,l+j−1,m                              (1)
+                                                                                                i,j,m
+parameters width multiplier and resolution multiplier.
+                                                                            Standard convolutions have the computational cost of:
+3.1. Depthwise Separable Convolution
+   The MobileNet model is based on depthwise separable                                     DK · DK · M · N · DF · DF                                           (2)
+convolutions which is a form of factorized convolutions
+which factorize a standard convolution into a depthwise                  where the computational cost depends multiplicatively on
+convolution and a 1 × 1 convolution called a pointwise con-              the number of input channels M , the number of output
+volution. For MobileNets the depthwise convolution ap-                   channels N the kernel size Dk × Dk and the feature map
+plies a single filter to each input channel. The pointwise               size DF × DF . MobileNet models address each of these
+convolution then applies a 1 × 1 convolution to combine the              terms and their interactions. First it uses depthwise separa-
+outputs the depthwise convolution. A standard convolution                ble convolutions to break the interaction between the num-
+both filters and combines inputs into a new set of outputs               ber of output channels and the size of the kernel.
+in one step. The depthwise separable convolution splits this                 The standard convolution operation has the effect of fil-
+into two layers, a separate layer for filtering and a separate           tering features based on the convolutional kernels and com-
+layer for combining. This factorization has the effect of                bining features in order to produce a new representation.
+drastically reducing computation and model size. Figure 2                The filtering and combination steps can be split into two
+shows how a standard convolution 2(a) is factorized into a               steps via the use of factorized convolutions called depthwise
+depthwise convolution 2(b) and a 1 × 1 pointwise convolu-                   1 We assume that the output feature map has the same spatial dimen-
+tion 2(c).                                                               sions as the input and both feature maps are square. Our model shrinking
+   A standard convolutional layer takes as input a DF ×                  results generalize to feature maps with arbitrary sizes and aspect ratios.
+separable convolutions for substantial reduction in compu-
+tational cost.
+    Depthwise separable convolution are made up of two
+                                                                       M
+layers: depthwise convolutions and pointwise convolutions.
+                                                                       M                                      ...
+We use depthwise convolutions to apply a single filter per         DK
+                                                                       M                                      ...
+each input channel (input depth). Pointwise convolution, a
+simple 1×1 convolution, is then used to create a linear com-
+                                                                   DK D
+                                                                        K                       N             ...
+bination of the output of the depthwise layer. MobileNets
+                                                                   DK DK                        N
+                                                                                   (a) Standard Convolution Filters
+use both batchnorm and ReLU nonlinearities for both lay-                  DK                    N
+ers.                                                                 1
+    Depthwise convolution with one filter per input channel          1                                          ...
+(input depth) can be written as:
+                                                                   DK
+                                                                   DK1                                          ...
+          Ĝk,l,m =
+                    X
+                        K̂i,j,m · Fk+i−1,l+j−1,m          (3)
+                                                                      D
+                                                                   DK DK
+                                                                        K
+                                                                                                    M
+                                                                                                    M
+                                                                                                                ...
+                     i,j
+                                                                           DK                       M
+where K̂ is the depthwise convolutional kernel of size                            (b) Depthwise Convolutional Filters
+
+                                                                                                             ...
+DK × DK × M where the mth filter in K̂ is applied to                   M
+                                                                                                             ...
+the mth channel in F to produce the mth channel of the                 M
+filtered output feature map Ĝ.
+    Depthwise convolution has a computational cost of:                1M
+                                                                      1 1                    N
+                                                                                                             ...
+                 DK · DK · M · DF · DF                    (4)         1 1                    N
+    Depthwise convolution is extremely efficient relative to            1                    N
+standard convolution. However it only filters input chan-
+                                                                 (c) 1×1 Convolutional Filters called Pointwise Convolution in the con-
+nels, it does not combine them to create new features. So        text of Depthwise Separable Convolution
+an additional layer that computes a linear combination of
+                                                                Figure 2. The standard convolutional filters in (a) are replaced by
+the output of depthwise convolution via 1 × 1 convolution       two layers: depthwise convolution in (b) and pointwise convolu-
+is needed in order to generate these new features.              tion in (c) to build a depthwise separable filter.
+    The combination of depthwise convolution and 1 × 1
+(pointwise) convolution is called depthwise separable con-
+volution which was originally introduced in [26].               3.2. Network Structure and Training
+    Depthwise separable convolutions cost:
+                                                                    The MobileNet structure is built on depthwise separable
+                                                                convolutions as mentioned in the previous section except for
+      DK · DK · M · DF · DF + M · N · DF · DF             (5)   the first layer which is a full convolution. By defining the
+                                                                network in such simple terms we are able to easily explore
+which is the sum of the depthwise and 1 × 1 pointwise con-      network topologies to find a good network. The MobileNet
+volutions.                                                      architecture is defined in Table 1. All layers are followed by
+   By expressing convolution as a two step process of filter-   a batchnorm [13] and ReLU nonlinearity with the exception
+ing and combining we get a reduction in computation of:         of the final fully connected layer which has no nonlinearity
+                                                                and feeds into a softmax layer for classification. Figure 3
+          DK · DK · M · DF · DF + M · N · DF · DF               contrasts a layer with regular convolutions, batchnorm and
+                 DK · DK · M · N · DF · DF                      ReLU nonlinearity to the factorized layer with depthwise
+          1     1                                               convolution, 1 × 1 pointwise convolution as well as batch-
+     =      + 2                                                 norm and ReLU after each convolutional layer. Down sam-
+          N    DK
+                                                                pling is handled with strided convolution in the depthwise
+    MobileNet uses 3 × 3 depthwise separable convolutions       convolutions as well as in the first layer. A final average
+which uses between 8 to 9 times less computation than stan-     pooling reduces the spatial resolution to 1 before the fully
+dard convolutions at only a small reduction in accuracy as      connected layer. Counting depthwise and pointwise convo-
+seen in Section 4.                                              lutions as separate layers, MobileNet has 28 layers.
+    Additional factorization in spatial dimension such as in        It is not enough to simply define networks in terms of a
+[16, 31] does not save much additional computation as very      small number of Mult-Adds. It is also important to make
+little computation is spent in depthwise convolutions.          sure these operations can be efficiently implementable. For
+                                                                               Table 1. MobileNet Body Architecture
+             3x3 Conv            3x3 Depthwise Conv
+                                                                   Type / Stride        Filter Shape          Input Size
+                BN                        BN                       Conv / s2            3 × 3 × 3 × 32        224 × 224 × 3
+                                                                   Conv dw / s1         3 × 3 × 32 dw         112 × 112 × 32
+               ReLU                      ReLU                      Conv / s1            1 × 1 × 32 × 64       112 × 112 × 32
+                                                                   Conv dw / s2         3 × 3 × 64 dw         112 × 112 × 64
+                                       1x1 Conv
+                                                                   Conv / s1            1 × 1 × 64 × 128      56 × 56 × 64
+                                          BN                       Conv dw / s1         3 × 3 × 128 dw        56 × 56 × 128
+                                                                   Conv / s1            1 × 1 × 128 × 128     56 × 56 × 128
+                                         ReLU                      Conv dw / s2         3 × 3 × 128 dw        56 × 56 × 128
+                                                                   Conv / s1            1 × 1 × 128 × 256     28 × 28 × 128
+Figure 3. Left: Standard convolutional layer with batchnorm and    Conv dw / s1         3 × 3 × 256 dw        28 × 28 × 256
+ReLU. Right: Depthwise Separable convolutions with Depthwise
+                                                                   Conv / s1            1 × 1 × 256 × 256     28 × 28 × 256
+and Pointwise layers followed by batchnorm and ReLU.
+                                                                   Conv dw / s2         3 × 3 × 256 dw        28 × 28 × 256
+                                                                   Conv / s1            1 × 1 × 256 × 512     14 × 14 × 256
+instance unstructured sparse matrix operations are not typ-           Conv dw / s1 3 × 3 × 512 dw             14 × 14 × 512
+                                                                   5×
+ically faster than dense matrix operations until a very high          Conv / s1         1 × 1 × 512 × 512     14 × 14 × 512
+level of sparsity. Our model structure puts nearly all of the      Conv dw / s2         3 × 3 × 512 dw        14 × 14 × 512
+                                                                   Conv / s1            1 × 1 × 512 × 1024    7 × 7 × 512
+computation into dense 1 × 1 convolutions. This can be im-
+                                                                   Conv dw / s2         3 × 3 × 1024 dw       7 × 7 × 1024
+plemented with highly optimized general matrix multiply
+                                                                   Conv / s1            1 × 1 × 1024 × 1024 7 × 7 × 1024
+(GEMM) functions. Often convolutions are implemented
+                                                                   Avg Pool / s1        Pool 7 × 7            7 × 7 × 1024
+by a GEMM but require an initial reordering in memory              FC / s1              1024 × 1000           1 × 1 × 1024
+called im2col in order to map it to a GEMM. For instance,          Softmax / s1         Classifier            1 × 1 × 1000
+this approach is used in the popular Caffe package [15].
+1 × 1 convolutions do not require this reordering in memory                     Table 2. Resource Per Layer Type
+and can be implemented directly with GEMM which is one                   Type                Mult-Adds     Parameters
+of the most optimized numerical linear algebra algorithms.
+                                                                         Conv 1 × 1          94.86%        74.59%
+MobileNet spends 95% of it’s computation time in 1 × 1
+                                                                         Conv DW 3 × 3       3.06%         1.06%
+convolutions which also has 75% of the parameters as can
+                                                                         Conv 3 × 3          1.19%         0.02%
+be seen in Table 2. Nearly all of the additional parameters
+                                                                         Fully Connected     0.18%         24.33%
+are in the fully connected layer.
+    MobileNet models were trained in TensorFlow [1] us-
+ing RMSprop [33] with asynchronous gradient descent sim-
+ilar to Inception V3 [31]. However, contrary to training          and width multiplier α, the number of input channels M be-
+large models we use less regularization and data augmen-          comes αM and the number of output channels N becomes
+tation techniques because small models have less trouble          αN .
+with overfitting. When training MobileNets we do not use              The computational cost of a depthwise separable convo-
+side heads or label smoothing and additionally reduce the         lution with width multiplier α is:
+amount image of distortions by limiting the size of small           DK · DK · αM · DF · DF + αM · αN · DF · DF             (6)
+crops that are used in large Inception training [31]. Addi-
+tionally, we found that it was important to put very little or    where α ∈ (0, 1] with typical settings of 1, 0.75, 0.5 and
+no weight decay (l2 regularization) on the depthwise filters      0.25. α = 1 is the baseline MobileNet and α < 1 are
+since their are so few parameters in them. For the ImageNet       reduced MobileNets. Width multiplier has the effect of re-
+benchmarks in the next section all models were trained with       ducing computational cost and the number of parameters
+same training parameters regardless of the size of the model.     quadratically by roughly α2 . Width multiplier can be ap-
+                                                                  plied to any model structure to define a new smaller model
+3.3. Width Multiplier: Thinner Models                             with a reasonable accuracy, latency and size trade off. It
+    Although the base MobileNet architecture is already           is used to define a new reduced structure that needs to be
+small and low latency, many times a specific use case or          trained from scratch.
+application may require the model to be smaller and faster.
+                                                                  3.4. Resolution Multiplier: Reduced Representa-
+In order to construct these smaller and less computationally
+                                                                       tion
+expensive models we introduce a very simple parameter α
+called width multiplier. The role of the width multiplier α is       The second hyper-parameter to reduce the computational
+to thin a network uniformly at each layer. For a given layer      cost of a neural network is a resolution multiplier ρ. We ap-
+Table 3. Resource usage for modifications to standard convolution.   Table 4. Depthwise Separable vs Full Convolution MobileNet
+Note that each row is a cumulative effect adding on top of the             Model          ImageNet      Million       Million
+previous row. This example is for an internal MobileNet layer
+                                                                                          Accuracy     Mult-Adds     Parameters
+with DK = 3, M = 512, N = 512, DF = 14.
+                                                                      Conv MobileNet       71.7%         4866           29.3
+     Layer/Modification             Million         Million             MobileNet          70.6%          569            4.2
+                                   Mult-Adds       Parameters
+       Convolution                   462              2.36                     Table 5. Narrow vs Shallow MobileNet
+ Depthwise Separable Conv            52.3             0.27                  Model         ImageNet      Million     Million
+        α = 0.75                     29.6             0.15                                Accuracy Mult-Adds Parameters
+        ρ = 0.714                    15.1             0.15             0.75 MobileNet       68.4%         325        2.6
+                                                                      Shallow MobileNet     65.3%         307        2.9
+
+ply this to the input image and the internal representation of
+                                                                                 Table 6. MobileNet Width Multiplier
+every layer is subsequently reduced by the same multiplier.
+                                                                        Width Multiplier   ImageNet      Million     Million
+In practice we implicitly set ρ by setting the input resolu-
+                                                                                           Accuracy Mult-Adds Parameters
+tion.
+                                                                      1.0 MobileNet-224     70.6%         569         4.2
+   We can now express the computational cost for the core
+                                                                      0.75 MobileNet-224    68.4%         325         2.6
+layers of our network as depthwise separable convolutions             0.5 MobileNet-224     63.7%         149         1.3
+with width multiplier α and resolution multiplier ρ:                  0.25 MobileNet-224    50.6%          41         0.5
+ DK · DK · αM · ρDF · ρDF + αM · αN · ρDF · ρDF (7)
+                                                                                    Table 7. MobileNet Resolution
+where ρ ∈ (0, 1] which is typically set implicitly so that                Resolution       ImageNet     Million        Million
+the input resolution of the network is 224, 192, 160 or 128.                               Accuracy Mult-Adds         Parameters
+ρ = 1 is the baseline MobileNet and ρ < 1 are reduced                 1.0 MobileNet-224      70.6%        569             4.2
+computation MobileNets. Resolution multiplier has the ef-             1.0 MobileNet-192      69.1%        418             4.2
+fect of reducing computational cost by ρ2 .                           1.0 MobileNet-160      67.2%        290             4.2
+   As an example we can look at a typical layer in Mo-                1.0 MobileNet-128      64.4%        186             4.2
+bileNet and see how depthwise separable convolutions,
+width multiplier and resolution multiplier reduce the cost
+and parameters. Table 3 shows the computation and number             accuracy by 1% on ImageNet was saving tremendously on
+of parameters for a layer as architecture shrinking methods          mult-adds and parameters.
+are sequentially applied to the layer. The first row shows              We next show results comparing thinner models with
+the Mult-Adds and parameters for a full convolutional layer          width multiplier to shallower models using less layers. To
+with an input feature map of size 14 × 14 × 512 with a ker-          make MobileNet shallower, the 5 layers of separable filters
+nel K of size 3 × 3 × 512 × 512. We will look in detail              with feature size 14 × 14 × 512 in Table 1 are removed.
+in the next section at the trade offs between resources and          Table 5 shows that at similar computation and number of
+accuracy.                                                            parameters, that making MobileNets thinner is 3% better
+                                                                     than making them shallower.
+4. Experiments
+                                                                     4.2. Model Shrinking Hyperparameters
+   In this section we first investigate the effects of depth-
+wise convolutions as well as the choice of shrinking by re-             Table 6 shows the accuracy, computation and size trade
+ducing the width of the network rather than the number of            offs of shrinking the MobileNet architecture with the width
+layers. We then show the trade offs of reducing the net-             multiplier α. Accuracy drops off smoothly until the archi-
+work based on the two hyper-parameters: width multiplier             tecture is made too small at α = 0.25.
+and resolution multiplier and compare results to a number               Table 7 shows the accuracy, computation and size trade
+of popular models. We then investigate MobileNets applied            offs for different resolution multipliers by training Mo-
+to a number of different applications.                               bileNets with reduced input resolutions. Accuracy drops
+                                                                     off smoothly across resolution.
+4.1. Model Choices
+                                                                        Figure 4 shows the trade off between ImageNet Accu-
+   First we show results for MobileNet with depthwise sep-           racy and computation for the 16 models made from the
+arable convolutions compared to a model built with full con-         cross product of width multiplier α ∈ {1, 0.75, 0.5, 0.25}
+volutions. In Table 4 we see that using depthwise separa-            and resolutions {224, 192, 160, 128}. Results are log linear
+ble convolutions compared to full convolutions only reduces          with a jump when models get very small at α = 0.25.
+                                                                        Table 8. MobileNet Comparison to Popular Models
+                                                                         Model          ImageNet     Million       Million
+                                                                                        Accuracy Mult-Adds Parameters
+                                                                   1.0 MobileNet-224     70.6%          569         4.2
+                                                                       GoogleNet         69.8%         1550         6.8
+                                                                        VGG 16           71.5%        15300         138
+
+                                                                  Table 9. Smaller MobileNet Comparison to Popular Models
+                                                                           Model          ImageNet    Million       Million
+                                                                                          Accuracy Mult-Adds Parameters
+                                                                   0.50 MobileNet-160      60.2%         76          1.32
+                                                                        Squeezenet         57.5%        1700         1.25
+                                                                         AlexNet           57.2%         720          60
+Figure 4. This figure shows the trade off between computation
+(Mult-Adds) and accuracy on the ImageNet benchmark. Note the
+log linear dependence between accuracy and computation.                       Table 10. MobileNet for Stanford Dogs
+                                                                         Model             Top-1        Million     Million
+                                                                                         Accuracy Mult-Adds Parameters
+                                                                    Inception V3 [18]       84%          5000        23.2
+                                                                   1.0 MobileNet-224      83.3%          569          3.3
+                                                                   0.75 MobileNet-224     81.9%          325          1.9
+                                                                   1.0 MobileNet-192      81.9%          418          3.3
+                                                                   0.75 MobileNet-192     80.5%          239          1.9
+
+                                                                  Table 11. Performance of PlaNet using the MobileNet architec-
+                                                                  ture. Percentages are the fraction of the Im2GPS test dataset that
+                                                                  were localized within a certain distance from the ground truth. The
+                                                                  numbers for the original PlaNet model are based on an updated
+                                                                  version that has an improved architecture and training dataset.
+                                                                          Scale          Im2GPS [7] PlaNet [35]         PlaNet
+                                                                                                                       MobileNet
+Figure 5. This figure shows the trade off between the number of   Continent (2500 km)       51.9%          77.6%        79.3%
+parameters and accuracy on the ImageNet benchmark. The colors      Country (750 km)         35.4%          64.0%        60.3%
+encode input resolutions. The number of parameters do not vary     Region (200 km)          32.1%          51.1%        45.2%
+based on the input resolution.                                       City (25 km)           21.9%          31.7%        31.7%
+                                                                     Street (1 km)           2.5%          11.0%        11.4%
+
+
+   Figure 5 shows the trade off between ImageNet Ac-
+curacy and number of parameters for the 16 models
+                                                                  4.3. Fine Grained Recognition
+made from the cross product of width multiplier α ∈                   We train MobileNet for fine grained recognition on the
+{1, 0.75, 0.5, 0.25} and resolutions {224, 192, 160, 128}.        Stanford Dogs dataset [17]. We extend the approach of [18]
+                                                                  and collect an even larger but noisy training set than [18]
+   Table 8 compares full MobileNet to the original
+                                                                  from the web. We use the noisy web data to pretrain a fine
+GoogleNet [30] and VGG16 [27]. MobileNet is nearly
+                                                                  grained dog recognition model and then fine tune the model
+as accurate as VGG16 while being 32 times smaller and
+                                                                  on the Stanford Dogs training set. Results on Stanford Dogs
+27 times less compute intensive. It is more accurate than
+                                                                  test set are in Table 10. MobileNet can almost achieve the
+GoogleNet while being smaller and more than 2.5 times less
+                                                                  state of the art results from [18] at greatly reduced compu-
+computation.
+                                                                  tation and size.
+    Table 9 compares a reduced MobileNet with width mul-
+                                                                  4.4. Large Scale Geolocalizaton
+tiplier α = 0.5 and reduced resolution 160 × 160. Reduced
+MobileNet is 4% better than AlexNet [19] while being 45×             PlaNet [35] casts the task of determining where on earth
+smaller and 9.4× less compute than AlexNet. It is also 4%         a photo was taken as a classification problem. The approach
+better than Squeezenet [12] at about the same size and 22×        divides the earth into a grid of geographic cells that serve as
+less computation.                                                 the target classes and trains a convolutional neural network
+on millions of geo-tagged photos. PlaNet has been shown                 Table 12. Face attribute classification using the MobileNet archi-
+                                                                        tecture. Each row corresponds to a different hyper-parameter set-
+to successfully localize a large variety of photos and to out-
+                                                                        ting (width multiplier α and image resolution).
+perform Im2GPS [6, 7] that addresses the same task.
+    We re-train PlaNet using the MobileNet architecture on               Width Multiplier / Mean Million   Million
+the same data. While the full PlaNet model based on the In-                  Resolution      AP Mult-Adds Parameters
+ception V3 architecture [31] has 52 million parameters and              1.0 MobileNet-224 88.7%    568        3.2
+5.74 billion mult-adds. The MobileNet model has only 13                 0.5 MobileNet-224 88.1%    149        0.8
+million parameters with the usual 3 million for the body and            0.25 MobileNet-224 87.2%    45        0.2
+10 million for the final layer and 0.58 Million mult-adds.              1.0 MobileNet-128 88.1%    185        3.2
+As shown in Tab. 11, the MobileNet version delivers only                0.5 MobileNet-128 87.7%     48        0.8
+slightly decreased performance compared to PlaNet despite               0.25 MobileNet-128 86.4%    15        0.2
+being much more compact. Moreover, it still outperforms                       Baseline      86.9% 1600        7.5
+Im2GPS by a large margin.
+                                                                        Table 13. COCO object detection results comparison using differ-
+4.5. Face Attributes                                                    ent frameworks and network architectures. mAP is reported with
+    Another use-case for MobileNet is compressing large                 COCO primary challenge metric (AP at IoU=0.50:0.05:0.95)
+systems with unknown or esoteric training procedures. In                  Framework       Model        mAP       Billion    Million
+a face attribute classification task, we demonstrate a syner-             Resolution                           Mult-Adds Parameters
+gistic relationship between MobileNet and distillation [9],                            deeplab-VGG 21.1%           34.9       33.1
+a knowledge transfer technique for deep networks. We                       SSD 300     Inception V2 22.0%          3.8        13.7
+seek to reduce a large face attribute classifier with 75                                MobileNet 19.3%             1.2        6.8
+                                                                         Faster-RCNN       VGG        22.9%        64.3      138.5
+million parameters and 1600 million Mult-Adds. The
+                                                                              300      Inception V2 15.4%         118.2       13.3
+classifier is trained on a multi-attribute dataset similar to
+                                                                                        MobileNet 16.4%            25.2        6.1
+YFCC100M [32].                                                           Faster-RCNN       VGG        25.7%       149.6      138.5
+    We distill a face attribute classifier using the MobileNet                600      Inception V2 21.9%         129.6       13.3
+architecture. Distillation [9] works by training the classi-                             Mobilenet 19.8%           30.5        6.1
+fier to emulate the outputs of a larger model2 instead of the
+ground-truth labels, hence enabling training from large (and
+potentially infinite) unlabeled datasets. Marrying the scal-
+ability of distillation training and the parsimonious param-
+eterization of MobileNet, the end system not only requires
+no regularization (e.g. weight-decay and early-stopping),
+but also demonstrates enhanced performances. It is evi-
+dent from Tab. 12 that the MobileNet-based classifier is re-
+silient to aggressive model shrinking: it achieves a similar
+mean average precision across attributes (mean AP) as the
+in-house while consuming only 1% the Multi-Adds.
+4.6. Object Detection
+   MobileNet can also be deployed as an effective base net-
+work in modern object detection systems. We report results
+                                                                        Figure 6. Example objection detection results using MobileNet
+for MobileNet trained for object detection on COCO data
+                                                                        SSD.
+based on the recent work that won the 2016 COCO chal-
+lenge [10]. In table 13, MobileNet is compared to VGG
+and Inception V2 [13] under both Faster-RCNN [23] and                   and evaluated on minival. For both frameworks, MobileNet
+SSD [21] framework. In our experiments, SSD is evaluated                achieves comparable results to other networks with only a
+with 300 input resolution (SSD 300) and Faster-RCNN is                  fraction of computational complexity and model size.
+compared with both 300 and 600 input resolution (Faster-
+RCNN 300, Faster-RCNN 600). The Faster-RCNN model                       4.7. Face Embeddings
+evaluates 300 RPN proposal boxes per image. The models                      The FaceNet model is a state of the art face recognition
+are trained on COCO train+val excluding 8k minival images               model [25]. It builds face embeddings based on the triplet
+   2 The emulation quality is measured by averaging the per-attribute   loss. To build a mobile FaceNet model we use distillation
+cross-entropy over all attributes.                                      to train by minimizing the squared differences of the output
+        Table 14. MobileNet Distilled from FaceNet                   [8] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learn-
+       Model            1e-4        Million      Million                 ing for image recognition. arXiv preprint arXiv:1512.03385,
+                     Accuracy Mult-Adds Parameters                       2015. 1
+    FaceNet [25]        83%           1600         7.5               [9] G. Hinton, O. Vinyals, and J. Dean. Distilling the knowledge
+ 1.0 MobileNet-160     79.4%           286         4.9                   in a neural network. arXiv preprint arXiv:1503.02531, 2015.
+ 1.0 MobileNet-128     78.3%           185         5.5                   2, 7
+ 0.75 MobileNet-128    75.2%           166         3.4              [10] J. Huang, V. Rathod, C. Sun, M. Zhu, A. Korattikara,
+ 0.75 MobileNet-128    72.5%           108         3.8                   A. Fathi, I. Fischer, Z. Wojna, Y. Song, S. Guadarrama, et al.
+                                                                         Speed/accuracy trade-offs for modern convolutional object
+                                                                         detectors. arXiv preprint arXiv:1611.10012, 2016. 7
+of FaceNet and MobileNet on the training data. Results for          [11] I. Hubara, M. Courbariaux, D. Soudry, R. El-Yaniv, and
+very small MobileNet models can be found in table 14.                    Y. Bengio. Quantized neural networks: Training neural net-
+                                                                         works with low precision weights and activations. arXiv
+                                                                         preprint arXiv:1609.07061, 2016. 2
+5. Conclusion                                                       [12] F. N. Iandola, M. W. Moskewicz, K. Ashraf, S. Han, W. J.
+                                                                         Dally, and K. Keutzer. Squeezenet: Alexnet-level accuracy
+   We proposed a new model architecture called Mo-
+                                                                         with 50x fewer parameters and¡ 1mb model size. arXiv
+bileNets based on depthwise separable convolutions. We
+                                                                         preprint arXiv:1602.07360, 2016. 1, 6
+investigated some of the important design decisions leading         [13] S. Ioffe and C. Szegedy. Batch normalization: Accelerating
+to an efficient model. We then demonstrated how to build                 deep network training by reducing internal covariate shift.
+smaller and faster MobileNets using width multiplier and                 arXiv preprint arXiv:1502.03167, 2015. 1, 3, 7
+resolution multiplier by trading off a reasonable amount of         [14] M. Jaderberg, A. Vedaldi, and A. Zisserman. Speeding up
+accuracy to reduce size and latency. We then compared dif-               convolutional neural networks with low rank expansions.
+ferent MobileNets to popular models demonstrating supe-                  arXiv preprint arXiv:1405.3866, 2014. 2
+rior size, speed and accuracy characteristics. We concluded         [15] Y. Jia, E. Shelhamer, J. Donahue, S. Karayev, J. Long, R. Gir-
+by demonstrating MobileNet’s effectiveness when applied                  shick, S. Guadarrama, and T. Darrell. Caffe: Convolu-
+to a wide variety of tasks. As a next step to help adoption              tional architecture for fast feature embedding. arXiv preprint
+and exploration of MobileNets, we plan on releasing mod-                 arXiv:1408.5093, 2014. 4
+                                                                    [16] J. Jin, A. Dundar, and E. Culurciello. Flattened convolutional
+els in Tensor Flow.
+                                                                         neural networks for feedforward acceleration. arXiv preprint
+                                                                         arXiv:1412.5474, 2014. 1, 3
+References                                                          [17] A. Khosla, N. Jayadevaprakash, B. Yao, and L. Fei-Fei.
+ [1] M. Abadi, A. Agarwal, P. Barham, E. Brevdo, Z. Chen,                Novel dataset for fine-grained image categorization. In First
+     C. Citro, G. S. Corrado, A. Davis, J. Dean, M. Devin, et al.        Workshop on Fine-Grained Visual Categorization, IEEE
+     Tensorflow: Large-scale machine learning on heterogeneous           Conference on Computer Vision and Pattern Recognition,
+     systems, 2015. Software available from tensorflow. org, 1,          Colorado Springs, CO, June 2011. 6
+     2015. 4                                                        [18] J. Krause, B. Sapp, A. Howard, H. Zhou, A. Toshev,
+                                                                         T. Duerig, J. Philbin, and L. Fei-Fei. The unreasonable ef-
+ [2] W. Chen, J. T. Wilson, S. Tyree, K. Q. Weinberger, and
+                                                                         fectiveness of noisy data for fine-grained recognition. arXiv
+     Y. Chen. Compressing neural networks with the hashing
+                                                                         preprint arXiv:1511.06789, 2015. 6
+     trick. CoRR, abs/1504.04788, 2015. 2
+                                                                    [19] A. Krizhevsky, I. Sutskever, and G. E. Hinton. Imagenet
+ [3] F. Chollet. Xception: Deep learning with depthwise separa-
+                                                                         classification with deep convolutional neural networks. In
+     ble convolutions. arXiv preprint arXiv:1610.02357v2, 2016.
+                                                                         Advances in neural information processing systems, pages
+     1
+                                                                         1097–1105, 2012. 1, 6
+ [4] M. Courbariaux, J.-P. David, and Y. Bengio. Training deep      [20] V. Lebedev, Y. Ganin, M. Rakhuba, I. Oseledets, and
+     neural networks with low precision multiplications. arXiv           V. Lempitsky.        Speeding-up convolutional neural net-
+     preprint arXiv:1412.7024, 2014. 2                                   works using fine-tuned cp-decomposition. arXiv preprint
+ [5] S. Han, H. Mao, and W. J. Dally. Deep compression: Com-             arXiv:1412.6553, 2014. 2
+     pressing deep neural network with pruning, trained quantiza-   [21] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. Reed.
+     tion and huffman coding. CoRR, abs/1510.00149, 2, 2015.             Ssd: Single shot multibox detector.            arXiv preprint
+     2                                                                   arXiv:1512.02325, 2015. 7
+ [6] J. Hays and A. Efros. IM2GPS: estimating geographic in-        [22] M. Rastegari, V. Ordonez, J. Redmon, and A. Farhadi. Xnor-
+     formation from a single image. In Proceedings of the IEEE           net: Imagenet classification using binary convolutional neu-
+     International Conference on Computer Vision and Pattern             ral networks. arXiv preprint arXiv:1603.05279, 2016. 1, 2
+     Recognition, 2008. 7                                           [23] S. Ren, K. He, R. Girshick, and J. Sun. Faster r-cnn: Towards
+ [7] J. Hays and A. Efros. Large-Scale Image Geolocalization.            real-time object detection with region proposal networks. In
+     In J. Choi and G. Friedland, editors, Multimodal Location           Advances in neural information processing systems, pages
+     Estimation of Videos and Images. Springer, 2014. 6, 7               91–99, 2015. 7
+[24] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh,
+     S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein,
+     et al. Imagenet large scale visual recognition challenge.
+     International Journal of Computer Vision, 115(3):211–252,
+     2015. 1
+[25] F. Schroff, D. Kalenichenko, and J. Philbin. Facenet: A uni-
+     fied embedding for face recognition and clustering. In Pro-
+     ceedings of the IEEE Conference on Computer Vision and
+     Pattern Recognition, pages 815–823, 2015. 8
+[26] L. Sifre. Rigid-motion scattering for image classification.
+     PhD thesis, Ph. D. thesis, 2014. 1, 3
+[27] K. Simonyan and A. Zisserman. Very deep convolutional
+     networks for large-scale image recognition. arXiv preprint
+     arXiv:1409.1556, 2014. 1, 6
+[28] V. Sindhwani, T. Sainath, and S. Kumar. Structured trans-
+     forms for small-footprint deep learning. In Advances in
+     Neural Information Processing Systems, pages 3088–3096,
+     2015. 1
+[29] C. Szegedy, S. Ioffe, and V. Vanhoucke. Inception-v4,
+     inception-resnet and the impact of residual connections on
+     learning. arXiv preprint arXiv:1602.07261, 2016. 1
+[30] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed,
+     D. Anguelov, D. Erhan, V. Vanhoucke, and A. Rabinovich.
+     Going deeper with convolutions. In Proceedings of the IEEE
+     Conference on Computer Vision and Pattern Recognition,
+     pages 1–9, 2015. 6
+[31] C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, and Z. Wojna.
+     Rethinking the inception architecture for computer vision.
+     arXiv preprint arXiv:1512.00567, 2015. 1, 3, 4, 7
+[32] B. Thomee, D. A. Shamma, G. Friedland, B. Elizalde, K. Ni,
+     D. Poland, D. Borth, and L.-J. Li. Yfcc100m: The new
+     data in multimedia research. Communications of the ACM,
+     59(2):64–73, 2016. 7
+[33] T. Tieleman and G. Hinton. Lecture 6.5-rmsprop: Divide
+     the gradient by a running average of its recent magnitude.
+     COURSERA: Neural Networks for Machine Learning, 4(2),
+     2012. 4
+[34] M. Wang, B. Liu, and H. Foroosh. Factorized convolutional
+     neural networks. arXiv preprint arXiv:1608.04337, 2016. 1
+[35] T. Weyand, I. Kostrikov, and J. Philbin. PlaNet - Photo Ge-
+     olocation with Convolutional Neural Networks. In European
+     Conference on Computer Vision (ECCV), 2016. 6, 7
+[36] J. Wu, C. Leng, Y. Wang, Q. Hu, and J. Cheng. Quantized
+     convolutional neural networks for mobile devices. arXiv
+     preprint arXiv:1512.06473, 2015. 1
+[37] Z. Yang, M. Moczulski, M. Denil, N. de Freitas, A. Smola,
+     L. Song, and Z. Wang. Deep fried convnets. In Proceedings
+     of the IEEE International Conference on Computer Vision,
+     pages 1476–1483, 2015. 1
+

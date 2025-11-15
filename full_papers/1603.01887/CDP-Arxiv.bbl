@@ -1,0 +1,75 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{DKM{\etalchar{+}}06}
+
+\bibitem[BK00]{BuldyginK00}
+V.V. Buldygin and I.U.V. Kozachenko.
+\newblock {\em Metric Characterization of Random Variables and Random
+  Processes}.
+\newblock Cross Cultural Communication. American Mathematical Soc., 2000.
+
+\bibitem[BS15]{BunS15}
+Mark Bun and Thomas Steinke.
+\newblock Concentrated differential privacy revisited.
+\newblock Manuscript, 2015.
+
+\bibitem[DKM{\etalchar{+}}06]{DworkKMMN06}
+Cynthia Dwork, Krishnaram Kenthapadi, Frank McSherry, Ilya Mironov, and Moni
+  Naor.
+\newblock Our data, ourselves: Privacy via distributed noise generation.
+\newblock In {\em Advances in Cryptology - {EUROCRYPT} 2006, 25th Annual
+  International Conference on the Theory and Applications of Cryptographic
+  Techniques, St. Petersburg, Russia, May 28 - June 1, 2006, Proceedings},
+  pages 486--503, 2006.
+
+\bibitem[DL09]{DworkL09}
+C.~Dwork and J.~Lei.
+\newblock Differential privacy and robust statistics.
+\newblock In {\em STOC}, 2009.
+
+\bibitem[DMNS06]{DworkMNS06}
+C.~Dwork, F.~McSherry, K.~Nissim, and A.~Smith.
+\newblock Calibrating noise to sensitivity in private data analysis.
+\newblock In {\em TCC}, pages 265--284, 2006.
+
+\bibitem[DMT07]{DworkMT07}
+C.~Dwork, F.~McSherry, and K.~Talwar.
+\newblock The price of privacy and the limits of lp decoding.
+\newblock In {\em STOC}, pages pp. 85--94, 2007.
+
+\bibitem[DN03]{DinurN03}
+Irit Dinur and Kobbi Nissim.
+\newblock Revealing information while preserving privacy.
+\newblock In {\em PODS}, pages 202--210, 2003.
+
+\bibitem[DRV10]{DworkRV10}
+Cynthia Dwork, Guy~N. Rothblum, and Salil~P. Vadhan.
+\newblock Boosting and differential privacy.
+\newblock In {\em FOCS}, pages 51--60, 2010.
+
+\bibitem[Dwo06]{Dwork06}
+C.~Dwork.
+\newblock Differential privacy.
+\newblock In {\em ICALP}, pages 1--12, 2006.
+
+\bibitem[Kah60]{Kahane60}
+J.~Kahane.
+\newblock Propriétés locales des fonctions à séries de fourier aléatoires.
+\newblock {\em Studia Mathematica}, 19(1):1--25, 1960.
+
+\bibitem[KOV15]{KairouzOV15}
+Peter Kairouz, Sewoong Oh, and Pramod Viswanath.
+\newblock The composition theorem for differential privacy.
+\newblock In {\em ICML}, pages 1376--1385, 2015.
+
+\bibitem[MV16]{MurtaghV16}
+Jack Murtagh and Salil~P. Vadhan.
+\newblock The complexity of computing the optimal composition of differential
+  privacy.
+\newblock In {\em {TCC}(A)}, pages 157--175, 2016.
+
+\bibitem[Riv12]{Rivasplata12}
+Omar Rivasplata.
+\newblock Subgaussian random variables: An expository note.
+\newblock Unpublished note, 2012.
+
+\end{thebibliography}
