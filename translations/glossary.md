@@ -1441,3 +1441,255 @@
 | posterior distribution | التوزيع اللاحق | 0.85 | 1 | Bayesian posterior probability distribution |
 | max-norm regularization | تنظيم القاعدة القصوى | 0.85 | 1 | Constraining weight vector norms |
 | weight decay | تضاؤل الأوزان | 0.90 | 1 | L2 regularization penalty on weights |
+| adaptive heuristic | استدلالي تكيفي | 0.85 | 1 | Self-adjusting heuristic method |
+| approximate stationarity | ثبات تقريبي | 0.85 | 1 | Nearly stationary point in optimization |
+| bounded dissimilarity | التباين المحدود | 0.85 | 1 | Bounded measure of difference between local functions |
+| consecutive rounds | جولات متتالية | 0.9 | 1 | Sequential communication rounds in federated learning |
+| device dissimilarity | تباين الأجهزة | 0.85 | 1 | Dissimilarity between devices in federated learning |
+| expected objective decrease | انخفاض الهدف المتوقع | 0.85 | 1 | Expected reduction in objective function value |
+| gradient norm | معيار التدرج | 0.9 | 1 | Norm of gradient vector |
+| gradient variance | تباين التدرجات | 0.85 | 1 | Variance of gradients across devices |
+| inexactness | عدم الدقة | 0.85 | 1 | Degree of approximation in local minimization |
+| local drift | الانجراف المحلي | 0.85 | 1 | Divergence of local model from global model |
+| local updating | التحديث المحلي | 0.9 | 1 | Updating model locally on device before aggregation |
+| minimizer | مُصغّر | 0.9 | 1 | Point that minimizes a function |
+| non-convex function | دالة غير محدبة | 0.9 | 1 | Function without convexity property |
+| partial updates | التحديثات الجزئية | 0.9 | 1 | Incomplete model updates from devices |
+| partial work | عمل جزئي | 0.85 | 1 | Incomplete local computation on device |
+| proximal term | حد قريبي | 0.9 | 2 | Regularization term keeping updates near current point |
+| stationary point | نقطة ثابتة | 0.9 | 1 | Point where gradient is zero in optimization |
+| stragglers | الأجهزة المتأخرة | 0.9 | 2 | Slow devices in distributed/federated system |
+| uniform device sampling | أخذ عينات الأجهزة الموحدة | 0.85 | 1 | Uniformly sampling devices in each round |
+| compound scaling | التوسيع المركب | 0.9 | 1 | Uniformly scaling width, depth, and resolution together |
+| receptive field | مجال الاستقبال | 0.9 | 1 | Region in input that affects a particular unit's output |
+| grid search | بحث شبكي | 0.9 | 1 | Exhaustive search over hyperparameter combinations |
+| scaling coefficient | معامل التوسيع | 0.9 | 1 | Multiplier for scaling network dimensions |
+| composed layers | طبقات مُركبة | 0.85 | 1 | Layers composed through function composition |
+| down-sampling | تقليل العينة | 0.9 | 1 | Reducing spatial resolution in neural networks |
+| vanishing gradient | التدرج المتلاشي | 0.9 | 1 | Gradient becoming very small during backpropagation |
+| skip connection | اتصال التخطي | 0.9 | 1 | Direct connection bypassing intermediate layers |
+| compound coefficient | معامل مركب | 0.9 | 1 | Unified scaling parameter for all dimensions |
+| mobile inverted bottleneck | عنق الزجاجة المقلوب للهاتف المحمول | 0.85 | 1 | MBConv block used in mobile architectures |
+| squeeze-and-excitation | الضغط والإثارة | 0.85 | 1 | Attention mechanism for channel relationships |
+| multi-objective optimization | تحسين متعدد الأهداف | 0.9 | 1 | Optimizing multiple objectives simultaneously |
+| hyperparameter | معامل فائق | 0.95 | 2 | Parameter controlling the learning process |
+| latency | زمن الاستجابة | 0.95 | 2 | Time delay in processing or inference |
+| over-parameterized | مُفرط في المعاملات | 0.85 | 1 | Having more parameters than necessary |
+| pipeline parallelism | التوازي الأنبوبي | 0.85 | 1 | Parallelizing computation across pipeline stages |
+| expressive power | قدرة على التعبير | 0.9 | 1 | Model's ability to represent complex functions |
+| hand-craft | صياغة يدوياً | 0.85 | 1 | Manually designing without automation |
+| RMSProp | RMSProp | 1.0 | 1 | Root Mean Square Propagation optimizer |
+| stochastic depth | العمق العشوائي | 0.85 | 1 | Randomly dropping layers during training |
+| survival probability | احتمال بقاء | 0.85 | 1 | Probability layer is not dropped in stochastic depth |
+| early stopping | إيقاف مبكر | 0.9 | 1 | Stopping training when validation performance plateaus |
+| minival | مجموعة تحقق صغيرة | 0.85 | 1 | Small validation set carved from training data |
+| finetune | ضبط بدقة | 0.9 | 2 | Fine-tuning pretrained model on new task |
+| class activation map | خريطة تنشيط الفئة | 0.85 | 1 | CAM - visualization of important regions for prediction |
+| disentangle | فصل | 0.85 | 1 | Separating or isolating different factors |
+| object details | تفاصيل الشيء | 0.9 | 1 | Fine-grained features of detected objects |
+| relevant regions | المناطق الأكثر صلة | 0.9 | 1 | Image regions most important for classification |
+| EfficientNet | EfficientNet | 1.0 | 1 | Family of efficient ConvNet models |
+| top-1 accuracy | دقة أفضل 1 | 0.95 | 2 | Accuracy when top prediction is correct |
+| top-5 accuracy | دقة أفضل 5 | 0.95 | 1 | Accuracy when correct label in top 5 predictions |
+| FL population | مجموعة التعلم الاتحادي | 0.9 | 1 | Globally unique identifier for FL task or application |
+| FL plan | خطة التعلم الاتحادي | 0.9 | 1 | TensorFlow graph and execution instructions for FL |
+| FL checkpoint | نقطة تحقق التعلم الاتحادي | 0.9 | 1 | Serialized TensorFlow session state for model parameters |
+| FL runtime | بيئة تشغيل التعلم الاتحادي | 0.9 | 1 | Runtime environment for federated learning on devices |
+| example store | مخزن الأمثلة | 0.9 | 1 | Local data repository for training examples on device |
+| pace steering | توجيه الوتيرة | 0.85 | 1 | Flow control mechanism for device connection patterns |
+| thundering herd | القطيع الهادر | 0.8 | 1 | Problem when many systems act simultaneously |
+| multi-tenancy | تعدد المستأجرين | 0.9 | 1 | Architecture supporting multiple FL populations in same app |
+| remote attestation | المصادقة عن بُعد | 0.9 | 1 | Cryptographic verification of device authenticity |
+| data poisoning | تسميم البيانات | 0.9 | 1 | Attack injecting malicious training data |
+| actor model | نموذج الفاعل | 0.9 | 1 | Concurrency model using actors and message passing |
+| actor programming | برمجة الفاعل | 0.9 | 1 | Programming paradigm based on actor model |
+| message passing | تمرير الرسائل | 0.95 | 1 | Communication mechanism between actors |
+| coordinators | المنسقون | 0.9 | 1 | Top-level actors managing FL populations in server |
+| selectors | المحددات | 0.9 | 1 | Actors accepting and forwarding device connections |
+| aggregators | المجمعات | 0.9 | 1 | Actors aggregating device updates in FL |
+| master aggregators | المجمعات الرئيسية | 0.9 | 1 | Actors overseeing aggregation for each FL round |
+| in-memory state | الحالة في الذاكرة | 0.9 | 1 | State maintained in RAM without persistent storage |
+| ephemeral actors | فواعل مؤقتة | 0.85 | 1 | Temporary actor instances for dynamic allocation |
+| pipelining | التسلسل المتوازي | 0.85 | 1 | Parallel execution of sequential protocol phases |
+| proxy datasets | مجموعات بيانات بديلة | 0.85 | 1 | Substitute data for development when real data unavailable |
+| versioned FL plans | خطط تعلم اتحادي ذات إصدارات | 0.85 | 1 | FL plans compatible with specific TensorFlow versions |
+| on-device ranking | الترتيب على الجهاز | 0.9 | 1 | Ranking items directly on device without server calls |
+| next word prediction | التنبؤ بالكلمة التالية | 0.9 | 1 | Predicting next word in sequence |
+| participation bias | تحيز المشاركة | 0.85 | 1 | Bias from non-random device participation patterns |
+| worker queue | صف عمل | 0.9 | 1 | Queue-based task scheduling mechanism |
+| quantized model | نموذج مُكمَّم | 0.85 | 1 | Model with reduced precision representations |
+| federated analytics | التحليلات الاتحادية | 0.85 | 1 | Monitoring aggregate statistics without raw data logging |
+| federated computation | الحساب الاتحادي | 0.85 | 1 | Distributed computation beyond machine learning |
+| communication overhead | عبء الاتصال | 0.9 | 1 | Cost of network communication in distributed systems |
+| daily active devices | أجهزة نشطة يومياً | 0.9 | 1 | Number of devices active per day |
+| diurnal patterns | أنماط يومية | 0.9 | 1 | Daily cyclical patterns in behavior |
+| dropout rate | معدل الانقطاع | 0.95 | 2 | Percentage of devices disconnecting during training |
+| eligibility criteria | معايير الأهلية | 0.9 | 1 | Requirements for device participation in FL |
+| shared locking service | خدمة القفل المشتركة | 0.85 | 1 | Service ensuring single ownership in distributed system |
+| bidirectional stream | تدفق ثنائي الاتجاه | 0.9 | 1 | Two-way communication channel |
+| time-series monitoring | مراقبة السلاسل الزمنية | 0.9 | 1 | Monitoring data over time for anomalies |
+| unmetered network | شبكة غير محدودة | 0.9 | 1 | Network without usage limits (e.g., WiFi) |
+| charging status | حالة الشحن | 0.95 | 1 | Whether device is connected to power |
+| temporal variation | تباين زمني | 0.9 | 1 | Changes over time |
+| elastic scaling | التوسع المرن | 0.9 | 1 | Automatic scaling with demand changes |
+| ELMo | ELMo | 1.0 | 1 | Embeddings from Language Models - deep contextualized word representations |
+| textual entailment | الاستلزام النصي | 0.9 | 1 | Determining if hypothesis follows from premise |
+| coreference resolution | حل الإحالة المرجعية | 0.9 | 1 | Clustering mentions referring to same entity |
+| word sense disambiguation | توضيح معنى الكلمة | 0.9 | 1 | WSD - determining which sense of word is used |
+| intrinsic evaluation | تقييم جوهري | 0.9 | 1 | Evaluation of representations themselves |
+| ablation analysis | تحليل استئصال | 0.9 | 1 | Removing components to test importance |
+| sample efficiency | كفاءة العينة | 0.9 | 1 | Performance with limited training data |
+| pivot word | كلمة محورية | 0.85 | 1 | Central target word in context |
+| monolingual data | بيانات أحادية اللغة | 0.9 | 1 | Data in single language |
+| parallel corpora | مدونات متوازية | 0.9 | 1 | Aligned texts in multiple languages |
+| n-gram convolutions | التفافات n-gram | 0.9 | 1 | Convolutional filters over character n-grams |
+| domain transfer | نقل المجال | 0.9 | 1 | Adapting model to different domain |
+| BiDAF | BiDAF | 1.0 | 1 | Bidirectional Attention Flow model |
+| ESIM | ESIM | 1.0 | 1 | Enhanced Sequential Inference Model |
+| BCN | BCN | 1.0 | 1 | Biattentive Classification Network |
+| SQuAD | SQuAD | 1.0 | 1 | Stanford Question Answering Dataset |
+| SNLI | SNLI | 1.0 | 1 | Stanford Natural Language Inference corpus |
+| SemCor | SemCor | 1.0 | 1 | Semantic Concordance corpus for WSD |
+| biLM | نموذج لغة ثنائي الاتجاه | 0.95 | 1 | Bidirectional language model |
+| CoVe | CoVe | 1.0 | 1 | Contextualized word vectors from MT encoder |
+| TagLM | TagLM | 1.0 | 1 | Language model for tagging tasks |
+| BIO tagging | وسم BIO | 0.9 | 1 | Begin-Inside-Outside sequence labeling |
+| OntoNotes | OntoNotes | 1.0 | 1 | Large-scale corpus for multiple NLP tasks |
+| 1B Word Benchmark | معيار 1B Word | 0.9 | 1 | One Billion Word language modeling benchmark |
+| GloVe | GloVe | 1.0 | 1 | Global Vectors for word representation |
+| AdaFactor | AdaFactor | 0.9 | 1 | Adaptive learning rate optimizer |
+| C4 corpus | مدونة C4 | 0.95 | 1 | Colossal Clean Crawled Corpus |
+| Common Crawl | Common Crawl | 1.0 | 2 | Web archive project |
+| greedy decoding | فك تشفير جشع | 0.85 | 1 | Selecting highest probability at each step |
+| inverse square root schedule | جدول الجذر التربيعي العكسي | 0.8 | 1 | Learning rate schedule |
+| language-agnostic | لا يعتمد على اللغة | 0.85 | 1 | Language-independent models |
+| mixing proportions | نسب المزج | 0.8 | 1 | Task mixing ratios in multi-task learning |
+| multi-task pre-training | تدريب مسبق متعدد المهام | 0.9 | 1 | Pre-training on multiple tasks simultaneously |
+| SentencePiece | SentencePiece | 1.0 | 2 | Unsupervised text tokenizer |
+| sentinel token | رمز حارس | 0.85 | 1 | Special token marking corrupted spans |
+| sequence packing | تحزيم التسلسل | 0.8 | 1 | Packing multiple sequences into batch |
+| span corruption | تلف الامتداد | 0.85 | 1 | Denoising objective corrupting token spans |
+| T5 | T5 | 1.0 | 1 | Text-to-Text Transfer Transformer model |
+| teacher forcing | الإجبار على التعليم | 0.85 | 1 | Training using ground truth as input |
+| validation set | مجموعة التحقق | 0.95 | 2 | Dataset for model validation |
+| WordPiece | WordPiece | 1.0 | 2 | Subword tokenization method |
+| adjacent databases | قواعد البيانات المتجاورة | 0.9 | 1 | Differential privacy term for databases differing in one entry |
+| moments accountant | محاسب العزوم | 0.9 | 8 | Privacy accounting method tracking moments of privacy loss |
+| privacy accountant | محاسب الخصوصية | 0.9 | 5 | Mechanism for tracking accumulated privacy loss |
+| privacy amplification | تضخيم الخصوصية | 0.9 | 2 | Privacy improvement through sampling |
+| privacy odometer | عداد خصوصية | 0.85 | 1 | Privacy accounting mode that tracks cumulative loss |
+| privacy filter | مرشح خصوصية | 0.85 | 1 | Privacy accounting mode that enforces budget limits |
+| privacy spending | إنفاق الخصوصية | 0.9 | 3 | Accumulated privacy cost over training |
+| Rényi differential privacy | خصوصية رينيي التفاضلية | 0.9 | 1 | Privacy notion based on Rényi divergence |
+| sanitizer | مطهر | 0.85 | 4 | Component that preprocesses gradients for privacy |
+| sensitivity | حساسية | 0.95 | 6 | Maximum change in function output for adjacent inputs |
+| per-example gradient | التدرج لكل مثال | 0.9 | 5 | Gradient computed individually for each training example |
+| gradient clipping | قص التدرج | 0.95 | 7 | Limiting gradient norm to bound sensitivity |
+| lot | لوت | 0.85 | 6 | Group of examples for privacy accounting (distinct from batch) |
+| epoch | حقبة | 0.95 | 12 | Full pass through training data |
+| model-inversion attack | هجوم انعكاس النموذج | 0.9 | 1 | Attack recovering training data from model |
+| Gaussian mechanism | آلية غاوس | 0.9 | 4 | DP mechanism adding Gaussian noise calibrated to sensitivity |
+| strong composition theorem | مبرهنة التركيب القوية | 0.9 | 3 | Theorem for composing multiple DP mechanisms |
+| empirical risk minimization | تصغير المخاطر التجريبية | 0.9 | 2 | ML training by minimizing loss on training data |
+| secure function evaluation | التقييم الآمن للدوال | 0.85 | 1 | Secure computation framework (SFE) |
+| secure multi-party computation | الحسابات الآمنة متعددة الأطراف | 0.85 | 1 | MPC framework for distributed private computation |
+| k-anonymity | k-anonymity | 0.9 | 1 | Privacy notion through generalization (kept in English) |
+| de-anonymization | إزالة إخفاء الهوية | 0.85 | 1 | Re-identifying individuals from anonymized data |
+| collaborative filtering | الترشيح التعاوني | 0.9 | 1 | Recommendation system technique |
+| sufficient statistics | الإحصاءات الكافية | 0.9 | 1 | Statistics capturing all information from data |
+| autoencoders | المشفرات التلقائية | 0.9 | 1 | Neural networks for unsupervised representation learning |
+| data augmentation | تعزيز البيانات | 0.95 | 2 | Artificially expanding training data through transformations |
+| cross-entropy loss | خسارة الانتروبيا المتقاطعة | 0.95 | 2 | Common classification loss function |
+| feed-forward neural network | شبكة عصبية أمامية | 0.95 | 2 | Neural network without recurrent connections |
+| handwritten digit recognition | التعرف على الأرقام المكتوبة بخط اليد | 0.95 | 1 | Classic ML task (MNIST) |
+| max pool | تجميع أعظم | 0.9 | 1 | Pooling operation taking maximum value |
+| noise-to-signal ratio | نسبة الضوضاء إلى الإشارة | 0.9 | 1 | Ratio of added noise to actual signal |
+| first-order optimization | التحسين من الرتبة الأولى | 0.9 | 1 | Optimization using first derivatives only |
+| language modeling | نمذجة اللغة | 0.95 | 1 | Predicting probability distributions over text |
+| shadow training | التدريب الظلي | 0.9 | 11 | Training shadow models to mimic target for attack |
+| shadow model | نموذج ظلي | 0.9 | 11 | Model trained to mimic target model behavior |
+| target model | النموذج المستهدف | 0.9 | 11 | Model being attacked in privacy/security analysis |
+| prediction vector | متجه التنبؤ | 0.9 | 11 | Output probabilities across all classes |
+| confidence scores | درجات الثقة | 0.9 | 11 | Model's confidence in predictions |
+| privacy leakage | تسريب الخصوصية | 0.9 | 11 | Unintended information disclosure about training data |
+| privacy loss | فقدان الخصوصية | 0.9 | 3 | Quantified loss of privacy in ML models |
+| black-box access | وصول الصندوق الأسود | 0.9 | 11 | Query access without internal model knowledge |
+| white-box access | وصول الصندوق الأبيض | 0.9 | 11 | Full access to model parameters and internals |
+| query access | وصول الاستعلام | 0.9 | 11 | Ability to query model with inputs |
+| per-class attack | هجوم لكل صنف | 0.9 | 11 | Separate attack model for each class |
+| global attack model | نموذج هجوم عام | 0.9 | 11 | Single attack model for all classes |
+| label-specific attack | هجوم خاص بالتسمية | 0.9 | 11 | Attack tailored to specific labels |
+| privacy-utility tradeoff | مفاضلة الخصوصية-الفائدة | 0.9 | 11 | Tradeoff between privacy and model utility |
+| model ensemble | مجموعة نماذج | 0.9 | 12 | Multiple models combined for predictions |
+| prediction rounding | تقريب التنبؤ | 0.9 | 11 | Reducing precision of prediction outputs |
+| temperature scaling | تدريج درجة الحرارة | 0.9 | 11 | Calibration technique for neural network outputs |
+| confidence masking | إخفاء الثقة | 0.9 | 11 | Adding noise to mask membership signals |
+| query budget | ميزانية الاستعلام | 0.9 | 11 | Limit on number of queries allowed |
+| adaptive attack | هجوم تكيفي | 0.9 | 11 | Attack that adapts to defense mechanisms |
+| privacy gain | كسب الخصوصية | 0.9 | 11 | Improvement in privacy from defense |
+| utility cost | تكلفة الفائدة | 0.9 | 11 | Loss in model utility from privacy protection |
+| privacy-by-design | الخصوصية بالتصميم | 0.9 | 11 | Integrating privacy from system design phase |
+| privacy impact assessment | تقييم تأثير الخصوصية | 0.9 | 11 | Evaluation of privacy risks |
+| privacy budgeting | ميزانية الخصوصية | 0.9 | 11 | Allocating privacy budget across queries |
+| privacy accounting | محاسبة الخصوصية | 0.9 | 11 | Tracking cumulative privacy loss |
+| privacy composition | تركيب الخصوصية | 0.9 | 11 | Combining privacy guarantees across mechanisms |
+| MLaaS | تعلم الآلة كخدمة | 0.9 | 11 | Machine Learning as a Service platforms |
+| overfitting behavior | سلوك فرط الملاءمة | 0.9 | 11 | Pattern of memorizing training data |
+| train-test gap | فجوة التدريب-الاختبار | 0.9 | 11 | Difference between train and test accuracy |
+| model capacity | سعة النموذج | 0.9 | 11 | Ability to fit complex patterns |
+| architecture mismatch | عدم تطابق المعمارية | 0.9 | 11 | Difference in model architectures |
+| transferability | قابلية النقل | 0.9 | 11 | Ability to transfer across settings |
+| responsible disclosure | الإفصاح المسؤول | 0.9 | 11 | Ethical disclosure of vulnerabilities |
+| arms race | سباق التسلح | 0.9 | 11 | Escalating competition between attacks and defenses |
+| dual use | استخدام مزدوج | 0.9 | 11 | Technology with both beneficial and harmful uses |
+| informed consent | الموافقة المستنيرة | 0.9 | 11 | Consent with full knowledge of risks |
+| paradigm shift | تحول نموذجي | 0.9 | 11 | Fundamental change in approach |
+| right to be forgotten | الحق في النسيان | 0.9 | 11 | GDPR right to data erasure |
+| protected health information | معلومات صحية محمية | 0.9 | 11 | PHI under HIPAA |
+| shared responsibility | المسؤولية المشتركة | 0.9 | 11 | Distributed accountability |
+| self-play | اللعب الذاتي | 0.9 | 1 | Training by playing against oneself |
+| superhuman performance | أداء فوق بشري | 0.9 | 1 | Performance exceeding human capability |
+| residual tower | برج متبقي | 0.9 | 1 | Stack of residual blocks in neural network |
+| residual block | كتلة متبقية | 0.9 | 1 | Neural network block with skip connections |
+| upper confidence bound | حد الثقة العلوي | 0.9 | 1 | UCB in bandit algorithms and MCTS |
+| visit count | عدد الزيارات | 0.9 | 1 | Number of times a node is visited in MCTS |
+| policy head | رأس السياسة | 0.9 | 1 | Network output for action probabilities |
+| value head | رأس القيمة | 0.9 | 1 | Network output for position evaluation |
+| Elo rating | تصنيف Elo | 0.95 | 1 | Chess rating system for player strength |
+| time control | التحكم في الوقت | 0.9 | 1 | Time limit per move or game |
+| opening book | كتاب افتتاح | 0.9 | 1 | Database of opening moves in chess |
+| endgame table | جدول نهاية اللعبة | 0.9 | 1 | Precomputed endgame positions |
+| castling rights | حقوق التبييت | 0.9 | 1 | Ability to castle in chess |
+| branching factor | معامل التفرع | 0.9 | 1 | Average number of legal moves per position |
+| first principles | المبادئ الأولى | 0.9 | 1 | Fundamental concepts without prior assumptions |
+| rollout | عملية التمرير | 0.8 | 1 | Simulating game to completion in MCTS |
+| mini-batch | دفعة صغيرة | 0.9 | 1 | Small batch of training samples |
+| baseline opponent | خصم أساسي | 0.9 | 1 | Reference opponent for evaluation |
+| playing style | أسلوب اللعب | 0.9 | 1 | Characteristic approach to playing a game |
+| positional advantage | ميزة موضعية | 0.9 | 1 | Strategic position benefit in chess |
+| Rényi divergence | اختلاف ريني | 0.9 | 1 | Measure of difference between probability distributions |
+| Rényi differential privacy | الخصوصية التفاضلية لريني | 0.9 | 1 | Privacy definition based on Rényi divergence |
+| privacy budget | ميزانية الخصوصية | 0.9 | 1 | Total amount of privacy that can be spent |
+| advanced composition | تركيب متقدم | 0.9 | 1 | Tighter composition analysis for DP mechanisms |
+| Kullback-Leibler divergence | اختلاف كولباك-ليبلر | 0.9 | 1 | KL divergence, also known as relative entropy |
+| relative entropy | الإنتروبيا النسبية | 0.9 | 1 | Another name for KL divergence |
+| Bayes factor | عامل بايز | 0.9 | 1 | Ratio of posterior to prior probabilities |
+| odds ratio | نسبة الاحتمالات | 0.9 | 1 | Ratio of probabilities for adjacent inputs |
+| budget curve | منحنى الميزانية | 0.9 | 1 | Curve parameterized by order α in RDP |
+| c-stable transformation | التحويل c-stable | 0.85 | 1 | Transformation preserving adjacency within c steps |
+| adjacent inputs | مدخلات متجاورة | 1.0 | 1 | Inputs differing by one individual's data |
+| ℓ₁-sensitivity | حساسية ℓ₁ | 0.95 | 1 | L1 norm sensitivity of a function |
+| ℓ₂-sensitivity | حساسية ℓ₂ | 0.95 | 1 | L2 norm sensitivity of a function |
+| subgaussian tails | ذيول شبه غاوسية | 0.85 | 1 | Distribution tails with Gaussian-like decay |
+| moments accountant | محاسب العزوم | 0.85 | 1 | Tool for tracking privacy loss via moments |
+| plausible deniability | الإنكار المعقول | 0.9 | 1 | Ability to deny participation with credibility |
+| Concentrated Differential Privacy | الخصوصية التفاضلية المركزة | 0.85 | 1 | Privacy definition using subgaussian tails |
+| zero-Concentrated Differential Privacy | الخصوصية التفاضلية المركزة الصفرية | 0.85 | 1 | Variant of concentrated DP |
+| bounded probability gain | كسب الاحتمالية المحدود | 0.85 | 1 | Upper bound on probability increase |
+| high privacy regime | نظام الخصوصية العالية | 0.85 | 1 | Parameter regime with strong privacy |
+| predicate | محمول | 0.9 | 1 | Boolean-valued function |
+| baseline risk | مخاطر خط الأساس | 0.9 | 1 | Initial probability of an event |
+| accumulated privacy loss | خسارة الخصوصية المتراكمة | 0.9 | 1 | Total privacy loss over multiple queries |
+| aggregate privacy loss | خسارة الخصوصية الكلية | 0.9 | 1 | Combined privacy loss across mechanisms |
+| tightness | إحكام | 0.9 | 1 | How close a bound is to optimal |
+| exponential mechanism | آلية الأسية | 0.9 | 1 | Exponential mechanism for DP |
