@@ -13,6 +13,7 @@
 | ACID | خصائص ACID | 0.9 | 1 | Atomicity, Consistency, Isolation, Durability |
 | actegory | فئة الفعل | 0.8 | 1 | Action category structure |
 | adaptive | تكيفية | 0.9 | 1 | Adaptive methods |
+| activation function | دالة التنشيط | 0.95 | 1 | Non-linear function in neural networks |
 | adaptive optimization | تحسين تكيفي | 0.9 | 1 | Runtime adaptive optimization |
 | additive category | فئة جمعية | 0.9 | 1 | Additive category |
 | address space | فضاء عنونة | 0.9 | 2 | Virtual memory addressing |
@@ -24,6 +25,7 @@
 | affine monad | موناد أفيني | 0.7 | 1 | Affine monad structure |
 | affine spline | شرائح أفينية | 0.7 | 1 | Affine spline functions |
 | affordance | إمكانات | 0.8 | 1 | Action affordances |
+| affine transformation | تحويل أفيني | 0.95 | 1 | Linear transformation followed by translation |
 | agency | فاعلية | 0.8 | 1 | Human agency in quantum physics |
 | aggregation | تجميع | 0.9 | 1 | Data aggregation |
 | algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
@@ -80,10 +82,11 @@
 | autoregressive | انحداري ذاتي | 0.8 | 2 | Autoregressive model |
 | auxiliary | مساعد | 0.9 | 1 | Auxiliary or helper component |
 | avionics | إلكترونيات الطيران | 0.9 | 2 | Aircraft electronics |
-| axiom | بديهية | 1.0 | 4 | Self-evident truth |
+| axiom | بديهية | 1.0 | 5 | Self-evident truth |
 | B-tree | شجرة B | 0.95 | 1 | Balanced tree data structure |
 | backpropagation | الانتشار العكسي | 0.9 | 1 | Gradient backpropagation |
 | baseline | خط الأساس | 0.9 | 3 | Reference point for comparison |
+| backward pass | المرور العكسي | 0.9 | 1 | Backpropagation phase in neural network training |
 | Bayesian inverse problem | مسألة بايزية عكسية | 0.8 | 1 | Bayesian inverse problems |
 | Bayesian optimization | التحسين البايزي | 0.8 | 1 | Bayesian optimization method |
 | benchmark | معيار | 0.9 | 14 | Performance evaluation |
@@ -125,6 +128,7 @@
 | camera pose | وضعية الكاميرا | 0.8 | 1 | Camera pose estimation |
 | caption | تسمية نصية | 0.85 | 1 | Text caption for images |
 | cardinality | العددية | 0.9 | 1 | Number of distinct elements in a set |
+| carry gate | بوابة الحمل | 0.9 | 1 | Gate that controls information passing in highway networks |
 | Cartesian closed | ديكارتي مغلق | 0.9 | 2 | Cartesian closed |
 | Cartesian Merkle tree | شجرة ميركل الديكارتية | 0.9 | 1 | Merkle tree with BST and heap properties |
 | case table | جدول حالات | 0.85 | 1 | Lookup table for algorithm cases |
@@ -191,7 +195,7 @@
 | compositional semantics | الدلالات التركيبية | 0.9 | 1 | Compositional approach to semantics |
 | compound design | تصميم المركبات | 0.9 | 1 | Molecular compound design |
 | compression | ضغط | 0.9 | 4 | Data compression |
-| computable function | دالة قابلة للحوسبة | 0.9 | 1 | Effectively calculable function |
+| computable function | دالة قابلة للحوسبة | 0.9 | 2 | Effectively calculable function |
 | computable number | عدد قابل للحوسبة | 0.9 | 1 | Numbers calculable by algorithm |
 | computation | حساب | 1.0 | 11 | Computation or calculation |
 | computation judgement | حكم حسابي | 0.8 | 1 | Judgement about computation |
@@ -426,6 +430,7 @@
 | formalization | الصياغة الرسمية | 0.9 | 11 | Making formal |
 | foundation | أساس | 0.9 | 4 | Foundational basis |
 | Fourier series | متسلسلة فورييه | 0.9 | 1 | Complex Fourier series |
+| forward pass | المرور الأمامي | 0.9 | 1 | Forward propagation in neural networks |
 | FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 10 | Field-Programmable Gate Array |
 | fps | إطار في الثانية | 1.0 | 1 | Frames per second |
 | fragment | جزء | 0.9 | 2 | Code fragment |
@@ -489,6 +494,7 @@
 | high-level synthesis | التوليف عالي المستوى | 0.8 | 1 | HLS for hardware design |
 | higher-kinded | عالي النوع | 0.8 | 1 | Type constructor taking type constructors |
 | higher-order | من الرتبة العليا | 0.9 | 8 | Higher-order functions |
+| highway networks | شبكات الطرق السريعة | 0.9 | 1 | Deep learning architecture with gating mechanisms |
 | Hilbert space | فضاء هيلبرت | 0.9 | 1 | Mathematical foundation of quantum mechanics |
 | histogram | رسم بياني هيستوغرامي | 0.8 | 1 | Histogram data structure |
 | historical state | حالة تاريخية | 0.8 | 1 | Historical state data |
@@ -518,7 +524,7 @@
 | impredicative polymorphism | تعدد أشكال غير محصور | 0.7 | 1 | Polymorphism allowing quantification over all types |
 | inaccessible | غير قابل للوصول | 0.8 | 1 | Inaccessible patterns |
 | inclusion proof | برهان تضمين | 0.8 | 1 | Proof of inclusion in set |
-| incompleteness | عدم الاكتمال | 1.0 | 5 | Gödel's incompleteness theorems |
+| incompleteness | عدم الاكتمال | 1.0 | 6 | Gödel's incompleteness theorems |
 | index | فهرس | 1.0 | 1 | Data index |
 | index structure | بنية فهرسة | 0.95 | 2 | Database index |
 | indexed | مفهرس | 0.9 | 1 | Indexed structure |
@@ -922,6 +928,7 @@
 | recoverable | قابل للاسترداد | 0.9 | 1 | Can be recovered after failure |
 | recovery (database) | استرداد | 0.9 | 1 | Database recovery process |
 | rectangle | مستطيل | 1.0 | 2 | Geometric rectangle |
+| rectified linear | خطي مقوم | 0.9 | 1 | ReLU activation function |
 | recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 2 | RNN architecture |
 | recursive | عودي | 0.9 | 1 | Recursive function or definition |
 | redo | إعادة | 0.9 | 1 | Redo operation in recovery |
@@ -1142,6 +1149,7 @@
 | transaction-based | قائم على المعاملات | 0.9 | 1 | Based on transactions |
 | transactional memory | ذاكرة معاملات | 0.9 | 2 | Transactional memory system |
 | transfer (ML) | نقل | 0.9 | 1 | Transfer of learned knowledge to new tasks |
+| transform gate | بوابة التحويل | 0.9 | 1 | Gate that controls transformation in highway networks |
 | transfer learning | التعلم بالنقل | 0.9 | 2 | Transfer learning technique |
 | transferability | قابلية النقل | 0.8 | 1 | Ability to transfer across contexts |
 | transformer | محول | 0.9 | 14 | Deep learning architecture |
@@ -1282,3 +1290,144 @@
 | sparse maps | خرائط متفرقة | 0.85 | 1 | Feature maps with many zero values |
 | transfer learning | التعلم بالنقل | 0.95 | 2 | Using pre-trained models for new tasks |
 | volumetric data | البيانات الحجمية | 0.9 | 1 | 3D volumetric data representation |
+| anchor (triplet) | المرساة | 0.9 | 1 | Anchor image in triplet loss |
+| backward compatibility | التوافق العكسي | 0.9 | 1 | Compatibility with older versions |
+| bottleneck layer | طبقة الاختناق | 0.9 | 1 | Intermediate layer with reduced dimensionality |
+| collapsed model | نموذج منهار | 0.85 | 1 | Model that outputs zero or constant values |
+| contrastive loss | خسارة تباينية | 0.9 | 1 | Loss function for comparing pairs |
+| face clustering | تجميع الوجوه | 0.95 | 1 | Grouping similar faces together |
+| face recognition | التعرف على الوجوه | 0.95 | 1 | Identifying individuals from facial features |
+| face verification | التحقق من الوجوه | 0.95 | 1 | Verifying if two faces belong to same person |
+| false accept rate | معدل القبول الخاطئ | 0.9 | 1 | FAR - rate of incorrectly accepting impostor pairs |
+| frame-level verification | التحقق على مستوى الإطار | 0.85 | 1 | Verification using single video frames |
+| hard negative | سلبي صعب | 0.85 | 1 | Negative example that is hardest to distinguish |
+| hard positive | إيجابي صعب | 0.85 | 1 | Positive example that is hardest to match |
+| harmonic embeddings | التضمينات التوافقية | 0.85 | 1 | Embeddings with compatibility across dimensions |
+| hold-out test set | مجموعة الاختبار المحتفظ بها | 0.9 | 1 | Test set separated from training data |
+| hypersphere | الكرة الفائقة | 0.85 | 1 | High-dimensional sphere surface |
+| impostor pairs | أزواج المحتالين | 0.85 | 1 | Pairs of faces from different people |
+| k-NN classification | تصنيف k-NN | 0.9 | 1 | k-Nearest Neighbors classification |
+| landmarks | المعالم | 0.9 | 1 | Facial landmarks or keypoints |
+| margin-based loss | الخسارة القائمة على الهامش | 0.9 | 1 | Loss function with enforced margin |
+| mini-batch | الدفعة الصغيرة | 0.95 | 1 | Small batch of training examples |
+| negative pair | زوج سلبي | 0.9 | 1 | Pair of dissimilar examples |
+| online triplet mining | التعدين الثلاثي المتصل | 0.85 | 1 | Selecting triplets during training |
+| pairwise accuracy | الدقة الزوجية | 0.9 | 1 | Accuracy on pairs of examples |
+| positive pair | زوج إيجابي | 0.9 | 1 | Pair of similar examples |
+| semi-hard negative | سلبي شبه صعب | 0.85 | 1 | Negative harder than anchor-positive but with positive loss |
+| set-wise accuracy | الدقة على مستوى المجموعة | 0.85 | 1 | Accuracy computed over sets of examples |
+| Siamese architecture | معمارية سيامية | 0.9 | 1 | Network with shared weights processing pairs |
+| similarity transform | تحويل التشابه | 0.9 | 1 | Transformation preserving shape |
+| state-of-the-art | متطور | 0.95 | 1 | Best current performance |
+| triplet loss | الخسارة الثلاثية | 0.9 | 1 | Loss function using anchor, positive, and negative |
+| truncated embedding | التضمين المقتطع | 0.85 | 1 | Embedding using only first k dimensions |
+| validation rate | معدل التحقق | 0.9 | 1 | Rate of correct validation |
+| sequence-to-sequence | من تسلسل إلى تسلسل | 0.95 | 1 | Seq2seq learning paradigm |
+| seq2seq | seq2seq | 0.95 | 1 | Short for sequence-to-sequence |
+| encoder-decoder | مشفر-فك التشفير | 0.95 | 1 | Two-part architecture for sequence transformation |
+| encoder | مشفر | 0.95 | 1 | Component that encodes input to fixed representation |
+| decoder | فك التشفير | 0.95 | 1 | Component that decodes representation to output |
+| beam search | البحث الشعاعي | 0.9 | 1 | Heuristic search algorithm for decoding |
+| partial hypothesis | فرضية جزئية | 0.85 | 1 | Incomplete translation hypothesis in beam search |
+| minimal time lag | التأخير الزمني الأدنى | 0.85 | 1 | Minimum temporal distance between related events |
+| end-of-sentence token | رمز نهاية الجملة | 0.9 | 1 | Special symbol marking sentence end |
+| gradient clipping | قص التدرج | 0.9 | 1 | Technique to prevent exploding gradients |
+| perplexity | الحيرة | 0.9 | 1 | Language model evaluation metric |
+| n-best list | قائمة أفضل n | 0.85 | 1 | Top n candidate translations |
+| rescoring | إعادة التصنيف | 0.9 | 1 | Re-ranking hypotheses with additional model |
+| SMT | SMT | 1.0 | 1 | Statistical Machine Translation (keep acronym) |
+| WMT | WMT | 1.0 | 1 | Workshop on Machine Translation (keep acronym) |
+| timestep | خطوة زمنية | 0.9 | 1 | Single step in sequential processing |
+| fixed-dimensional representation | تمثيل ذي أبعاد ثابتة | 0.85 | 1 | Vector representation with constant size |
+| variable length | طول متغير | 0.9 | 1 | Sequences of different lengths |
+| state space | فضاء الحالة | 0.9 | 1 | State space in physics/mechanics |
+| curried functions | الدوال المُكارية | 0.85 | 1 | Functions that take arguments one at a time |
+| referential transparency | الشفافية المرجعية | 0.85 | 1 | Property where expressions can be replaced by values |
+| displacement | إزاحة | 0.95 | 1 | Vector displacement in physics |
+| velocity | سرعة | 1.0 | 1 | Velocity in physics |
+| acceleration | تسارع | 1.0 | 1 | Acceleration in physics |
+| electromagnetic theory | النظرية الكهرومغناطيسية | 0.95 | 1 | Theory of electricity and magnetism |
+| scalar field | حقل قياسي | 0.9 | 1 | Function mapping positions to scalars |
+| vector field | حقل متجهي | 0.9 | 1 | Function mapping positions to vectors |
+| curve | منحنى | 1.0 | 1 | Mathematical curve |
+| parametrized curve | منحنى مُعَلَّم | 0.85 | 1 | Curve with parameter |
+| line integral | تكامل خطي | 0.9 | 1 | Integration along a curve |
+| charge distribution | توزيع الشحنة | 0.95 | 1 | Distribution of electric charge |
+| current | تيار | 1.0 | 1 | Electrical current |
+| Biot-Savart law | قانون بيوت-سافارت | 0.9 | 1 | Law for magnetic fields from currents |
+| permittivity | السماحية الكهربائية | 0.9 | 1 | Electric permittivity constant |
+| damped driven oscillator | مذبذب مخمد مُدار | 0.85 | 1 | Physics oscillator with damping and driving force |
+| Euler method | طريقة أويلر | 0.9 | 1 | Numerical method for differential equations |
+| Euler-Cromer method | طريقة أويلر-كرومر | 0.85 | 1 | Improved version of Euler method |
+| differential equation | معادلة تفاضلية | 0.95 | 1 | Equation involving derivatives |
+| evolution method | طريقة التطور | 0.85 | 1 | Method for advancing state in time |
+| initial value problem | مسألة القيمة الأولية | 0.9 | 1 | Differential equation with initial condition |
+| cross product | الضرب الاتجاهي | 0.95 | 1 | Vector cross product |
+| dot product | الضرب النقطي | 0.95 | 1 | Vector dot product |
+| magnitude | مقدار | 1.0 | 1 | Vector magnitude/length |
+| trapezoidal rule | قاعدة شبه المنحرف | 0.9 | 1 | Numerical integration method |
+| pedagogical | تربوي | 0.95 | 1 | Related to teaching/education |
+| computational physics | الفيزياء الحسابية | 0.95 | 1 | Physics using computational methods |
+| Newtonian mechanics | الميكانيكا النيوتونية | 0.95 | 1 | Classical mechanics based on Newton's laws |
+| electric field | حقل كهربائي | 1.0 | 1 | Electric field |
+| magnetic field | حقل مغناطيسي | 1.0 | 1 | Magnetic field |
+| numerical integrator | مُكامل رقمي | 0.9 | 1 | Numerical integration method |
+| Runge-Kutta method | طريقة رونج-كوتا | 0.85 | 1 | Higher-order numerical method |
+| spring force | قوة الزنبرك | 0.95 | 1 | Force exerted by spring |
+| damping force | قوة التخميد | 0.95 | 1 | Force that dampens motion |
+| driving force | قوة الإدارة | 0.9 | 1 | External force driving system |
+| Hooke's law | قانون هوك | 0.95 | 1 | Spring force law |
+| Newton's second law | قانون نيوتن الثاني | 0.95 | 1 | F = ma |
+| Newton's third law | قانون نيوتن الثالث | 0.95 | 1 | Action-reaction law |
+| inverse square law | قانون التربيع العكسي | 0.9 | 1 | Force proportional to 1/r² |
+| physical dimensions | الأبعاد الفيزيائية | 0.95 | 1 | Length, mass, time dimensions |
+| formal derivation | اشتقاق صوري | 0.9 | 1 | Series of statements following derivation rules |
+| derivation rules | قواعد الاشتقاق | 0.9 | 1 | Logical inference rules |
+| sound (formal system) | سليم | 0.9 | 1 | Only true statements derivable |
+| complete (formal system) | كامل | 0.9 | 1 | Either S or ¬S derivable |
+| consistent | متسق | 0.9 | 1 | Cannot derive both S and ¬S |
+| diagonal argument | حجة القطر | 0.9 | 1 | Cantor's diagonal method |
+| ordering | ترتيب | 0.9 | 1 | Total order or sequence |
+| lexicographic order | ترتيب معجمي | 0.9 | 1 | Dictionary ordering |
+| rich-enough | غني بما يكفي | 0.85 | 1 | Sufficiently expressive formal system |
+| well-defined | معرف جيداً | 0.9 | 1 | Has clear unambiguous definition |
+| Goldilocks approach | نهج غولديلوكس | 0.85 | 1 | Middle-ground balanced approach |
+| Gödel numbering | ترقيم غودل | 0.9 | 1 | Encoding of logical formulas as numbers |
+| self-reference | الإشارة الذاتية | 0.9 | 1 | Statement referring to itself |
+| halting problem | مسألة التوقف | 0.95 | 1 | Undecidable problem in computation |
+| undecidability | عدم القابلية للحسم | 0.9 | 1 | Property of undecidable problems |
+| propositional logic | المنطق القضوي | 0.9 | 1 | Logic of propositions |
+| predicate logic | منطق المحمولات | 0.9 | 1 | First-order logic |
+| Peano postulates | بديهيات بيانو | 0.9 | 1 | Axioms for natural numbers |
+| Zermelo-Fraenkel set theory | نظرية المجموعات لزيرميلو-فرينكل | 0.85 | 1 | ZF set theory |
+| well-formed formula | الصيغة المكونة جيداً | 0.85 | 1 | WFF - syntactically correct formula |
+| countable infinity | اللانهاية القابلة للعد | 0.9 | 1 | Countably infinite set |
+| Gödel-Rosser theorem | نظرية غودل-روسر | 0.9 | 1 | Strengthened version of Gödel's theorem |
+| transitivity | التعدية | 0.95 | 1 | Transitive property in logic |
+| mechanical checking | فحص آلي | 0.9 | 1 | Automated verification |
+| positive integer | عدد صحيح موجب | 1.0 | 1 | Natural number greater than zero |
+| clause | جملة | 0.9 | 1 | Logical clause or constraint in optimization |
+| MaxSat | MaxSat | 1.0 | 1 | Maximum satisfiability problem |
+| independent set | مجموعة مستقلة | 0.9 | 1 | Set of non-adjacent vertices in graph |
+| uniform superposition | التراكب الموحد | 0.9 | 1 | Equal superposition of quantum basis states |
+| bounded degree | الدرجة المحدودة | 0.9 | 1 | Graph with maximum vertex degree bounded by constant |
+| concentration | التركيز | 0.9 | 1 | Probability mass concentrated near mean |
+| ring | حلقة | 0.95 | 1 | 2-regular connected graph forming a cycle |
+| line segment | مقطع خطي | 0.9 | 1 | Straight path between two points |
+| decimal places | منزلة عشرية | 0.95 | 1 | Digits after decimal point |
+| isolated triangle | مثلث معزول | 0.85 | 1 | Triangle subgraph with edges leaving to distinct vertices |
+| crossed square | مربع متقاطع | 0.85 | 1 | 4-vertex square subgraph with crossing diagonal |
+| bipartite | ثنائي الأجزاء | 0.9 | 1 | Graph with two vertex sets, edges only between sets |
+| odd loop | حلقة فردية | 0.85 | 1 | Graph cycle with odd number of edges |
+| Quantum Adiabatic Algorithm | الخوارزمية الكمومية الأديباتية | 0.9 | 1 | QAA - quantum optimization by adiabatic evolution |
+| Hamming weight | وزن هامينج | 0.9 | 1 | Number of 1s in binary string |
+| Perron-Frobenius theorem | مبرهنة بيرون-فروبينيوس | 0.85 | 1 | Theorem on eigenvalues of positive matrices |
+| Trotterization | التروتر | 0.8 | 1 | Approximating evolution by product of operators |
+| monotonic function | دالة رتيبة | 0.9 | 1 | Function preserving or reversing order |
+| hypercube | المكعب الفائق | 0.85 | 1 | n-dimensional generalization of cube |
+| adjacency matrix | مصفوفة الجوار | 0.95 | 1 | Matrix representing graph connections |
+| quantum walk | مشي كمومي | 0.85 | 1 | Quantum analog of random walk |
+| legal strings | سلاسل قانونية | 0.85 | 1 | Valid bit strings satisfying constraints |
+| smooth function | دالة ناعمة | 0.9 | 1 | Continuously differentiable function |
+| compact set | مجموعة مدمجة | 0.9 | 1 | Closed and bounded set |
+| QAOA | QAOA | 1.0 | 1 | Quantum Approximate Optimization Algorithm |

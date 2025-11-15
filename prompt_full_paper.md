@@ -30,7 +30,7 @@ Start with the most influential papers from our existing abstracts. These are fo
 - [x] **classic-dean-2004** - MapReduce: Simplified Data Processing on Large Clusters - COMPLETED ✅ (0.874 quality)
 - [x] **dynamo-2007** - Dynamo: Amazon's Highly Available Key-value Store - COMPLETED ✅ (0.875 quality)
 - [x] **chord-2001** - Chord: A Scalable Peer-to-peer Lookup Service - COMPLETED ✅ (0.89 quality)
-- [ ] **classic-nakamoto-2008** - Bitcoin: A Peer-to-Peer Electronic Cash System
+- [x] **classic-nakamoto-2008** - Bitcoin: A Peer-to-Peer Electronic Cash System - COMPLETED ✅ (0.872 quality)
 - [ ] Add UNIX, TCP/IP papers if available
 
 ### Tier 1B: Deep Learning Foundations
@@ -337,6 +337,6 @@ Show me:
 ---
 
 **Last Updated:** 2025-11-15
-**Papers Completed:** 14 (GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra Go To, Google File System, MapReduce, Dynamo, Chord, AlexNet, VGGNet, Batch Normalization, Adam)
+**Papers Completed:** 28 (Session 1: GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra, GFS, MapReduce, Dynamo, Chord, AlexNet, VGGNet, BatchNorm, Adam, Bitcoin, FaceNet, FCN, R-CNN, Highway Networks | Session 2: Algorithmic Game Theory, Opetopes, Differential Privacy, NMT-Attention, Seq2Seq, Gödel, QAOA, Haskell Physics, Adam)
 **Papers In Progress:** 0
-**Next Up:** Bitcoin (classic-nakamoto-2008) or BigTable (bigtable-2006)
+**Next Up:** Continue with remaining 313 untranslated papers
