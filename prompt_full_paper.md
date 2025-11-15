@@ -337,6 +337,6 @@ Show me:
 ---
 
 **Last Updated:** 2025-11-15
-**Papers Completed:** 19 (GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra Go To, Google File System, MapReduce, Dynamo, Chord, AlexNet, VGGNet, Batch Normalization, Adam, Bitcoin, FaceNet, FCN, R-CNN, Highway Networks)
+**Papers Completed:** 28 (Session 1: GANs, Transformer, ResNet, BERT, GPT-3, Dijkstra, GFS, MapReduce, Dynamo, Chord, AlexNet, VGGNet, BatchNorm, Adam, Bitcoin, FaceNet, FCN, R-CNN, Highway Networks | Session 2: Algorithmic Game Theory, Opetopes, Differential Privacy, NMT-Attention, Seq2Seq, Gödel, QAOA, Haskell Physics, Adam)
 **Papers In Progress:** 0
-**Next Up:** BigTable (bigtable-2006) or other Tier 2 papers
+**Next Up:** Continue with remaining 313 untranslated papers

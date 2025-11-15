@@ -82,7 +82,7 @@
 | autoregressive | انحداري ذاتي | 0.8 | 2 | Autoregressive model |
 | auxiliary | مساعد | 0.9 | 1 | Auxiliary or helper component |
 | avionics | إلكترونيات الطيران | 0.9 | 2 | Aircraft electronics |
-| axiom | بديهية | 1.0 | 4 | Self-evident truth |
+| axiom | بديهية | 1.0 | 5 | Self-evident truth |
 | B-tree | شجرة B | 0.95 | 1 | Balanced tree data structure |
 | backpropagation | الانتشار العكسي | 0.9 | 1 | Gradient backpropagation |
 | baseline | خط الأساس | 0.9 | 3 | Reference point for comparison |
@@ -195,7 +195,7 @@
 | compositional semantics | الدلالات التركيبية | 0.9 | 1 | Compositional approach to semantics |
 | compound design | تصميم المركبات | 0.9 | 1 | Molecular compound design |
 | compression | ضغط | 0.9 | 4 | Data compression |
-| computable function | دالة قابلة للحوسبة | 0.9 | 1 | Effectively calculable function |
+| computable function | دالة قابلة للحوسبة | 0.9 | 2 | Effectively calculable function |
 | computable number | عدد قابل للحوسبة | 0.9 | 1 | Numbers calculable by algorithm |
 | computation | حساب | 1.0 | 11 | Computation or calculation |
 | computation judgement | حكم حسابي | 0.8 | 1 | Judgement about computation |
@@ -524,7 +524,7 @@
 | impredicative polymorphism | تعدد أشكال غير محصور | 0.7 | 1 | Polymorphism allowing quantification over all types |
 | inaccessible | غير قابل للوصول | 0.8 | 1 | Inaccessible patterns |
 | inclusion proof | برهان تضمين | 0.8 | 1 | Proof of inclusion in set |
-| incompleteness | عدم الاكتمال | 1.0 | 5 | Gödel's incompleteness theorems |
+| incompleteness | عدم الاكتمال | 1.0 | 6 | Gödel's incompleteness theorems |
 | index | فهرس | 1.0 | 1 | Data index |
 | index structure | بنية فهرسة | 0.95 | 2 | Database index |
 | indexed | مفهرس | 0.9 | 1 | Indexed structure |
@@ -1322,3 +1322,112 @@
 | triplet loss | الخسارة الثلاثية | 0.9 | 1 | Loss function using anchor, positive, and negative |
 | truncated embedding | التضمين المقتطع | 0.85 | 1 | Embedding using only first k dimensions |
 | validation rate | معدل التحقق | 0.9 | 1 | Rate of correct validation |
+| sequence-to-sequence | من تسلسل إلى تسلسل | 0.95 | 1 | Seq2seq learning paradigm |
+| seq2seq | seq2seq | 0.95 | 1 | Short for sequence-to-sequence |
+| encoder-decoder | مشفر-فك التشفير | 0.95 | 1 | Two-part architecture for sequence transformation |
+| encoder | مشفر | 0.95 | 1 | Component that encodes input to fixed representation |
+| decoder | فك التشفير | 0.95 | 1 | Component that decodes representation to output |
+| beam search | البحث الشعاعي | 0.9 | 1 | Heuristic search algorithm for decoding |
+| partial hypothesis | فرضية جزئية | 0.85 | 1 | Incomplete translation hypothesis in beam search |
+| minimal time lag | التأخير الزمني الأدنى | 0.85 | 1 | Minimum temporal distance between related events |
+| end-of-sentence token | رمز نهاية الجملة | 0.9 | 1 | Special symbol marking sentence end |
+| gradient clipping | قص التدرج | 0.9 | 1 | Technique to prevent exploding gradients |
+| perplexity | الحيرة | 0.9 | 1 | Language model evaluation metric |
+| n-best list | قائمة أفضل n | 0.85 | 1 | Top n candidate translations |
+| rescoring | إعادة التصنيف | 0.9 | 1 | Re-ranking hypotheses with additional model |
+| SMT | SMT | 1.0 | 1 | Statistical Machine Translation (keep acronym) |
+| WMT | WMT | 1.0 | 1 | Workshop on Machine Translation (keep acronym) |
+| timestep | خطوة زمنية | 0.9 | 1 | Single step in sequential processing |
+| fixed-dimensional representation | تمثيل ذي أبعاد ثابتة | 0.85 | 1 | Vector representation with constant size |
+| variable length | طول متغير | 0.9 | 1 | Sequences of different lengths |
+| state space | فضاء الحالة | 0.9 | 1 | State space in physics/mechanics |
+| curried functions | الدوال المُكارية | 0.85 | 1 | Functions that take arguments one at a time |
+| referential transparency | الشفافية المرجعية | 0.85 | 1 | Property where expressions can be replaced by values |
+| displacement | إزاحة | 0.95 | 1 | Vector displacement in physics |
+| velocity | سرعة | 1.0 | 1 | Velocity in physics |
+| acceleration | تسارع | 1.0 | 1 | Acceleration in physics |
+| electromagnetic theory | النظرية الكهرومغناطيسية | 0.95 | 1 | Theory of electricity and magnetism |
+| scalar field | حقل قياسي | 0.9 | 1 | Function mapping positions to scalars |
+| vector field | حقل متجهي | 0.9 | 1 | Function mapping positions to vectors |
+| curve | منحنى | 1.0 | 1 | Mathematical curve |
+| parametrized curve | منحنى مُعَلَّم | 0.85 | 1 | Curve with parameter |
+| line integral | تكامل خطي | 0.9 | 1 | Integration along a curve |
+| charge distribution | توزيع الشحنة | 0.95 | 1 | Distribution of electric charge |
+| current | تيار | 1.0 | 1 | Electrical current |
+| Biot-Savart law | قانون بيوت-سافارت | 0.9 | 1 | Law for magnetic fields from currents |
+| permittivity | السماحية الكهربائية | 0.9 | 1 | Electric permittivity constant |
+| damped driven oscillator | مذبذب مخمد مُدار | 0.85 | 1 | Physics oscillator with damping and driving force |
+| Euler method | طريقة أويلر | 0.9 | 1 | Numerical method for differential equations |
+| Euler-Cromer method | طريقة أويلر-كرومر | 0.85 | 1 | Improved version of Euler method |
+| differential equation | معادلة تفاضلية | 0.95 | 1 | Equation involving derivatives |
+| evolution method | طريقة التطور | 0.85 | 1 | Method for advancing state in time |
+| initial value problem | مسألة القيمة الأولية | 0.9 | 1 | Differential equation with initial condition |
+| cross product | الضرب الاتجاهي | 0.95 | 1 | Vector cross product |
+| dot product | الضرب النقطي | 0.95 | 1 | Vector dot product |
+| magnitude | مقدار | 1.0 | 1 | Vector magnitude/length |
+| trapezoidal rule | قاعدة شبه المنحرف | 0.9 | 1 | Numerical integration method |
+| pedagogical | تربوي | 0.95 | 1 | Related to teaching/education |
+| computational physics | الفيزياء الحسابية | 0.95 | 1 | Physics using computational methods |
+| Newtonian mechanics | الميكانيكا النيوتونية | 0.95 | 1 | Classical mechanics based on Newton's laws |
+| electric field | حقل كهربائي | 1.0 | 1 | Electric field |
+| magnetic field | حقل مغناطيسي | 1.0 | 1 | Magnetic field |
+| numerical integrator | مُكامل رقمي | 0.9 | 1 | Numerical integration method |
+| Runge-Kutta method | طريقة رونج-كوتا | 0.85 | 1 | Higher-order numerical method |
+| spring force | قوة الزنبرك | 0.95 | 1 | Force exerted by spring |
+| damping force | قوة التخميد | 0.95 | 1 | Force that dampens motion |
+| driving force | قوة الإدارة | 0.9 | 1 | External force driving system |
+| Hooke's law | قانون هوك | 0.95 | 1 | Spring force law |
+| Newton's second law | قانون نيوتن الثاني | 0.95 | 1 | F = ma |
+| Newton's third law | قانون نيوتن الثالث | 0.95 | 1 | Action-reaction law |
+| inverse square law | قانون التربيع العكسي | 0.9 | 1 | Force proportional to 1/r² |
+| physical dimensions | الأبعاد الفيزيائية | 0.95 | 1 | Length, mass, time dimensions |
+| formal derivation | اشتقاق صوري | 0.9 | 1 | Series of statements following derivation rules |
+| derivation rules | قواعد الاشتقاق | 0.9 | 1 | Logical inference rules |
+| sound (formal system) | سليم | 0.9 | 1 | Only true statements derivable |
+| complete (formal system) | كامل | 0.9 | 1 | Either S or ¬S derivable |
+| consistent | متسق | 0.9 | 1 | Cannot derive both S and ¬S |
+| diagonal argument | حجة القطر | 0.9 | 1 | Cantor's diagonal method |
+| ordering | ترتيب | 0.9 | 1 | Total order or sequence |
+| lexicographic order | ترتيب معجمي | 0.9 | 1 | Dictionary ordering |
+| rich-enough | غني بما يكفي | 0.85 | 1 | Sufficiently expressive formal system |
+| well-defined | معرف جيداً | 0.9 | 1 | Has clear unambiguous definition |
+| Goldilocks approach | نهج غولديلوكس | 0.85 | 1 | Middle-ground balanced approach |
+| Gödel numbering | ترقيم غودل | 0.9 | 1 | Encoding of logical formulas as numbers |
+| self-reference | الإشارة الذاتية | 0.9 | 1 | Statement referring to itself |
+| halting problem | مسألة التوقف | 0.95 | 1 | Undecidable problem in computation |
+| undecidability | عدم القابلية للحسم | 0.9 | 1 | Property of undecidable problems |
+| propositional logic | المنطق القضوي | 0.9 | 1 | Logic of propositions |
+| predicate logic | منطق المحمولات | 0.9 | 1 | First-order logic |
+| Peano postulates | بديهيات بيانو | 0.9 | 1 | Axioms for natural numbers |
+| Zermelo-Fraenkel set theory | نظرية المجموعات لزيرميلو-فرينكل | 0.85 | 1 | ZF set theory |
+| well-formed formula | الصيغة المكونة جيداً | 0.85 | 1 | WFF - syntactically correct formula |
+| countable infinity | اللانهاية القابلة للعد | 0.9 | 1 | Countably infinite set |
+| Gödel-Rosser theorem | نظرية غودل-روسر | 0.9 | 1 | Strengthened version of Gödel's theorem |
+| transitivity | التعدية | 0.95 | 1 | Transitive property in logic |
+| mechanical checking | فحص آلي | 0.9 | 1 | Automated verification |
+| positive integer | عدد صحيح موجب | 1.0 | 1 | Natural number greater than zero |
+| clause | جملة | 0.9 | 1 | Logical clause or constraint in optimization |
+| MaxSat | MaxSat | 1.0 | 1 | Maximum satisfiability problem |
+| independent set | مجموعة مستقلة | 0.9 | 1 | Set of non-adjacent vertices in graph |
+| uniform superposition | التراكب الموحد | 0.9 | 1 | Equal superposition of quantum basis states |
+| bounded degree | الدرجة المحدودة | 0.9 | 1 | Graph with maximum vertex degree bounded by constant |
+| concentration | التركيز | 0.9 | 1 | Probability mass concentrated near mean |
+| ring | حلقة | 0.95 | 1 | 2-regular connected graph forming a cycle |
+| line segment | مقطع خطي | 0.9 | 1 | Straight path between two points |
+| decimal places | منزلة عشرية | 0.95 | 1 | Digits after decimal point |
+| isolated triangle | مثلث معزول | 0.85 | 1 | Triangle subgraph with edges leaving to distinct vertices |
+| crossed square | مربع متقاطع | 0.85 | 1 | 4-vertex square subgraph with crossing diagonal |
+| bipartite | ثنائي الأجزاء | 0.9 | 1 | Graph with two vertex sets, edges only between sets |
+| odd loop | حلقة فردية | 0.85 | 1 | Graph cycle with odd number of edges |
+| Quantum Adiabatic Algorithm | الخوارزمية الكمومية الأديباتية | 0.9 | 1 | QAA - quantum optimization by adiabatic evolution |
+| Hamming weight | وزن هامينج | 0.9 | 1 | Number of 1s in binary string |
+| Perron-Frobenius theorem | مبرهنة بيرون-فروبينيوس | 0.85 | 1 | Theorem on eigenvalues of positive matrices |
+| Trotterization | التروتر | 0.8 | 1 | Approximating evolution by product of operators |
+| monotonic function | دالة رتيبة | 0.9 | 1 | Function preserving or reversing order |
+| hypercube | المكعب الفائق | 0.85 | 1 | n-dimensional generalization of cube |
+| adjacency matrix | مصفوفة الجوار | 0.95 | 1 | Matrix representing graph connections |
+| quantum walk | مشي كمومي | 0.85 | 1 | Quantum analog of random walk |
+| legal strings | سلاسل قانونية | 0.85 | 1 | Valid bit strings satisfying constraints |
+| smooth function | دالة ناعمة | 0.9 | 1 | Continuously differentiable function |
+| compact set | مجموعة مدمجة | 0.9 | 1 | Closed and bounded set |
+| QAOA | QAOA | 1.0 | 1 | Quantum Approximate Optimization Algorithm |
