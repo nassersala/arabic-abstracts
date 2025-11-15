@@ -1,0 +1,1353 @@
+Homomorphic Encryption: Theory & Application 
+Jaydip Sen 
+Department of Computer Science, National Institute of Science & Technology 
+Odisha, INDIA 
+1. Introduction 
+The demand for privacy of digital data and of algor ithms for handling more complex 
+structures have increased exponentially over the la st decade. This goes in parallel with the 
+growth in communication networks and their devices and their increasing capabilities (Sen, 
+2013a; Sen, 2012d; Sen, 2012c; Bandyopadhyay & Sen,  2011; Sen, 2011b; Sen, 2011c; Sen, 
+2010c). At the same time, these devices and network s are subject to a great variety of attacks 
+involving manipulation and destruction of data and theft of sensitive information (Sen, 
+2013b; Sen, 2012e; Sen, 2011d; Sen, 2010d; Sen et a l., 2007a; Sen et al., 2007b; Sen et al., 2007c; 
+Sen et al., 2006). For storing and accessing data s ecurely, current technology provides 
+several methods of guaranteeing privacy such as dat a encryption and usage of tamper-
+resistant hardwares. However, the critical problem arises when there is a requirement for 
+computing (publicly) with private data or to modify  functions or algorithms in such a way 
+that they are still executable while their privacy is ensured. This is where homomorphic 
+cryptosystems can be used since these systems enabl e computations with encrypted data.  
+In 1978 Rivest et al. (Rivest et al, 1978a) first inv estigated the design of a homomorphic 
+encryption scheme. Unfortunately, their privacy homomorphism  was broken a couple of years 
+later by Brickell and Yacobi (Brickell & Yacobi, 19 87). The question rose again in 1991 when 
+Feigenbaum and Merritt (Feigenbaum & Merritt, 1991)  raised an important question: is there 
+an encryption function (E) such that both E(x + y) and E(x.y) are easy to compute from E(x) and 
+E(y)?  Essentially, the question is intended to investiga te whether there is any algebraically 
+homomorphic encryption scheme that can be designed.  Unfortunately, there has been a very 
+little progress in determining whether such encrypt ion schemes exist that are efficient and 
+secure until 2009 when Craig Gentry, in his seminal  paper, theoretically demonstrated the 
+possibility of construction such an encryption syst em (Gentry, 2009). In this chapter, we will 
+discuss various aspects of homomorphic encryption s chemes – their definitions, 
+requirements, applications, formal constructions, a nd the limitations of the current 
+homomorphic encryption schemes. We will also briefl y discuss some of the emerging trends 
+in research in this field of computer science.   
+The chapter is organized as follows. In Section 2, we provide some basic and fundamental 
+information on cryptography and various types of en cryption schemes. Section 3 presents a 
+formal discussion on homomorphic encryption schemes  and discusses their various 
+features. In Section 4, we discuss some of the most  well-known and classical homomorphic 
+encryption schemes in the literature. Section 5 pro vides a brief presentation on various 
+properties and applications of homomorphic cryptosy stems. Section 6 presents a discussion 
+on fully homomorphic encryption schemes which are t he most powerful encryption 
+schemes for providing a framework for computing ove r encrypted data. Finally, Section 7 
+concludes the chapter while outlining a number of r esearch directions and emerging trends 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+2
+in this exciting filed of computation which has a t remendous potential of finding 
+applications in the real-world deployments.  
+2. Fundamentals of Cryptography 
+In this Section, we will recall some important conc epts on encryption schemes. For more 
+detailed information, the reader may refer to (Mene zes et al., 1997; Van Tilborg, 2011). 
+Encryption schemes are designed to preserve confide ntiality. The security of encryption 
+schemes must not rely on the obfuscation of their c odes, but it should only be based on the 
+secrecy of the key used in the encryption process. Encryption schemes are broadly of two 
+types: symmetric  and asymmetric  encryption schemes. In the following, we present a  very 
+brief discussion on each of these schemes. 
+Symmetric encryption schemes : In these schemes, the sender and the receiver agr ee on the 
+key they will use before establishing any secure co mmunication session. Therefore, it is not 
+possible for two persons who never met before to us e such schemes directly. This also 
+implies that in order to communicate with different  persons, we must have a different key 
+for each people. Requirement of large number of keys  in these schemes make their key 
+generation and management relatively more complex o perations. However, symmetric 
+schemes present the advantage of being very fast an d they are used in applications where 
+speed of execution is a paramount requirement. Amon g the existing symmetric encryption 
+systems, AES (Daemen & Rijmen, 2000; Daemen & Rijmen,  2002), One-Time Pad (Vernam, 
+1926) and Snow (Ekdahl & Johansson, 2002) are very popular. 
+Asymmetric encryption schemes:  In these schemes, every participant has a pair of keys- 
+private and public. While the private key of a pers on is known to only her, the public key of 
+each participant is known to everyone in the group.  Such schemes are more secure than 
+their symmetric counterparts and they don’t need an y prior agreement between the 
+communicating parties on a common key before establ ishing a session of communication. 
+RSA (Rivest et al., 1978b) and ElGamal (ElGamal, 1985 ) are two most popular asymmetric 
+encryption systems.  
+Security of encryption schemes:  Security of encryption schemes was first formalize d by 
+Shannon (Shannon, 1949). In his seminal paper, Shan non first introduced the notion of 
+perfect secrecy/unconditional secrecy, which charac terizes encryption schemes for which 
+the knowledge of a ciphertext does not give any inf ormation about the corresponding 
+plaintext and the encryption key. Shannon also prov ed that One-Time Pad (Vernam, 1926) 
+encryption scheme is perfectly secure under certain  conditions. However, no other 
+encryption scheme has been proved to be uncondition ally secure. For asymmetric schemes, 
+we can rely on their mathematical structures to est imate their security strength in a formal 
+way. These schemes are based on some well-identifie d mathematical problems which are 
+hard to solve in general, but easy to solve for the  one who knows the trapdoor – i.e., the 
+owner of the keys. However, the estimation of the s ecurity level of these schemes may not 
+be always correct due to several reasons. First, th ere may be other ways to break the system 
+than solving the mathematical problems on which the se schemes are based (Ajtai & Dwork, 
+1997; Nguyen & Stern, 1999). Second, most of the se curity proofs are performed in an 
+idealized model called random oracle model , in which involved primitives, for example, hash 
+functions, are considered truly random. This model has allowed the study of the security 
+
+ 
+Homomorphic Encryption: Theory and Application 3
+level of numerous asymmetric ciphers. However, we a re now able to perform proofs in a 
+more realistic model called standard model  (Canetti et al., 1998; Paillier, 2007). This model  
+eliminates some of the unrealistic assumptions in t he random oracle model and makes the 
+security analysis of cryptographic schemes more pra ctical.  
+Usually, to evaluate the attack capacity of an adve rsary, we distinguish among several 
+contexts (Diffie & Hellman, 1976): cipher-text only attacks  (where the adversary has access 
+only to some ciphertexts), known-plaintext attacks  (where the adversary has access to some 
+pairs of plaintext messages and their corresponding  ciphertexts), chosen-plaintext attacks  (the 
+adversary has access to a decryption oracle that be haves like a black-box and takes a 
+ciphertext as its input and outputs the correspondi ng plaintexts). The first context is the 
+most frequent in real-world since it can happen whe n some adversary eavesdrops on a 
+communication channel. The other cases may seem dif ficult to achieve, and may arise when 
+the adversary is in a more powerful position; he ma y, for example, have stolen some 
+plaintexts or an encryption engine. The chosen  one exists in adaptive versions, where the 
+opponents can wait for a computation result before choosing the next input (Fontaine & 
+Galand, 2007). 
+Probabilistic encryption: Almost all the well-known cryptosystems are deterministic . This 
+means that for a fixed encryption key, a given plai ntext will always be encrypted into the 
+same ciphertext under these systems. However, this may lead to some security problems. 
+RSA scheme is a good example for explaining this poi nt. Let us consider the following 
+points with reference to the RSA cryptosystem: 
+• A particular plaintext may be encrypted in a too mu ch structured way. With RSA, 
+messages 0 and 1 are always encrypted as 0 and 1, r espectively. 
+• It may be easy to compute some partial information about the plaintext: with RSA, 
+the ciphertext c leaks one bit of information about the plaintext m, namely, the so 
+called Jacobi symbol (Fontaine & Galand, 2007). 
+• When using a deterministic encryption scheme, it is  easy to detect when the same 
+message is sent twice while processed with the same  key. 
+In view of the problems stated above, we prefer enc ryption schemes to be probabilistic. In 
+case of symmetric schemes, we introduce a random ve ctor in the encryption process (e.g., in 
+the pseudo-random generator for stream ciphers, or in the operating mode for block 
+ciphers) – generally called initial vector  (IV). This vector may be public and it may be 
+transmitted in a clear-text form. However, the IV m ust be changed every time we encrypt a 
+message. In case of asymmetric ciphers, the securit y analysis is more mathematical and 
+formal, and we want the randomized schemes to remai n analyzable in the same way as the 
+deterministic schemes. Researchers have proposed som e models to randomize the existing 
+deterministic schemes, as the optimal asymmetric encryption padding  (OAEP) for RSA (or any 
+scheme that is based on a trapdoor one-way permutat ion) (Bellare & Rogaway, 1995). In the 
+literature, researchers have also proposed some oth er randomized schemes (ElGamal, 1985; 
+Goldwasser & Micali, 1982; Blum & Goldwasser, 1985) . 
+A simple consequence of this requirement of the enc ryption schemes to be preferably 
+probabilistic appears in the phenomenon called expansion . Since for a plaintext we require 
+the existence of several possible ciphertexts, the number of ciphertexts is greater than the 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+4
+number of possible plaintexts. This means the ciphe rtexts cannot be as short as the 
+plaintexts; they have to be strictly longer. The ra tio of the length of the ciphertext and the 
+corresponding plaintext (in bits) is called expansi on. The value of this parameter is of 
+paramount importance in determining security and efficiency tradeoff  of a probabilistic 
+encryption scheme. In Paillier’s scheme, an efficie nt probabilistic encryption mechanism has 
+been proposed with the value of expansion less than  2 (Paillier, 1997). We will see the 
+significance of expansion in other homomorphic encr yption systems in the subsequent 
+sections of this chapter.   
+3. Homomorphic Encryption Schemes 
+During the last few years, homomorphic encryption s chemes have been studied extensively 
+since they have become more and more important in m any different cryptographic 
+protocols such as, e.g., voting protocols. In this Section, we introduce homomorphic 
+cryptosystems in three steps: what , how  and why  that reflects the main aspects of this 
+interesting encryption technique. We start by defin ing homomorphic cryptosystems and 
+algebraically homomorphic cryptosystems. Then we de velop a method to construct 
+algebraically homomorphic schemes given special hom omorphic schemes. Finally, we 
+describe applications of homomorphic schemes.  
+Definition:  Let the message space ( M, o) be a finite (semi-)group, and let σ be the sec urity 
+parameter. A homomorphic public-key encryption scheme  (or homomorphic cryptosystem ) on M is 
+a quadruple ( K, E, D, A) of probabilistic, expected polynomial time algori thms, satisfying the 
+following functionalities: 
+• Key Generation:  On input 1 σ the algorithm K outputs an encryption/decryption 
+key pair ( ℤg2193ℤg2187ℤuni002Cℤg2193ℤg2186ℤg4667 ℤg3404 ℤg2193 ℤg1488 ℤg2167ℤuni002C  where ℤg2167 denotes the key space. 
+• Encryption:  On inputs 1 σ, ke , and an element ℤg1865ℤuni0020 ℤg1488 ℤg2169ℤuni0020the encryption algorithm E 
+outputs a ciphertext ℤg1855ℤuni0020 ℤg1488 ℤg2159ℤuni0020ℤuni002Cℤuni0020where ℤg2159 denotes the ciphertext space. 
+• Decryption:  The decryption algorithm D is deterministic. On inputs 1 σ, k, and an 
+element ℤg1855ℤuni0020 ℤg1488 ℤg2159ℤuni0020it outputs an element in the message space M so that for all ℤg1865ℤuni0020 ℤg1488
+ℤg2169ℤuni0020ℤuni0069ℤuni0074ℤuni0020ℤuni0068ℤuni006Fℤuni006Cℤuni0064ℤuni0073ℤuni003Aℤuni0020   if ℤuni0020c = E(1 ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤg4667 then ℤg1842ℤg1870ℤg1867ℤg1854ℤg4670ℤg1830ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤuni002Cℤg1855ℤg4667 ℤg3405 ℤg1865ℤg4671  is negligible, i.e., it holds 
+that ℤg1842ℤg1870ℤg1867ℤg1854 ℤg4670ℤg1830ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤuni002Cℤg1855ℤg4667ℤg3405 ℤg1865ℤg4671ℤg3409ℤuni0020ℤuni0032ℤg2879ℤg3097. 
+• Homomorphic Property:  A is an algorithm that on inputs ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni0020, and elements 
+ℤg1855ℤg2869ℤuni002Cℤg1855ℤg2870ℤuni0020ℤuni0020ℤg1488 ℤg2159ℤuni0020outputs an element ℤg1855ℤg2871ℤuni0020ℤg1488 ℤg2159 so that for all ℤg1865ℤg2869ℤuni002Cℤg1865ℤg2870ℤuni0020ℤuni0020ℤg1488 ℤg2169ℤuni0020it holds: if ℤg1865ℤg2871ℤg3404
+ℤg1865ℤg2869ℤuni0020ℤg1867ℤuni0020ℤg1865ℤg2870 and ℤg1855ℤg2869ℤg3404 ℤg1831ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤg2869ℤg4667, and ℤg1855ℤg2870ℤg3404 ℤg1831ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤg2870ℤg4667, then 
+ℤg1842ℤg1870ℤg1867ℤg1854ℤg3427ℤg1830ℤg3435ℤg1827 ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1855ℤg2869ℤuni002Cℤg1855ℤg2870ℤg4667ℤg3439ℤg3431 ℤg3405ℤuni0020ℤg1865 ℤg2871ℤg4671 is negligible.  
+Informally speaking, a homomorphic cryptosystem is a cryptosystem with the additional 
+property that there exists an efficient algorithm t o compute an encryption of the sum or the 
+product, of two messages given the public key and t he encryptions of the messages but not 
+the messages themselves.  
+If M is an additive (semi-)group, then the scheme is ca lled additively homomorphic  and the 
+algorithms A is called Add Otherwise, the scheme is called multiplicatively homomorphic  and 
+the algorithm A is called Mult .  
+With respect to the aforementioned definitions, the  following points are worth noticing: 
+
+ 
+Homomorphic Encryption: Theory and Application 5
+• For a homomorphic encryption scheme to be efficient , it is crucial to make sure that 
+the size of the ciphertexts remains polynomially bo unded in the security parameter 
+σ during repeated computations. 
+• The security aspects, definitions, and models of ho momorphic cryptosystems are 
+the same as those for other cryptosystems. 
+If the encryption algorithm E gets as additional input a uniform random number r of a set ℤℤ ℤℤ, 
+the encryption scheme is called probabilistic , otherwise, it is called deterministic . Hence, if a 
+cryptosystem is probabilistic, there belong several  different ciphertexts to one message 
+depending on the random number ℤg1870ℤuni0020 ℤg1488 ℤuni0020ℤ. But note that as before the decryption algorithm 
+remains deterministic, i.e., there is just one mess age belonging to a given ciphertext. 
+Furthermore, in a probabilistic, homomorphic crypto system the algorithm A should be 
+probabilistic too to hide the input ciphertext. For  instance, this can be realized by applying a 
+blinding algorithm  on a (deterministic) computation of the encryption  of the product and of 
+the sum respectively. 
+Notations:  In the following, we will omit the security parame ter σ and the public key in the 
+description of the algorithms. We will write ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg4667 or E(m)  for ℤg1831ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤg4667 and ℤg1830ℤg3038ℤg4666ℤg1855ℤg4667 or 
+D(c)  for ℤg1830ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤuni002Cℤg1855ℤg4667 when there is no possibility of any ambiguity. If the scheme is 
+probabilistic, we will also write ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg4667 or E(m)  as well as ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4667 or E(m, r)  for 
+ℤg1831ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤuni002Cℤg1870ℤg4667. Furthermore, we will write ℤg1827ℤg3435ℤg1831ℤg4666ℤg1865ℤg4667ℤuni002Cℤg1831ℤg4666ℤg1865ℤg4593ℤg4667ℤg3439 ℤg3404 ℤuni0020ℤg1831ℤg4666ℤg1865ℤuni0020ℤg1867ℤuni0020ℤg1865ℤg4593ℤg4667 to denote that the 
+algorithm A (either Add  or Mult ) is applied on two encryptions of the messages ℤg1865ℤuni002Cℤg1865ℤg4593ℤuni0020ℤg1488
+ℤg4666ℤg2169ℤuni002Cℤg1867ℤg4667 and outputs an encryption of ℤg1865ℤuni0020ℤg1867ℤuni0020ℤg1865ℤg4593, i.e., it holds  that except with negligible 
+probability: 
+ℤg1830ℤg3436ℤg1827ℤg4672ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg4667ℤuni002Cℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg4593ℤg4667ℤg4673ℤg3440 ℤg3404 ℤg1865ℤuni0020ℤg1867ℤuni0020ℤg1865ℤg4593  
+Example:  In the following, we give an example of a determin istic multiplicatively 
+homomorphic scheme and an example of a probabilisti c, additively homomorphic scheme.  
+The RSA Scheme:  The classical RSA scheme (Rivest et al., 1987b) is a n example of a 
+deterministic multiplicatively homomorphic cryptosy stem on ℤg2169 ℤg3404 ℤg4666ℤℤuni002Fℤg1840ℤℤuni002Cℤuni002Eℤg4667 , where N is the 
+product of two large primes. As ciphertext space, w e have ℤg2159 ℤg3404 ℤg4666ℤℤuni002Fℤg1840ℤℤuni002Cℤuni002Eℤg4667  and as key space 
+we have ℤg2167 ℤg3404 ℤg3419ℤg4666ℤg1863ℤg3032ℤuni002Cℤg1863ℤg3031ℤg4667ℤg3404 ℤg3435ℤg4666ℤg1840ℤuni002Cℤg1857ℤg4667ℤuni002Cℤg1856ℤg3439ℤg3627ℤuni0020ℤg1840 ℤg3404 ℤg1868ℤg1869ℤuni002Cℤg1857ℤg1856ℤuni0020 ℤg1568 ℤuni0031ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg2030ℤg4666ℤg1840ℤg4667ℤg4669 . The encryption of a message 
+ℤg1865ℤuni0020 ℤg1488 ℤg2169 is defined as ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg4667ℤg3404ℤuni0020ℤg1865ℤg3032ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1840 for decryption of a  ciphertext ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg4667ℤg3404 ℤuni0020ℤg1855ℤuni0020 ℤg1488 ℤg2159 we 
+compute ℤg1830ℤg3038ℤg3280ℤuni002Cℤg3038ℤg3279ℤg4666ℤg1855ℤg4667ℤg3404ℤuni0020ℤuni0020ℤg1855ℤg3031ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1840 ℤg3404 ℤg1865ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1840ℤuni002Eℤuni0020 Obviously, the encryption of the product of two 
+messages can be efficiently computed by multiplying  the corresponding ciphertexts, i.e.,   
+ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2869ℤuni002Eℤg1865ℤg2870ℤg4667ℤg3404 ℤg4666ℤg1865 ℤg2869ℤuni002Eℤg1865ℤg2870ℤg4667ℤg3032ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1840 ℤg3404 ℤg4666ℤg1865ℤg2869ℤg3032ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1866ℤg4667ℤg4666ℤg1865ℤg2870ℤg3032ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1840 ℤg4667ℤg3404 ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2869ℤg4667ℤuni002Eℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2870ℤg4667 
+where ℤg1865ℤg2869ℤuni002Cℤg1865ℤg2870ℤg1488 ℤg2169ℤuni002Eℤuni0020 Therefore, the algorithm for Mult can be easiliy realized as follows:  
+ℤg1839ℤg1873ℤg1864ℤg1872ℤg4672ℤg1831 ℤg3038ℤg3280ℤg4666ℤg1865ℤg2869ℤg4667ℤuni002Cℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2870ℤg4667ℤg4673 ℤg3404ℤuni0020ℤg1831 ℤg3038ℤg3280ℤg4666ℤg1865ℤg2869ℤg4667ℤuni002Eℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2870) 
+Usually in the RSA scheme as well as in most of the cryptosystems which are based on the 
+difficulty of factoring the security parameter σ is  the bit length of N. For instance, σ = 1024 is 
+a common security parameter.  
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+6
+The Goldwasser-Micali Scheme:  The Goldwasser-Micali scheme (Goldwasser & Micali,  
+1984) is an example of a probabilistic, additively homomorphic cryptosystem on ℤg2169 ℤg3404
+ℤg4666ℤℤuni002Fℤuni0032ℤℤuni002Cℤg3397ℤg4667  with the ciphtertext space ℤg2159 ℤg3404 ℤg2182 ℤg3404 ℤg4666ℤℤuni002Fℤg1840ℤℤg4667* where ℤg1840 ℤg3404 ℤg1868ℤg1869ℤuni0020 is the product of two 
+large primes. We have.  
+ℤg2167 ℤg3404ℤg4668ℤg4666ℤg1863ℤg3032ℤuni002Cℤg1863ℤg3031ℤg4667ℤg3404 ℤg3435ℤg4666ℤg1840ℤuni002Cℤg1853ℤg4667ℤuni002Cℤg4666ℤg1868ℤuni002Cℤg1869ℤg4667ℤg3439ℤuni007Cℤuni0020ℤg1840 ℤg3404 ℤg1868ℤg1869ℤuni002C ℤg1853ℤuni0020 ℤg1488  ℤg4666ℤℤuni002Fℤg1840ℤℤg4667* : ℤg4672ℤg3028
+ℤg3043ℤg4673 ℤg3404ℤuni0020ℤg4672ℤg3028
+ℤg3044ℤg4673 ℤg3404ℤuni0020ℤg3398ℤuni0031ℤg4669 
+Since this scheme is probabilistic, the encryption algorithm gets as additional input a 
+random value  ℤg1870ℤuni0020 ℤg1488 ℤg2182ℤuni002Eℤuni0020We define ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4667ℤg3404 ℤg1853ℤg3040ℤg1870ℤg2870ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1840 and ℤg1830ℤg4666ℤg3038ℤg3280ℤuni0020ℤg3038ℤg3279ℤg4667ℤg3404 ℤuni0030 if c is a square and 
+= 1 otherwise. The following relation therefore hol ds good: 
+ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2869ℤuni002Cℤg1870ℤg2869ℤg4667ℤuni002Eℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2870ℤuni002Cℤg1870ℤg2870ℤg4667ℤg3404ℤuni0020ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2869ℤg3397 ℤg1865ℤg2870ℤuni002Cℤg1870ℤg2869ℤg1870ℤg2870ℤg4667 
+The algorithms Add  can, therefore, be efficiently implemented as foll ows: 
+ℤg1827ℤg1856ℤg1856ℤg3435ℤg1831 ℤg3038ℤg3280ℤg4666ℤg1865ℤg2869ℤuni002Cℤg1870ℤg2869ℤg4667ℤuni002Cℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2870ℤuni002Cℤg1870ℤg2870ℤg4667ℤuni002Cℤg1870ℤg2871ℤg3439 ℤg3404ℤuni0020ℤg1831 ℤg3038ℤg3280ℤg4666ℤg1865ℤg2869ℤuni002Cℤg1870ℤg2869ℤg4667ℤuni002Eℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg2870ℤuni002Cℤg1870ℤg2870ℤg4667ℤuni002Eℤg1870ℤg2871ℤg2870ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1840 ℤg3404ℤuni0020ℤg1831 ℤg3038ℤg3032 ℤg4666ℤg1865ℤg2869ℤg3397ℤuni0020ℤg1865ℤg2870ℤuni002Cℤuni0020ℤuni0020ℤuni0020ℤg1870ℤg2869ℤg1870ℤg2870ℤg1870ℤg2871ℤg4667 
+In the above equation, ℤg1870ℤg2871ℤg2870ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1840 is equivalent to ℤg1831ℤg3038ℤg3280ℤg4666ℤuni0030ℤuni002Cℤg1870ℤg2871ℤg4667. Also, ℤg1865ℤg2869ℤuni002Cℤg1865ℤg2870ℤg1488 ℤg2169  and ℤg1870ℤg2869ℤuni002Cℤg1870ℤg2870,ℤg1870ℤg2871ℤuni0020ℤg1488
+ℤuni0020ℤg2182ℤuni002E Note that this algorithm should be probabilistic, since it obtains a random number ℤg1870ℤg2871 as 
+an additional input.  
+A public-key homomorphic encryption scheme on a (se mi-)ring ( M, +, .) can be defined in a 
+similar manner. Such schemes consist of two algorit hms: Add  and Mult  for the 
+homomorphic property instead of one algorithm for A, i.e., it is additively and 
+multiplicatively homomorphic at the same time. Such  schemes are called algebraically 
+homomorphic .  
+Definition:  An additively homomorphic encryption scheme on a ( semi-)ring ( M, +, .) is 
+called scalar homomorphic  if there exists a probabilistic, expected polynomi al time algorithm 
+Mixed_Mult  that on inputs ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1871ℤuni0020 ℤg1488 ℤg2169 and an element ℤg1855ℤuni0020 ℤg1488 ℤg2159 outputs an element ℤg1855ℤg4593ℤuni0020ℤg1488 ℤg2159 so 
+that for all ℤg1865ℤuni0020 ℤg1488 ℤg2169ℤuni0020 it holds that:  if ℤg1865ℤg4593ℤg3404 ℤg1871ℤuni002Eℤg1865 and ℤg1855 ℤg3404 ℤg1831ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤg4667 then the probability  
+ℤg1842ℤg1870ℤg1867ℤg1854ℤg3427ℤg1830ℤg3435ℤg1839ℤg1861ℤg1876ℤg1857ℤg1856ℤuni005Fℤg1839ℤg1873ℤg1864ℤg1872 ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1871ℤuni002Cℤg1871ℤg4667ℤg3439 ℤg3405ℤuni0020ℤg1865ℤg4593ℤg3431ℤuni0020is negligible.  
+Thus in a scalar homomorphic scheme, it is possible  to compute an encryption 
+ℤg1831ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1871ℤuni002Eℤg1865ℤg4667ℤg3404 ℤg1831ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤg4593ℤg4667 of a product of two messages ℤg1871ℤuni002Cℤg1865ℤuni0020 ℤg1488 ℤg2169  given the public key ℤg1863ℤg3032 
+and an encryption ℤg1855 ℤg3404 ℤg1831ℤg4666ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤg4667 of one message m and the other message s as a plaintext. 
+It is clear that any scheme that is algebraically h omomorphic is scalar homomorphic as well. 
+We will denote by ℤg1839ℤg1861ℤg1876ℤg1857ℤg1856ℤuni005Fℤg1839ℤg1873ℤg1864ℤg1872ℤg3435ℤg1865ℤuni002Cℤg1831 ℤg4666ℤg1865ℤg4593ℤg4667ℤg3439 ℤg3404 ℤg1831ℤg4666ℤg1865ℤg1865ℤg4593) if the following equation holds good 
+except possibly with a negligible probability of no t holding. 
+ℤg1830ℤg4666ℤg1839ℤg1861ℤg1876ℤg1857ℤg1856ℤuni005Fℤg1839ℤg1873ℤg1864ℤg1872ℤg4672ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002Cℤg1865ℤuni002Cℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤg4593ℤg4667ℤg4673 ℤg3404 ℤuni0020ℤg1865ℤuni0020ℤuni002Eℤg1865ℤg4593 
+Definition:  A blinding algorithm  is a probabilistic, polynomial-time algorithm whic h on 
+inputs ℤuni0031ℤg3097ℤuni002Cℤg1863ℤg3032ℤuni002C and ℤg1855 ℤg1488 ℤg1831 ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4667 where ℤg1870 ℤg1488 ℤ is randomly chosen outputs another encryption 
+ℤg1855ℤg4593ℤg1488 ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4593ℤg4667 of m where ℤg1870ℤg4593ℤg1488 ℤ is chosen uniformly at random.  
+For instance, in a probabilistic, homomorphic crypt osystem on ( M, o) the blinding algorithm 
+can be realized by applying the algorithm A on the ciphertext c and an encryption of the 
+identity element in M.  
+
+ 
+Homomorphic Encryption: Theory and Application 7
+If M is isomorphic to ℤℤuni002Fℤg1866ℤ  if M is finite or to ℤ otherwise, then the algorithm Mixed_Mult  
+can easily be implemented using a double and Add  algorithm. This is combined with a 
+blinding algorithm is the scheme is probabilistic ( Cramer et al., 2000). Hence, every 
+additively homomorphic cryptosystem on ℤℤuni002Fℤg1866ℤ or ℤ is also scalar homomorphic  and the 
+algorithm Mixed_Mult  can be efficiently implemented (Sander & Tschudin,  1998).  
+Algebraically Homomorphic Cryptosystems: The existence of an efficient and secure 
+algebraically homomorphic cryptosystem has been a l ong standing open question. In this 
+Section, we first present some related work conside ring this problem. Thereafter, we 
+describe the relationship between algebraically hom omorphic schemes and homomorphic 
+schemes on special non-abelian groups. More precise ly, we prove that a homomorphic 
+encryption scheme on the non-ableain group ( S7, .), the symmetric group on seven elements, 
+allows to construct an algebraically homomorphic en cryption scheme on ( F2, +, .). An 
+algebraically homomorphic encryption scheme on ( F2, +, .) can also be obtained from a 
+homomorphic encryption scheme on the special linear  group ( SL (3, 2) , .) over F2. 
+Furthermore, using coding theory, an algebraically homomorphic encryption on an 
+arbitrary finite ring or field could be obtained gi ven a homomorphic encryption scheme on 
+one of these non-abelian groups. These observations  could be a first step to solve the 
+problem whether efficient and secure algebraically homomorphic schemes exist. The 
+research community in cryptography has spent substa ntial effort on this problem. In 1996, 
+Boneh and Lipton proved that under a reasonable ass umption every deterministic, 
+algebraically homomorphic cryptosystem can be broke n in sub-exponential time (Boneh & 
+Lipton, 1996). This may be perceived as a negative result concerning the existence of an 
+algebraically homomorphic encryption scheme, althou gh most of the existing 
+cryptosystems, e.g., RSA scheme or the ElGamal schem e can be also be broken in sub-
+exponential time. Furthermore, if we seek for algeb raically homomorphic public-key 
+schemes on small fields or rings such as M = F2, obviously such a scheme has to be 
+probabilistic in order to be secure.  
+Some researchers also tried to find candidates for algebraically homomorphic schemes. In 
+1993, Fellows and Koblitz presented an algebraic pu blic-key cryptosystem called Polly 
+Cracker (Fellows & Koblitz, 1993). It is algebraica lly homomorphic and provably secure. 
+Unfortunately, the scheme has a number of difficult ies and is not efficient concerning the 
+ciphertext length. Firstly, Polly Cracker is a poly nomial-based system. Therefore, computing 
+an encryption of the product ℤg1831ℤg4666ℤg1865ℤg2869ℤuni002Eℤg1865ℤg2870ℤg4667 of two messages ℤg1865ℤg2869 and ℤg1865ℤg2870 by multiplying the 
+corresponding ciphertext polynomials ℤg1831ℤg4666ℤg1865ℤg2869ℤg4667 and ℤg1831ℤg4666ℤg1865ℤg2870ℤg4667, leads to an exponential blowup in 
+the number of monomials. Hence, during repeated com putations, there is an exponential 
+blow up in the ciphertext length.  Secondly, all ex isting instantiations of Polly Cracker suffer 
+from further drawbacks (Koblitz, 1998). They are ei ther insecure since they succumb to 
+certain attacks, they are too inefficient to be pra ctical, or they lose the algebraically 
+homomorphic property. Hence, it is far from clear h ow such kind of schemes could be 
+turned into efficient and secure algebraically homo morphic encryption schemes. A detailed 
+analysis and description of these schemes can be fo und in (Ly, 2002).  
+In 2002, J. Domingo-Ferrer developed a probabilisti c, algebraically homomorphic secret-key 
+cryptosystem (Domingo-Ferrer, 2002). However, this scheme was not efficient since there 
+was an exponential blowup in the ciphertext length during repeated multiplications that 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+8
+were required to be performed. Moreover, it was als o broken by Wagner and Bao (Bao, 2003; 
+Wagner, 2003).  
+Thus considering homomorphic encryption schemes on groups instead of rings seems more 
+promising to design a possible algebraically homomo rphic encryption scheme. It brings us 
+closer to structures that have been successfully us ed in cryptography. The following 
+theorem shows that indeed the search for algebraica lly homomorphic schemes can be 
+reduced to the search for homomorphic schemes on sp ecial non-abelian groups (Rappe, 
+2004). 
+Theorem I:  The following two statements are equivalent: (1) T here exists an algebraically 
+homomorphic encryption scheme on ( F2, +, .). (2) There exists a homomorphic encryption 
+scheme on the symmetric group ( S7, .). 
+Proof: 1 /barb2right/barb2right /barb2right/barb2right 2: This direction of proof follows immediately and it  holds for an arbitrary finite 
+group since operations of finite groups can always be implemented by Boolean circuits. Let 
+S7 be represented as a subset of {0, 1} l, where e.g. l = 21 can be chosen, and let C be a circuit 
+with addition and multiplication gates that takes a s inputs the binary representations of 
+elements ℤg1865ℤg2869ℤuni002Cℤg1865ℤg2870ℤg1488 ℤg1845ℤg2875 and outputs the binary representations of ℤg1865ℤg2869ℤg1865ℤg2870. If we have an 
+algebraically homomorphic encryption scheme ( K, E, D, Add, Mult ) on ( F2, +, .) then we can 
+define a homomorphic encryption scheme ℤg4666ℤg1837ℤuni002Cℤg3561ℤuni0020ℤg1831ℤuni002Cℤg3561ℤg1830ℤuni002Cℤg3561ℤg1839ℤg1873ℤg1864ℤg1872ℤg4667ℤg3563 on S7 by defining ℤg1831ℤuni0020ℤg3561ℤg4666ℤg1865ℤg4667ℤg3404
+ℤg4666ℤg1831ℤg4666ℤg1871ℤg2868ℤg4667ℤuni002Cℤuni2026ℤuni002Eℤg1831ℤg4666ℤg1871ℤg3039ℤg2879ℤg2869ℤg4667ℤg4667 where ℤg4666ℤg1871ℤg2868ℤuni002Cℤuni2026ℤuni2026ℤuni002Eℤuni002Eℤg1871 ℤg3039ℤg2879ℤg2869ℤg4667 denotes the binary representation of m. ℤg1839ℤg1873ℤg1864ℤg1872 ℤg3563 is 
+constructed by substituting the addition gates in C by Add  and the multiplication gates by 
+Mult . ℤg1837ℤg3561 and ℤg1830ℤg3561 are defined in the obvious way. 
+2 /barb2right/barb2right /barb2right/barb2right 1: The proof has two steps. First, we use a construct ion of Ben-Or and Cleve (Ben-Or & 
+Cleve, 1992) to show that the field ( F2, +, .) can be encoded in the special linear group 
+(SL( 3,2 ), .) over F2. Then, we apply a theorem from projective geometry  to show that 
+(SL (3,2), .) is a subgroup of S7. This proves the claim. 
+Homomorphic encryption schemes on groups have been extensively studied. For instance, 
+we have homomorphic schemes on groups ( ℤℤuni002Fℤg1839ℤℤuni002Cℤg3397ℤg4667 , for M being a smooth number 
+(Goldwasser & Micali, 1984; Benaloh, 1994; Naccache  & Stern, 1998) for M = p.q being an 
+RSA modulus (Paillier, 1999; Galbraith, 2002), and f or groups ( ℤg4666ℤℤuni002Fℤg1840ℤℤg4667ℤuni0020ℤg1499ℤuni002Cℤuni002Eℤg4667 where N is an 
+RSA modulus. All known efficient and secure schemes are homomorphic on abelian groups. 
+However, S7 and SL (3, 2) are non-abelian. Sander, Young and Yung (San der et al., 1999) 
+investigated the possibility of existence of a homo morphic encryption scheme on non-
+abelain groups. Although non-abelian groups had bee n used to construct encryption 
+schemes (Ko et al., 2000; Paeng et al., 2001; Wagne r & Magyarik, 1985; Grigoriev & 
+Ponomarenko, 2006), the resulting schemes are not h omomorphic in the sense that we need 
+for computing efficiently on encrypted data.  
+Grigoriev and Ponomarenko propose a novel definitio n of homomorphic cryptosystems on 
+which they base a method to construct homomorphic c ryptosystems over arbitrary finite 
+groups including non-abelian groups (Grigoriev & Po nomarenko, 2006). Their construction 
+method is based on the fact that every finite group  is an epimorphic image of a free product 
+of finite cyclic groups. It uses existing homomorph ic encryption schemes on finite cyclic 
+groups as building blocks to obtain homomorphic enc ryption schemes on arbitrary finite 
+groups. Since the ciphertext space obtained from th e encryption scheme is a free product of 
+
+ 
+Homomorphic Encryption: Theory and Application 9
+groups, an exponential blowup of the ciphertext len gths during repeated computations is 
+produced as a result. The reason is that the length  of the product of two elements x and y of 
+a free product is, in general, the sum of the lengt h of x and the length of y. Hence, the 
+technique proposed by Grigoriev and Ponomarenko suf fers from the same drawback as the 
+earlier schemes and does not provide an efficient c ryptosystem. We note that using this 
+construction it is possible to construct a homomorp hic encryption scheme on the symmetric 
+group S7 and on the special linear group SL (3, 2). If we combine this with Theorem 1 , we 
+can construct an algebraically homomorphic cryptosy stem on the finite field ( F2, +, .). 
+Unfortunately, the exponential blowup owing to the construction method in the 
+homomorphic encryption scheme on S7 and on SL (3, 2) respectively, would lead to an 
+exponential blowup in F2 and hence leaves the question open if an efficient  algebraically 
+homomorphic cryptosystem on F2 exists. We will come back to this issue in Section  6, where 
+we discuss fully homomorphic encryption schemes .  
+Grigoriev and Ponomarenko propose another method to  encrypt arbitrary finite groups 
+homomorphically (Grigoriev & Ponomarenko, 2004). Th is method is based on the difficulty 
+of the membership problem for groups of integer mat rices, while in (Grigoriev & 
+Ponomarenko, 2006) it is based on the difficulty of  factoring. However, as before, this 
+scheme is not efficient. Moreover, in (Grigoriev & Ponomarenko, 2004), an algebraically 
+homomorphic cryptosystem over finite commutative ri ngs is proposed. However, owing to 
+its immense size, it is infeasible to implement in real-world applications. 
+4. Some Classical Homomorphic Encryption Systems 
+In this Section, we describe some classical homomor phic encryption systems which have 
+created substantial interest among the researchers in the domain of cryptography. We start 
+with the first probabilistic systems proposed by Go ldwasser and Micali in 1982 (Goldwasser 
+& Micali, 1982; Goldwasser & Micali, 1984) and then  discuss the famous Paillier’s encryption 
+scheme (Paillier, 1999) and its improvements. Paill ier’s scheme and its variants are well-
+known for their efficiency and the high level of se curity that they provide for homomorphic 
+encryption. We do not discuss their mathematical co nsiderations in detail, but summarize 
+their important parameters and properties.  
+Goldwasser-Micali scheme: This scheme (Goldwasser & Micali, 1982; Goldwasser & Micali, 
+1984) is historically very important since many of subsequent proposals on homomorphic 
+encryption were largely motivated by its approach. Like in RSA, in this scheme, we use 
+computations modulo n = p.q, a product of two large primes. The encryption pro cess is 
+simple which uses a product and a square, whereas d ecryption is heavier and involves 
+exponentiation. The complexity of the decryption pr ocess is: ℤg1841ℤg4666ℤg1863ℤuni002Eℤg1864ℤg4666ℤg1868ℤg4667ℤg2870ℤg4667, where ℤg1864ℤg4666ℤg1868ℤg4667 denotes 
+the number of bits in p. Unfortunately, this scheme has a limitation since  its input consist of 
+a single bit. First, this implies that encrypting k bits leads to a cost of ℤg1841ℤg4666ℤg1863ℤuni002Eℤg1864ℤg4666ℤg1868ℤg4667ℤg2870ℤg4667. This is not 
+very efficient even if it may be considered as prac tical. The second concern is related to the 
+issue of expansion  – a single bit of plaintext is encrypted in an integer modulo  n, that is, ℤg1864ℤg4666ℤg1866ℤg4667 
+bits. This leads to a huge blow up of ciphertext ca using a serious problem with this scheme. 
+Goldwasser-Micali (GM) scheme can be viewed from an other perspective. When looked 
+from this angle, the basic principle of this scheme  is to partition a well-chosen subset of 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+10  
+integers modulo n into two secret parts: ℤg1839ℤg2868 and ℤg1839ℤg2869. The encryption process selects a random 
+element ℤg1839ℤg3029 to encrypt plaintext b, and the decryption process lets the user know in which 
+part the randomly selected element lies. The essenc e of the scheme lies in the mechanism to 
+determine the subset, and to partition it into ℤg1839ℤg2868 and ℤg1839ℤg2869. The scheme uses group theory to 
+achieve this goal. The subset is the group G of invertible integers modulo n with a Jacobi 
+symbol with respect to n, equal to 1. The partition is generated by another  group ℤg1834 ℤg1599 ℤg1833, 
+consisting of the elements that are invertible modu lo n with a Jacobi symbol, with respect to 
+a fixed factor n, equal to 1. W ith these settings of parameters, it is possible to  split G into two 
+parts – H and G\H. The generalization schemes of GM deal with these two groups. These 
+schemes attempt to find two groups G and H such that G can be split into more than k = 2 
+parts.  
+Benaloh’s scheme: Benaloh (Benaloh, 1988) is a generalization of GM s cheme that enables 
+one to manage inputs of ℤg1864ℤg4666ℤg1863ℤg4667 bits, k being a prime satisfying some specified constraint s. 
+Encryption is similar as in GM scheme (encrypting a  message ℤg1865ℤuni0020 ℤg1488 ℤg4668ℤuni0030ℤuni002Cℤuni2026ℤuni002Eℤuni002Cℤg1863 ℤg3398 ℤuni0031ℤg4669  is 
+tantamount to picking an integer ℤg1870ℤuni0020 ℤg1488ℤuni0020ℤg2182 ℤg3041ℤg1499 and computing ℤg1855 ℤg3404ℤuni0020ℤg1859ℤg3040ℤg1870ℤg3038ℤuni0020ℤg1865ℤg1867ℤg1856ℤuni0020ℤg1866). However, the 
+decryption phase is more complex. If the input and output sizes are ℤg1864ℤg4666ℤg1863ℤg4667 and ℤg1864ℤg4666ℤg1866ℤg4667 bits 
+respectively, the expansion is equal to ℤg1864ℤg4666ℤg1866ℤg4667ℤuni002Fℤg1864ℤg4666ℤg1863ℤg4667 . The value of expansion obtained in this 
+approach is less than that achieved in GM. This mak es the scheme more attractive.  
+Moreover, the encryption is not too expensive as we ll. The overhead in the decryption 
+process is estimated to be ℤg1841ℤg4666ℤuni221Aℤg1863ℤuni002Eℤg1864ℤg4666ℤg1863ℤg4667ℤg4667 for pre-computation which remains constant for eac h 
+dynamic decryption step. This implies that the valu e of k has to be taken very small, which 
+in turn limits the gain obtained on the value of ex pansion. 
+Naccache-Stern scheme: This scheme (Naccache & Stern, 1998) is an improvem ent of 
+Benaloh’s scheme. Using a value of the parameter k that is greater than that used in the 
+Benaloh’s scheme, it achieves a smaller expansion a nd thereby attains a superior efficiency. 
+The encryption step is precisely the same as in Ben aloh’s scheme. However, decryption is 
+different. The value of expansion is same as that i n Benaloh’s scheme, i.e., ℤg1864ℤg4666ℤg1866ℤg4667ℤuni002Fℤg1864ℤg4666ℤg1863ℤg4667 . 
+However, the cost of decryption is less and is give n by: ℤg1841ℤg4666ℤg1864ℤg4666ℤg1866ℤg4667ℤg2873ℤg1864ℤg1867ℤg1859ℤg4666ℤg1864ℤg4666ℤg1866ℤg4667ℤg4667 . The authors claim 
+that it is possible to choose the values of the par ameters in the system in such a way that the 
+achieved value of expansion is 4 (Naccache & Stern,  1998). 
+Okamoto-Uchiyama scheme: To improve the performance of the earlier schemes o n 
+homomorphic encryption, Okamoto and Uchiyama change d the base group G (Okamoto & 
+Uchiyama, 1998). By taking ℤg1866 ℤg3404ℤuni0020ℤg1868ℤg2870ℤg1869, p and q being two large prime numbers as usual, and 
+the group ℤg2163 ℤg3404ℤuni0020ℤg2182ℤg3043ℤg3118ℤg1499, the authors achieve ℤg1863 ℤg3404 ℤg1868. The value of the expansion obtained in the 
+scheme is 3. One of the biggest advantages of this scheme is that its security is equivalent to 
+the factorization of n. However, a chosen-ciphertext attack has been prop osed on this 
+scheme that can break the factorization problem. Th is has somewhat limited is applicability. 
+However, this scheme was used to design the EPOC sy stems (Okamoto et al., 2000) which is 
+accepted in the IEEE standard specifications for public-key cryptog raphy  (IEEE P1363).  
+Paillier scheme: One of the most well-known  homomorphic encryption schemes is due to 
+Paillier (Paillier, 1999). It is an improvement ove r the earlier schemes in the sense that it is 
+able to decrease the value of expansion from 3 to 2 . The scheme uses ℤg1866 ℤg3404 ℤg1868ℤuni002Eℤg1869  
+with ℤuni0020ℤuni0067ℤuni0063ℤuni0064ℤg3435ℤg1866ℤuni002Cℤg2038 ℤg4666ℤg1866ℤg4667ℤg3439 ℤg3404 ℤuni0031. As usual p and q are two large primes. However, it considered the 
+group ℤg2163 ℤg3404ℤuni0020ℤg2182ℤg3041ℤg3118ℤg1499 and a proper choice of H led to ℤg1863 ℤg3404 ℤg1864ℤg4666ℤg1866ℤg4667. While the cost of encryption is not 
+
+ 
+Homomorphic Encryption: Theory and Application 11  
+too high, decryption needs one exponentiation modul o ℤg1866ℤg2870 to the power ℤg2019ℤg4666ℤg1866ℤg4667, and a 
+multiplication modulo n. This makes decryption a bit heavyweight process. The author has 
+shown how to manage decryption efficiently using th e famous Chinese Remainder Theorem . 
+With smaller expansion and lower cost compared with  the other schemes, this scheme 
+found great acceptance. In 2002, Cramer and Shoup p roposed a general approach to achieve 
+higher security against adaptive chosen-ciphertext attacks  for certain cryptosystems with some 
+particular algebraic properties (Cramer & Shoup, 20 02). They applied their propositions on 
+Paillier’s original scheme and designed a stronger variant of homomorphic encryption. 
+Bresson et al. proposed a slightly different versio n of a homomorphic encryption scheme 
+that is more accurate for some applications (Bresso n et al., 2003).      
+Damgard-Jurik scheme: Damgard and Jurik propose a generalization of Paill ier’s scheme to 
+groups of the form ℤg2182ℤg3041ℤg3294ℤg3126ℤg3117ℤg1499 for ℤg1871 ℤg3408 ℤuni0030 (Damgard & Jurik, 2001). In this scheme, choice of  larger 
+values of s will achieve lower values of expansion. This schem e can be used in a number of 
+applications. For example, we can mention the adapt ation of the size of the plaintext, the use 
+of threshold cryptography, electronic voting, and s o on. To encrypt a message, ℤg1865 ℤg1488 ℤg2182 ℤg3041ℤg1499, one 
+picks at random ℤg1870ℤuni0020 ℤg1488 ℤg2182 ℤg3041ℤg1499 and computes ℤg1859ℤg3040ℤg1870ℤg3041ℤg3294ℤg1488 ℤg2182ℤg3041ℤg3294ℤg3126ℤg3117. The authors show that if one can 
+break the scheme for a given value ℤg1871 ℤg3404 ℤg2026, then one can break it for ℤg1871 ℤg3404 ℤg2026 ℤg3398 ℤuni0031 . They also 
+show that the semantic security of this scheme is e quivalent to that of Paillier’s scheme. The 
+value of expansion can be computed using: ℤuni0031 ℤg3397 ℤuni0031ℤuni002Fℤg1871. It is clear that expansion can attain a 
+value close to 1 if s is sufficiently large. The ratio of the cost for e ncryption in this scheme 
+over Paillier’s scheme can be estimated to be: ℤg3046ℤg4666ℤg3046ℤg2878ℤg2869ℤg4667ℤg4666ℤg3046ℤg2878ℤg2870ℤg4667
+ℤg2874. The same ratio for the decryption 
+process will have value equal to: ℤg4666ℤg3046ℤg2878ℤg2869ℤg4667ℤg4666ℤg3046ℤg2878ℤg2870ℤg4667
+ℤg2874. Even if this scheme has a lower value of 
+expansion as compared to Paillier’s scheme, it is c omputationally more intensive. Moreover, 
+if we want to encrypt or decrypt k blocks of ℤg1864ℤg4666ℤg1866ℤg4667 bits, running Paillier’s scheme k times is less 
+expensive than running Damgard-Jurik‘s scheme.  
+Galbraith scheme: This is an adaptation of the existing homomorphic e ncryption schemes 
+in the context of elliptic curves (Galbraith, 2002) . Its expansion is equal to 3. For ℤg1871 ℤg3404 ℤuni0031, the 
+ratio of the encryption cost for this scheme over t hat of Paillier’s scheme can be estimated to 
+be about 7, while the same ratio for the cost of de cryption cost is about 14 for the same value 
+of s. However, the most important advantage of this sch eme is that the cost of encryption 
+and decryption can be decreased using larger values  of s. In addition, the security of the 
+scheme increases with the increase in the value of s as it is the case in Damgard-Jurik’s 
+scheme.  
+Castagnos scheme: Castagnos explored the possibility of improving the  performance of 
+homomorphic encryption schemes using quadratic fiel ds quotations (Castagnos, 2006; 
+Castagnos, 2007). This scheme achieves an expansion  value of 3 and the ratio of 
+encryption/decryption cost with ℤg1871 ℤg3404 ℤuni0031 over Paillier’s scheme can be estimated to be abou t 2.   
+5. Applications and Properties of Homomorphic Encry ption Schemes 
+An inherent drawback of homomorphic cryptosystems i s that attacks on these systems 
+might possibly exploit their additional structural information. For instance, using plain RSA 
+(Rivest et al., 1978b) for signing, the multiplicati on of two signatures yields a valid signature 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+12  
+of the product of the two corresponding messages. A lthough there are many ways to avoid 
+such attacks, for instance, by application of hash functions, the use of redundancy or 
+probabilistic schemes, this potential weakness lead s us to the question why homomorphic 
+schemes should be used instead of conventional cryp tosystems under certain situations. The 
+main reason for the interest in homomorphic cryptos ystems is its wide application scope. 
+There are theoretical as well as practical applicat ions in different areas of cryptography. In 
+the following, we list some of the main application s and properties of homomorphic 
+schemes and summarize the idea behind them.  
+5.1 Some Applications of Homomorphic Encryption Sch emes 
+Protection of mobile agents:  One of the most interesting applications of homomo rphic 
+encryption is its use in protection of mobile agent s. As we have seen in Section 3, a 
+homomorphic encryption scheme on a special non-abel ian group would lead to an 
+algebraically homomorphic cryptosystem on the finit e filed F2. Since all conventional 
+computer architectures are based on binary strings and only require multiplication and 
+addition, such homomorphic cryptosystems would offe r the possibility to encrypt a whole 
+program so that it is still executable. Hence, it c ould be used to protect mobile agents against 
+malicious hosts by encrypting them (Sander & Tschud in, 1998a). The protection of mobile 
+agents by homomorphic encryption can be used in two  ways: (i) computing with  encrypted 
+functions  and (ii) computing with encrypted data . Computation with encrypted functions is a 
+special case of protection of mobile agents. In suc h scenarios, a secret function is publicly 
+evaluated in such a way that the function remains s ecret. Using homomorphic 
+cryptosystems the encrypted function can be evaluat ed which guarantees its privacy. 
+Homomorphic schemes also work on encrypted data to compute publicly while maintaining 
+the privacy of the secret data. This can be done en crypting the data in advance and then 
+exploiting the homomorphic property to compute with  encrypted data.  
+Multiparty computation: In multiparty computation schemes, several parties are interested 
+in computing a common, public function on their inp uts while keeping their individual 
+inputs private. This problem belongs to the area of  computing with encrypted data . Usually in 
+multiparty computation protocols, we have a set of ℤg1866 ℤg3410 ℤuni0032 players whereas in computing 
+with encrypted data scenarios ℤuni0020ℤg1866 ℤg3404 ℤuni0032. Furthermore, in multi-party computation protocols , 
+the function that should be computed is publicly kn own, whereas in the area of computing 
+with encrypted data it is a private input of one pa rty.  
+Secret sharing scheme: In secret sharing schemes, parties share a secret s o that no 
+individual party can reconstruct the secret form th e information available to it. However, if 
+some parties cooperate with each other, they may be  able to reconstruct the secret. In this 
+scenario, the homomorphic property implies that the  composition of the shares of the secret 
+is equivalent to the shares of the composition of t he secrets.    
+Threshold schemes: Both secret sharing schemes and the multiparty comp utation schemes 
+are examples of threshold schemes. Threshold scheme s can be implemented using 
+homomorphic encryption techniques.  
+Zero-knowledge proofs: This is a fundamental primitive of cryptographic pr otocols and 
+serves as an example of a theoretical application o f homomorphic cryptosystems. Zero-
+knowledge proofs are used to prove knowledge of som e private information. For instance, 
+
+ 
+Homomorphic Encryption: Theory and Application 13  
+consider the  case where a user has to prove his identity to a ho st by logging in with her 
+account and private password. Obviously, in such a protocol the user wants her private 
+information (i.e., her password) to stay private an d not to be leaked during the protocol 
+operation. Zero-knowledge proofs guarantee that the  protocol communicates exactly the 
+knowledge that was intended, and no (zero) extra kn owledge. Examples of zero-knowledge 
+proofs using homomorphic property can be found in ( Cramer & Damgard, 1998).   
+Election schemes: In election schemes, the homomorphic property provi des a tool to obtain 
+the tally given the encrypted votes without decrypt ing the individual votes.  
+Watermarking and fingerprinting schemes:  Digital watermarking and fingerprinting 
+schemes embed additional information into digital d ata. The homomorphic property is used 
+to add a mark to previously encrypted data. In gene ral, watermarks are used to identify the 
+owner/seller of digital goods to ensure the copyrig ht. In fingerprinting schemes, the person 
+who buys the data should be identifiable by the mer chant to ensure that data is not illegally 
+redistributed. Further properties of such schemes c an be found in (Pfitzmann & Waidner, 
+1997; Adelsbach et al. 2002).  
+Oblivious transfer:  It is an interesting cryptographic primitive. Usua lly in a two-party 1-
+out-of-2 oblivious transfer protocol, the first par ty sends a bit to the second party in such as 
+way that the second party receives it with probabil ity ½, without the first party knowing 
+whether or not the second party received the bit. A n example of such a protocol that uses 
+the homomorphic property can be found in (Lipmaa, 2 003). 
+Commitment schemes: Commitment schemes are some fundamental cryptograph ic 
+primitives. In a commitment scheme, a player makes a commitment. She is able to choose a 
+value from some set and commit to her choice such t hat she can no longer change her mind. 
+She does not have to reveal her choice although she  may do so at some point later. Some 
+commitment schemes can be efficiently implemented u sing homomorphic property.    
+Lottery protocols: Usually in a cryptographic lottery, a number pointi ng to the winning 
+ticket has to be jointly and randomly chosen by all  participants. Using a homomorphic 
+encryption scheme this can be realized as follows: Each player chooses a random number 
+which she encrypts. Then using the homomorphic prop erty the encryption of the sum of the 
+random values can be efficiently computed. The comb ination of this and a threshold 
+decryption scheme  leads to the desired functionality. More details a bout homomorphic 
+properties of lottery schemes can be found in (Fouq ue et al., 2000).  
+Mix-nets: Mix-nets are protocols that provide anonymity for s enders by collecting 
+encrypted messages from several users. For instance , one can consider mix-nets that collect 
+ciphertexts and output the corresponding plaintexts  in a randomly permuted order. In such 
+a scenario, privacy is achieved by requiring that t he permutation that matches inputs to 
+outputs is kept secret to anyone except the mix-net . In particular, determining a correct 
+input/output pair, i.e., a ciphertext with correspo nding plaintext, should not be more 
+effective then guessing one at random. A desirable property to build such mix-nets is re-
+encryption which is achieved by using homomorphic e ncryption. More information about 
+applications of homomorphic encryption in mix-nets can be found in (Golle et al., 2004; 
+Damgard & Jurik, 2003).   
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+14  
+Data aggregation in wireless sensor networks: In-network data aggregation in WSNs is a 
+technique that combines partial results at the inte rmediate nodes en route to the base station 
+(i.e., the node issuing the query), thereby reducin g the communication overhead and 
+optimizing the bandwidth utilization in the wireles s links (Sen 2012a; Sen & Maitra, 2011;). 
+However, this technique raises privacy and security  issues if the sensor nodes which need to 
+share their data with the aggregator node. In appli cations such as healthcare and military 
+surveillance where the sensitivity of private data of the sensor is very high, the aggregation 
+has to be carried out in a privacy-preserving way, so that the sensitive data are not revealed 
+to the aggregator. Secure and efficient schemes for  additive data aggregation functions have 
+been proposed in (Sen 2012a; Sen & Maitra 2011; He et al., 2007). However, these schemes 
+are not generic and cannot be applied for multiplic ative aggregation function. 
+Homomorphic encryption schemes can be applied to pr otect privacy of input data while 
+computing an arbitrary aggregation function in a wi reless sensor network. Security in 
+sensor networks is a well researched problem (Sen 2 012b; Sen & Ukil, 2010; Sen, 2010a; Sen 
+2010b; Sen, 2009). Security in data aggregation has  also been studied extensively by 
+researchers. Interested readers may refer to (Sen, 2012a; Sen 2011a) for further details.  
+ 
+5.2 Some Properties of Homomorphic Encryption Schem es 
+Homomorphic encryption schemes have some interestin g mathematical properties. In the 
+following, we mention some of these properties. 
+Re-randomizable encryption/re-encryption:  Re-randomizable cryptosystems (Groth, 2004) 
+are probabilistic cryptosystems with the additional  property that given the public key ℤg1863ℤg3032 
+and an encryption ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4667 of a message ℤg1865 ℤg1488 ℤg2169ℤuni0020under the public key ℤg1863ℤg3032 and a random 
+number ℤg1870ℤuni0020 ℤg1488 ℤg2182 it is possible to efficiently convert ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4667 into another encryption ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4593ℤg4667 
+that is perfectly indistinguishable from a fresh  encryption of m under the public key ℤg1863ℤg3032. This 
+property is also called re-encryption .  
+It obvious that every probabilistic homomorphic cry ptosystem is re-randomizable. Without 
+loss of generality, we assume that the cryptosystem  is additively homomorphic. Given 
+ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4667  and the public key ℤg1863ℤg3032, we can compute ℤg1831ℤg3038ℤg3280ℤg4666ℤuni0030ℤuni002Cℤg1870ℤg4593ℤg4593 ℤg4667 for a random number r’’ and 
+hence compute the following: 
+ℤg1827ℤg1856ℤg1856ℤg4672ℤg1831 ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4667ℤuni002Cℤg1831ℤg3038ℤg3280ℤg4666ℤuni0030ℤuni002Cℤg1870ℤg4593ℤg4593 ℤg4667ℤg4673 ℤg3404ℤuni0020ℤg1831 ℤg3038ℤg3280ℤg4666ℤg1865 ℤg3397 ℤuni0030ℤuni002Cℤg1870ℤg4593ℤg4667ℤg3404ℤuni0020ℤg1831ℤg3038ℤg3280ℤg4666ℤg1865ℤuni002Cℤg1870ℤg4593) 
+where r’ is an appropriate random number. We note that this  is exactly what a blinding 
+algorithm  does.  
+Random self-reducibility:  Along with the possibility of re-encryption comes the property of 
+random self-reducibility concerning the problem of computing the plaintext from the 
+ciphertext. A cryptosystem is called random self-reducible  if any algorithm that can break a 
+non-trivial fraction of ciphertexts can also break a random instance with significant 
+probability. This property is discussed in detail i n (Damgard et al., 2010; Sander et al., 1999). 
+Verifiable encryptions / fair encryptions:  If an encryption is verifiable, it provides a 
+mechanism to check the correctness of encrypted dat a without compromising on the secrecy 
+of the data. For instance, this is useful in voting  schemes to convince any observer that the 
+
+ 
+Homomorphic Encryption: Theory and Application 15  
+encrypted name of a candidate, i.e., the encrypted vote is indeed in the list of candidates. A 
+cryptosystem with this property that is based on ho momorphic encryption can be found in 
+(Poupard & Stern, 2000). Verifiable encryptions are  also called fair encryptions .  
+6. Fully Homomorphic Encryption Schemes 
+In 2009, Gentry described the first plausible const ruction of a fully homomorphic 
+cryptosystem that supports both addition and multip lication (Gentry, 2009). Gentry’s 
+proposed fully homomorphic encryption consists of s everal steps: First, it constructs a 
+somewhat homomorphic  scheme that supports evaluating low-degree polynom ials on the 
+encrypted data. Next, it squashes  the decryption procedure so that it can be express ed as a 
+low-degree polynomial which is supported by the sch eme, and finally, it applies a 
+bootstrapping transformation  to obtain a fully homomorphic scheme. The essentia l approach 
+of this scheme is to derive and establish a process  that can evaluate polynomials of high-
+enough degree using a decryption procedure that can  be expressed as a polynomial of low-
+enough degree. Once the degree of polynomials that can be evaluated by the scheme 
+exceeds the degree of the decryption polynomial by a factor of two, the scheme is called 
+bootstrappable  and it can then be converted into a fully homomorp hic scheme.  
+For designing a bootstrappable scheme, Gentry prese nted a somewhat homomorphic 
+scheme (Gentry, 2009) which is roughly a GGH (Goldr eich, Goldwasser, Halevi)-type 
+scheme (Goldreich et al., 1997; Micciancio, 2001) o ver ideal lattices. Gentry later proved that 
+with an appropriate key-generation procedure, the s ecurity of that scheme can be reduced to 
+the worst-case hardness of some lattice problems in  ideal lattice constructions (Gentry, 
+2010). Since this somewhat homomorphic scheme is no t bootstrappable, Gentry described a 
+transformation to squash the decryption procedure, reducing the degree of the decryption 
+polynomial (Gentry, 2009). This is done by adding t o the public key, an additional hint 
+about the secret key in the form of a sparse subset-sum problem  (SSSP). The public key is 
+augmented with a big set of vectors in such a way t hat there exists a very sparse subset of 
+them that adds up to the secret key. A ciphertext o f the underlying scheme can be post-
+processed  using this additional hint and the post-processed ciphertext can be decrypted with 
+a low-degree polynomial, thereby achieving a bootst rappable scheme.  
+Gentry’s construction is quite involved – the secre t key, even in the private key version of 
+his scheme is a short basis of a random ideal lattice . Generating pairs of public and secret 
+bases with the right distributions appropriate for the worst-case to average-case reduction is 
+technically quite complicated. A significant resear ch effort has been devoted to increase the 
+efficiency of its implementation (Gentry & Halevi, 2011; Smart & Vercauteren, 2010).  
+A parallel line of work that utilizes ideal lattice s in cryptography dates back to the NTRU 
+cryptosystem (Hoffstein et al., 1998). This approac h uses ideal lattices for efficient 
+cryptographic constructions. The additional structu re of ideal lattices, compared to ordinary 
+lattices, makes their representation more powerful and enables faster computation. 
+Motivated by the work of Micciancio (Micciancio, 20 07), a significant number of work 
+(Peikert & Rosen, 2006; Lyubashevsky & Micciancio, 2 006; Peikert & Rosen, 2007; 
+Lyubashevsky et al., 2008; Lybashevsky & Micciancio , 2008) has produced efficient 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+16  
+constructions of various cryptographic primitives w hose security can formally be reduced to 
+the hardness of short-vector problems in ideal latt ices (Brakerski & Vaikuntanathan, 2011).  
+Lyubashevsky et al. (Lyubashevsky et al., 2010) pre sent the ring learning with errors  (RLWE) 
+assumption which is the ring counterpart  of Regev’s learning with errors assumption (Regev, 
+2005). In a nutshell, the assumption is that given polynomially many samples over a certain 
+ring of the form ( ℤg1853ℤg3036ℤuni002Cℤg1853ℤg3036ℤg1871 ℤg3397 ℤg1857ℤg3036ℤg4667, where s is a random secret ring element , ai’s are distributed 
+uniformly randomly in the ring, and ei are small ring elements, it will be impossible for an 
+adversary to distinguish this sequence of samples f rom random pairs of ring elements. The 
+authors have shown that this simple assumption can be very efficiently reduced to the worst 
+case hardness of short-vector problems on ideal lat tices. They have also shown how to 
+construct a very efficient ring counterpart to Regev ’s public-key encryption scheme (Regev, 
+2005), as well as a counterpart to the identity-bas ed encryption scheme presented in (Gentry 
+et al., 2008) by using the basis sampling technique s in (Regev, 2005). The scheme presented 
+in (Lyubashevsky et al., 2010) is very elegant and efficient since it is not dependent on any 
+complex computations over ideal lattices.  
+Brakerski and Vaikuntanathan raised a natural quest ion that whether the above approaches 
+(i.e., ideal lattices and RLWE) can be effectively e xploited so that benefits of both these 
+approaches can be achieved at the same time – namel y the functional powerfulness on the 
+one hand (i.e., the ideal lattice approach) and the  simplicity and efficiency of the other (i.e., 
+RLWE). They have shown that indeed this can be done (Brakerski & Vaikuntanathan, 2011). 
+They have constructed a somewhat homomorphic encryp tion scheme based on RLWE. The 
+scheme inherits the simplicity and efficiency, as w ell as the worst case relation to ideal 
+lattices. Moreover, the scheme enjoys key dependent message security  (KDM security, also 
+known as circular security ), since it can securely encrypt polynomial functio ns (over an 
+appropriately defined ring) of its own secret key. The significance of this feature of the 
+scheme in context of homomorphic encryption has bee n clearly explained by the authors. 
+The authors argue that all known constructions of f ully homomorphic encryption employ a 
+bootstrapping technique that enforces the public ke y of the scheme to grow linearly with the 
+maximal depth of evaluated circuits. This is a majo r drawback with regard to the usability 
+and the efficiency of the schemes. However, the siz e of the public key can be made 
+independent of the circuit depth if the somewhat ho momorphic scheme can securely 
+encrypt its own secret key. With the design of this  scheme, the authors have solved an open 
+problem - achieving circular secure somewhat homomorphic encryption. They have also 
+computed the circular security of their scheme with  respect to the representation of the 
+secret key as a ring element, where bootstrapping r equires circular security with respect to 
+the bitwise representation of the secret key (actua lly, the bitwise representation of the 
+squashed  secret key). Since there is no prior work that stu dies a possible co-existence between 
+somewhat homomorphism with any form of circular sec urity, the work is a significant first 
+step towards removing the assumption (Brakerski & V aikuntanathan, 2011). The authors 
+have also shown how to transform the proposed schem e into a fully homomorphic 
+encryption scheme following Gentry’s blueprint of squashing  and bootstrapping . Applying the 
+techniques presented in (Brakerski & Vaikuntanathan , 2011a), the authors argue that 
+squashing  can even be avoided at the cost of relying of a sparse  version of RLWE that is not 
+known to reduce to worst case scenarios. This great ly enhances the efficiency of the 
+proposed scheme in practical applications. The prop osed scheme is also additively key-
+
+ 
+Homomorphic Encryption: Theory and Application 17  
+homomorphic – a property that has found applications in achievi ng security against key-related 
+attacks  (Applebaum et al., 2011).  
+Smart and Vercauteren (Smart & Vercauteren, 2010) p resent a fully homomorphic 
+encryption scheme has smaller key and ciphertext si zes. The construction proposed by the 
+authors follows the fully homomorphic construction based on ideal lattices proposed by 
+Gentry (Gentry, 2009). It produces a fully homomorp hic scheme form a somewhat 
+homomorphic scheme . For somewhat homomorphic scheme, the public and t he private keys 
+consist of two large integers (one of which shared by both the public and the private key), 
+and the ciphertext consists of one large integer. T he scheme (Smart & Vercauteren, 2010) has 
+smaller ciphertext blow up  and reduced key size than in Gentry’s scheme based  on ideal 
+lattices. Moreover, the scheme also allows efficien t fully homomorphic encryption over any 
+field of characteristics two. More specifically, it  uses arithmetic of cyclotomic number fields . In 
+particular, the authors have focused on the field g enerated by the polynomial: ℤuni0020ℤg1832ℤg4666ℤg1850ℤg4667ℤg3404ℤuni0020ℤg1850ℤg2870ℤg3289ℤg3397
+ℤuni0020ℤuni0031. However, they also noted that the scheme could be  applied with arbitrary (even non-
+cyclotomic) number fields as well. In spite of havi ng a large number of advantages, the 
+major problem with this scheme is that the key gene ration method is very slow. 
+Gentry and Halevi presented a novel implementation approach for the variant of Smart and 
+Vercauteren proposition (Smart & Vercauteren, 2010) , which had a greatly improved key 
+generation phase (Gentry & Halevi, 2011). In partic ular, the authors have noted that key 
+generation (for cyclotomic fields) is essentially a n application of a Discrete Fourier Transform  
+(DFT), followed by a small quantum of computation, and then application of the inverse 
+transform. The authors then further demonstrate tha t it is not even required to perform the 
+DFTs if one selects the cyclotomic field to be of t he form:  ℤg1850ℤg2870ℤg3289ℤg3397 ℤuni0020ℤuni0031. The authors illustrate this 
+by using a recursive approach to deduce two constan ts from the secret key which 
+subsequently facilitates the key generation algorit hm to construct a valid associated public 
+key. The key generation method of Gentry and Halevi  (Gentry & Halevi, 2011) is fast. 
+However, the scheme appears particularly tailored t o work with two-power roots of unity.  
+Researchers have also examined ways of improving key  generation in fully homomorphic 
+encryption schemes. For example, in (Ogura et al., 2010) a method is proposed for 
+construction of keys for essentially random number fields by pulling random elements and 
+analyzing eigenvalues  of the corresponding matrices. However, this metho d is unable to 
+achieve the improvement in efficiency in terms of reduced ciphertext blow up  as done in 
+(Smart & Vercauteren, 2010) and (Gentry & Halevi, 2 011).  
+Stehle and Steinfield improved Gentry’s fully homom orphic scheme and obtained a faster 
+fully homomorphic scheme with O(n3.5 ) bits complexity per elementary binary 
+addition/multiplication gate (Stehle & Steinfeld, 2 010). However, the hardness assumption 
+of the security of the scheme is stronger than that  of Gentry’s scheme (Gentry, 2009). The 
+improved complexity of the proposed scheme stems fr om two sources. First, the authors 
+have given a more aggressive security analysis of t he sparse subset sum problem  (SSSP) against 
+lattice attacks as compared to the analysis present ed in (Gentry, 2009). The SSSP along with 
+the ideal lattice bounded distance decoding  (BDD) problem are the two problems underlying 
+the security of Gentry’s fully homomorphic scheme. In his security analysis of BDD, Gentry 
+has used the best known complexity bound for the ap proximate shortest vector problem  (SVP) 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+18  
+in lattices. However, in analyzing SSSP, Gentry has  assumed the availability of an exact SVP 
+oracle. On the contrary, the finer analysis of Steh le and Steinfield for SSSP takes into account 
+the complexity of approximate SVP, thereby making i t more consistent with the assumption 
+underlying the analysis of the BDD problem. This le ads to choices of smaller parameter in 
+the scheme. Moreover, Stehle and Steinfield have re laxed the definition of fully 
+homomorphic encryption to allow for a negligible bu t non-zero probability of decryption 
+error. They have shown that the randomness in the SplitKey  key generation for the squashed 
+decryption algorithm  (i.e., the decryption algorithms of the bootstrapp able scheme) in the 
+Gentry’s scheme can be gainfully exploited to allow  a negligible decryption error 
+probability. This decryption error, although neglig ible in value, can lead to rounding 
+precision used in representing the ciphertext compo nents that is almost half the value of the 
+precision as achieved in Gentry’s scheme (Gentry, 2 009), which involves zero error 
+probability.  
+In (Chunsheng, 2012), Chunsheng proposed a modifica tion of the fully homomorphic 
+encryption scheme of Smart and Vercauteren (Smart &  Vercauteren, 2010). The author has 
+applied a self-loop bootstrappable technique  so that the security of the modified scheme only 
+depends on the hardness of the polynomial coset problem  and does not require any 
+assumption of the sparse subset problem  as required in the original work of Smart and 
+Vercauteren (Smart & Vercauteren, 2010). In additio n, the author have constructed a non-
+self-loop fully homomorphic encryption scheme  that uses cycle keys . In a nutshell, the security of 
+the improved fully homomorphic encryption scheme in  this work is based on use of three 
+mathematical approaches: (i) hardness of factoring integer problem, (ii) solving Diophantine 
+equation problem, and (iii) finding approximate gre atest common divisor problem.  
+Boneh and Freeman propose a linearly homomorphic si gnature scheme that authenticates 
+vector subspaces of a given ambient space (Boneh & Freeman, 2011). The scheme has several 
+novel features that were not present in any of the existing similar schemes. First, the scheme 
+is the first of its kind that enables authentication of vectors over binary fields ; previous schemes 
+could not authenticate vectors with large or growin g coefficients. Second, the scheme is the 
+only scheme that is based on the problem of finding short vectors in integer lattice s , and 
+therefore, it enjoys the worst-case security guaran tee that is common to lattice-based 
+cryptosystems . The scheme can be used to authenticate linear tra nsformations of signed data, 
+such as those arising when computing mean and Fouri er transform or in networks that use 
+network coding  (Boneh & Freeman, 2011). The work has three major contributions in the state 
+of the art as identified by the authors: (i) Homomorphic signatures over F2: the authors have 
+constructed the first unforgeable linearly homomorphic signature scheme  that authenticates 
+vectors with coordinates in F2. It is an example of a cryptographic primitive tha t can be built 
+using lattice models, but cannot be built using bil inear maps or other traditional algebraic 
+methods based on factoring or discrete log type pro blems. The scheme can be modified to 
+authenticate vectors with coefficients in other sma ll fields, including prime fields and 
+extension fields such as ℤg1780ℤg2779ℤg1804. Moreover, the scheme is private, in the sense tha t a derived 
+signature on a vector v leaks no information about the original signed vec tors beyond what 
+is revealed by v. (ii) A simple k-time signature without random oracles:  the authors have 
+presented a stateless signature scheme and have pro ved that it is secure in the standard 
+model when used to sign at most k messages, for small values of k. The public key of the 
+scheme is significantly smaller than that of any ot her stateless lattice-based signature 
+
+ 
+Homomorphic Encryption: Theory and Application 19  
+scheme that can sign multiple large messages and is  secure in the standard model. The 
+construction proposed by the authors can be viewed as removing the random oracle  from the 
+signature scheme of Gentry, Peikert, and Vaikuntana than (Gentry et al., 2008), but only for 
+signing k messages (Boneh & Freeman, 2011). (iii) New tools for lattice-based signatures:  the 
+scheme is unforgeable based on a new hard problem o n lattices, which the authors have 
+called the k-small integer solutions  (k-SIS) problem. The authors have shown that k-SIS 
+reduces to the small integer solution  (SIS) problem, which is known to be as hard as sta ndard 
+worst-case lattice problems (Micciancio & Regev, 200 7).    
+7. Conclusion and Future Trends 
+The study of fully homomorphic encryption has led t o a number of new and exciting 
+concepts and questions, as well as a powerful tool- kit to address them. We conclude the 
+chapter by discussing a number of research directio ns related to the domain of fully 
+homomorphic encryption and more generally, on the p roblem of computing on encrypted 
+data.  
+Applications of fully homomorphic encryption:  While Gentry’s original construction was 
+considered as being infeasible for practical deploy ments, recent constructions and 
+implementation efforts have drastically improved th e efficiency of fully homomorphic 
+encryption (Vaikuntanathan, 2011). The initial impl ementation efforts focused on Gentry’s 
+original scheme and its variants (Smart & Vercauter en, 2010; Smart & Vercauteren, 2012; 
+Coron et al., 2011; Gentry & Halevi, 2011), which s eemed to pose rather inherent efficiency 
+bottlenecks. Later implementations leverage the rec ent algorithmic advances (Brakerski & 
+Vaikuntanathan, 2011; Brakerski et al., 2011; Brake rski & Vaikuntanathan, 2011a) that result 
+in asymptotically better fully homomorphic encrypti on systems, as well as new algebraic 
+mechanisms to improve the overall efficiency of the se schemes ( Naehrig et al., 2011; Gentry 
+et al., 2012; Smart & Vercauteren, 2012). 
+Non-malleability and homomorphic encryption:  Homomorphism and non-malleability  are 
+two orthogonal properties of an encryption scheme. Homomorphic encryption schemes 
+permit anyone to transform an encryption of a messa ge m into an encryption of f(m)  for non-
+trivial functions f. Non-malleable encryption, on the other hand, prev ents precisely this sort 
+of thing- it requires that no adversary be able to transform an encryption of m into an 
+encryption of any related  message. Essentially, what we need is a combinatio n of both the 
+properties that selectively permit homomorphic computations  (Vaikuntanathan, 2011). This 
+implies that the evaluator should be able to homomo rphically compute any function from 
+some pre-specified class Fhom ; however, she should not be able to transform an e ncryption of 
+m into an encryption of f(m)  for which ℤg1858 ℤg1488ℤuni0020ℤg2162 ℤg3035ℤg3042ℤg3040   does not hold good (i.e., f does not belong 
+to Fhom ). The natural question that arises is: whether we can control what is being 
+(homomorphically) computed ?  
+Answering this question turns out to be tricky. Bon eh, Segev and Waters (Boneh et al., 2011) 
+propose the notion of targeted malleability  – a possible formalization of such a requirement a s 
+well as formal constructions of such encryption sch emes. Their encryption scheme is based 
+on a strong knowledge of exponent-type  assumption that allows iterative evaluation of at most 
+t functions, where t is a suitably determined and pre-specified constan t. Improving their 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+20  
+construction as well as the underlying complexity a ssumptions is an important open 
+problem (Vaikuntanathan, 2011). 
+It is also interesting to extend the definition of non-malleability to allow for chosen cipher-text 
+attacks . As an example, we consider the problem that invol ves implementing an encrypted 
+targeted advertisement system that generates advert isements depending on the contents of a user’s e-
+mail. Since the e-mail is stored in an encrypted form w ith the user’s public key, the e-mail 
+server performs a homomorphic evaluation and comput es an encrypted advertisement to be 
+sent back to the user. The user decrypts it, perfor ms an action depending on what she sees. 
+If the advertisement is relevant, she might choose to click on it; otherwise, she simply 
+discards it. However, if the e-mail server is aware  to this information, namely whether the 
+user clicked on the advertisement or not, it can us e this as a restricted decryption oracle  to 
+break the security of the user’s encryption scheme and possibly even recover her secret key. 
+Such attacks are ubiquitous whenever we compute on encrypted data, almost to the point 
+that CCA security seems inevitable. Yet, it is easy  to see that chosen ciphertext (CCA2-
+secure) homomorphic encryption schemes cannot exist . Therefore, an appropriate security 
+definition and constructions that achieve the defin ition is in demand.  
+Fully homomorphic encryption and functional decrypt ion: Homomorphic encryption 
+schemes permit anyone to evaluate functions on encr ypted data, but the evaluators never 
+see any information about the result. It is possibl e to construct an encryption scheme where 
+a user can compute f(m)  from an encryption of a message m, but she should not be able to 
+learn any other information about m (including the intermediate results in the computa tion 
+of f)? Essentially, the issue boils down to the followi ng question: can we control the 
+information that the evaluator can see?  Such an encryption scheme is called a functional 
+encryption scheme. The concept of functional encryption scheme was fir st introduced by Sahai 
+and Waters (Sahai & Waters, 2005) and subsequently investigated in a number of intriguing 
+works (Katz et al., 2013; Lewko et al., 2010; Boneh  et al., 2011; Agrawal et al., 2011). 
+Although the constructions in these propositions wo rk for several interesting families of 
+functions (such as monotone formulas and inner prod ucts), construction of a fully functional 
+encryption scheme is still not achieved and remains  as an open problem. What we need is a 
+novel and generic encryption system that provides u s with fine-grained control over what 
+one can see and access and what one can compute on data to get a desired output.  
+Other problems and applications:  Another important open question relates to the 
+assumptions underlying the current fully homomorphi c encryption systems. All known 
+fully homomorphic encryption schemes are based on hardness of lattice problems . The natural 
+question that arises - can we construct fully homom orphic from other approaches – say, for 
+example, from number-theoretic assumptions? Can we bring in the issue of the hardness of 
+factoring or discrete logarithms in this problem? 
+In addition to the scenarios where it is beneficial  to keep all data encrypted and to perform 
+computations on encrypted data, fully homomorphic e ncryption can be gainfully exploited 
+to solve a number of practical problems in cryptogr aphy. Two such examples are the 
+problems of verifiably outsourcing computation  (Goldwasser et al., 2008; Gennaro et al., 2010; 
+Chung et al., 2010; Applebaum et al., 2010) and constructing short non-interactive zero-
+knowledge proofs  (Gentry, 2009). Some of the applications of fully homomorphic encryption 
+do not require its full power. For example, in private information retrieval  (PIR), it is sufficient 
+
+ 
+Homomorphic Encryption: Theory and Application 21  
+to have a somewhat homomorphic encryption scheme th at is capable of evaluating simple 
+database indexing functions. For this applications,  what is needed is an optimized and less 
+functional encryption scheme that is more efficient  than a fully homomorphic encryption 
+function. Design of such functions for different ap plication scenarios is also a current hot 
+topic of research.  
+ 
+References 
+Adelsbach, A., Katzenbeisser, S., & Sadeghi, A. (20 02). Cryptography Meets Watermarking: 
+Detecting Watermarks with Minimal or Zero Knowledge  Disclosure. In: Proceedings 
+of the European Signal Processing Conference (EUSIP CO’02) , Vol 1, pp. 446-449, 
+Toulouse, France.  
+Agrawal, S., Freeman, D. M., & Vaikuntanathan, V. ( 2011). Functional Encryption for Inner 
+Product Predicates from Learning with Errors. In: Advances in Cryptology- 
+Proceedings of ASIACRYPT’11, Lecture Notes in Compu ter Science (LNCS) , Vol 7073, 
+Springer-Verlag, pp. 21-40. 
+Ajtai, M. & Dwork, C. (1997). A Public Key Cryptosy stem with Worst-Case/ Average-Case 
+Equivalence. In: Proceedings of the 29 th  Annual ACM International Symposium on 
+Theory of Computing (STOC’97) , pp. 284-293, ACM Press, New York, NY, USA. 
+Applebaum, B., Ishai, Y., & Kushilevitz, E. (2010).  Semantic Security under Related-Key 
+Attacks and Applications. Innovations in Computer Science (ICS) , pp. 45-55, 2011.  
+Applebaum, B., Ishai, Y., & Kushilevitz, E. (2010).  From Secrecy to Soundness: Efficient 
+Verification via Secure Computation. In: Automata, Language and Programming - 
+Proceedings of ICALP, Lecture Notes in Computer Sci ence (LNCS) , Vol 6198, Springer-
+Verlag, pp. 152-163. 
+Bandyopadhyay, D. & Sen, J. (2011). Internet of Thi ngs: Application and Challenges in 
+Technology and Standardization. Wireless Personal Communications , Vol 58, No 1, 
+pp. 49-69, Special Issue on Distributed and Secure Cloud Clust ering (DISC) , Springer-
+Verlag, Berlin, Heidelberg, Germany, May 2011. 
+Bao, F. (2003). Cryptanalysis of a Provable Secure Additive and Multiplicative Privacy 
+Homomorphism. In: Proceedings of International Workshop on Coding and  
+Cryptography (WCC’03),  Versailles, France, pp. 43-49. 
+Bellare, M. & Rogaway, P. (1995). Optimal Asymmetric  Encryption- How to Encrypt with 
+RSA. In: Advances in Cryptology - Proceedings of EUROCRYPT’9 4, Lecture Notes in 
+Computer Science (LNCS) , Vol 950, Springer-Verlag, pp. 92-111. 
+Benaloh, J. (1994). Dense Probabilistic Encryption.  In: Proceedings of the Workshop on Selected 
+Areas of Cryptography , 1994, pp. 120-128. 
+Benaloh, J. (1988). Verifiable Secret-Ballot Elections . Doctoral Dissertation, Department of 
+Computer Science, Yale University, New Haven, Conne cticut, USA. 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+22  
+Ben-Or, M. & Cleve, R. (1992). Computing Algebraic F ormulas Using a Constant Number of 
+Registers. SIAM Journal on Computing , Vol 21, No 1, pp. 54-58, 1992. 
+Blum, M. & Goldwasser, S. (1985). An Efficient Prob abilistic Public-Key Encryption Scheme 
+which Hides All Partial Information. In: Advances in Cryptology – Proceedings of 
+EUROCRYPT’84, Lecture Notes in Computer Science (LN CS) , Vol 196, Springer-
+Verlag, pp. 289-299. 
+Boneh, D. & Freeman, D. M. (2011). Linearly Homomor phic Signatures over Binary Fields 
+and New Tools for Lattice-Based Signatures. In: Public Key Cryptography (PKC’11), 
+Lecture Notes in Computer Science (LNCS) , Vol 6571, Springer-Verlag, pp. 1-16. 
+Boneh, D. & Lipton, R. (1996). Searching for Elemen ts in Black Box Fields and Applications. 
+In: Advances in Cryptology- Proceedings of CRYPTO’96, L ecture Notes in Computer 
+Science (LNCS) , Vol 1109, Springer-Verlag, pp. 283-297. 
+Boneh, D., Segev, G., & Waters, B. (2012). Targeted  Malleability: Homomorphic Encryption 
+for Restricted Computations. In: Proceedings of Innovations in Theoretical Computer 
+Science (ITCS) , pp 350-366, ACM Press, New York, NY, USA, 2012.  
+Brakerski, Z., Gentry, C., & Vaikuntanathan, V. (20 11). Fully Homomorphic Encryption 
+without Bootstrapping. In: Proceedings of the 3 rd  Innovations in Theoretical Computer 
+Science Conference (ITCS’12) , pp. 309-325, ACM Press, New York, NY, USA.  
+Brakerski, Z. & Vaikuntanathan, V. (2011). Fully Ho momorphic Encryption from Ring-LWE 
+and Security for Key Dependent Messages. In: Advances in Cryptology- Proceedings of 
+CRYPTO’11, Lecture Notes in Computer Science (LNCS) , Vol 6841, Springer-Verlag, 
+pp. 505-524. 
+Brakerski, Z. & Vaikuntanathan, V. (2011a). Efficie nt Fully Homomorphic Encryption from 
+(Standard) LWE. In: Proceedings of the IEEE 52 nd  Annual Symposium on Foundations of 
+Computer Science (FOCS’11) , pp. 97-106, ACM Press, New York, NY, USA. 
+Bresson, E., Catalano, D., & Pointcheval, D. (2003) . A Simple Public-Key Cryptosystem with 
+a Double Trapdoor Decryption Mechanism and its Appl ications. In: Advances in 
+Cryptology- Proceedings of ASIACRYPT’03, Lecture No tes in Computer Science (LNCS) , 
+Vol 2894, Springer-Verlag, pp. 37-54. 
+Brickell, E. F. & Yacobi, Y. (1987). On Privacy Hom omorphisms. In: Advances in Cryptology – 
+Proceedings of EUROCRYPT 1987, Lecture Notes in Com puter Science (LNCS)  Vol 304, 
+Springer-Verlag, pp. 117-125. 
+Canetti, R., Goldreich, O., & Halevi, S. (2004). The  Random Oracle Methodology, Revisited. 
+Journal of ACM (JACM) , Vol 5, Issue 4, July 2004, pp. 557-594, ACM Press , New 
+York, NY, USA.  
+Castagnos, G. (2007). An Efficient Probabilistic Pu blic-Key Cryptosystem over Quadratic 
+Fields Quotients. Finite Fields and Their Applications , Vol 13, No 3, pp. 563-576, July 
+2007. 
+
+ 
+Homomorphic Encryption: Theory and Application 23  
+Castagnos, G. (2006). Quelques Schemas De Cryptogra phic Asymetrique Probabiliste. 
+Doctoral Dissertation, Universite De Limoges, 2006.  Available Online at: 
+http://epublications.unilim.fr/ theses/2006/castagnos-guilhem/castagnos-guilhem.pdf   
+Chung, K.-M., Kalai, Y.  & Vadhan, S. (2010). Impro ved Delegation of Computation Using 
+Fully Homomorphic Encryption. In:  Advances in Cryptology - Proceedings of 
+CRYPTO’10, Lecture Notes in Computer Science (LNCS) , Vol 6223, Springer-Verlag, 
+pp. 483-501. 
+Chunsheng, G. (2012). More Practical Fully Homomorp hic Encryption. International Journal 
+of Cloud Computing and Services Science , Vol 1, Issue 4, pp. 199-201. 
+Coron, J.-S., Mandal, A., Naccache, D., & Tibouchi,  M. (2011). Fully Homomorphic 
+Encryption over the Integers with Shorter Public Ke ys. In: Advances in Cryptology - 
+Proceedings of CRYPTO’11, Lecture Notes in Computer  Science (LNCS) , Vol 6841, 
+Springer-Verlag, pp. 487-504. 
+Cramer, R. & Damgard, I. (1998). Zero-Knowledge Proo fs for Finite Field Arithmetic, Or: 
+Can Zero-Knowledge be for Free? In: Advances in Cryptology - Proceedings of 
+CRYPTO’98, Lecture Notes in Computer Science (LNCS) , Vol 1462, Springer-Verlag, 
+pp. 424-441. 
+Cramer, R., Damgard, I., & Maurer, U. (2000). Genera l Secure Multi-party Computation 
+from any Linear Secret-Sharing Scheme. In: Advances in Cryptology – Proceedings of 
+EUROCRYPT’00, Lecture Notes in Computer Science (LN CS) , Vol 1807, Springer-
+Verlag, pp. 316-334. 
+Cramer, R. & Shoup, V. (2002). Universal Hash Proof s and a Paradigm for Adaptive Chosen 
+Ciphertext Secure Public-Key Encryption. In: Advances in Cryptology – Proceedings of 
+EUROCRYPT’02, Lecture Notes in Computer Science (LN CS) , Vol 2332, Springer-
+Verlag, New York, NY, USA, pp. 45-64. 
+Daemen, J. & Rijmen, V. (2002). The Design of Rijndael: AES- The Advanced Encryptio n 
+Standard . Information Security and Cryptography, Springer, New York, NY, USA, 
+2002. 
+Daemen, J. & Rijmen, V. (2000). The Block Cipher Rijn dael. In: Proceedings of International 
+Conference on Smart Cards Research and Applications  (CARDS’98) , Lecture Notes in 
+Computer Science (LNCS) , Vol 1820, Springer-Verlag, pp. 247-256. 
+Damgard, I. & Jurik, M. (2003). A Length-Flexible T hreshold Cryptosystem with 
+Applications. In: Proceedings of the 8 th  Australasian Conference on Information Security 
+and Privacy (ACSIP’03), Lecture Notes in Computer S cience (LNCS) , Vol 2727, 
+Springer-Verlag, pp 350-364. 
+Damgard, I. & Jurik, M. (2001). A Generalisation, a  Simplification and Some Applications of 
+Paillier’s Probabilistic Public-Key System. In: Proceedings of the 4 th  International 
+Workshop on Practice and Theory in Public Key Crypt ography (PKC’01), Lecture Notes in 
+Computer Science (LNCS) , Vol 1992, Springer-Verlag, pp. 119-136.  
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+24  
+Damgard, I., Jurik, M., & Nielsen, J. (2010). A Gen eralization of Paillier’s Public-Key System 
+with Applications to Electronic Voting. International Journal on Information Security 
+(IJIS), Special Issues on Special Purpose Protocol , Vol 9, Issue 6, December 2010, pp. 
+371-385, Springer-Verlag, Heidelberg, Berlin, Germa ny.  
+Diffie, W. & Hellman, M. (1976). New Directions in Cryptography. IEEE Transactions on 
+Information Theory , Vol 22, No 6, November 1976, pp. 644-654. 
+Domingo-Ferrer, J. (2002). A Provably Secure Additi ve and Multiplicative Privacy 
+Homomorphism. In: Proceedings of the 5 th  International Conference on Information 
+Security (ISC’02), Lecture Notes in Computer Scienc e (LNCS) , Vol 2433, Springer-
+Verlag, pp. 471-483. 
+Ekdahl, E. & Johansson, T. (2002). A New Version of  the Stream Cipher SNOW. In: 
+Proceedings of the 9 th  International Workshop on Selected Areas of Crypto graphy 
+(SAC’02), Lecture Notes in Computer Science (LNCS),  Vol 2595, Springer-Verlag, pp. 
+47-61. 
+ElGamal, T. (1985). A Public Key Cryptosystem and a  Signature Scheme Based on Discrete 
+Logarithms. IEEE Transactions on Information Theory , Vol 31, Issue 4, July 1985, pp. 
+469-472. 
+Feigenbaum, J. & Merritt, M. (1991). Open Questions , Talk Abstracts, and Summary of 
+Discussions. DIMACS Series in Discrete Mathematics and Theoretic al Computer Science , 
+Vol 2, pp. 1-45. 
+Fellows, M. & Koblitz, N. (1993). Combinatorial Cry ptosystems Galore! Finite Fields- 
+Theory, Applications and Algorithms. Contemporary Mathematics , Vol. 168, Las 
+Vegas, 1994, pp. 51-61. 
+Fontaine, C. & Galand, F. (2007). A Survey of Homom orphic Encryption for Nonspecialists. 
+EURASIP Journal on Information Security , Vol 2007, January 2007, Article ID 15, 
+Hindawi Publishing Corporation, New York, NY, USA. DOI: 10.1155/2007/13801. 
+Fouque, P., Poupard, G., & Stern, J. (2000). Sharin g Decryption in the Context of Voting or 
+Lotteries. In: Proceedings of the 4 th  International Conference on Financial Cryptography  
+(FC’00), Lecture Notes in Computer Science (LNCS) , Vol 1962, Springer-Verlag, pp. 90-
+104. 
+Galbraith, S. D. (2002). Elliptic Curve Paillier Sc hemes. Journal of Cryptology , Vol 15, No 2, pp. 
+129-138, August 2002. 
+Gennaro, R., Gentry, C., & Parno, B. (2010). Non-Int eractive Verifiable Computing: 
+Outsourcing Computation to Untrusted Workers. In: Advances in Cryptology-
+Proceedings of CRYPTO’10, Lecture Notes in Computer  Science (LNCS) , Vol 6223, 
+Springer-Verlag, pp. 465-482. 
+Gentry, C. (2010). Toward Basing Fully Homomorphic Encryption on Worst-Case Hardness. 
+In: Advances in Cryptology- Proceedings of CRYPTO’10, L ecture Notes in Computer 
+Science (LNCS) , Vol 6223, Springer-Verlag, pp. 116-137. 
+
+ 
+Homomorphic Encryption: Theory and Application 25  
+Gentry, C. (2009). Fully Homomorphic Encryption Usi ng Ideal Lattices. In: Proceedings of the 
+41 st  Annual ACM Symposium on Theory of Computing (STOC’ 09), pp. 169-178, ACM 
+Press, New York, NY, USA. 
+Gentry, C. & Halevi, S. (2011). Implementing Gentry ’s Fully-Homomorphic Encryption 
+Scheme. In: Advances in Cryptology - Proceedings of EUROCRYPT’1 1, Lecture Note in 
+Computer Science (LNCS) , Vol 6632, Springer-Verlag, pp. 129-148. 
+Gentry, C, Halevi, S., & Smart, N. (2012). Better B ootstrapping in Fully Homomorphic 
+Encryption. In: Proceedings of the 15 th  International Conference on Practice and Theory 
+in Public Key Cryptography (PKC’12), Lecture Notes in Computer Science (LNCS) , Vol 
+7293, Springer-Verlag, pp. 1-16.  
+Gentry, C., Peikert, C., & Vaikuntanathan, V. (2008 ). Trapdoors for Hard Lattices and New 
+Cryptographic Constructions. In: Proceedings of the 40 th  Annual ACM Symposium on 
+Theory of Computing (STOC’08) , pp. 197-206, ACM Press, New York, NY, USA. 
+Goldreich, O., Goldwasser, S., & Halevi, S. (1997).  Public-Key Cryptosystems from Lattice 
+Reduction Problems. In: Advances in Cryptology- Proceedings of CRYPTO’97, L ecture 
+Notes in Computer Science (LNCS) , Vol 1294, Springer-Verlag, pp. 112-131. 
+Goldwasser, S., Kalai, Y. T., & Rothblum, G. N. (200 8). Delegating Computation: Interactive 
+Proofs for Muggles. In: Proceedings of the 40 th  Annual ACM Symposium on Theory of 
+Computing (STOC’08) , pp. 113-122, ACM Press, New York, NY, USA. 
+Goldwasser, S. & Micali, S. (1982). Probabilistic E ncryption and How to Play Mental Poker 
+Keeping Secret All Partial Information. In: Proceedings of the 14 th  Annual ACM 
+Symposium on Theory of Computing (STOC’82) , pp. 365-377, ACM Press, New York, 
+NY, USA. 
+Goldwasser, S. & Micali, S. (1984). Probabilistic E ncryption. Journal of Computer and System 
+Sciences , Vol 28, Issue 2, pp. 270-299, April 1984. 
+Golle, P., Jakobsson, M., Juels, A., & Syverson, P.  (2004). Universal Re-Encryption for 
+Mixnets. In: Topics in Cryptology - Proceedings of the RSA Confe rence Cryptographers’ 
+Track (CT-RSA’04), Lecture Notes in Computer Scienc e (LNCS) , Vol 2964, Springer-
+Verlag, pp. 163-178. 
+Grigoriev, D. & Ponomarenko. (2006). Homomorphic Pu blic-Key Cryptosystems and 
+Encrypting Boolean Circuits. Applicable Algebra in Engineering, Communication an d 
+Computing , Vol 17, Issue 3-4, pp. 239-255, August 2006. 
+Grigoriev, D. & Ponomarenko, I. (2004). Homomorphic  Public-Key Cryptosystems over 
+Groups and Rings. Quaderni di Mathematica , Vol 13, pp. 304-325, 2004. 
+Groth, J. (2004). Rerandomizable and Replayable Adapt ive Chosen Ciphertext Attack Secure 
+Cryptosystems. In: Proceedings of the 1 st  Theory of Cryptography Conference (TCC’04), 
+Lecture Notes in Computer Science (LNCS) , Vol 2951, Springer-Verlag, pp. 152-170.  
+He, W; Liu, X.; Nguyen, H.; Nahrstedt, K.; Abdelzah er, T. (2007). PDA: Privacy-Preserving 
+Data Aggregation in Wireless Sensor Networks. In Proceedings of the 26 th  IEEE 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+26  
+International Conference on Computer Communications  (INFOCOM’07) , pp. 2045-2053, 
+Anchorage, Alaska, USA, May 2007.  
+Hoffstein, J., Pipher, J., & Silverman, J. (1998). NTRU: A Ring-Based Public Key 
+Cryptosystem. In: Proceedings of the 3 rd  International Symposium on Algorithmic 
+Number Theory (ANTS-III), ANTS’98, Lecture Notes in  Computer Science (LNCS) , Vol 
+1423, Springer-Verlag, pp. 267-288. 
+Katz, J. Sahai, A., & Waters, B. (2013). Predicate Encryption Supporting Disjunctions, 
+Polynomial Equations, and Inner Products. Journal of Cryptology , Vol 26, Issue 2, pp. 
+191-224, April 2013, Springer-Verlag, Berlin, Heide lberg, Germany.  
+Ko, K. H., Lee, S. J. Cheon, J. H., Han, J. W., Kan g, J.-S., & Park, C. (2000). New Public-Key 
+Cryptosystem Using Braid Groups. In: Advances in Cryptology – Proceedings of 
+CRYPTO’00, Lecture Notes in Computer Science (LNCS) , Vol 1880, Springer-Verlag, 
+pp. 166-183. 
+Koblitz, N. (1998). Algebraic Aspects of Cryptograp hy: Algorithms and Computation in 
+Mathematics, Vol 3, Springer-Verlag, Berlin, Heidel berg, Germany, 1998.  
+Lewko, A. B., Okamoto, T., Sahai, A. Takashima, K. & Waters, B. (2010). Fully Secure 
+Functional Encryption: Attribute-Based Encryption a nd (Hierarchical) Inner 
+Product Encryption. In: Advances in Cryptology- Proceedings of EUROCRYPT’10 , 
+Lecture Notes in Computer Science (LNCS) , Vol 6110, Springer-Verlag, pp. 62-91. 
+Lipmaa, H. (2003). Verifiable Homomorphic Oblivious  Transfer and Private Equality Test. 
+In: Advances in Cryptology- Proceedings of ASIACRYPT’03 , Lecture Notes in Computer 
+Science (LNCS) , Vol 2894, Springer-Verlag, pp. 416-433. 
+Ly, L. V. (2002). Polly Two - A Public-Key Cryptosystem Based on Poll y Cracker . Doctoral 
+Dissertation, Ruhr-Universitat, Bochum, Germany, Oct ober 2002.  
+Lyubashevsky, V. & Micciancio, D. (2008). Asymptoti cally Efficient Lattice-Based Digital 
+Signatures. In: Proceedings of the 5 th  International Conference on Theory of Cryptography  
+(TCC’08), Lecture Notes in Computer Science (LNCS) , Vol 4948, Springer-Verlag, pp. 
+37-54. 
+Lyubashevsky, V. & Micciancio, D. (2006). Generaliz ed Compact Knapsacks are Collision 
+Resistant. In: Proceedings of the 33 rd  International Conference on Automata, Languages 
+and Programming (ICALP’06), Lecture Notes in Comput er Science (LNCS) , Vol 4052, 
+Springer-Verlag, pp. 144-155.   
+Lyubashevsky, V., Micciancio, D., Peikert, C., & Ros en, A. (2008). SWIFT: A Modest 
+Proposal for FFT Hashing. In: Proceedings of the 15 th  International Workshop on Fast 
+Software Encryption (FSE’08), Lecture Notes in Comp uter Science (LNCS),  Vol 5068, 
+Springer-Verlag, pp. 54-72. 
+Lyubashevsky, V., Peikert, C., & Regev, O. (2010). O n Ideal Lattices and Learning with 
+Errors over Rings. In:  Advances in Cryptology- Proceedings of EUROCRYPT’1 0, 
+Lecture Notes in Computer Science (LNCS) , Vol 6110, Springer-Verlag, pp. 1-23. 
+
+ 
+Homomorphic Encryption: Theory and Application 27  
+Menezes, A., Van Orschot, P. & Vanstone, S. (1997).  Handbook of Applied Cryptography . CRC 
+Press, USA. Available Online at: http://www.cacr.ma th.uwaterloo.ca/hac/. 
+Micciancio, D. (2007). Generalized Compact Knapsack s, Cyclic Lattices, and Efficient One-
+Way Functions. Computational Complexity , Vol 16, No 4, pp. 365-411, December 
+2007. 
+Micciancio, D. (2001). Improving Lattice Based Cryp tosystems Using Hermite Normal Form. 
+In: Cryptography and Lattices - Proceedings of the Inte rnational Conference on 
+Cryptography and Lattices (CaLC’01), Lecture Notes in Computer Science (LNCS) , Vol 
+2146, Springer-Verlag, pp. 126-145. 
+Micciancio, D. & Regev, O. (2007). Worst-Case to Ave rage-Case Reductions Based on 
+Gaussian Measures. SIAM Journal on Computing , Vol 37, Issue 1, pp. 267-302, April 
+2007. 
+Naccache, D. & Stern, J. (1998). A New Public Key C ryptosystem Based on Higher Residues. 
+In: Proceedings of the 5 th  ACM Conference on Computer and Communications Secu rity 
+(CCS’98) , pp. 59-66, ACM Press, New York, NY, USA. 
+Naehrig, M., Lauter, K., & Vaikuntanathan, V. (2011 ). Can Homomorphic Encryption be 
+Practical? In: Proceedings of the 3 rd  ACM Workshop on Cloud Computing Security , pp. 
+113-124, ACM Press, New York, NY, USA. 
+Nguyen, P. & Stern, J. (1999). Cryptanalysis of the  Ajtai-Dwork Cryptosystem. In: Advances 
+in Cryptology – Proceedings of CRYPTO’98, Lecture N otes in Computer Science (LNCS) , 
+Springer-Verlag, Vol 1462, New York, NY, USA, pp. 2 23-242. 
+Ogura, N., Yamamoto, G., Kobayashi, T., & Uchiyama,  S. (2010). An Improvement of Key 
+Generation Algorithm for Gentry’s Homomorphic Encry ption Scheme. In: Advances 
+in Information and Computer Security- Proceedings o f the 5 th  International Conference on 
+Advances in Information and Computer Security (IWSE C’10), Lecture Notes in Computer 
+Science (LNCS) , Vol 6434, Springer-Verlag, pp. 70-83.  
+Okamoto, T. & Uchiyama, S. (1998). A New Public-Key  Cryptosystem as Secure as 
+Factoring. In: Advances in Cryptology- Proceedings of EUROCRYPT’98 , Lecture Notes 
+in Computer Science (LNCS) , Vol 1403, Springer-Verlag, pp. 308-318. 
+Okamoto, T., Uchiyama, S., & Fujisaki, E. (2000). E POC: Efficient Probabilistic Public-Key 
+Encryption. Technical Report, 2000, Proposal to IEEE  P1363a. Available Online at: 
+http://grouper.iee.org/groups/1363/StudyGroup/NewFa m.html. 
+Paeng, S.-H, Ha, K.-C., Kim, J. H., Chee, S., & Par k, C. (2001). New Public Key Cryptosystem 
+Using Finite Non Abelian Groups. In: Advances in Cryptology- Proceedings of 
+CRYPTO’01, Lecture Notes in Computer Science (LNCS) , Vol 2139, Springer-Verlag, 
+pp. 470-485. 
+Paillier, P. (2007). Impossibility Proofs for RSA Si gnatures in the Standard Model. In: Topics 
+in Cryptology - Proceedings of the RSA Conference C ryptographers’ Track (CT-RSA’07), 
+Lecture Notes in Computer Science (LNCS) , Vol 4377, pp. 31-48, San Francisco, 
+California, USA.  
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+28  
+Paillier, P. (1999). Public-Key Cryptosystems Based  on Composite Degree Residuosity 
+Classes. In: Advances in Cryptology – Proceedings of EUROCRYPT’9 9, Lecture Notes in 
+Computer Science (LNCS) , Vol 1592, Springer-Verlag, pp. 223-238. 
+Pfitzmann, B. & Waidner, M. (1997). Anonymous Finge rprinting. In: Advances in Cryptology- 
+Proceedings of the EUROCRYPT’97, Lecture Notes in C omputer Science (LNCS) , Vol 
+1233, Springer-Verlag, pp. 88-102. 
+Peikert, C. & Rosen, A. (2007). Lattices that Admit Logarithmic Worst-Case to Average-Case 
+Connection Factors. In: Proceedings of the 39 th  Annual ACM Symposium on Theory of 
+Computing (STOC’07) , pp. 478-487, ACM Press, June 2007. 
+Peikert, C. & Rosen, A. (2006). Efficient Collision- Resistant Hashing from Worst-Case 
+Assumptions on Cyclic Lattices. In: Theory of Cryptography - Proceedings of the 3 rd  
+International Conference on Theory of Cryptography (TCC’06), Lecture Notes in 
+Computer Science (LNCS) , Vol 3876, Springer-Verlag, pp. 145-166. 
+Poupard, G. & Stern, J. (2000). Fair Encryption of RSA Keys. In: Advances in Cryptology- 
+Proceedings of EUROCRYPT’00, Lecture Notes in Compu ter Science (LNCS) , Vol 1807, 
+Springer-Verlag, pp. 172-189. 
+Rappe, D. (2004). Homomorphic Cryptosystems and thei r Applications. Doctoral 
+Dissertation. University of Dortmund, Dortmund, Ger many. 
+Regev, O. (2005). On Lattices, Learning with Errors,  Random Linear Codes, and 
+Cryptography. In: Proceedings of the 37 th  Annual ACM Symposium on Theory of 
+Computing (STOC’05) , pp. 84-93, ACM Press, New York, NY, USA.  
+Rivest, R., Adleman, L., & Dertouzos, M. (1978a). On Data Banks and Privacy 
+Homomorphisms. Foundations of Secure Communication , pp. 169-177, Academic 
+Press. 
+Rivest, R., Shamir, A., & Adleman, L. (1978b). A Meth od for Obtaining Digital Signatures 
+and Public-Key Cryptosystems. Communications of the ACM , Vol 21, No 2, pp. 120-
+126. 
+Sahai, A. & Waters, B. (2005). Fuzzy Identity-Based  Encryption. In: Advances in Cryptology -  
+Proceedings of EUROCRYPT’05, Lecture Notes in Compu ter Science (LNCS) , Vol 3494, 
+Springer-Verlag, pp. 457-473. 
+Sander, T. & Tschudin, C. F. (1998). Towards Mobile  Cryptography. In: Proceedings of  IEEE 
+Symposium on Security & Privacy , Oakland, California, USA, pp. 215-224,  May 1998.  
+Sander, T. & Tshudin, C. F. (1998a). Protecting Mob ile Agents against Malicious Hosts. In: 
+Proceedings of International Conference on Mobile A gents and Security, Lecture Notes in 
+Computer Science (LNCS) , Vol 1419, Springer-Verlag, pp. 44-60. 
+Sander, T., Young, A., & Yung, M. (1999). Non-Inter active CryptoComputing for NC. In: 
+Proceedings of the 40 th  Annual IEEE Symposium on Foundations of Computer S cience , 
+pp. 564-566, October 1999. 
+
+ 
+Homomorphic Encryption: Theory and Application 29  
+Sen, J. (2013a). An Efficient, Secure and User Priv acy-Preserving Search Protocol for Peer-to-
+Peer Networks. In: Internet of Things and Inter-Cooperative Computatio nal Technologies 
+for Collective Intelligence , Bessis, N. et al. (eds.), pp. 279-320, Studies in Computational 
+Intelligence Series , Springer-Verlag, Berlin, Heidelberg, Germany, Jan uary 2013. 
+Sen, J. (2013b). Security and Privacy Issues in Wir eless Mesh Networks: A Survey. In: 
+Wireless Networks and Security-Issues, Challenges a nd Research Trends , Khan, S. et al. 
+(eds.), pp. 189-272, Springer-Verlag, Berlin, Heide lberg, February 2013. 
+Sen, J. (2012a). Secure and Privacy-Preserving Data  Aggregation Protocols for Wireless 
+Sensor Networks. In: Cryptography and Security in Computing, Sen, J. (ed.), pp. 133-
+164, INTECH Publishers, Croatia, April 2012. 
+Sen, J. (2012b). Security in Wireless Sensor Networ ks. In: Wireless Sensor Networks: Current 
+Status and Future Trends , Khan, S. et al. (eds.), pp. 407-460, CRC Press, US A, 
+November 2012. 
+Sen, J. (2012c). Secure and User privacy-Preserving  Searching in Peer-to-Peer Networks. 
+Logic Journal of IGP,  Oxford University Press, DOI: 10.1093/jigpal/jzs03 6, August, 
+2012. 
+Sen, J. (2012d). Secure and Privacy-Preserving Auth entication Protocols for Wireless Mesh 
+Networks. In: Applied Cryptography and Network Security , Sen, J. (ed.), pp. 3-34, 
+Intech Publishers, Croatia, April 2012. 
+Sen, J. (2012e). Ubiquitous Computing: Applications , Challenges and Future Trends. In: 
+Embedded Systems and Wireless Technology: Theory an d Practical Application , Aquino 
+Santos, R. et al. (eds.), pp. 1-40, CRC Press, USA, 2 012. 
+Sen, J. (2011a). A Robust and Secure Aggregation Pro tocol for Wireless Sensor Networks. In: 
+Proceedings of the 6 th  International Symposium on Electronic Design, Test  and 
+Applications (DELTA’11) , pp. 222-227, Queenstown, New Zealand, January 201 1. 
+Sen, J. (2011b). Secure and Privacy-Aware Searching  in Peer-to-Peer Networks. In: Data 
+privacy Management and Autonomous Spontaneous Secur ity – Proceedings of the 6 th  
+International Workshop on Data Privacy Management ( DPM’11), Co-located with 
+ESORICS’12, Lecture Notes in Computer Science (LNCS ), Vol 7122, pp. 72-89, 
+Springer-Verlag, September 2011. 
+Sen, J. (2011c). An Anonymous Authentication and Co mmunication Protocol for Wireless 
+mesh Networks. In: Proceedings of the First International Conference o n Advances on 
+Computing and Communications (ACC’11), Communicatio ns in Computer and 
+Information Science (CCIS) , Vol 193, Springer-Verlag, 581-592, July 2011. 
+Sen, J. (2011d). A Novel Mechanism for Detection of  Distributed Denial of Service Attacks. 
+In: Proceedings of the First International Conference o n Computer Science and Information 
+Technology (CCSIT’11), Communications in Computer a nd Information Science (CCIS) , 
+Vol 133, Part III, pp. 247-257, Springer-Verlag, Be rlin, Heidelberg, January 2011. 
+
+Theory and Practice of Cryptography and Network Sec urity Protocols and Technologies 
+30  
+Sen, J. (2010a). Routing Security Issues in Wireless  Sensor Networks: Attacks and Defenses. 
+In: Sustainable Wireless Sensor Networks , Tan Y. K. et al.  (eds.), pp. 279-309, Intech 
+Publishers, Croatia, December 2010. 
+Sen, J. (2010b). Reputation- and Trust-Based Systems  for Wireless Self-Organizing 
+Networks. In: Security of Self-Organizing Networks: MANET, WSN, W MN, VANET , 
+Pathan, A.-S.K. (ed.), pp. 91-122, CRC Press, USA, D ecember 2010. 
+Sen, J. (2010c). An Efficient and User Privacy-Pres erving Routing Protocol for Wireless mesh 
+Networks. In: Scalable Computing: Practice and Experience, Specia l Issue on Network 
+and Distributed Systems , Vol 11, No 4, pp. 345-358, December 2010.  
+Sen, J. (2010d). A Distributed Trust and Reputation Framework for Mobile Ad Hoc 
+Networks. In: Proceedings of the First International Workshop on Trust Management in 
+Peer-to-Peer Systems (IWTMP2PS), Communications in Computer and Information 
+Science (CCIS),  Springer-Verlag, Vol 89, pp. 538-547, July 2010. 
+Sen, J. (2009). A Survey on Wireless Sensor Network  Security. International Journal of 
+Communication Networks and Information Security (IJ CNIS) , Vol 1, No 2, pp. 59-82, 
+August 2009. 
+Sen, J., Chandra, M. G., Balamuralidhar, P., Hariha ra, S. G., Reddy, H. (2007a). A Mechanism 
+for Detection of Gray Hole Attack in Mobile Ad Hoc Networks. In: Proceedings of 
+the 6 th  International Conference on Information, Communica tion and Signal Processing 
+(ICICS’07) , Paper ID: 458, Singapore, December 2007. 
+Sen, J. Chandra, M. G., Balamuralidhar, P., Harihar a, S.G., & Reddy, H. (2007b). A 
+Distributed Protocol for Detection of Packet Droppi ng Attack in Mobile Ad Hoc 
+networks. In: Proceedings of the International Conference on Tele communications and 
+Malaysian International Conference on Communication s (ICT-MICC’07),  Paper ID; 74, 
+Penang, Malaysia, May 2007. 
+Sen, J. Roychowdhury, P., Sengupta, I. (2007c). A Di stributed Trust Establishment Scheme 
+for Mobile Ad Hoc Networks. In: Proceedings of the International Conference on 
+Computation: Theory and Applications (ICCTA’07) , pp. 51-57, Kolkata, India, March 
+2007. 
+Sen, J., Roychowdhury, P., & Sengupta, I. (2006). A Distributed Trust Mechanism for Mobile 
+Ad Hoc Networks. In: Proceedings of the International Symposium on Ad Ho c and 
+Ubiquitous Computing (ISAHUC’06) , pp. 62-67, Surathkal, Mangalore, India, 
+December 2006. 
+Sen, J. & Maitra, S. (2011). An Attack on Privacy-P reserving Data Aggregation Protocol for 
+Wireless Sensor Networks. In: Information Security Technology for Applications – 
+Proceedings of the 16 th  Nordic Conference in Secure IT Systems (NordSec’11 ), Lecture 
+Notes in Computer Science (LNCS) , Vol 7161, Springer-Verlag, pp. 205-22. 
+Sen, J. & Ukil, A. (2010). A Secure Routing Protocol  for Wireless Sensor Networks. In: 
+Computational Science and its Applications - Procee dings of the International Conference 
+on Computational Science and its Applications (ICCS A’10), Lecture Notes in Computer 
+Science (LNCS) , Vol 6018, Part III, Springer-Verlag, pp. 277-290,  March 2010. 
+
+ 
+Homomorphic Encryption: Theory and Application 31  
+Shannon, C. (1949). Communication Theory of Secrecy  Systems. Bell System Technical Journal , 
+Vol 28, Issue 4, pp. 656-715, October 1949. 
+Smart, N. P. & Vercauteren, F. (2010). Fully Homomo rphic Encryption with Relatively Small 
+Key and Ciphertext Sizes. In: Public Key Cryptography - Proceedings of the 13 th  
+International Conference on Practice and Theory in Public Key Cryptography (PKC’10), 
+Lecture Notes in Computer Science (LNCS), Vol 6056,  Springer-Verlag, pp. 420-443. 
+Smart, N. & Vercauteren. (2012). Fully Homomorphic SIMD Operations. Design Codes and 
+Cryptography , Springer, USA, July 2012.  
+Stehle, D. & Steinfeld, R. (2010). Faster Fully Homo morphic Encryption. In: Advances in 
+Cryptology – Proceedings of ASIACRYPT’10, Lecture N otes in Computer Science 
+(LNCS) , Vol 6477, Springer-Verlag, pp. 377-394.  
+Vaikuntanathan, V. (2011). Computing Blindfolded: N ew Developments in Fully 
+Homomorphic Encryption. In: Proceedings of the IEEE 52 nd  Annual Symposium on 
+Foundations of Computer Science (FOCS’11) , pp. 5-16, IEEE Computer Society Press, 
+Washington, DC, USA.  
+Van Tilborg, H. C. A. & Jajodia, S. (Eds.) (2011). Encyclopedia of Cryptography and Security . 
+Springer-Verlag, New York, NY, USA, 2011.  
+Vernam, G. S. (1926). Cipher Printing Telegraph Sys tems for Secret Wire and Radio 
+Telegraphic Communications. Journal of the American Institute of Electrical Eng ineers , 
+Vol 45, pp. 295-301.  
+Wagner, D. (2003). Cryptanalysis of an Algebraic Pr ivacy Homomorphism. In: Proceedings of 
+the 6 th  International Conference on Information Security ( ISC’03), Lecture Notes in 
+Computer Science (LNCS) , Vol 2851, Springer-Verlag, pp.234-239. 
+Wagner, N. R. & Magyarik, M. R. (1985). A Public Key Cryptosystem Based on the Word 
+Problem. In: Advances in Cryptology- Proceedings of CRYPTO’84, L ecture Notes in 
+Computer Science (LNCS),  Vol 196, Springer-Verlag, pp. 19-36.  
+
