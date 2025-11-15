@@ -1,0 +1,51 @@
+At this point, we reflect on other DSL based approaches for railway
+verification, commenting on how they differ to our presented
+methodology.
+
+The Railway Control Systems Domain language (RCSD) is a DSL for
+railway control systems developed by Kirsten
+Mewes~\cite{mewes2010}. RCSD is motivated by model-driven engineering
+approaches to system design. The language uses common domain notation
+for its concrete syntax and incorporates knowledge from domain
+engineers about the domain into its static and dynamic
+semantics. Mewes also considers the topic of testing models created in
+DSL. Here, domain specific constraints are included into the models
+ensuring that validation checks for correct functionality can be
+tested at the model level, before any software is been
+developed. Mewes' work focuses on the design of RCSD. In contrast, we
+leave the design of the DSL to the domain engineer and focus on
+capturing domain knowledge that can be exploited for automatic
+verification.
+
+Work by Haxthausen and Peleska~\cite{peleska07} has also explored the
+development of a domain specific framework for automated construction
+and verification of railway control systems. Their framework consists
+of a three tiered approach: the top layer is a DSL for use by domain
+engineers to specify railway control systems; the second tier is model
+generation: A generator automatically produces the model of a control
+program based on the specification given by the design
+engineer. Bounded model checking can then be performed to establish
+various safety properties over such programs; the third tier allows
+actual code to be automatically generated and verified to ensure
+certain properties are maintained throughout process. Differing to our
+work, this framework is specifically developed for the railway domain
+and tied to a specific DSL. In this paper, we provide a generic and
+systematic methodology, where the railway domain serves for
+illustration.
+
+Finally, the SafeCap toolset~\cite{iliasov2012b} provides a tooling
+platform that supports reasoning about railway capacity whilst
+ensuring system safety. It is based upon the SafeCap DSL, which
+captures track topology, route and path definitions and signalling
+rules. Overall, the toolset allows signalling engineers to design
+stations and junctions, to check their safety and to evaluate the
+potential improvements in capacity. Again, the SafeCap approach is
+bound to a specific DSL, where the design of the DSL is tailored to
+the underlying verification technology (Event B). This differs from
+our aim to decouple the DSL from the formal specification language, in
+turn allowing tooling environments to be very openly extendable.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

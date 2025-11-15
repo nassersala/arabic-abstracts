@@ -1,0 +1,162 @@
+%% Here you can specify new commands and environments that you intend
+%% to use. Using commands can make your document easier to write, read
+%% and be more consistent.
+
+%% An example could be
+%% \newcommand{\CASL}{\textrm{\textsc{Casl}}\xspace}
+%% This would define the command \CASL, that would produce the LaTeX
+%% code '\textrm{\textsc{Casl}}' (with an appropriate space at the
+%% end) each time it was used.
+
+
+\usepackage{microtype}
+\usepackage{fancybox}
+\usepackage{float}
+\usepackage{hetcasl}
+\usepackage{amsmath,amssymb,amsthm,stmaryrd,mathrsfs}
+\usepackage{subfloat}
+\usepackage{rotating}
+\usepackage{caption}
+\usepackage{framed}
+%%\usepackage{tikz-uml}
+%%\usepackage{babel}
+%%\usepackage{subfig}
+\usepackage{subfigure}
+%%\usepackage{ltablex}
+\usepackage{url}
+%%\include{tikz_macros}
+
+\renewcommand{\tt}{\texttt}
+\renewcommand{\it}{\textit}
+\renewcommand{\bf}{\textbf}
+
+%%\newsubfloat{figure}
+
+\usepackage{todonotes}
+%%\newcommand{\todo}[1]{\bf{#1}}
+
+\newcommand{\CASL}{\textrm{\textsc{Casl}}\xspace}
+
+\newcommand{\ModalCASL}{\textrm{\textsc{ModalCasl}}\xspace }
+
+\newcommand{\category}[1]{\ensuremath{\mathop{\text{{#1}}}}}
+\newcommand{\functor}[1]{\ensuremath{\mathop{\text{{#1}}}}}
+\newcommand{\functorsymbol}[1]{#1}
+\newcommand{\ModReduct}{\ensuremath{\category{Mod\_Reduct}}\xspace}
+
+\newcommand{\Sen}{\functor{sen}}
+\newcommand{\ModFunctor}{\functor{mod}}
+
+\newcommand{\PCFOL}{\text{\textit{PCFOL$^{=}$}}\xspace}
+\newcommand{\SubPCFOL}{\text{\textit{SubPCFOL$^{=}$}}\xspace}
+\newcommand{\ModSubPCFOL}{\text{\textit{ModalSubPCFOL$^{=}$}}\xspace}
+\newcommand{\op}{op}
+\newcommand{\inj}{\mbox{\texttt{inj}}\xspace}
+\newcommand{\pr}{\mbox{\texttt{pr}}\xspace}
+
+\newcommand{\angles}[1]{\langle #1 \rangle}
+
+\newcommand{\partialto}{\rightarrow? \;}
+
+\newenvironment{mybox}
+{\begin{Sbox}\begin{minipage}{0.8\textwidth}}
+{\end{minipage}\end{Sbox}\begin{center}\shadowbox{\TheSbox}\end{center}}
+
+\newcommand{\Nat}{\mathbb{N}\xspace}
+
+% these are (projection) functions
+\newcommand{\Sig}{\ensuremath{\mathop{\text{\textbf{Sig}}}}}
+\newcommand{\Mod}{\ensuremath{\mathop{\text{\textbf{Mod}}}}}
+
+
+
+
+\newcommand{\DB}{Dines Bj{\o}rner\xspace}
+\newcommand{\Bjoerner}{Bj{\o}rner\xspace}
+
+\newcommand{\CSPB}{CSP$||$B\xspace}
+
+\newcommand{\Hets}{\textrm{\textsc{Hets}}\xspace}
+\newcommand{\SPASS}{SPASS\xspace}
+\newcommand{\Vampire}{Vampire\xspace}
+%% Tikz Styles
+%\tikzstyle{category}     =[circle, draw, minimum size=3cm]
+%\tikzstyle{categoryLarge}=[ellipse, draw, minimum width=10cm, minimum height=5.5cm]
+%\tikzstyle{functor}      =[->, above, shorten <=0.2cm, shorten >=0.2cm]
+%\tikzstyle{object}       =[]
+%\tikzstyle{morphism}     =[->]
+
+
+
+%% UML
+\newcommand{\uml}[1]{\textsf{#1}}
+\newcommand{\stereotype}[1]{\uml{\flqq#1\frqq}}
+\newcommand{\aggregation}{\raisebox{0.2pt}{\begin{sideways}\fontsize{6pt}{6pt}\selectfont$\lozenge$\end{sideways}}}
+\newcommand{\composition}{\raisebox{0.2pt}{\begin{sideways}\fontsize{6pt}{6pt}\selectfont$\blacklozenge$\end{sideways}}}
+
+
+\newcommand{\Tau}{\mathrm{T}}
+\newcommand{\Ypsilon}{\mathrm{Y}}
+\newcommand{\omikron}{\ensuremath{o}}
+%%\newcommand{\partialto}{\rightharpoonup}
+\def\compfun{\mathbin{\circ}}
+\def\reductop{\mathnormal{|}}
+\def\sem#1{\mathopen\llbracket#1\mathclose\rrbracket}
+
+
+
+%% Institutions
+\newcommand{\institution}[1]{\mathscr{#1}}
+\newcommand{\instSigop}{\mathrm{Sig}}
+\newcommand{\instSig}[1]{\instSigop^{\institution{#1}}}
+\newcommand{\instModop}{\mathrm{Mod}}
+\newcommand{\instMod}[1]{\instModop^{\institution{#1}}}
+\newcommand{\instSenop}{\mathit{Sen}}
+\newcommand{\instSen}[1]{\instSenop^{\institution{#1}}}
+\newcommand{\instmodels}[2][]{\mathrel{\models^{\institution{#2}}_{#1}}}
+\newcommand{\instPresop}{\mathrm{Pres}}
+\newcommand{\instPres}[1]{\instPresop^{\institution{#1}}}
+
+
+
+
+\newcommand{\ippinstitution}[1]{\institution{\wp_{*}^{\mathrm{i}}#1}}
+\newcommand{\ippinstSig}[1]{\instSig{\ippinstitution{#1}}}
+\newcommand{\ippinstSen}[1]{\instSen{\ippinstitution{#1}}}
+\newcommand{\ippinstMod}[1]{\instMod{\ippinstitution{#1}}}
+\newcommand{\ippinstmodels}[2][]{\instmodels[#1]{\ippinstitution{#2}}}
+
+\newcommand{\ippinstcomorph}[1]{\mu^{\ippinstitution{#1}, \institution{#1}}}
+\newcommand{\ippinstcomorphSig}[1]{\Phi^{\ippinstitution{#1}, \institution{#1}}}
+\newcommand{\ippinstcomorphSen}[1]{\alpha^{\ippinstitution{#1}, \institution{#1}}}
+\newcommand{\ippinstcomorphMod}[1]{\beta^{\ippinstitution{#1}, \institution{#1}}}
+
+\newcommand{\incppinstitution}[1]{\institution{\wp_{*}^{\hookrightarrow}#1}}
+\newcommand{\incppinstSig}[1]{\instSig{\incppinstitution{#1}}}
+\newcommand{\incppinstSen}[1]{\instSen{\incppinstitution{#1}}}
+\newcommand{\incppinstMod}[1]{\instMod{\incppinstitution{#1}}}
+\newcommand{\incppinstmodels}[2][]{\instmodels[#1]{\incppinstitution{#2}}}
+
+\def\natto{\mathrel{\dot{\mathnormal{\to}}}}
+\def\limp{\mathrel{\Rightarrow}}
+
+ \newcommand{\ainj}[1]{\lceil #1 \rceil}
+ \newcommand{\apr}[1]{\lfloor #1 \rfloor}
+ \newcommand{\nil}{\langle\rangle}
+\newcommand{\cinj}{{\mathit inj}}
+\newcommand{\cpr}{{\mathit pr}}
+
+
+
+\usepackage{listings}
+
+\def\Bpre{\;\mbox{\bf PRE }}
+\def\Blet{\;\mbox{\bf LET}\;}
+\def\Bbe{\;\mbox{\bf BE}\;}
+\def\Bin{\;\mbox{\bf IN}\;}
+\def\Bif{\;\mbox{\bf IF}\;}
+\def\Bthen{\;\mbox{\bf THEN}\;}
+\def\Bend{\;\mbox{\bf END}}
+\def\Belse{\;\mbox{\bf ELSE}}
+\def\BConstants{\;\mbox{\bf CONSTANTS}}
+\def\BProperties{\;\mbox{\bf PROPERTIES}}

@@ -294,7 +294,9 @@
 | definition | تعريف | 1.0 | 1 | Formal definition |
 | defunctionalization | إزالة الوظيفية | 0.8 | 1 | Transformation to eliminate higher-order functions |
 | deletion | حذف | 1.0 | 1 | Delete operation |
-| denoising | إزالة الضوضاء | 0.9 | 4 | Noise removal process |
+| denoising | إزالة الضوضاء | 0.9 | 5 | Noise removal process |
+| denoising autoencoder | مشفر تلقائي لإزالة الضوضاء | 0.9 | 1 | Autoencoder trained to remove noise |
+| denoising score matching | مطابقة النقاط لإزالة الضوضاء | 0.85 | 1 | Score matching technique for denoising |
 | denotational | دلالي | 0.8 | 14 | Denotational semantics |
 | density matrix | مصفوفة الكثافة | 0.9 | 1 | Quantum state representation |
 | density control | التحكم في الكثافة | 0.85 | 1 | Control of density in 3D representations |
@@ -315,7 +317,9 @@
 | diagrammatic | رسومي بياني | 0.8 | 4 | Diagram-based representation |
 | dialogue | الحوار | 0.9 | 1 | Dialogue or conversation |
 | differential privacy | خصوصية تفاضلية | 0.9 | 6 | Mathematical framework for privacy |
-| diffusion model | نموذج الانتشار | 0.9 | 7 | Generative model using diffusion process |
+| diffusion model | نموذج الانتشار | 0.9 | 8 | Generative model using diffusion process |
+| diffusion probabilistic model | نموذج الانتشار الاحتمالية | 0.9 | 1 | Diffusion model with probabilistic formulation |
+| diffusion process | عملية الانتشار | 0.9 | 1 | Forward diffusion adding noise to data |
 | Dirac notation | ترميز ديراك | 0.9 | 1 | Dirac bra-ket notation |
 | directed acyclic graph | رسم بياني لا دوري موجه | 0.9 | 1 | DAG structure |
 | discriminative | تمييزي | 0.9 | 1 | Discriminative models |
@@ -431,6 +435,7 @@
 | foundation | أساس | 0.9 | 4 | Foundational basis |
 | Fourier series | متسلسلة فورييه | 0.9 | 1 | Complex Fourier series |
 | forward pass | المرور الأمامي | 0.9 | 1 | Forward propagation in neural networks |
+| forward process | العملية الأمامية | 0.9 | 1 | Forward diffusion process adding noise |
 | FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 10 | Field-Programmable Gate Array |
 | fps | إطار في الثانية | 1.0 | 1 | Frames per second |
 | fragment | جزء | 0.9 | 2 | Code fragment |
@@ -582,7 +587,10 @@
 | large language model | نماذج اللغة الكبيرة | 0.9 | 10 | LLMs for NLP tasks |
 | latency | زمن الاستجابة | 0.9 | 2 | Response time metric |
 | latent diffusion | الانتشار الكامن | 0.9 | 5 | Diffusion in latent space |
-| latent space | الفضاء الكامن | 0.9 | 8 | Latent representation space |
+| latent space | الفضاء الكامن | 0.9 | 9 | Latent representation space |
+| latent variable | متغير كامن | 0.9 | 1 | Hidden variable in probabilistic models |
+| Langevin dynamics | ديناميكيات لانجفين | 0.85 | 1 | Stochastic differential equation for sampling |
+| lossy compression | ضغط بفقدان | 0.9 | 1 | Compression with information loss |
 | lattice | شبكة بلورية | 0.9 | 2 | Mathematical structure for cryptography |
 | lattice-based | قائم على الشبكات | 0.9 | 2 | Based on lattice structures |
 | layer | طبقة | 1.0 | 5 | Neural network layer |
@@ -967,6 +975,7 @@
 | restart | إعادة التشغيل | 1.0 | 1 | System restart after failure |
 | reuse | إعادة الاستخدام | 1.0 | 1 | Code reusability |
 | reverse-mode | النمط العكسي | 0.8 | 1 | Reverse-mode AD |
+| reverse process | العملية العكسية | 0.9 | 1 | Reverse diffusion process removing noise |
 | rewrite rule | قاعدة إعادة كتابة | 0.8 | 1 | Transformation rule |
 | RFID | تحديد الترددات الراديوية | 0.9 | 1 | Radio-frequency identification |
 | Riemannian manifold | متعدد ريمان | 0.8 | 2 | Riemannian geometry manifold |
@@ -989,7 +998,8 @@
 | scheduling | جدولة | 0.95 | 3 | Task scheduling |
 | scheduling language | لغة الجدولة | 0.9 | 2 | Scheduling language |
 | schema | مخطط | 0.9 | 1 | Database schema |
-| score function | دالة النقاط | 0.8 | 1 | Scoring function |
+| score function | دالة النقاط | 0.8 | 2 | Scoring function |
+| score matching | مطابقة النقاط | 0.85 | 1 | Training method matching gradient of log-density |
 | search | بحث | 1.0 | 1 | Search operation |
 | search space | فضاء البحث | 0.9 | 3 | Problem solving domain |
 | secure computation | حساب آمن | 0.9 | 1 | Cryptographic secure computation |
@@ -1194,6 +1204,8 @@
 | Vandermonde matrix | مصفوفة فاندرموند | 0.9 | 1 | Vandermonde matrix structure |
 | vanishing gradient | تلاشي التدرجات | 0.8 | 1 | Vanishing gradient problem |
 | variance reduction | تقليل التباين | 0.8 | 1 | Monte Carlo optimization technique |
+| variance schedule | جدول التباين | 0.85 | 1 | Schedule of noise variance levels in diffusion models |
+| variational bound | الحد التبايني | 0.85 | 1 | Upper/lower bound in variational inference |
 | variant | نوع | 0.9 | 1 | Variant or type |
 | variants | متغيرات | 0.9 | 1 | Variations or variants |
 | variational | تباينية | 0.9 | 1 | Variational method or principle |
@@ -1903,6 +1915,7 @@
 | autonomous navigation | الملاحة المستقلة | 0.9 | 1 | Self-guided movement through environment |
 | conventional wisdom | الحكمة التقليدية | 0.85 | 1 | Commonly accepted beliefs |
 | frame rate | معدل الإطارات | 0.95 | 1 | Frames per second in video/animation |
+| Markov chain | سلسلة ماركوف | 0.9 | 1 | Sequence of random variables with Markov property |
 | Markov decision process | عملية قرار ماركوف | 0.95 | 1 | MDP - mathematical framework for sequential decisions |
 | feedback loop | حلقة ردود فعل | 0.9 | 1 | System where output affects input |
 | prioritized sweeping | المسح ذي الأولوية | 0.8 | 1 | RL technique prioritizing important updates |
@@ -1978,3 +1991,76 @@
 | von Neumann bottleneck | عنق زجاجة فون نيومان | 0.89 | 1 | Limitation of sequential word-at-a-time architecture |
 | von Neumann computer | حاسوب فون نيومان | 0.9 | 1 | Traditional sequential architecture with shared memory |
 | word-at-a-time | كلمة بكلمة | 0.88 | 1 | Sequential operation on individual memory words |
+| ray tree | شجرة الأشعة | 0.9 | 7 | Hierarchical structure of primary and secondary rays |
+| primary ray | شعاع أولي | 0.9 | 5 | Initial ray from camera through pixel |
+| secondary ray | شعاع ثانوي | 0.9 | 5 | Rays spawned from primary ray intersections |
+| shadow ray | شعاع الظل | 0.9 | 7 | Ray testing visibility to light source |
+| reflection ray | شعاع الانعكاس | 0.9 | 5 | Ray following mirror reflection direction |
+| refraction ray | شعاع الانكسار | 0.9 | 5 | Ray following refraction through transparent material |
+| recursive ray tracing | تتبع الأشعة التكراري | 0.9 | 7 | Ray tracing with recursive reflection/refraction |
+| Snell's law | قانون سنل | 0.95 | 5 | Law of refraction relating incident and refracted angles |
+| total internal reflection | الانعكاس الداخلي الكلي | 0.9 | 3 | Complete reflection at interface when refraction impossible |
+| refractive index | معامل الانكسار | 0.95 | 5 | Material property determining light bending |
+| Phong shading | تظليل فونج | 0.95 | 5 | Local illumination model (ambient+diffuse+specular) |
+| Phong model | نموذج فونج | 0.95 | 5 | Phong illumination/shading model |
+| specular reflection | انعكاس لامع | 0.95 | 7 | Mirror-like reflection from shiny surfaces |
+| diffuse reflection | انعكاس منتشر | 0.95 | 5 | Matte reflection scattering light in all directions |
+| ambient light | ضوء محيط | 0.9 | 3 | Uniform background illumination |
+| specular exponent | أس لامع | 0.9 | 3 | Parameter controlling highlight sharpness in Phong model |
+| specular highlight | بقعة لامعة | 0.9 | 3 | Bright reflection of light source on shiny surface |
+| global illumination | الإضاءة الشاملة | 0.95 | 10 | Lighting accounting for entire environment |
+| local illumination | الإضاءة المحلية | 0.9 | 5 | Lighting from direct sources only |
+| photorealism | الواقعية الفوتوغرافية | 0.95 | 7 | Rendering achieving photograph-like realism |
+| photorealistic rendering | التقديم ذو الواقعية الفوتوغرافية | 0.95 | 5 | Rendering technique producing photorealistic images |
+| hidden surface removal | إزالة الأسطح المخفية | 0.9 | 3 | Determining visible surfaces from viewpoint |
+| visible surface algorithm | خوارزمية الأسطح المرئية | 0.9 | 3 | Algorithm for visibility determination |
+| ray-object intersection | تقاطع الشعاع مع الكائن | 0.9 | 7 | Testing if ray hits object and finding hit point |
+| intersection test | اختبار التقاطع | 0.9 | 5 | Algorithm testing ray-object intersection |
+| ray casting | إرسال الأشعة | 0.9 | 3 | Tracing rays for visibility (non-recursive) |
+| bounding volume | حجم محيط | 0.9 | 7 | Simple shape enclosing complex object for fast rejection |
+| axis-aligned bounding box | صندوق محيط محاذٍ للمحاور | 0.9 | 3 | Box with faces perpendicular to coordinate axes |
+| bounding volume hierarchy | التسلسل الهرمي للحجم المحيط | 0.85 | 5 | Tree of bounding volumes for acceleration |
+| BVH | BVH | 0.85 | 5 | Bounding Volume Hierarchy |
+| octree | شجرة ثمانية | 0.85 | 5 | Tree subdividing space into eight octants |
+| KD-tree | شجرة KD | 0.85 | 3 | Binary tree partitioning space with axis-aligned planes |
+| spatial data structure | بنية بيانات مكانية | 0.9 | 5 | Data structure organizing objects spatially |
+| acceleration structure | بنية تسريع | 0.9 | 7 | Data structure reducing ray-object intersection tests |
+| barycentric coordinates | إحداثيات باريسنترية | 0.85 | 3 | Coordinates expressing point as weighted combination of vertices |
+| surface normal | عمودي السطح | 0.95 | 7 | Vector perpendicular to surface at point |
+| normal vector | متجه عمودي | 0.95 | 5 | Unit vector perpendicular to surface |
+| normal interpolation | استكمال العمودي | 0.85 | 1 | Interpolating normals for smooth shading |
+| self-intersection | تقاطع ذاتي | 0.85 | 3 | Ray incorrectly intersecting surface it spawned from |
+| epsilon offset | إزاحة إبسيلون | 0.85 | 3 | Small offset to avoid self-intersection |
+| caustics | كاوستيكس | 0.8 | 3 | Focused light patterns from curved surfaces |
+| Fresnel equations | معادلات فريسنل | 0.85 | 1 | Equations for reflection/transmission at interface |
+| distributed ray tracing | تتبع الأشعة الموزع | 0.85 | 3 | Ray tracing with stochastic sampling for soft effects |
+| path tracing | تتبع المسار | 0.9 | 5 | Monte Carlo ray tracing following light paths |
+| photon mapping | تخطيط الفوتونات | 0.85 | 3 | Two-pass global illumination algorithm |
+| bidirectional path tracing | تتبع المسار ثنائي الاتجاه | 0.85 | 1 | Path tracing from both camera and lights |
+| radiosity | إشعاع | 0.85 | 1 | Diffuse interreflection global illumination method |
+| color bleeding | نزيف لوني | 0.85 | 3 | Color transfer between surfaces via diffuse reflection |
+| interreflection | انعكاس متبادل | 0.85 | 3 | Light bouncing between surfaces multiple times |
+| BRDF | دالة توزيع انعكاس ثنائية الاتجاه | 0.8 | 3 | Bidirectional Reflectance Distribution Function |
+| subsurface scattering | تشتت تحت سطحي | 0.85 | 1 | Light penetrating and scattering within material |
+| participating media | وسائط مشاركة | 0.8 | 1 | Media (fog, smoke) that scatter/absorb light |
+| penumbra | نصف ظل | 0.9 | 1 | Soft shadow region partially occluded from light |
+| hard shadow | ظل حاد | 0.9 | 3 | Sharp shadow boundary from point light |
+| soft shadow | ظل ناعم | 0.9 | 1 | Gradual shadow boundary from area light |
+| area light | ضوء مساحة | 0.9 | 1 | Light source with non-zero area producing soft shadows |
+| point light | ضوء نقطي | 0.9 | 3 | Idealized light source at single point |
+| supersampling | أخذ عينات فائقة | 0.85 | 3 | Sampling multiple points per pixel for anti-aliasing |
+| adaptive supersampling | أخذ عينات فائقة تكيفي | 0.85 | 1 | Supersampling with varying density based on need |
+| stochastic sampling | أخذ عينات عشوائية | 0.85 | 3 | Random/Monte Carlo sampling for rendering |
+| anti-aliasing | مكافحة التسنن | 0.9 | 3 | Techniques reducing jagged edges in images |
+| aliasing | تسنن | 0.9 | 3 | Jagged edges and artifacts from undersampling |
+| depth of field | عمق المجال | 0.9 | 1 | Blur of out-of-focus regions |
+| motion blur | ضبابية الحركة | 0.9 | 1 | Blur from object motion during exposure |
+| scan-line rendering | تقديم خط المسح | 0.85 | 1 | Rasterization-based rendering technique |
+| rasterization | ترقيم | 0.9 | 3 | Converting geometry to pixels |
+| Lambertian reflection | انعكاس لامبرتي | 0.9 | 3 | Ideal diffuse reflection (constant BRDF) |
+| mirror reflection | انعكاس مرآة | 0.95 | 3 | Perfect specular reflection |
+| transparency | شفافية | 0.95 | 5 | Property of transparent materials |
+| light transport | نقل الضوء | 0.9 | 5 | Propagation of light through scene |
+| physically-based rendering | التقديم القائم على الفيزياء | 0.9 | 3 | Rendering respecting physics of light |
+| coherence | تماسك | 0.85 | 3 | Similarity/correlation exploitable for optimization |
+| spatial coherence | تماسك مكاني | 0.85 | 1 | Nearby pixels/rays behaving similarly |

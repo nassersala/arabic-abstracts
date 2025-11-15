@@ -1,0 +1,99 @@
+\subsection{Background: \Bjoerner's DSL Adapted for ETCS}
+
+The process of identifying, classifying and precisely defining the
+elements of a domain has been coined as ``Domain Engineering'' by
+\DB~\cite{bjorner2009}.  \Bjoerner gives such a classification, i.e.,
+DSL, for the railway domain using a narrative~\cite{bjorner2003} which
+we introduce as a running example.
+
+Figure~\ref{fig:bjoerners_dsl_pic} shows part of the UML class diagram
+for \Bjoerner's DSL. A railway is a ``Net'', built from ``Station(s)''
+that are connected via ``Line(s)''.  A station can have a complex
+structure, including ``Tracks'', ``Switch Points'' (also called
+points) and ``Linear Units''. ``Tracks'' and ``Lines'' can only
+contain ``Linear Units''. All ``Unit(s)'' are attached together via
+``Connector(s)''.  Along with defining these concepts, \Bjoerner
+stipulates various well-formedness conditions on such a model, for
+example, ``No two distinct lines and/or stations share units.'' or
+``Every line of a net is connected to exactly two, distinct
+stations''~\cite{bjorner2003}.
+
+\Bjoerner's approach contains the necessary terms to describe the
+track plan in Figure~\ref{fig:trackplan}. The whole track plan forms a
+\emph{station}. This \emph{station} contains all elements such as
+\emph{switch points} $P1$ and $P2$ along with \emph{linear units}
+$LA1, PLAT1, PLAT2$, and $LA2$, and \emph{connectors} $c1,c2,\dots,c8$
+for connecting these units. From this point on, we only consider the
+elements of \Bjoerner's DSL that we require for modelling track plans
+we are interested in. Therefore, some of the conditions stipulated by
+\Bjoerner do not apply. For example, the track plan given in
+Figure~\ref{fig:trackplan} is open ended. Hence, axioms regarding
+closed networks, such as the condition ``all nets must contain two
+stations'' (leaving no open lines), do not apply to our models.
+
+\Bjoerner's DSL gains dynamics by attaching a state to each
+unit~\cite{bjorner2003}. Each unit can be in one of several
+\emph{states} at a given time. A state is represented using a set of
+paths, where a path is a pair of distinct connectors $(c,c')$. A path
+expresses that a train is allowed to move along a given unit from
+connector $c$ to connector $c'$. To combine a unit and a path across
+it, \Bjoerner introduces \emph{unit path pairs} by forming pairs from
+units and paths across them. These paths allow one to describe which
+direction along a unit a train is allowed to travel. Trains are not an
+explicit part of \Bjoerner's DSL. Instead, \Bjoerner describes the
+concept of a ``Route'', which is a dynamic ``window'' around a
+train. Concretely, routes are lists of connected units and paths
+through them. For example, the route from $X$ to $PLAT1$ of
+Figure~\ref{fig:trackplan} would be captured as the list
+$[(LA1,(c1,c2)) , (P1,(c2,c3)), (PLAT1,(c3,c4))].$ \Bjoerner
+stipulates that a route can be dynamically changed over time using a
+movement function that, for a given time, gives the set of assigned
+routes. This movement function extends or shrinks a route by adding or
+removing units at one or both of its ends. Train movements are
+modelled using this function.
+
+Finally, \Bjoerner has formalised his narrative in (the algebraic part
+of) RSL~\cite{bjorner2003}. Here we adopt the \CASL specification
+language rather than RSL. Our formalisation follows in great part
+\Bjoerner's modelling, however, we utilise the \CASL features of
+predicates, subsorting, and structuring in order to obtain a more
+readable specification text. Our choice of \CASL is also due to the
+greater level of proof support that is available for \CASL in the form
+of the \Hets environment~\cite{hets07}, and the institutional base for
+\Hets which allows us to describe how to implement a comorphism
+from UML class diagrams to \CASL in
+Section~\ref{sec:comorph}. Overall, the CASL models we present capture
+the narrative in a similar manner to the RSL models presented by
+\Bjoerner in~\cite{bjorner2003}.
+
+%% \subsubsection{Stereotypes for Dynamics}
+%% As discuss above, the railway domain has a variety of concepts that
+%% can change over time. It also has a variety of concepts that are
+%% static for all time. For example, consider the track plan in
+%% Figure~\ref{fig:trackplan} and the UML class diagram in
+%% Figure~\ref{fig:bjoerners_dsl_pic}. Here, the \textit{has}
+%% relation between Connectors and Linear units clearly remains the same
+%% over the time we are interested in the system~\footnote{That is, we do
+%%   not consider, for example, modelling construction changes to the
+%%   railway.}. However, if we consider, for example the \textit{StateAt}
+%% relation between Units and UnitStates, it is clear that the state of a
+%% point may change over time. To allow UML Class Diagrams to capture
+%% this dual nature of systems, we have introduced a so-called UML
+%% \emph{stereotype}. In Figure~\ref{fig:bjoerners_dsl_pic} this
+%% appears for the association \textit{stateAt} and the two operations
+%% \textit{ isClosed\-At} and \textit{isOpen}. All other elements are
+%% considered to be \textbf{rigid}. These domain-specific stereotypes are
+%% intended to make clear which parts of an object structure complying to
+%% the class diagram can change over time, i.e., are \textbf{dynamic}
+%% like \textit{stateAt}, and which parts have to be kept fixed over
+%% time, i.e., are \textbf{rigid}, e.g., the objects of \textit{Net},
+%% \textit{Station}, \textit{Line}, etc. More details on the use of these
+%% stereotypes can be found in ~\cite{james13}.
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

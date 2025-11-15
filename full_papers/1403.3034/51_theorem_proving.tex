@@ -1,0 +1,22 @@
+\subsection{Background: Theorem Proving for CASL}
+With respect to \CASL and \ModalCASL, tool support comes in the form
+of \Hets~\cite{hets07}, the Heterogeneous Tool Set. \Hets supports
+parsing (is the specification correct w.r.t.\ the context-free
+grammar?) and static analysis (is the specification correct
+w.r.t.\ context-sensitive properties, such as: have all sorts occurring
+in a formula been declared?) of specifications written in \CASL and
+\ModalCASL. \Hets also acts as a broker to various proof assistants
+and automated theorem provers that can be called to discharge
+proofs. We mainly make use of \SPASS~\cite{weidenbach02} and of
+eProver~\cite{schulz02} both of which support theorem proving for
+first-order logic with equality. At this point, we note that in our
+experience with our models, both these theorem provers work best with
+smaller axiomatic bases. Hence whenever possible, we make our
+specifications as loose as possible by systematically excluding axioms
+that are not required for a given proof.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

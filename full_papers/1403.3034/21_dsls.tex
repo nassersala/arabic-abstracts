@@ -1,0 +1,109 @@
+\subsection{Background: Domain Specific Languages (DSLs)}
+
+Throughout all areas of science, one can find approaches that are
+general in principle or specific to the task at hand. A general
+approach gives a solution to several problems of a similar
+manner. Whereas a specific approach often solves problems in a more
+comprehensive manner, but can be applied to significantly less
+problems. In computer science, the differences are exemplified by
+general purpose languages (GPLs) and domain specific languages (DSLs)
+respectively.
+
+Domain specific languages (DSLs)~\cite{heering05}, are languages that
+have been designed and tailored for a specific application
+domain. DSLs aim to abstract away technical details of computer
+science from the user, allowing them to create programs or
+specifications without having to be an expert programmer or
+specifier. Examples of DSLs include the well known Backus Naur Form or
+the commonly used HTML markup language. Considering HTML, it is
+designed explicitly with webpage creation in mind. It has specific
+features such as \textit{elements}, \textit{tags} and
+\textit{attributes} that allow the specification of structure within a
+web page. The advantages of having these domain specific features are
+apparent as HTML has become the de facto standard for webpage creation
+thanks to its expressiveness and to its ease of application. When we
+speak of expressiveness in the context of DSLs, we refer to the
+question of how easy it is for a user to describe the objects they
+desire. Expressiveness can often be explored by considering how
+intuitive various language constructs are. This idea forms a main
+theme throughout this work.
+
+\subsubsection{DSLs Formulated using UML Class Diagrams and Narrative}
+
+UML Class Diagrams~\cite{uml} are industrially accepted for modelling
+a variety of systems across numerous domains. Often they are used to
+describe all elements and relationships occurring within a domain. As
+such, a UML Class Diagram can be thought of as describing a DSL. Many
+tools and frameworks actually use UML class diagrams as a starting
+point for the description of a DSL~\cite{gronback09,kolovos2012}. A
+typical example of such an endeavour is given by the Data
+Model~\cite{DataModel} of our research partner Invensys
+Rail\footnote{www.invensys.com}. It aims to describe all elements
+within the railway domain.
+
+\begin{figure}
+\centering
+ \includegraphics[width=\linewidth]{images/new_uml.png}
+%% \includegraphics[scale=0.27]{images/new_uml.png}
+ \caption{Part of \Bjoerner's DSL captured in a UML Diagram.}
+\label{fig:bjoerners_dsl_pic}
+\end{figure}
+
+The UML diagram in Figure~\ref{fig:bjoerners_dsl_pic} captures
+\Bjoerner's railway DSL~\cite{bjorner2003} that we will use as a
+running example. It illustrates many of the features of class
+diagrams:
+\begin{itemize}
+\item Classes, represented by a box, e.g.\ \emph{Net}, \emph{Unit},
+  \emph{Station} etc. These represent concepts from the railway domain.
+\item Properties, listed inside a class, e.g.\ \emph{id\,:\,UID} in the
+  class \emph{Net} expresses that all \emph{Net}s have an identifier of
+  type \emph{UID}.
+\item Generalisations, represented by an unfilled arrow head, e.g.\
+  \emph{Point} and \emph{Linear} are generalisations of \emph{Unit}.
+\item Associations, represented by a line connecting two classes,
+  e.g. the \emph{has} link between \emph{Unit} and \emph{Connector}.
+  These can have direction, and also multiplicities associated with
+  them. The multiplicities on the \emph{has} association between
+  \emph{Unit} and \emph{Connector} can be read as: ``One \emph{Unit}
+  has two or more connectors''.
+\item Compositions, represented by a filled diamond, e.g. the
+  \emph{hasLine} composition for \emph{Net} and \emph{Line}, tell us that
+  one class ``is made up of'' another class. In a similar fashion to
+  associations, compositions can also have multiplicities.
+\item{Operations} are also represented inside a class, e.g.\ the
+  \emph{isOpen} operation of type \emph{Boolean} inside the \emph{Route}
+  class.
+\end{itemize}
+
+As UML class diagrams only capture static system aspects, we make the
+realistic assumption that the class diagram is accompanied with some
+narrative. Obviously, such a narrative can give explanations on the
+static structure of the class diagram. Its main purpose, however, is
+to describe the dynamic system aspects. For many domains such a
+narrative is present in the form of standard literature. An example of
+this is Kerr's narrative for the railway domain~\cite{kerr01}. Kerr
+describes, for instance, how a signal changes using the following
+narrative:
+%
+%\begin{quote}
+  \it{''a repeater signal shows yellow if its parent signal is
+    showing red''} \cite{kerr01}.
+%\end{quote}
+%
+Further examples of narrative are \bf{N1} and \bf{N2} in Section
+\ref{ssec:industry_rw}.
+
+UML class diagrams and narratives can be linked via the stereotype
+\bf{dynamic}. This annotation indicates that the labelled class
+diagram element element is related to the dynamic nature of the
+system. The manner in which change happens is described in the narrative. In
+Figure \ref{fig:bjoerners_dsl_pic}, e.g., the relation \it{stateAt} is
+marked to be of dynamic nature, i.e., to change over time. Section
+\ref{sec:railway} provides the narrative how this state change
+happens.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

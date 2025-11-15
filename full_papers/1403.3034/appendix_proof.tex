@@ -1,0 +1,156 @@
+\section{Domain Specific Lemma Proof}
+\label{app:proof}
+\textbf{Proof:}
+%%\begin{proof} 
+Following from the axioms presented in
+Section~\ref{sec:narrative_model}. we have:
+  \begin{description}
+  \item $\Leftarrow$: Let us assume (**). The proof is given by
+    induction on time $t$.  
+
+    In the base case (t=$0$), (*) is true. This is the case as only
+    the empty movement authority is assigned at time $0$ (given by
+    axiom {\small{}\KW{\%}(no\_ma\_0)\KW{\%}}). Let $m1$, $m2$ be two
+    movement authorities such that $share(m1,m2)$ holds. We consider
+    two cases: 
+
+    (1) if $m1=m2$ then the implication holds trivially;
+
+    (2) if $m1 \not= m2$ then only one of these movement authorities
+    can be the empty movement authority. Let, without loss of
+    generality, $m1 \not=[]$. Then $assigned(m1,0)$ is false (by axiom
+    {\small{}\KW{\%}(no\_ma\_0)\KW{\%}}), hence the implication holds.
+
+    For the step case we have to show that:
+\begin{hetcasl}
+\>\Ax{\forall} \Id{t} \Ax{:} \Id{Time} \Ax{\bullet}\\
+\>\> (\Ax{\forall} \Id{m1}, \Id{m2} \Ax{:} \Id{MA} \Ax{\bullet} \IdApplLabel{\Id{share}}{share}(\Id{m1}, \Id{m2}) \\
+\>\>\> \Ax{\Rightarrow} \Id{m1} \Ax{=} \Id{m2} \Ax{\vee} \Ax{\neg} (\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1}, \IdApplLabel{\Ax{t}}{t}) \Ax{\wedge} \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2}, \IdApplLabel{\Ax{t}}{t}))) {\small{}\KW{\%}(ih)\KW{\%}}  \\
+\>\>$\Rightarrow$\\
+\>\> (\Ax{\forall} \Id{m1}, \Id{m2} \Ax{:} \Id{MA} \Ax{\bullet} \IdApplLabel{\Id{share}}{share}(\Id{m1}, \Id{m2}) \\
+\>\>\> \Ax{\Rightarrow} \Id{m1} \Ax{=} \Id{m2} \Ax{\vee} \Ax{\neg} (\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1}, \IdApplLabel{\Ax{suc(t)}}{suc(t)}) \Ax{\wedge} \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2}, \IdApplLabel{\Ax{suc(t)}}{suc(t)}))) 
+\end{hetcasl}
+
+Let us assume (ih) for all movement authorities $m1,m2$. Let $m1'$,
+$m2'$ be two movement authorities such that $share(m1',m')$ holds. We
+consider two cases: 
+
+(1) if $m1'=m2'$ then the implication holds trivially; 
+
+(2) if $m1' \not= m2'$ then we need to show \Ax{\neg}
+(\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1'}, \Id{t}) \Ax{\wedge}
+\IdApplLabel{\Id{assigned}}{assigned}(\Id{m2'}, \Id{t})). By case
+distinction over the definition of the predicate \Id{assigned} (axiom
+{\small{}\KW{\%}(assigned\_defn)\KW{\%}}), we show that
+(\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1'}, \Id{t}) \Ax{\wedge}
+\IdApplLabel{\Id{assigned}}{assigned}(\Id{m2'}, \Id{t})) is not
+possible and hence the implication holds.
+\begin{itemize}
+\item Case 1: (\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1'},
+  \IdApplLabel{\Ax{suc(t)}}{suc(t)}) \Ax{\wedge}
+  \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2'},
+  \IdApplLabel{\Ax{suc(t)}}{suc(t)})) $\Rightarrow$
+  (\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1'}, \Id{t}) \Ax{\wedge}
+  \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2'}, \Id{t}) does not
+  hold as it contradicts the assumed induction hypothesis (ih).
+
+\item Case 2: (\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1'},
+  \IdApplLabel{\Ax{suc(t)}}{suc(t)}) \Ax{\wedge}
+  \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2'},
+  \IdApplLabel{\Ax{suc(t)}}{suc(t)})) $\Rightarrow$
+  \IdApplLabel{\Id{canExtend}}{canExtend}(\Id{m1'}, \Id{t}) \Ax{\wedge}
+  \IdApplLabel{\Id{canExtend}}{canExtend}(\Id{m2'}, \Id{t}), does not hold
+  as it contradicts with axiom\break
+  {\small{}\KW{\%}(one\_ma\_changes)\KW{\%}} stating that only one
+  movement authority extends per time step.
+
+\item Case 3: (\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1'},
+  \IdApplLabel{\Ax{suc(t)}}{suc(t)}) \Ax{\wedge}
+  \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2'},
+  \IdApplLabel{\Ax{suc(t)}}{suc(t)})) $\Rightarrow$
+  \IdApplLabel{\Id{assigned}}{assigned}(\Id{m1'}, \Id{t}) \Ax{\wedge}
+  \IdApplLabel{\Id{canExtend}}{canExtend}(\Id{m2'}, \Id{t}). Given that
+  \IdApplLabel{\Id{share}}{share}(\Id{m1'}, \Id{m2'}) holds, by the
+  definition of the predicate $share$ (axiom
+  {\small{}\KW{\%}(share\_defn)\KW{\%}}) we know that there exists a
+  region $rg$ such that $rg \in$ \Id{m1'} and $rg \in$ \Id{m2'}. Let
+  us consider, what it means for
+  \IdApplLabel{\Id{canExtend}}{canExtend}(\Id{m2'}, \Id{t}) to hold,
+  i.e. instantiating axiom {\small{}\KW{\%}(extend\_defn)\KW{\%}} with
+  $m2'$ gives:
+\begin{hetcasl}
+  \IdApplLabel{\Id{canExtend}}{canExtend}(\=\Id{m2'}, \Id{t})
+  \Ax{\Leftrightarrow}\\
+  \> \=\Ax{\exists} \Id{ma} \Ax{:} \IdApplLabel{\Id{MA}}{MA}; \Id{r} \Ax{:} \IdApplLabel{\Id{Route}}{Route} \Ax{\bullet}\\
+  \>\>\> \=\IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma}, \Id{t})
+  \Ax{\wedge} \IdApplLabel{\Id{ext}}{ext}(\=\Id{ma}, \Id{r}, \Id{m2'})
+  \Ax{\wedge}
+  \=\Id{r} \IdApplLabel{\Id{isOpenAt}}{::isOpenAt::} \Id{t} \Ax{\wedge} \\
+  \>\>\> (\=\Ax{\neg} \=\Id{ma} \Ax{=} \=\Ax{[}\Ax{]} \Ax{\Rightarrow}
+  \Ax{\neg} \IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma},
+  \IdApplLabel{\Id{suc}}{suc}(\Id{t})))
+\end{hetcasl}
+Hence, we have two cases to consider for the shared region $rg$: 
+
+(1) if $rg \in$ \Id{ma}, then by (**), all routes $r'$
+such that $rg \in regions(r')$ are not open. Hence given axiom
+{\small{}\KW{\%}(ext\_defn)\KW{\%}} which tells us that ext acts like
+list concatenation we know that $\neg \; r \; isOpenAt \; t$. Thus we
+have a contradiction that $canExtend(m2',t)$ must hold, but also $\neg
+\; r \; isOpenAt \; t$ must hold; 
+
+(2) if $rg \not\in$ \Id{ma} then we know due to axiom
+{\small{}\KW{\%}(ext\_defn)\KW{\%}} that $share(m1',ma)$ holds. We
+also know, by the definition of canExtend (axiom
+{\small{}\KW{\%}(extends\_defn)\KW{\%}}) that $assigned(ma,t)$ holds
+and similarly by our case assumption that \break $assigned(m1',t)$
+holds. Now if $m1' \not=ma$ then we gain a contradiction to our
+induction hypothesis (ih). Whereas, if $m1' = ma$, then by the
+definition of $canExtend$ (axiom
+{\small{}\KW{\%}(extends\_defn)\KW{\%}}) we know that $\neg
+assigned(ma,suc(t))$ and hence that \break $\neg
+assigned(m1',suc(t))$. This again contradicts our case assumption that
+$assigned(m1',t)$ holds.
+
+ \item Case 4:
+ (\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1'},
+  \IdApplLabel{\Ax{suc(t)}}{suc(t)}) \Ax{\wedge}
+  \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2'},
+  \IdApplLabel{\Ax{suc(t)}}{suc(t)})) $\Rightarrow$
+  \IdApplLabel{\Id{canExtend}}{canExtend}(\Id{m1'}, \Id{t})
+  \Ax{\wedge} \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2'}, \Id{t}):
+  Analogous to Case 3.
+
+\item Case 5-9: The remaining cases involve the reduction of one
+  movement authority that is already assigned. Hence, each case
+  follows from the definition of the
+  \IdDeclLabel{\Id{canReduce}}{canReduce} predicate
+  {\small{}\KW{\%}(reduces\_defn)\KW{\%}} and our induction hypothesis
+  (ih).
+\end{itemize}
+
+\item $\Rightarrow$: Let us assume (*). The proof is by contradiction.
+
+ We assume (**) does not hold, that is, we know there exists a route $r$ such that:
+\begin{hetcasl}
+\> \Ax{\exists} \Id{t} \Ax{:} \Id{Time}; \Id{r} \Ax{:} \Id{Route}; \Id{rg} \Ax{:} \IdApplLabel{\Id{Region}}{Region}; \Id{ma} \Ax{:} \Id{MA} 
+\\ 
+\>\>\Ax{\bullet} \IdApplLabel{\Id{assigned}}{assigned}(\Id{ma}, \Id{t}) \Ax{\wedge} \Id{rg} \IdApplLabel{\Id{eps}}{::eps::} \Id{ma} \Ax{\wedge} \Id{rg} \IdApplLabel{\Id{eps}}{::eps::} \IdApplLabel{\Id{regions}}{regions}(\Id{r})\\
+\>\>\> \Ax{\Rightarrow} \Id{r} \IdApplLabel{\Id{isOpenAt}}{::isOpenAt::} \Id{t} 
+\end{hetcasl}
+Given this, this route can be used for an extension to another
+movement authority even though it is assigned. Assume at some time
+$t'$, such that $suc(t') = t$ there exist movement authorities $ma1,
+ma2$ such that $ext(ma1,r ma2)$ and $rg \; eps \; ma2$. Then the predicate
+$canExtend$ (axiom {\small{}\KW{\%}(extends\_defn)\KW{\%}}) holds for
+$ma2$ at time $t$. Thus, by the definition of assigned (axiom
+{\small{}\KW{\%}(assigned\_defn)\KW{\%}}) $ma2$ can become assigned at
+time $suc(t')$, i.e.\ time $t$. Now we have the situation that
+$assigned(ma,t)$ and $assigned(ma2,t)$ hold, but so does
+$share(ma,ma2)$ (axiom {\small{}\KW{\%}(share\_defn)\KW{\%}}) over the
+region $rg$. Hence we have a contradiction to (**).
+\end{description}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

@@ -1,0 +1,154 @@
+\subsection{Contribution: Automatic Translation of UML Class Diagrams to CASL}
+\label{sec:comorph}
+
+The details of our automatic translation are given
+in~\cite{james13}. Mathematically it is based on institution
+theory. In~\cite{james13} we present a formal semantics to UML class
+diagrams, extending prior work by Cengarle and
+Knapp~\cite{cengarle08}. We then define a semantics preserving
+translation to \ModalCASL. In this paper, we discuss the resulting
+\ModalCASL and show how to formalise the narrative of our DSL.
+
+\subsubsection{Translating \Bjoerner's DSL to Modal CASL}
+We consider the result of translating the UML class diagram in
+Figure~\ref{fig:bjoerners_dsl_pic} along the co-morphism defined
+in~\cite{james13}.
+
+First, classes from the class diagram are translated to \ModalCASL
+sorts.  Generalisations are translated to subsorts in \ModalCASL. Note
+that as part of our translation, we often include and (possibly)
+instantiate specifications from the \CASL Basic Datatypes for the
+built-in types from the class diagram, e.g.\ for type formers such as
+$\mathsf{Pair}[c_1,c_2]$. Considering \Bjoerner's DSL we gain the
+following \CASL specification for the translations of classes and
+generalisations:
+\begin{small}
+\begin{hetcasl}
+ \> {\small{}\KW{\%\%} Classes:}\\
+ \> \SORTS \=\IdDeclLabel{\Id{Net}}{Net}, \IdDeclLabel{\Id{Station}}{Station}, \IdDeclLabel{\Id{Unit}}{Unit}, \ldots, \IdDeclLabel{\Id{UID}}{UID}\\
+ \> {\small{}\KW{\%\%} Hierarchy:}\\
+ \> \SORTS \=\IdApplLabel{\Id{Point}}{Point}, \IdApplLabel{\Id{Linear}}{Linear} \Ax{<} \IdApplLabel{\Id{Unit}}{Unit};
+ \ldots;
+ \=\IdApplLabel{\Id{Route}}{Route} \Ax{<} \IdApplLabel{\Id{ListPairUnitPath}}{ListPairUnitPath}
+ \end{hetcasl}
+\end{small}
+ 
+Next, property declarations of the class diagram are translated to
+total functions. For these functions, the classification into
+``rigid'' and ``flexible'' are obtained directly from the stereotypes
+in the class diagram. Thus, we obtain:
+\begin{small} 
+\begin{hetcasl}
+ \> {\small{}\KW{\%\%} Properties:}\\
+ \> \KW{rigid} \KW{op} \=\IdDeclLabel{\Id{id}}{id} \Ax{:}
+ \=\IdApplLabel{\Id{Net}}{Net} \Ax{\rightarrow}?
+ \IdApplLabel{\Id{UID}}{UID}\\
+ \> \KW{flexible} \KW{ops}
+  \IdDeclLabel{\Id{isClosedAt}}{isClosedAt} \Ax{:} \=\IdApplLabel{\Id{Unit}}{Unit} \Ax{\rightarrow?} \IdApplLabel{\Id{Boolean}}{Boolean};\\
+ \>\ldots
+ \end{hetcasl}
+\end{small}
+\ModalCASL predicates are then used to capture the composition and
+association declarations. Again, rigid and dynamic elements can be
+taken from the stereotypes of the class diagram. As well as these, a
+predicate $\mathit{isAlive}$ is added for each sort. These predicates
+are used to model ``flexible'' sort interpretations in \ModalCASL,
+see~\cite{james13} for details. Considering the running example, we
+obtain the following \ModalCASL:
+\begin{small}
+\begin{hetcasl}
+ \> {\small{}\KW{\%\%} Compositions:}\\
+ \> \KW{rigid} \KW{preds}
+  \Ax{\_\_}\IdDeclLabel{\Id{has}}{::has:}\Ax{\_\_} \Ax{:} \=\IdApplLabel{\Id{Station}}{Station} \Ax{\times} \IdApplLabel{\Id{Unit}}{Unit};
+  \Ax{\_\_}\IdDeclLabel{\Id{has}}{::has::}\Ax{\_\_}
+ \Ax{:} \=\IdApplLabel{\Id{Station}}{Station} \Ax{\times}
+  \IdApplLabel{\Id{Track}}{Track}; \\
+\> \dots\\
+  \> {\small{}\KW{\%\%} Associations: }\\
+ \> \KW{rigid} \KW{preds}
+  \Ax{\_\_}\IdDeclLabel{\Id{has}}{::has::}\Ax{\_\_} \Ax{:} \=\IdApplLabel{\Id{Unit}}{Unit} \Ax{\times} \IdApplLabel{\Id{Connector}}{Connector};
+  \Ax{\_\_}\IdDeclLabel{\Id{has}}{::has::}\Ax{\_\_} \Ax{:}
+ \=\IdApplLabel{\Id{Linear}}{Linear} \Ax{\times}
+ \IdApplLabel{\Id{Connector}}{Connector}; \ldots\\
+\> \dots\\
+ \> {\small{}\KW{\%\%} Is Alive preds:}\\
+ \> \KW{rigid} \KW{preds}
+  \IdDeclLabel{\Id{isAlive}}{isAlive} \Ax{:} \IdApplLabel{\Id{Net}}{Net};
+ \IdDeclLabel{\Id{isAlive}}{isAlive} \Ax{:} \IdApplLabel{\Id{Station}}{Station};
+ \IdDeclLabel{\Id{isAlive}}{isAlive} \Ax{:} \IdApplLabel{\Id{Unit}}{Unit}; \ldots;
+ \IdDeclLabel{\Id{isAlive}}{isAlive} \Ax{:} \IdApplLabel{\Id{UID}}{UID};
+ \end{hetcasl}
+\end{small}
+Finally, we add axioms capturing multiplicity constraints from the
+class diagram\footnote{We note that further axioms are also added for
+  technical reasons regarding the \IdDeclLabel{\Id{isAlive}}{isAlive}
+  predicate.}.  These can be systematically encoded in first order
+logic using ``poor man's counting'', by providing the necessary number
+of variables.  A typical example of the mapping for a composition
+constraint from \Bjoerner's DSL is for the composition ``Station has
+Unit''. Where, considering Figure~\ref{fig:bjoerners_dsl_pic} we can
+see that there must be at least one Unit for every Station. The
+resulting \ModalCASL axiom for this would be:
+
+\begin{hetcasl}
+\> \Ax{\bullet} \=\Ax{\forall} \Id{s} \Ax{:} \Id{Station} \Ax{\bullet} \=\Ax{\exists} \Id{u} \Ax{:} \Id{Unit} \Ax{\bullet} \IdApplLabel{\Id{has}}{has}(\=\Ax{s},\=\Ax{u}).
+\end{hetcasl}
+
+% \begin{small}
+%  $$\forall s:Station . \exists u1:Unit . has(s,u1)$$
+% \end{small}
+ \noindent Similarly, an example of a constraint on an association is
+ the ``has'' association between Units and Connectors, where we can
+ see that each Unit must have at least $2$ Connectors. The resulting
+ \ModalCASL axiom for this would be:
+
+\begin{hetcasl}
+\> \Ax{\bullet} \=\Ax{\forall} \Id{u} \Ax{:} \Id{Unit} \Ax{\bullet} \=\Ax{\exists} \Id{c1}, \Id{c2} \Ax{:} \Id{Connector} \Ax{\bullet} \Ax{\neg} (\=\Id{c1}  \Ax{=} \Id{c2}) \Ax{\wedge} \IdApplLabel{\Id{has}}{has}(\=\Ax{c1},\=\Ax{u}) \Ax{\wedge} \IdApplLabel{\Id{has}}{has}(\=\Ax{c2},\=\Ax{u}).
+\end{hetcasl}
+
+% \begin{small}
+% $$\forall \textit{u} : \textit{Unit} \,.\,
+% \exists \textit{c1}, \textit{c2} : \textit{Connector} \,.\,
+% \textit{c1} \neq \textit{c2} \land \textit{has}(\textit{c1},
+% \textit{u}) \land \textit{has}(\textit{c2}, \textit{u}).$$
+% \end{small}
+
+\subsubsection{Translating Modal CASL to CASL}
+
+Finally, for the sake of better proof support, we apply the existing
+\ModalCASL to \CASL comorphism to gain a \CASL specification. For
+example, we add the sort \Id{Time} to deal with modalities:
+\begin{small}
+\begin{hetcasl}
+ \> \SORTS \=\IdDeclLabel{\Id{Time}}{Time}, \IdDeclLabel{\Id{Net}}{Net}, \IdDeclLabel{\Id{Station}}{Station}, \IdDeclLabel{\Id{Unit}}{Unit}, \ldots, \IdDeclLabel{\Id{UID}}{UID}
+\end{hetcasl}
+\end{small}
+\noindent Subsort relations simply remain the same. Similarly, rigid
+operations and predicates also remain the same:
+\begin{small}
+\begin{hetcasl}
+  \> \KW{op} \=\IdDeclLabel{\Id{id}}{id} \Ax{:}
+  \=\IdApplLabel{\Id{Net}}{Net} \Ax{\rightarrow}?
+  \IdApplLabel{\Id{UID}}{UID}
+\end{hetcasl}
+\end{small}
+\noindent whilst flexible operations and predicates have the sort
+\Id{Time} added to their profile:
+\begin{small}
+\begin{hetcasl}
+  \> \KW{op} \IdDeclLabel{\Id{isClosedAt}}{isClosedAt} \Ax{:}
+  \=\IdApplLabel{\Id{Unit}}{Unit} \Ax{\times}
+  \IdApplLabel{\Id{Time}}{Time} \Ax{\rightarrow?}
+  \IdApplLabel{\Id{Boolean}}{Boolean};
+ \end{hetcasl}
+\end{small}
+\noindent Finally, we note that as the presented examples of axioms
+for multiplicity constraints are not dependent on flexible operations
+or predicates, they remain unchanged.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 
