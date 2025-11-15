@@ -1431,3 +1431,13 @@
 | smooth function | دالة ناعمة | 0.9 | 1 | Continuously differentiable function |
 | compact set | مجموعة مدمجة | 0.9 | 1 | Closed and bounded set |
 | QAOA | QAOA | 1.0 | 1 | Quantum Approximate Optimization Algorithm |
+| thinned network | الشبكة المخففة | 0.85 | 1 | Neural network with randomly dropped units (dropout) |
+| weight scaling | قياس الأوزان | 0.90 | 1 | Scaling weights at test time in dropout |
+| Bernoulli distribution | توزيع برنولي | 0.95 | 1 | Probability distribution for binary outcomes |
+| element-wise multiplication | الضرب عنصراً بعنصر | 0.90 | 1 | Hadamard product, component-wise multiplication |
+| phone error rate | معدل الخطأ الصوتي | 0.85 | 1 | PER - phoneme recognition error metric |
+| model averaging | حساب متوسط النماذج | 0.90 | 2 | Averaging predictions from multiple models |
+| weight sharing | مشاركة الأوزان | 0.90 | 1 | Using same weights across different subnetworks |
+| posterior distribution | التوزيع اللاحق | 0.85 | 1 | Bayesian posterior probability distribution |
+| max-norm regularization | تنظيم القاعدة القصوى | 0.85 | 1 | Constraining weight vector norms |
+| weight decay | تضاؤل الأوزان | 0.90 | 1 | L2 regularization penalty on weights |
