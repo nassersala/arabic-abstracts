@@ -1,0 +1,62 @@
+In this paper, we have introduced a novel design methodology for
+encapsulating formal methods within DSLs. We have supported our
+hypothesis that DSLs can aid with verification by showing it to be
+valid for the railway domain. 
+
+Our methodology begins with industrial documents describing domain
+elements in the form of UML class diagrams with narratives. This
+informal DSL is formalised in the algebraic specification
+language~\CASL, where we support this step with automated translations
+of the UML class diagram, thus ensuring ``faithful modelling'' of the
+domain. Next, systematic exploitation of domain knowledge allows us to
+prove domain specific lemmas. Thanks to these domain specific lemmas,
+properties on the formal specifications can automatically be proven
+for a class of systems, thus addressing issues surrounding
+``scalability''. Finally, a graphical editor for the DSL is
+developed. This editor allows engineers from the domain to follow a
+seamless verification process: (1) they can formulate models in the
+DSL; (2) these models can be automatically transformed into formal
+specifications; and (3) they can automatically verify these models
+thanks to the domain specific lemmas. Overall, this addresses the
+issues of ``accessibility''of formal methods.
+
+The verification of railway control software has been identified as a
+grand challenge of computer science~\cite{topic11}. The defining
+element of a grand challenge is that progress towards the challenge
+results in progress in computer science in general. Therefore,
+motivated by the railway domain, our methodology can be seen as a step
+forward for industrial applications of formal methods.
+
+Along with presenting this methodology, we have also successfully
+illustrated the use of algebraic specification for modelling railway
+systems and the use of automated theorem proving for railway
+verification. Bringing these points together results in a strong case
+for using DSLs in the setting of specification and verification.
+
+In the future, we would like to explore visual feedback of failed
+proof attempts. Currently, feedback to the user is provided in the
+form of a named route which is unsafe (obtained from the name of the
+failed proof). Such visualisations have been considered by Marchi et
+al.\ \cite{ic2011}, and it would be interesting to extend OnTrack with
+such visualisations. We would also like to illustrate the
+applicability of our methodology to further domains, such as to the
+design of medical devices as considered by Oladimeji et
+al.\ \cite{olad13}.
+\\
+\paragraph{Acknowledgements:}
+The authors would like to thank Simon Chadwick and Dominic Taylor from
+Invensys Rail UK for their contributions and encouraging feedback. We
+would like to thank our colleagues from the Swansea railway
+verification group and the Swansea Processes and Data research group
+for their input and feedback towards this work. Similarly, we greatly
+appreciate the input of Alexander Knapp and Till Mossakowski towards
+our work on the UML institution and comorphism to \ModalCASL. We also
+thank Helen Treharne, Steve Schneider and Matthew Trumble from Surrey
+University for their collaboration in developing the OnTrack tool. Our
+final thanks goes to Erwin R.\ Catesbeiana (Jr) for signalling us in
+the correct direction.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

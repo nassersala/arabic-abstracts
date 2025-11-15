@@ -1,0 +1,390 @@
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{calc}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+\usetikzlibrary{snakes}
+
+
+\tikzset{sortTZ/.style ={}}
+\tikzset{subsortTZ/.style = {draw, <-}}
+\tikzset{isomorphicTZ/.style = {subsortTZ, <->}}
+\tikzset{fixedTextHeightProblem/.style = {text height=1.5ex,text depth=.25ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                          %
+%                                                          %
+% Railway macros                                           %
+%                                                          %
+%                                                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Customiseable Lengths
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\RWConnectorHalfHeight}{1mm}
+\newcommand{\RWPointHeight}{10mm}
+\newcommand{\RWPointHalfWidth}{10mm}
+%% The lengths of the units attached to the point within the junction
+\newcommand{\RWJunctionUnitLength}{10mm}
+%% The gap vertical between the platform edge and the track
+\newcommand{\RWPlatformGapFromTrack}{2mm}
+%% The gap horizontal gap between the platform edge and the connector
+\newcommand{\RWPlatformGapFromConnector}{4mm}
+%% The vertical height of the platform
+\newcommand{\RWPlatformHeight}{3mm}
+
+\newcommand{\RWSemiLongPointHalfWidth}{20mm}
+\newcommand{\RWLongPointHalfWidth}{30mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Connectors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% param 1 = name of connector (must not exist)
+% param 2 = coordinate for center of connector
+\newcommand{\RWConnector}[2]{
+  \coordinate (#1) at #2;
+  \draw ($(#1) +(0,-\RWConnectorHalfHeight)$) -- ($(#1) +(0,+\RWConnectorHalfHeight)$);
+}
+
+% param 1 = name of connector to draw at (must exist)
+% param 2 = label to be used on connector
+\newcommand{\RWLabelConnectorBelow}[2]{
+  \node [anchor = north] at ($(#1) +(0,-\RWConnectorHalfHeight)$) {#2};
+}
+
+% param 1 = name of connector to label (must exist)
+% param 2 = label to be used on connector
+\newcommand{\RWLabelConnectorAbove}[2]{
+  \node [anchor = south] at ($(#1) +(0,+\RWConnectorHalfHeight)$) {#2};
+}
+
+% param 1 = name of connector 1 (must exist)
+% param 2 = name of connector 2 (must exist)
+% param 3 = label to be used on linear unit
+\newcommand{\RWLabelLinearUnitAbove}[3]{
+  \node [anchor = south] at ($(#1)!.5!(#2) +(0,+\RWConnectorHalfHeight)$) {#3};
+}
+
+% param 1 = name of connector 1 (must exist)
+% param 2 = name of connector 2 (must exist)
+% param 3 = label to be used on linear unit
+\newcommand{\RWLabelLinearUnitBelow}[3]{
+  \node [anchor = north] at ($(#1)!.5!(#2) +(0,-\RWConnectorHalfHeight)$) {#3};
+}
+
+% param 1 = name of connector 1 (must exist)
+% param 2 = name of connector 2 (must exist)
+% param 3 = label to be used on linear unit
+\newcommand{\RWLinearUnitAbove}[3] {
+  \draw (#1) -- (#2);
+  \RWLabelLinearUnitAbove{#1}{#2}{#3}
+}
+% param 1 = name of connector 1 (must exist)
+% param 2 = name of connector 2 (must exist)
+% param 3 = label to be used on linear unit
+\newcommand{\RWLinearUnitBelow}[3] {
+  \draw (#1) -- (#2);
+  \RWLabelLinearUnitBelow{#1}{#2}{#3}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Points
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%    /----
+% --------
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of left connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWPoint}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (-\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (\RWPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (\RWPointHalfWidth,\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+\newcommand{\FigPoint}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (-30mm,0)$)}
+  \RWConnector{#3}{($#5 + (\RWPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (\RWPointHalfWidth,\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+% --------
+%    \----
+
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of left connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWPointUpsideDown}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (-\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (\RWPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (\RWPointHalfWidth,-\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+% ----\
+% ---------
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of right connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWPointReverse}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (+\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (-\RWPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (-\RWPointHalfWidth,\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+
+% ---------
+%     /----
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of right connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWPointReverseUpsideDown}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (+\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (-\RWPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (-\RWPointHalfWidth,-\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LongPoints
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%    /----
+% --------
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of left connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWLongPoint}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (-\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (3*\RWPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (\RWPointHalfWidth,\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+% --------
+%    \----
+
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of left connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWLongPointUpsideDown}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (-\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (3*\RWPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (\RWPointHalfWidth,-\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+% ----\
+% ---------
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of right connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWLongPointReverse}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (-\RWLongPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (-\RWPointHalfWidth,\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+
+% ----\
+% ---------
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of right connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWSemiLongPointReverse}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (-\RWSemiLongPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (-\RWPointHalfWidth,\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+
+
+
+% ---------
+%     /----
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of right connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+\newcommand{\RWLongPointReverseUpsideDown}[5]{
+  \coordinate (#1) at #5;
+  \RWConnector{#2}{($#5 + (+\RWPointHalfWidth,0)$)}
+  \RWConnector{#3}{($#5 + (-\RWLongPointHalfWidth,0)$)}
+  \RWConnector{#4}{($#5 + (-\RWPointHalfWidth,-\RWPointHeight)$)}
+
+  \draw (#2) -- #5;
+  \draw #5 -- (#3);
+  \draw #5 -- (#4);
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Junctions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%    /----
+% --------
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of left connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+% param 6 = label for linner unit 1 - left
+% param 7 = label for linner unit 2 - normal
+% param 8 = label for linner unit 3 - reverse
+% param 9 = label for the point
+\newcommand{\RWJunction}[9]{
+  %% We assume RWTempA, RWTempB and RWTempC coordinate names are not
+  %% used. These can be reused as they are just overwritten.
+  \RWPoint{#1}{RWTempA}{RWTempB}{RWTempC}{#5} 
+  \RWConnector{#2}{($(RWTempA) + (-\RWJunctionUnitLength,0)$)}
+  \RWConnector{#3}{($(RWTempB) + (+\RWJunctionUnitLength,0)$)}
+  \RWConnector{#4}{($(RWTempC) + (+\RWJunctionUnitLength,0)$)}
+  \draw (RWTempA) -- (#2);
+  \draw (RWTempB) -- (#3);
+  \draw (RWTempC) -- (#4);
+  \node[anchor = north] at ($(RWTempA)!.5!(#2)$) {#6};
+  \node[anchor = north] at ($(RWTempB)!.5!(#3)$) {#7};
+  \node[anchor = south] at ($(RWTempC)!.5!(#4)$) {#8};
+  \node[anchor = north] at ($(RWTempA)!.5!(RWTempB)$) {#9};
+}
+
+% ----\
+% ---------
+% param 1 = name for center of point (must not exist)
+% param 2 = name for center of right connector (must not exist)
+% param 3 = name for center of normal connector (must not exist)
+% param 4 = name for center of reverse connector (must not exist)
+% param 5 = coordinate for center of point
+% param 6 = label for linner unit 1 - right
+% param 7 = label for linner unit 2 - normal
+% param 8 = label for linner unit 3 - reverse
+% param 9 = label for the point
+\newcommand{\RWJunctionReverse}[9]{
+  %% We assume RWTempA, RWTempB and RWTempC coordinate names are not
+  %% used. These can be reused as they are just overwritten.
+  \RWPointReverse{#1}{RWTempA}{RWTempB}{RWTempC}{#5}
+  \RWConnector{#2}{($(RWTempA) + (+\RWJunctionUnitLength,0)$)}
+  \RWConnector{#3}{($(RWTempB) + (-\RWJunctionUnitLength,0)$)}
+  \RWConnector{#4}{($(RWTempC) + (-\RWJunctionUnitLength,0)$)}
+  \draw (RWTempA) -- (#2);
+  \draw (RWTempB) -- (#3);
+  \draw (RWTempC) -- (#4);
+  \node[anchor = north] at ($(RWTempA)!.5!(#2)$) {#6};
+  \node[anchor = north] at ($(RWTempB)!.5!(#3)$) {#7};
+  \node[anchor = south] at ($(RWTempC)!.5!(#4)$) {#8};
+  \node[anchor = north] at ($(RWTempA)!.5!(RWTempB)$) {#9};
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Platforms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Make a platform between two connectors assuming the connectors have
+% the same y values and that the first is positioned to the left of
+% the second.
+% A platform also joins the connectors with a track (a line)
+% param 1 = name of the platform (must not exist)
+% param 2 = name of the first connector (must exist)
+% param 3 = name of the second connector (must exist)
+\newcommand{\RWPlatformAbove}[3]{
+  \draw[fill=gray] ($(#2) + (\RWPlatformGapFromConnector,\RWPlatformGapFromTrack)$) -- ($(#3) + (-\RWPlatformGapFromConnector,\RWPlatformGapFromTrack)$) -- 
+    ($(#3) + (-\RWPlatformGapFromConnector,\RWPlatformGapFromTrack) + (0,\RWPlatformHeight)$) -- ($(#2) + (\RWPlatformGapFromConnector,\RWPlatformGapFromTrack) + (0,\RWPlatformHeight)$) --
+    cycle;
+
+  \coordinate (#1) at ($(#2)!.5!(#3) + (0,\RWPlatformGapFromTrack) + 0.5*(0, \RWPlatformHeight)$);
+  \draw (#2) -- (#3);
+}
+
+% Make a platform between two connectors assuming the connectors have
+% the same y values and that the first is positioned to the left of
+% the second.
+% A platform also joins the connectors with a track (a line)
+% param 1 = name of the platform (must not exist)
+% param 2 = name of the first connector (must exist)
+% param 3 = name of the second connector (must exist)
+\newcommand{\RWPlatformBelow}[3]{
+  \draw[fill=gray] ($(#2) + (\RWPlatformGapFromConnector,-\RWPlatformGapFromTrack)$) -- ($(#3) + (-\RWPlatformGapFromConnector,-\RWPlatformGapFromTrack)$) -- 
+    ($(#3) + (-\RWPlatformGapFromConnector,-\RWPlatformGapFromTrack) + (0,-\RWPlatformHeight)$) -- ($(#2) + (\RWPlatformGapFromConnector,-\RWPlatformGapFromTrack) + (0,-\RWPlatformHeight)$) --
+    cycle;
+
+  \coordinate (#1) at ($(#2)!.5!(#3) + (0,-\RWPlatformGapFromTrack) + 0.5*(0, -\RWPlatformHeight)$);
+  \draw (#2) -- (#3);
+}
+
+% param 1 = name of the platform to label (must exist)
+% param 2 = label to be used on platform
+\newcommand{\RWLabelPlatformAbove}[2]{
+  \node [anchor = south] at ($(#1) + 0.5*(0, \RWPlatformHeight)$) {#2};
+}
+
+% param 1 = name of the platform to label (must exist)
+% param 2 = label to be used on platform
+\newcommand{\RWLabelPlatformBelow}[2]{
+  \node [anchor = north] at ($(#1) + 0.5*(0, -\RWPlatformHeight)$) {#2};
+}

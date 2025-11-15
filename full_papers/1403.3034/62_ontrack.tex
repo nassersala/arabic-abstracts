@@ -1,0 +1,233 @@
+\subsection{Contribution: OnTrack Editor + Model Transformations}
+\label{sec:ontrack}
+As we have seen, within the railway industry, defining graphical
+descriptions is the de facto method of designing railway networks.  Up
+until now, we have presented several \CASL models for varying aspects
+of the railway domain. Although these models use terminology from the
+railway domain, the modelling approaches presented are not in a form
+that is common knowledge for the everyday railway engineer. In this
+section, we introduce the OnTrack toolset that achieves the goal of
+encapsulating formal methods for the railway domain. Overall, the
+OnTrack toolset is a modelling and verification environment that
+allows graphical scheme plan descriptions to be captured and supported
+by formal verification. Thus, it provides a bridge between railway
+domain notations and formal specification. This meets the third aim of
+this paper, namely to make formal methods accessible to domain
+engineers.
+
+In this section we describe the main aspects of the OnTrack tool
+including the architecture of the tool. Along with this, we present
+the model transformations required to generate \CASL models. This
+discussion serves as an illustration on how the tool can be extended
+for other formalisms. For example, OnTrack currently also contains the
+ability to output models formulated using the \CSPB specification
+language~\cite{cspb}. Finally, OnTrack can also generate scheme plan
+abstractions, however we refrain from a discussion of these aspects
+here and instead refer the reader to~\cite{nfm2013}.
+
+\subsubsection{The OnTrack Toolset Architecture}
+
+OnTrack has been created using the GMF framework~\cite{gronback09} and
+multiple Epsilon~\cite{kolovos2012} model transformations.
+Figure~\ref{fig:workflow} shows the architecture that we employ in
+OnTrack. Initially, a user draws a {\em Track Plan} using the
+graphical front end. Then the first transformation, {\em Generate
+  Tables} leads to a {\em Scheme Plan}, which is a track plan and its
+associated control tables. Generation of control tables has been
+previously studied~\cite{mirabadi2009} and here we implement a
+technique that produces control tables based on track topology and
+signal positions, see~\cite{nfm2013} for details. Track plans and
+scheme plans are models formulated relative to our DSL meta model, see
+Figure~\ref{fig:bjoerners_dsl_pic}. A scheme plan is then the basis
+for subsequent workflows that support its verification. Scheme plans
+can then be translated to formal specifications. This can be achieved
+in two possible ways, indicated by the optional dashed box in
+Figure~\ref{fig:workflow}:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{images/nfm_workflow.png}
+\caption{The OnTrack workflow.}
+\label{fig:workflow}
+\end{figure}
+
+\begin{enumerate}
+\item Using a meta model for the formal specification language: The
+  first option is to have a meta model describing the formal
+  specification language. A \emph{Represent} transformation translates
+  a \emph{Scheme Plan} into an equivalent \emph{Formal Scheme Plan}
+  over the meta model of the formal specification language. Then
+  various \emph{Generate for Verification} model to text
+  transformations turn a \emph{Formal Scheme Plan} into a \emph{Formal
+    Specification Text} ready for verification.
+\item Direct generation of a formal specification: The second approach
+  is to directly generate a formal specification. Thus only the
+  \emph{Generate for Verification} model to text transformations need
+  to be implemented.
+\end{enumerate}
+
+\noindent In both cases, the \emph{Generate for Verification}
+transformations can enrich the models appropriately for verification,
+e.g.\ by including the DSL lemmas discussed earlier.
+
+This horizontal workflow provides a transformation yielding a formal
+specification that faithfully represents a scheme plan. Here, we
+highlight the second approach that has been taken for the generation
+of \CASL. The top level of the workflow shows the ability of OnTrack
+to include abstractions. We are interested in abstractions to ease
+verification. As abstractions do not play a role in our presentation
+in this paper, we refer the reader to~\cite{nfm2013} for the details.
+
+OnTrack implements this overall workflow in a typical EMF/GMF/Epsilon
+architecture~\cite{gronback09,steinberg08,kolovos2012}.  As a basis
+for our tool, we have taken the UML diagram in
+Figure~\ref{fig:bjoerners_dsl_pic} as our meta-model. Implementing a
+GMF front-end for this meta model involves selecting the concepts of
+the meta model that should become graphical constructs within the
+editor and assigning graphical images to them. Figure~\ref{fig:editor}
+shows the OnTrack editor which consists of a drawing canvas and a
+palette. Graphical elements from the palette can be positioned onto
+the drawing canvas. For example, a linear unit is now a drawable
+element.
+
+\begin{figure}[h]
+ \centering
+  \includegraphics[width=\linewidth]{images/junc.png}
+  \caption{A screenshot of OnTrack modelling a station.}
+  \label{fig:editor}
+\end{figure}
+
+
+\subsubsection{Generation of Formal CASL Specifications}
+
+Here we describe the direct implementation of the {\em Generate for
+  Verification} transformations for \CASL. The \emph{Generate for
+  Verification} transformation translates meta model instances of
+\Bjoerner's DSL into formal specification text. This transformation is
+implemented using the Epsilon Generation Language
+(EGL)~\cite{kolovos2012}. EGL allows template files to be written
+describing the text to be generated. These templates provide two main
+features for outputting text, namely the ability to output
+\emph{static text} and to output \emph{dynamic text}. \emph{Static
+  text} is considered text that is always generated independent of the
+model. Whilst \emph{Dynamic text} is text that is text dependent on
+the given model. For this reason, \emph{Dynamic text} is sometimes
+referred to as configuration data. By default, any text written in an
+EGL template is considered to be static text. For example we know that
+the specification of datatypes for our DSL and similarly our extension
+of this with dynamical aspects is the same for all models. Hence this
+is rather straightforwardly encoded as static text to be output, see
+Figure~\ref{fig:static_gen}.
+
+\begin{figure}[h]
+\begin{small}
+\begin{framed}
+\begin{verbatim}
+    spec Pair [sort S] [sort T] =
+        sort Pair[S,T]
+        ops first: Pair[S,T] -> S;
+            second: Pair[S,T] -> T;
+    ...
+    spec StaticSignature =
+         sorts Net, Station, Unit, Connector ...
+         sorts Linear, Switch < Unit ...
+         preds  __hasLine__: Net * Line;                                
+    ...
+\end{verbatim}
+\vspace{-0.2cm}
+\end{framed}
+\end{small}
+\caption{Example of static text generation for our DSL.}
+\label{fig:static_gen}
+\end{figure}
+
+Within the same EGL template, we can then specify the output for a
+concrete scheme plan. For example, consider the free type of
+units. Such a free type is built from the concrete elements of linear
+units and switch points contained within the graphical model. Hence we
+can specify the template in Figure~\ref{fig:dyn_gen} for the dynamic
+generation of the free type Unit. The result of applying this EGL
+fragment, to the concrete scheme plan in Figure~\ref{fig:trackplan} is
+the following \CASL specification fragment:
+\begin{center}
+\texttt{free type Unit ::=  lA1 | P1 | PLAT1 | PLAT2 | P2 | LA2}.
+\end{center}
+
+\begin{figure}[h]
+\begin{small}
+\begin{framed}
+\begin{verbatim}
+1.  [% var rail : RailDiagram  := RailDiagram.allInstances().at(0); %]  
+2.  ...
+3.  [%if(rail.hasUnits.size > 0){%]
+4.      free type Unit ::= 
+5.      [%  var i := 0;
+6.          while (i < rail.hasUnits.size()-1){ %]
+7.          [%  var unit : Unit := rail.hasUnits.at(i);
+8.             i := i+1; %]
+9.             [%=unit.id%] | [%}%]
+10.     [% var unit : Unit := rail.hasUnits.at(i); %]
+11.     [%=unit.id%] [%}%]
+\end{verbatim}
+\vspace{-0.2cm}
+\end{framed}
+\end{small}
+\caption{Dynamic text generation for elements of Unit free type.}
+\label{fig:dyn_gen}
+\end{figure}
+
+Considering Figure~\ref{fig:dyn_gen}, the first construct of EGL that
+we notice is \texttt{[\%} and \texttt{\%]}. Any text specified between
+such a set of brackets is interpreted as code. For example, the line
+\texttt{var rail : RailDiagram := ...} is a line of EGL code for
+declaring the variable \texttt{rail} and assigning to it the current
+scheme plan instance within the graphical editor. This variable, can
+then be used throughout the EGL template to refer to the current model
+instance. Next, we see an EGL if statement (line 3). This statement
+checks the number of elements in the \texttt{hasUnits} relation of the
+current rail diagram. If there are linear units or points that have
+been drawn in the diagram, the code inside the if statement is
+executed. The first line within the if statement is static text to be
+generated. That is, as long as the if statement is entered, the text
+``\texttt{free type Unit ::=}'' will be output. Lines 6 through to 9
+perform a loop through the units of the concrete scheme plan
+instance. For each unit up until the last but one we can see, that in
+line 9, the dynamic text generation ``\texttt{[\%=unit.id\%]}'' is
+executed. Here, the dynamic text generation also contains the
+``\texttt{=}'' symbol. This indicates that the text following is a
+piece of code that returns a value. For example, ``\texttt{unit.id}''
+is a field containing the name that has been given to the current unit
+element.  This name will then be output by the generation
+process. This dynamic text generation is immediately followed by the
+static text generation ``\texttt{|}''. This produces the
+``\texttt{|}'' symbol between elements of the free type. Finally,
+after the while statement there is another block of code (lines 10 and
+11) that outputs the last unit identifier in the collection. For this
+unit, there is no static generation of the ``\texttt{|}'' symbol which
+matches the expected output for a \CASL free type.
+
+In a similar manner to the presented free type generation, it is
+possible to explore all the elements of the diagram generating the
+concrete scheme plan specification in \CASL. After generation of the
+scheme plan, the safety property to be proven over the scheme plan can
+also be generated. As this property is the same for all scheme plans,
+this is simply generated as static text. The result is a full \CASL
+specification ready for verification of the current editor model
+instance.
+
+Overall, this generation means that OnTrack achieves the aim of
+automating the production of formal specifications from a graphical
+model.  OnTrack is a toolset that is usable by engineers from the
+railway domain and allows them to produce formal \CASL specifications
+ready for verification. This meets the third objective of our
+methodology as it makes formal specification available to domain
+engineers in an accessible format. The overall result from our
+methodology is a graphical tooling environment that incorporates a
+``push button'' verification process for the railway signalling
+domain.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

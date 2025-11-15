@@ -1,0 +1,38 @@
+\subsection{Contribution: The Resulting Verification Process}
+
+The result of applying our methodology is a toolset accommodating the
+verification process illustrated in
+Figure~\ref{fig:verification_process}. This process is undertaken
+purely by the engineers in the domain. It follows three main
+steps:
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\linewidth]{images/verification_process.png}
+   \caption{A verification process based on the designed tools.}
+  \label{fig:verification_process}
+\end{figure}
+
+\paragraph{V1: Model Development Based on the Informal DSL} The first
+(optional) step within industry is to outline or specify a design
+informally. This step should be undertaken using the vocabulary
+outlined within the informal DSL.\\
+
+\paragraph{V2: Graphical Modelling} Next, the domain engineer can
+encode their design using the graphical editor. Once encoded, the
+engineer can automatically produce formal specifications ready for
+verification. As the graphical editor contains constructs that are
+from the informal DSL, training and learning costs are minimal.\\
+
+\paragraph{V3: Verification} Finally, the formal specifications can be
+verified using (for \CASL) the Heterogeneous Toolset,
+\Hets~\cite{hets07}. Due to the domain specific lemmas developed
+during the design process, verification is automated and ``Push
+Button''.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

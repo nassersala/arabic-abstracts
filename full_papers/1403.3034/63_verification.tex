@@ -1,0 +1,310 @@
+\subsection{Contribution: Verification Results}
+\label{ssec:verification}
+Each of the track plans in Figure~\ref{fig:plans} (TP-A to TP-D) have
+been modelled using our DSL. 
+
+
+\begin{figure}[h]
+    \centering
+
+ 
+    \subfigure[A pass through station (TP-A).]
+    {       
+\begin{tikzpicture}[scale=0.55,transform shape]
+\node at (-0.5,0) {X};
+\node at (13.5,0) {Y};
+\node at (3.5,-1) {SX};
+\node at (9.5,-1) {SY};
+\draw [<->] (0,0.7) to (1,0.7);
+\draw [<->] (13,0.7) to (12,0.7);
+\RWConnector{a}{(0,0)}
+\RWConnector{a1}{(1,0)}
+\RWLinearUnitAbove{a}{a1}{la1}
+\RWPointUpsideDown{p1}{p1cl}{p1cn}{p1cr}{(3,0)}
+\RWLabelLinearUnitAbove{p1cn}{p1cl}{P1}
+\RWLinearUnitAbove{a1}{p1cl}{la2}
+\RWConnector{a3}{(5,0)}
+\RWLinearUnitAbove{p1cn}{a3}{la3}
+\RWConnector{a4}{(6,0)}
+\RWLinearUnitAbove{a3}{a4}{la4}
+\RWConnector{a5}{(7,0)}
+\RWLinearUnitAbove{a4}{a5}{Plat}
+\RWConnector{a6}{(8,0)}
+\RWLinearUnitAbove{a5}{a6}{la5}
+\RWPointReverseUpsideDown{p2}{p2cl}{p2cn}{p2cr}{(10,0)}
+\RWLabelLinearUnitAbove{p2cn}{p2cl}{P2}
+\RWLinearUnitAbove{a6}{p2cn}{la6}
+\RWConnector{a7}{(12,0)}
+\RWLinearUnitAbove{p2cl}{a7}{la7}
+\RWConnector{a8}{(13,0)}
+\RWLinearUnitAbove{a7}{a8}{la8}
+\RWConnector{b1}{(5,-1)}
+\RWLinearUnitBelow{p1cr}{b1}{lb1}
+\RWConnector{b2}{(6,-1)}
+\RWLinearUnitBelow{b1}{b2}{lb2}
+\RWConnector{b3}{(7,-1)}
+\RWLinearUnitBelow{b2}{b3}{lb3}
+\RWConnector{b4}{(8,-1)}
+\RWLinearUnitBelow{b3}{b4}{lb4}
+\RWLinearUnitBelow{b4}{p2cr}{lb5}
+\end{tikzpicture}
+        \label{fig:first_sub}
+    }
+    \subfigure[A double junction (TP-B).]
+    {
+\begin{tikzpicture}[scale=0.55,transform shape]
+\node at (-0.5,0) {A};
+\node at (-0.5,-2) {B};
+\node at (11.5,0) {X};
+\node at (11.5,-2) {Y};
+\draw [->] (0,0.7) to (1,0.7);
+\draw [->] (11,-2.7) to (10,-2.7);
+\draw [->] (1,-2.7) to (0,-2.7);
+\draw [->] (10,0.7) to (11,0.7);
+\RWConnector{a}{(0,0)}
+\RWConnector{a1}{(1,0)}
+\RWLinearUnitAbove{a}{a1}{la1}
+\RWConnector{a2}{(2,0)}
+\RWLinearUnitAbove{a1}{a2}{la2}
+\RWPoint{p1}{p1cl}{p1cn}{p1cr}{(4,0)}
+\RWLabelLinearUnitBelow{p1cn}{p1cl}{P1}
+\RWLinearUnitAbove{a2}{p1cl}{la3}
+\draw [->] ($(p1) + (0.1,0.6) $) to ($(p1cr) + (-0.3,0.2)$);
+\RWPointReverseUpsideDown{p2}{p2cl}{p2cn}{p2cr}{(6,0)}
+\RWLabelLinearUnitAbove{p2cn}{p2cl}{P2}
+\RWPoint{p3}{p3cl}{p3cn}{p3cr}{(8,0)}
+\RWLabelLinearUnitBelow{p3cn}{p3cl}{P3}
+\draw [<-] ($(p3) + (0.1,0.6) $) to ($(p3cr) + (-0.3,0.2)$);
+\RWConnector{a3}{(10,0)}
+\RWLinearUnitAbove{p3cn}{a3}{la4}
+\RWConnector{x}{(11,0)}
+\RWLinearUnitAbove{a3}{x}{la5}
+\RWConnector{b}{(0,-2)}
+\RWConnector{b1}{(1,-2)}
+\RWLinearUnitBelow{b}{b1}{lb1}
+\RWConnector{b2}{(2,-2)}
+\RWLinearUnitBelow{b1}{b2}{lb2}
+\RWPoint{p4}{p4cl}{p4cn}{p4cr}{(4,-2)}
+\RWLabelLinearUnitBelow{p4cn}{p4cl}{P4}
+\RWLinearUnitBelow{b2}{p4cl}{lb3}
+\RWConnector{b3}{(7,-2)}
+\RWLinearUnitBelow{p4cn}{b3}{lb4}
+\RWConnector{b4}{(9,-2)}
+\RWLinearUnitBelow{b3}{b4}{lb5}
+\RWConnector{b5}{(10,-2)}
+\RWLinearUnitBelow{b4}{b5}{lb6}
+\RWConnector{y}{(11,-2)}
+\RWLinearUnitBelow{b5}{y}{lb7}
+\end{tikzpicture}     
+        \label{fig:second_sub}
+    }
+    \\
+    \subfigure[A terminal station (TP-C).]
+    {
+\begin{tikzpicture}[scale=0.55,transform shape]
+\node at (-0.5,0) {A};
+\node at (-0.5,-1) {B};
+\node at (-0.5,-3) {C};
+\node at (-0.5,-4) {D};
+\node at (14.5,-1) {X};
+\node at (14.5,-3) {Y};
+\draw [->] (14,-0.3) to (13,-0.3);
+\draw [->] (13,-3.7) to (14,-3.7);
+\RWConnector{a}{(0,0)}
+\RWConnector{a1}{(1,0)}
+\RWLinearUnitAbove{a}{a1}{PlatA}
+\RWConnector{a2}{(2,0)}
+\RWLinearUnitAbove{a1}{a2}{la1}
+\RWPointReverse{p1}{p1cl}{p1cn}{p1cr}{(4,-1)}
+\RWLabelLinearUnitBelow{p1cn}{p1cl}{P1}
+\RWLinearUnitAbove{a2}{p1cr}{la2}
+\RWLongPointReverseUpsideDown{p2}{p2cn}{p2cl}{p2cr}{(8,-1)}
+\RWLabelLinearUnitAbove{p2cn}{p1cl}{P2}
+\RWLongPointUpsideDown{p3}{p3cl}{p3cn}{p3cr}{(10,-1)}
+\RWLabelLinearUnitAbove{p3cn}{p3cl}{P3}
+\RWConnector{a3}{(14,-1)}
+\RWLinearUnitAbove{p3cn}{a3}{la3}
+\RWConnector{b}{(0,-1)}
+\RWConnector{b1}{(1,-1)}
+\RWLinearUnitBelow{b}{b1}{PlatB}
+\RWConnector{b2}{(2,-1)}
+\RWLinearUnitBelow{b1}{b2}{lb1}
+\RWLinearUnitBelow{b2}{p1cn}{lb2}
+\RWConnector{c}{(0,-3)}
+\RWConnector{c1}{(1,-3)}
+\RWLinearUnitAbove{c}{c1}{PlatC}
+\RWConnector{c2}{(2,-3)}
+\RWLinearUnitAbove{c1}{c2}{lc1}
+\RWPointReverseUpsideDown{p4}{p4cl}{p4cn}{p4cr}{(4,-3)}
+\RWLabelLinearUnitAbove{p4cn}{p4cl}{P4}
+\RWLongPoint{p5}{p5cl}{p5cn}{p5cr}{(6,-3)}
+\RWLabelLinearUnitBelow{p5cn}{p5cl}{P5}
+\RWLinearUnitAbove{c2}{p4cn}{lc2}
+\RWLongPointReverse{p6}{p6cl}{p6cn}{p6cr}{(12,-3)}
+\RWLabelLinearUnitBelow{p6cn}{p6cl}{P6}
+\RWConnector{y}{(14,-3)}
+\RWLinearUnitBelow{p6cl}{y}{lc3}
+\RWConnector{d}{(0,-4)}
+\RWConnector{d1}{(1,-4)}
+\RWLinearUnitBelow{d}{d1}{PlatD}
+\RWConnector{d2}{(2,-4)}
+\RWLinearUnitBelow{d1}{d2}{ld1}
+\RWLinearUnitBelow{d2}{p4cr}{ld2}
+\end{tikzpicture}
+        \label{fig:third_sub}
+    }
+  \subfigure[A modified track plan from a London Underground
+  station (TP-D).]
+    {
+\begin{tikzpicture}[scale=0.55,transform shape]
+\node at (-0.5,0) {A};
+\node at (-0.5,-2) {B};
+\node at (20.5,-0) {X};
+\node at (20.5,-2) {Y};
+\draw [->] (0,0.7) to (1,0.7);
+\draw [->] (1,-2.7) to (0,-2.7);
+\RWConnector{a}{(0,0)}
+\RWConnector{a1}{(1,0)}
+\RWLinearUnitAbove{a}{a1}{la1}
+\RWConnector{a2}{(2,0)}
+\RWLinearUnitAbove{a1}{a2}{la2}
+\RWConnector{a3}{(3,0)}
+\RWLinearUnitAbove{a2}{a3}{la3}
+\RWPointUpsideDown{p1}{p1cl}{p1cn}{p1cr}{(5,0)}
+\RWLabelLinearUnitAbove{p1cl}{p1cn}{P1}
+\RWLinearUnitAbove{a3}{p1cl}{la4}
+\RWConnector{a4}{(8,0)}
+\RWLinearUnitAbove{p1cn}{a4}{la5}
+\RWConnector{a5}{(9,0)}
+\RWLinearUnitAbove{a4}{a5}{la6}
+\RWConnector{a6}{(10,0)}
+\RWLinearUnitAbove{a5}{a6}{la7}
+\RWConnector{a7}{(11,0)}
+\RWLinearUnitAbove{a6}{a7}{la8}
+\RWConnector{a8}{(12,0)}
+\RWLinearUnitAbove{a7}{a8}{la9}
+\RWPointReverseUpsideDown{p2}{p2cl}{p2cn}{p2cr}{(15,0)}
+\RWLabelLinearUnitAbove{p2cl}{p2cn}{P2}
+\RWLinearUnitAbove{a8}{p2cn}{la10}
+\RWConnector{a9}{(17,0)}
+\RWLinearUnitAbove{p2cl}{a9}{la11}
+\RWConnector{a10}{(18,0)}
+\RWLinearUnitAbove{a9}{a10}{la12}
+\RWConnector{a11}{(19,0)}
+\RWLinearUnitAbove{a10}{a11}{PlatA}
+\RWConnector{a12}{(20,0)}
+\RWLinearUnitAbove{a11}{a12}{la13}
+\RWConnector{b}{(0,-2)}
+\RWConnector{b1}{(1,-2)}
+\RWLinearUnitBelow{b}{b1}{lb1}
+\RWConnector{b2}{(2,-2)}
+\RWLinearUnitBelow{b1}{b2}{lb2}
+\RWConnector{b3}{(3,-2)}
+\RWLinearUnitBelow{b2}{b3}{lb3}
+\RWConnector{b4}{(4,-2)}
+\RWLinearUnitBelow{b3}{b4}{lb4}
+\RWPointReverse{p3}{p3cl}{p3cn}{p3cr}{(7,-2)}
+\RWLabelLinearUnitBelow{p3cl}{p3cn}{P3}
+\RWLinearUnitBelow{b4}{p3cn}{lb5}
+\RWConnector{b5}{(9,-2)}
+\RWLinearUnitBelow{p3cl}{b5}{lb6}
+\RWConnector{b6}{(10,-2)}
+\RWLinearUnitBelow{b5}{b6}{lb7}
+\RWConnector{b7}{(11,-2)}
+\RWLinearUnitBelow{b6}{b7}{lb8}
+\RWPoint{p4}{p4cl}{p4cn}{p4cr}{(13,-2)}
+\RWLabelLinearUnitBelow{p4cl}{p4cn}{P4}
+\RWLinearUnitBelow{b7}{p4cl}{lb9}
+\RWConnector{b8}{(16,-2)}
+\RWLinearUnitBelow{p4cn}{b8}{lb10}
+\RWConnector{b9}{(17,-2)}
+\RWLinearUnitBelow{b8}{b9}{lb11}
+\RWConnector{b10}{(18,-2)}
+\RWLinearUnitBelow{b9}{b10}{lb12}
+\RWConnector{b11}{(19,-2)}
+\RWLinearUnitBelow{b10}{b11}{PlatB}
+\RWConnector{b12}{(20,-2)}
+\RWLinearUnitBelow{b11}{b12}{lb13}
+\end{tikzpicture}
+}
+    \caption{Verified track plans.}
+    \label{fig:plans}
+\end{figure}
+
+We have then included a then \THEN {\small{}\KW{\%}\KW{implies}} block
+for the proof of safety. This block is also generated automatically by
+the OnTrack tool, as all information required for this block is
+available from the graphical model. The block is structured in two
+parts, the first contains lemmas to be proven, then the second our
+overall proof goal. The aim of the lemmas from the first block is to
+encode a case distinction used in the proof of safety. That is, they
+help the automated prover in proving our final goal. For verification
+using our DSL, these lemmas are in the form of our final proof goal
+instantiated for each route of the scheme plan under
+consideration. That is, for a route R, we have:
+\begin{small}
+\begin{hetcasl}
+\> \Ax{\forall} \Id{t} \Ax{:} \Id{Time}; \Id{rg} \Ax{:} \IdApplLabel{\Id{Region}}{Region}; \Id{ma} \Ax{:} \Id{MA} \\
+\>\> \Ax{\bullet} \=\IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma}, \Id{t}) \Ax{\wedge} \=\Id{rg} \IdApplLabel{\Id{eps}}{::eps::} \Id{ma} \Ax{\wedge} \=\Id{rg} \IdApplLabel{\Id{eps}}{::eps::} \IdApplLabel{\Id{regions}}{regions}(\Id{R}) 
+ \Ax{\Rightarrow} \Ax{\neg} \=\Id{R} \IdApplLabel{\Id{isOpenAt}}{::isOpenAt::} \Id{t} 
+\end{hetcasl}
+\end{small}
+
+
+
+\noindent Once the above implied axioms have been proven, they can be used to
+help deduce our overall proof goal:
+\begin{small}
+\begin{hetcasl}
+\THEN \={\small{}\KW{\%}\KW{implies}}\\
+\> \Ax{\forall} \Id{t} \Ax{:} \Id{Time}; \Id{r} \Ax{:} \IdApplLabel{\Id{Route}}{Route}; \Id{rg} \Ax{:} \IdApplLabel{\Id{Region}}{Region}; \Id{ma} \Ax{:} \Id{MA} \\
+\>\> \Ax{\bullet} \=\IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma}, \Id{t}) \Ax{\wedge} \=\Id{rg} \IdApplLabel{\Id{eps}}{::eps::} \Id{ma} \Ax{\wedge} \=\Id{rg} \IdApplLabel{\Id{eps}}{::eps::} \IdApplLabel{\Id{regions}}{regions}(\Id{r}) 
+\Ax{\Rightarrow} \Ax{\neg} \=\Id{r} \IdApplLabel{\Id{isOpenAt}}{::isOpenAt::} \Id{t} 
+\end{hetcasl}
+\end{small}
+
+The verification times presented in Figure~\ref{fig:times} show that
+verification is possible over our enriched DSL. The average memory
+column shows the average memory used across all route lemma proofs and
+the safety proof. The proofs have been performed on a quad core $3$GHz
+machine with $8$GB of RAM running Ubuntu 12.04.
+
+\begin{figure}[h]
+\begin{small}
+\centering
+\begin{tabular}{|l|r|r|r|}
+\hline
+Track Plan & Routes Lemma Proofs (s) & Safety Proof (s) & Avg. Memory (MB)\\
+\hline  \hline
+
+TP-A &  54.54  & 10.04 & 176.88 \\
+TP-B &  23.88  & 6.57 & 90.36 \\
+TP-C &  194.41  & 22.34 & 188.07 \\
+TP-D &  236.10  & 20.46 & 489.64 \\
+\hline  
+\end{tabular}
+\end{small}
+\caption{Verification times for the given track plans.}
+\label{fig:times}
+\end{figure}
+
+All proofs are completed relatively quickly, with the longest proof
+time being for track plan TP-D. Interestingly, this is due to the
+number of units contained within this track plan. Also, it is
+interesting to note that the track plans that look more complicated
+and contain more possible routes, i.e.\ TP-B and TP-C are relatively
+quick to verify. This is because these track plans get split into many
+smaller regions compared with the fewer larger regions of track plan
+TP-D. Each of these small regions is represented by a list containing
+fewer elements within our modelling. Hence, the automated theorem
+prover does not need to search to such a depth to find a proof. This
+point is also illustrated by the increased average memory usage for
+TP-D. This shows that the DSL lemmas we have introduced give a
+measurable effect for verification. We note that these times
+outperform the typical times for model checking on such stations as,
+e.g., as presented in \cite{MNRST12HVC}.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

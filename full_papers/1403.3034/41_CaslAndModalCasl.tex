@@ -1,0 +1,197 @@
+\subsection{Background: The Underlying Specification
+  Formalisms}\label{ssec:spec_languages}
+\label{sec:casl}
+
+We introduce the relevant background on \CASL, \ModalCASL and give details on translating \ModalCASL to \CASL.
+
+\subsubsection{CASL}
+
+The Common Algebraic Specification Language~\cite{mosses04a}, known as
+\CASL, is a specification formalism developed by the CoFI initiative
+throughout the late 1990's and early 2000's in order to design a
+\emph{Common Framework for Algebraic Specification and
+  Development}. \CASL has \emph{basic}, \emph{structured}, and
+\emph{architectural} specifications, of which we consider the first
+two kinds only.
+
+Roughly speaking, a {\CASL} \emph{basic specification} consists of a
+\emph{signature} made up of sorts, operations, and predicates
+(declared by means of the keywords \bf{sort}, \bf{op}, and \bf{pred},
+respectively), and axioms referring to the signature items. Operations
+can be partial or total. Furthermore, one may declare a \emph{subsort
+  relation} on the sort symbols. Axioms are written in first-order
+logic. Going one step beyond first order logic, \CASL also features
+sort generation constraints for datatypes (keywords \bf{generated},
+\bf{free type}).
+
+As an example consider the \CASL specification in Figure
+\ref{fig:casl_time} formalising the concept of time.  The
+specification has the name \SIdIndex{Time}. It specifies the sort
+symbol \Id{Time}, the constant function symbol \Ax{0}, the total
+function symbol \Id{suc} from sort \Id{Time} to sort \Id{Time}, the
+partial function symbol \Id{pre} from sort \Id{Time} to sort \Id{Time}
+and the predicate symbol \Ax{\_\_}\Ax{<=}\Ax{\_\_} over $\Id{Time}
+\times \Id{Time}$. The axiom is a first order formula stating that $0$
+denotes the smallest element of sort \Id{Time}.
+
+
+\begin{figure}[h]
+\begin{small}
+\begin{hetcasl}
+  \SPEC \=\SIdIndex{Time} \Ax{=}\\ \> \SORT \IdDeclLabel{\Id{Time}}{Time}\\ \> \OPS \=\IdDeclLabel{\Ax{0}}{0} \Ax{:} \IdApplLabel{\Id{Time}}{Time};\\ \>\> \IdDeclLabel{\Id{suc}}{suc} \Ax{:} \=\IdApplLabel{\Id{Time}}{Time} \Ax{\rightarrow} \IdApplLabel{\Id{Time}}{Time};\\ \>\> \IdDeclLabel{\Id{pre}}{pre} \Ax{:} \=\IdApplLabel{\Id{Time}}{Time} \Ax{\rightarrow?} \IdApplLabel{\Id{Time}}{Time}\\ \> \PRED \=\Ax{\_\_}\Ax{<=}\Ax{\_\_} \Ax{:} \=\IdApplLabel{\Id{Time}}{Time} \Ax{\times} \IdApplLabel{\Id{Time}}{Time}\\
+\>\Ax{\forall} \=\Id{n} \Ax{:}
+\IdApplLabel{\Id{Time}}{Time} \Ax{\bullet} \=\IdApplLabel{\Ax{0}}{0}
+\Ax{<=} \=\Id{n}\\
+\KW{end}
+\end{hetcasl}
+\end{small}
+\caption{A basic \CASL specification, formalising the concept of time.}\label{fig:casl_time}
+\end{figure}
+
+A \emph{model} of a \CASL specification is an algebra which interprets
+sorts as (non empty) sets and operations and predicates as (partial)
+functions and subsets respectively, in such a way that the given
+axioms are satisfied. The subsorting relation is reflected by
+injective coercion functions between the sets interpreting the
+involved sorts (\emph{not} by subset inclusion),
+see~\cite{mossakowski02,mosses04a} for further details. The collection
+of all these models is called the \emph{model class} of the
+specification. It is a speciality of \CASL to support \emph{loose
+  specification}, i.e., to write a specification that has algebras of
+different ``forms'' in its model class.
+
+The \CASL specification \SIdIndex{Time} of Figure \ref{fig:casl_time}
+has the naturals with the standard interpretations as its model, i.e.,
+discrete time is a possible model. It also has the non-negative reals
+as a model, i.e., dense continuous time is a possible model as
+well. The \CASL specification \SIdIndex{Time} is a typical example of
+a loose specification with algebras of different form: the naturals
+are countable, while the non-negative reals are not countable.
+
+Besides basic specifications, {\CASL} provides ways of building
+complex (\emph{structured}) specifications out of simpler ones (the
+simplest being basic specifications) by means of various
+\emph{specification-building operations}. These include translation,
+hiding, union, and both free and loose forms of extension. In our
+presentation we make use of only a few of these, on which we elaborate
+upon below.
+
+\emph{Translations} of declared symbols to new symbols are specified
+by giving lists of `maplets' of the form \(old \mapsto new\) (keyword
+\bf{with}).
+
+The signature of a \emph{union} of two specifications is the union of
+their signatures. Given models over the component signatures, the
+unique model over the union signature that extends each of these
+models is called their \emph{amalgamation}. Clearly, not all pairs of
+models over component signatures amalgamate. The models of a union
+(keyword \bf {and}) are all amalgamations of the models of the
+component specifications.
+
+\emph{Extensions} (keyword \bf{then}) may specify new symbols or
+merely require further properties of old ones. Extensions can be
+classified by their effect on the specified model class. For instance,
+an extension is called \emph{implicational} (annotation
+\bf{\%implies}) if the signature and model class remain unchanged.
+%
+Note that this annotation has no effect on the semantics of a
+specification: a specifier may use them to express their intentions,
+tools may use them to generate proof obligations, see Section
+\ref{sec:verification} for further details.
+
+Structured specifications may be \emph{named}, and a named
+specification may be \emph{generic} in the sense that it declares
+\emph{parameters} that need to be \emph{instantiated} when the
+specification is (re)used. Instantiation is a matter of providing an
+appropriate \emph{argument specification}. 
+%% together with a
+%% \emph{fitting morphism} from the parameter to the argument
+%% specification
+%% The formal parameters (as well as the argument
+%% specifications in any instantiation) are regarded as extensions of the
+%% imports.
+
+The generic specification \SIdIndex{Pair} in Figure
+\ref{fig:casl_generic} has two formal parameters, namely the
+(non-named basic) specification \KW{sort} \IdDeclLabel{\Id{S}}{S} and
+the (non-named basic) specification \KW{sort}
+\IdDeclLabel{\Id{T}}{T}. In the specification
+\SIdIndex{InstantiatedPair}, both these parameters are instantiated
+with the specification
+%
+%\KW{sort} \IdDeclLabel{\Id{Connector}}
+\KW{sort} \it{Connector}
+%
+as the
+actual parameter. This results in a sort
+\Id{Pair}[\IdApplLabel{\Id{Connector}}{Connector},\IdApplLabel{\Id{Connector}}{Connector}]
+representing pairs over the sort \Id{Connector}. In a final step the
+signature of the instantiated specification is adjusted by a renaming,
+namely to rename the operation symbols \Id{first} and \Id{second} into
+\Id{c1} and \Id{c2}.
+
+\begin{figure}
+\begin{small}
+\begin{hetcasl}
+\SPEC \=\SIdIndex{Pair} [\KW{sort} \IdDeclLabel{\Id{S}}{S}][\KW{sort} \IdDeclLabel{\Id{T}}{T}] \Ax{=}\\
+\> \SORT \=\Id{Pair}[\=\IdApplLabel{\Id{S}}{S},\IdApplLabel{\Id{T}}{T}]\\
+\> \OPS \=\IdDeclLabel{\Id{first}}{first} \Ax{:} \=\Id{Pair}[\=\IdApplLabel{\Id{S}}{S},\IdApplLabel{\Id{T}}{T}] \Ax{\rightarrow} \IdApplLabel{\Id{S}}{S};\\
+\>\> \IdDeclLabel{\Id{second}}{second} \Ax{:} \=\Id{Pair}[\=\IdApplLabel{\Id{S}}{S},\IdApplLabel{\Id{T}}{T}] \Ax{\rightarrow} \IdApplLabel{\Id{T}}{T};\\
+\>\> \IdDeclLabel{\Id{pair}}{pair} \Ax{:} \=\IdApplLabel{\Id{S}}{S} \Ax{\times} \IdApplLabel{\Id{T}}{T} \Ax{\rightarrow} \=\Id{Pair}[\=\IdApplLabel{\Id{S}}{S},\IdApplLabel{\Id{T}}{T}]\\
+\> \Ax{\forall} \Id{s} \Ax{:} \IdApplLabel{\Id{S}}{S}; \=\Id{t} \Ax{:} \IdApplLabel{\Id{T}}{T} \\
+\> \Ax{\bullet} \=\IdApplLabel{\Id{first}}{first}(\IdApplLabel{\Id{pair}}{pair}(\=\Id{s}, \Id{t})) \Ax{=} \Id{s}\\
+\> \Ax{\bullet} \=\IdApplLabel{\Id{second}}{second}(\IdApplLabel{\Id{pair}}{pair}(\=\Id{s}, \Id{t})) \Ax{=} \Id{t}\\
+\KW{end}\\
+
+\SPEC \=\SIdIndex{InstantiatedPair} \Ax{=}\\
+\>  \=\SId{Pair} \=[\KW{sort} \IdDeclLabel{\Id{Connector}}{Connector}][\KW{sort} \IdDeclLabel{\Id{Connector}}{Connector}] \\
+\> \KW{with} \=\IdApplLabel{\Id{first}}{first} \Ax{:} \=\Id{Pair}[\=\IdApplLabel{\Id{Connector}}{Connector},\IdApplLabel{\Id{Connector}}{Connector}] \Ax{\rightarrow} \IdApplLabel{\Id{Connector}}{Connector} \Ax{\mapsto} \Id{c1}, \\
+\>\> \IdApplLabel{\Id{second}}{second} \Ax{:} \=\Id{Pair}[\=\IdApplLabel{\Id{Connector}}{Connector},\IdApplLabel{\Id{Connector}}{Connector}] \Ax{\rightarrow} \IdApplLabel{\Id{Connector}}{Connector} \Ax{\mapsto} \Id{c2}\\
+\KW{end}
+\end{hetcasl}
+\end{small}
+\caption{A generic \CASL specification and its
+  instantiation.}\label{fig:casl_generic}
+\end{figure}
+
+\subsubsection{Modal CASL}
+\ModalCASL~\cite{mossakowski2004} is an extension of \CASL with
+concepts from Modal Logic. We use only a small sublanguage of
+\ModalCASL described below.
+
+Roughly speaking, a {\ModalCASL} \emph{basic specification} consists
+of a \emph{signature} that is a \CASL signature in which operation and
+predicate symbols can be declared to have a fixed interpretation in
+all worlds (keywords \KW{rigid}) or to possibly change interpretation
+with regards to worlds (keyword \KW{flexible}).  Ordinary operation
+and predicate declarations are treated as rigid.  \ModalCASL axioms
+are \CASL axioms extended by first-order logic formulae involving the
+modal operators $\Diamond$ (``there exists a reachable world such
+that'') and $\Box$ (``in all reachable worlds holds'').
+
+A \emph{model} of a \ModalCASL specification consists of a set of
+worlds $W$, one of which is distinguished as the initial one, a binary
+accessibility relation on $W$, and for each world $w$ a \CASL model
+$M_w$, such that carrier sets and the interpretation of rigid
+operation and predicate symbols are the same for all $M_w$, and the
+given axioms are satisfied. Again, the collection of all these models
+is called the \emph{model class} of the specification.
+
+Finally, the \CASL \emph{specification-building operations} carry over
+to \ModalCASL~\cite{mossakowski2004}.
+
+\subsubsection{Translating from Modal CASL to CASL}
+It is possible to define a semantics preserving map, mathematically
+speaking a so-called institution comorphism, from \ModalCASL to
+\CASL. Given the signature of the \ModalCASL specification, one adds a
+sort $W$ (for ``worlds''), a constant $init : W$ and a binary
+predicate $R : W \times W$ for reachability between worlds; rigid
+operation and predicate symbols are kept unchanged; for flexible
+operation and predicate symbols, $W$ is added as an extra
+argument. Axioms are translated as expected, where $\Diamond$ and
+$\Box$ are expressed via suitable quantification over $W.$
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

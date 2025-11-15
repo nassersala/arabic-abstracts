@@ -1,0 +1,35 @@
+\subsection{Background: EMF, GMF and Epsilon}
+\label{sec:eclipse-based-dsls}
+Many people consider the core of a language to be its abstract
+syntax. The Eclipse Modelling Framework (EMF)~\cite{steinberg08} is a
+modelling framework and code generation facility for building tools
+and other applications based on a structured data model. Part of this
+framework includes Ecore~\cite{steinberg08} which is a UML class
+diagram like language for describing meta models for DSLs. Such a
+model serves as the basis for creating a graphical syntax for a DSL
+using the graphical modelling framework. The Graphical Modelling
+Framework (GMF)~\cite{gronback09} provides features allowing one to
+develop, from an Ecore meta model, a graphical concrete syntax for a
+DSL. This editor can be used to produce model instances of the DSL
+described by the underlying Ecore meta model. Often, the development
+of a GMF editor is motivated by the possibility of producing, from an
+instance model created by the editor, some sort of output usually in
+the form of text or program code. To help with this task, users can
+make use of what are known as model transformations. For this task, we
+make use of Epsilon~\cite{kolovos2012}. Epsilon provides a family of
+languages and features for defining and applying model
+transformations, comparisons, validation and code generation.
+
+
+%  We use the following: the Epsilon
+% object language (EOL) that provides a common set of model management
+% constructs. The Epsilon transformation language (ETL) for specifying
+% model to model transformations; The Epsilon generation language (EGL)
+% for model to text transformations; and the Epsilon wizard
+% language(EWL) for defining and executing transformation workflows,
+% including activating transformations from a GMF editor.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

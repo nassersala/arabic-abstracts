@@ -1,0 +1,219 @@
+\subsection{Background: Industrial Practice in the Railway Domain}\label{ssec:industry_rw}
+
+In industry, companies such as our industrial partner, Invensys Rail,
+undertake domain engineering with the aim to ``describe all concepts,
+components and properties within the railway
+domain''~\cite{DataModel}. This modelling, for example, includes
+features such as rail topology (the basic graph underlying the
+railway), dimensions (e.g, where tracks are with regards to reference
+points, the length of tracks, etc), and signalling (routes, speed
+restrictions etc.). Common across all these layers is the notion of a
+\emph{track plan} as a term to describe layouts of junctions and
+stations. Track plans combine topological information and the
+conceptual abstraction of routes, which determine the use of a rail
+layout.
+% Track plans are part of design processes prescribed by Railway
+% Authorities, such as Network Rail's \emph{Governance for Railway
+%   Investment Projects} (GRIP) process. The first four phases of the
+% GRIP process define the track plan and routes of the railway to be
+% constructed. While phase five -- the detailed design -- is contracted
+% to a signalling company such as Invensys. It is then the signalling
+% company which chooses appropriate track equipment, adds control
+% information to the track plan, and implements concrete control systems
+% for running the railway.
+An example track plan is shown in Figure~\ref{fig:trackplan}. 
+
+\begin{figure}[h]
+%\begin{footnotesize}
+  \centering
+\begin{tikzpicture}[transform shape]
+ \node at (-0.5,0) {X};
+ \node at (8.5,0) {Y};
+ \draw [->] (0,0.7) to (1,0.7);
+ \RWConnector{a}{(0,0)}
+ \RWLabelConnectorBelow{a}{c1}
+ \RWConnector{a1}{(1,0)}
+ \RWLabelConnectorBelow{a1}{c2}
+ \RWLinearUnitAbove{a}{a1}{LA1}
+ \RWPoint{p1}{p1cl}{p1cn}{p1cr}{(2,0)}
+ \RWLabelLinearUnitBelow{p1cn}{p1cl}{P1}
+ \RWLabelConnectorBelow{p1cn}{c5}
+ \RWConnector{a3}{(5,0)}
+ \RWLabelConnectorBelow{a3}{c6}
+ \RWLinearUnitAbove{p1cn}{a3}{PLAT2}
+ \RWPointReverse{p2}{p2cl}{p2cn}{p2cr}{(6,0)}
+ \RWLabelLinearUnitBelow{p2cn}{p2cl}{P2}
+ \RWConnector{b1}{(3,1)}
+ \RWLabelConnectorBelow{b1}{c3}
+ \RWConnector{b2}{(5,1)}
+ \RWLabelConnectorBelow{b2}{c4}
+ \RWLinearUnitAbove{b1}{b2}{PLAT1}
+ \RWConnector{b4}{(7,0)}
+ \RWLabelConnectorBelow{b4}{c7}
+ \RWConnector{b5}{(8,0)}
+  \RWLabelConnectorBelow{b5}{c8}
+ \RWLinearUnitAbove{b4}{b5}{LA2}
+ \end{tikzpicture}              
+\\ \quad \\
+\begin{tabular}{|l|c|c|c|}
+\hline
+Route & Clear        & Normal & Reverse \\ \hline \hline
+RX1   & LA1, P1, PLAT1 &      & P1        \\
+R1Y   & P2, LA2      &     & P2        \\
+RX2   & LA1, P1, PLAT2 & P1       &       \\
+R2Y   & P2, LA2      & P2       &       \\ \hline
+\end{tabular}
+\begin{tabular}{|l|c|}
+\hline
+Route & Point(Cleared By)               \\ \hline \hline
+RX1   & P1(P1)                         \\ 
+R1Y   & P2(LA2)                         \\ 
+RX2   & P1(P1)                         \\ 
+R2Y   & P2(LA2)                         \\ \hline 
+\end{tabular}\\ \quad \\
+%\end{footnotesize}
+\caption{A scheme plan for a simple station. Top: Track
+  plan, Bottom Left: Control table, Bottom Right: Release table.}
+\label{fig:trackplan}
+\end{figure}
+
+
+The intended operation of the train station shown in
+Figure~\ref{fig:trackplan} is: (1) trains enter at X using track LA1,
+they then proceed across point P1 towards the upper line to platform
+PLAT1 (i.e.\ taking route RX1); (2) alternatively, they pass over
+point P1 towards the lower line and proceed to platform PLAT2 (i.e.\
+taking route RX2); (3) trains from platform PLAT1 can then pass back
+the lower line using point P2 and exit the station through track LA2
+(i.e.\ taking route R1Y); (4) finally, trains from platform PLAT2 can
+pass across point P2 and exit the station through track LA2 (i.e.\
+taking route R2Y).
+
+Such a track plan is usually paired with a set of control and release
+tables~\cite{kerr01} to form a scheme plan -- see Figure
+\ref{fig:trackplan}. A scheme plan details the conditions required for
+route availability. The operational setting and unsetting of points
+and routes is controlled by an interlocking which is implemented based
+on this scheme plan.
+
+The control table prescribes that a given route can be used when all
+tracks in the ``clear'' column are not occupied by a train, and the
+points in the ``normal'' and ``reverse'' columns are set to those
+positions. The example control table prescribes that route RX1 can be
+assigned to a train when units LA1, P1, and PLAT1 are unoccupied and
+point P1 is in its reverse position, that is, allowing trains to
+travel to the top line of Figure~\ref{fig:trackplan}. We note that the
+track plan in Figure~\ref{fig:trackplan} is uni-directional and that
+if it were bi-directional, there would be routes corresponding to the
+opposite direction of travel. The rules for these routes would also
+share tracks with the current rules, stopping the possibility of
+routes in opposite directions being used at the same time.
+
+The interlocking also allocates so called locks on points to
+particular route requests. These locks ensure that the point remains
+locked in position. Such locks are then released according to the
+information in the release table. For example, the first row of the
+release table states that for route RX1 the point P1 can be released
+by the point itself becoming clear. Releasing of these locks allows
+the corresponding points to be used within another route. Notice, that
+for a point which splits two routes, i.e.\ point P1, the lock on the
+point can be released by the point itself. However, for points that
+merge two routes, i.e.\ point P2, there is the added safety check that
+the point can only be released after the shared parts of the routes
+are cleared, i.e.\ track LA2. 
+
+%% In this paper, we refrain from considering the concrete implementation
+%% of an interlocking, although such a task has been considered by
+%% several
+%% others~\cite{james10a,kanso08b,fokkink98,peleska04,peleska07}. Instead,
+%% we focus on verification of the control logic captured by the scheme
+%% plan. The checking of the logic of these tables with respect the
+%% topology of the track plan is vital in avoiding train
+%% collisions. Later in Section~\ref{XXX} we will see that this forms the
+%% basis of our verification problem.
+
+Finally, the last element in the dynamic operation of railways is that
+of train movements. Above, we have described how access to certain
+routes is granted, and areas of tracks can be released. This follows
+conventional railway signalling~\cite{kerr01}. However, the newer
+ETCS~\cite{etcs} standard builds on this conventional signalling with
+the notion of a movement authority. A movement authority can be
+thought of as an area of railway for which a train can be granted
+access to travel along. For example, a train may be granted access to
+move along units LA1 and P1 in Figure~\ref{fig:trackplan}. The
+assignment of movement authorities is given by the following
+narratives:
+\begin{description}
+\item[N1 -- Extension] Initially, no train has a movement
+  authority. A request can be made for a train to travel along a
+  particular route. If the route is available (as dictated by the
+  control table) then the train's movement authority can be extended to
+  include the route.  The movement authority for a train can contain
+  multiple routes. 
+\item[N2 -- Release] As a train travels it releases regions of railway
+  from its movement authority according to the release table for that
+  route.
+\end{description}
+Such movement authorities allow the example run illustrated in
+Figure~\ref{fig:example_movements}. In the beginning, at time $0$,
+there is no train in the system. At time $1$, train A has been
+detected by track circuit $LA1$. Train A travels to platform PLAT1
+where it resides until it has been overtaken by train B. Train A then
+travels further and leaves the system. This run illustrates that train
+A releases the use of point P1 before it exits the full route
+RX1. This allows for train B to use route RX2 whilst the end of route
+RX1 is still in use by train A.
+
+
+\begin{figure}[h]
+  \centering
+\begin{footnotesize}
+\begin{tabular}{l|c|c|c|c|c|c}
+Time & LA1 & P1 & PLAT1 & PLAT2 & P2 & LA2 \\ \hline \hline
+0 & \_ & \_ & \_ & \_ & \_ & \_ \ \\
+1 & $\Longmapsto_a$ & \_ & \_ & \_ & \_ & \_ \\
+2 & \_ & $\Longmapsto_a$ & \_ & \_ & \_ & \_ \\
+3 & \ & \_ & $\Longmapsto_a$ & \_ & \_ & \_ \\
+4 & $\Longmapsto_b$ & \_ & $\Longmapsto_a$ & \_ & \_ & \_ \\
+5 & $\_$ & $\Longmapsto_b$ & $\Longmapsto_a$ & \_ & \_ & \_ \\
+6 & $\_$ & $\_$ & $\Longmapsto_a$ & $\Longmapsto_b$ & \_ & \_ \\
+7 & $\_$ & $\_$ & $\Longmapsto_a$ & \_ & $\Longmapsto_b$ & \_ \\
+8 & $\_$ & $\_$ & $\Longmapsto_a$ & \_ & \_ & $\Longmapsto_b$ \\
+9 & $\_$ & $\_$ & $\Longmapsto_a$ & \_ & \_ & \_ \\
+10 & $\_$ & $\_$ & \_ & \_ &  $\Longmapsto_a$ & \_ \\
+11 & $\_$ & $\_$ & \_ & \_ & \_ & $\Longmapsto_a$ \\
+12 & \_ & \_ & \_ & \_ & \_ & \_ \ \\
+\end{tabular}
+\end{footnotesize}
+\caption{A time/position diagram for an example run of the station.}
+  \label{fig:example_movements}
+\end{figure}
+
+\subsubsection{Discussion of Safety Properties}
+\label{sec:safety_discussion}
+
+In railway signalling, many different safety properties have been
+considered. For example, on the concrete level of an interlocking, one
+may want to check the concrete property that ``Signal x only shows
+green when route y is free to use''~\cite{james10b}. Alternatively,
+when checking the design of a scheme plan, Moller et al.\ check that
+the control table ensures collision-freedom (excluding two trains
+occupying the same track)~\cite{MNRST12HVC}. Our aim differs slightly,
+as we consider the assignment of movement authorities which is
+outlined by the ETCS standard~\cite{etcs}. Therefore we verify that
+ ``overlapping movement authorities are not assigned at the same
+  time''.
+
+Such a property is at a higher level of abstraction than the
+properties mentioned previously. However, as movement authorities are
+extended depending on the rules of the control table, we do in fact
+cover the property of collision freedom under the assumption that
+trains are well behaved. That is, if trains stay within their given
+movement authority, and movement authorities are proven to never
+overlap, then we know two trains cannot occupy the same track unit.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

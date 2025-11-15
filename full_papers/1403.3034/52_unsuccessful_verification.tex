@@ -1,0 +1,32 @@
+\subsection{Contribution: Unsuccessful Verification Over \Bjoerner's
+  DSL}\label{ssec:failed_verification} Overall, the capturing of
+\Bjoerner's DSL along with our extension of movement authorities in
+\CASL is straightforward. However, with respect to verification, both
+\SPASS and eProver were unable to directly prove our safety property
+(within six hours each). Even with the addition of the following
+property specific axiom for induction over time, both provers still
+fail:
+\begin{small}
+\begin{hetcasl}
+\>\Ax{\bullet} (\=\Ax{\forall} \Id{ma1}, \Id{ma2} \Ax{:} \Id{MA} \Ax{\bullet} \=\IdApplLabel{\Id{share}}{share}(\=\Id{ma1}, \Id{ma2}) \\
+\>\> \Ax{\Rightarrow} \=\Id{ma1} \Ax{=} \Id{ma2} \Ax{\vee} \Ax{\neg} (\=\IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma1}, \IdApplLabel{\Ax{0}}{0}) \Ax{\wedge} \IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma2}, \IdApplLabel{\Ax{0}}{0}))) \`{\small{}\KW{\%}(base case)\KW{\%}} \\ 
+\>\>  \Ax{\wedge}\\
+\>\> \Ax{\forall} \=\Id{t} \Ax{:} \Id{Time} \Ax{\bullet} \=(\=\Ax{\forall} \Id{ma1}, \Id{ma2} \Ax{:} \Id{MA} \Ax{\bullet} \=\IdApplLabel{\Id{share}}{share}(\=\Id{ma1}, \Id{ma2}) \\
+\>\>\> \Ax{\Rightarrow} \=\Id{ma1} \Ax{=} \Id{ma2} \Ax{\vee} \Ax{\neg} (\=\IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma1}, \Id{t}) \Ax{\wedge} \IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma2}, \Id{t}))) \\
+\>\> \Ax{\Rightarrow} (\=\Ax{\forall} \Id{ma1}, \Id{ma2} \Ax{:} \Id{MA} \Ax{\bullet} \=\IdApplLabel{\Id{share}}{share}(\=\Id{ma1}, \Id{ma2}) \\
+\>\>\> \Ax{\Rightarrow} \=\Id{ma1} \Ax{=} \Id{ma2} \Ax{\vee} \Ax{\neg} (\=\IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma1}, \IdApplLabel{\Id{suc}}{suc}(\Id{t})) \Ax{\wedge} \IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma2}, \IdApplLabel{\Id{suc}}{suc}(\Id{t})))) \`{\small{}\KW{\%}(step case)\KW{\%}}\\ 
+\> \Ax{\Rightarrow} \Ax{\forall} \=\Id{t} \Ax{:} \Id{Time} \Ax{\bullet} \=(\=\Ax{\forall} \Id{ma1}, \Id{ma2} \Ax{:} \Id{MA} \Ax{\bullet} \=\IdApplLabel{\Id{share}}{share}(\=\Id{ma1}, \Id{ma2}) \\
+\>\> \Ax{\Rightarrow} \=\Id{ma1} \Ax{=} \Id{ma2} \Ax{\vee} \Ax{\neg} (\=\IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma1}, \Id{t}) \Ax{\wedge} \IdApplLabel{\Id{assigned}}{assigned}(\=\Id{ma2}, \Id{t}))) 
+\end{hetcasl}
+\end{small}
+\noindent This is not surprising, as we, as well as \Bjoerner, have
+intended to provide a strong language for modelling, and we have aimed
+to model movement authorities intuitively. However, the concept of a
+movement authority and our safety principle lend themselves, on the
+general level of the railway domain, to natural abstraction that we
+now show can be exploited for verification.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

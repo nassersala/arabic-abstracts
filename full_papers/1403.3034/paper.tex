@@ -1,0 +1,103 @@
+\documentclass{mathincs}
+\input{00_customisation.tex}
+\input{tikz_macros.tex}
+ \newtheorem{lem}{Lemma}
+\begin{document}
+
+
+\title[Encapsulating Formal Methods in DSLs]{Encapsulating Formal Methods within
+  Domain Specific Languages: \\ A Solution for Verifying Railway Scheme Plans}
+
+\author{Phillip James}
+\address{Department of Computer Science,\\Swansea University,\\ Singleton Park, \\Swansea,\\SA2 8PP.}
+\email{cspj@swansea.ac.uk}
+
+\author{Markus Roggenbach}
+\address{Department of Computer Science,\\Swansea University,\\ Singleton Park, \\Swansea,\\SA2 8PP.}
+\email{m.roggenbach@swansea.ac.uk}
+
+
+
+\begin{abstract}
+  The development and application of formal methods is a long standing
+  research topic within the field of computer science. One particular
+  challenge that remains is the uptake of formal methods into
+  industrial practices. This paper introduces a methodology for
+  developing domain specific languages for modelling and verification
+  to aid in the uptake of formal methods within industry. It
+  illustrates the successful application of this methodology within
+  the railway domain. The presented methodology addresses issues
+  surrounding faithful modelling, scalability of verification and
+  accessibility to modelling and verification processes for
+  practitioners within the domain.
+\end{abstract}
+
+\subjclass{68Q60; 68N30; 68T15}
+
+\keywords{Domain Specific Languages, Algebraic Specification,
+  Modelling, Verification, \CASL, Railway Domain}
+
+\maketitle
+
+\vspace{-1.3cm}
+\section{Introduction}
+\input{1_introduction}
+
+\section{A Methodology for Encapsulating Formal Methods within DSLs} 
+\label{sec:methodology}
+\input{2_method_intro.tex}
+\input{21_dsls.tex}
+\input{22_design_process.tex}
+\input{23_verification_process.tex}
+
+\section{The Railway Signalling Domain}
+\label{sec:railway}
+\input{3_railway_intro.tex}
+\input{31_railway.tex}
+\input{32_bjoerner.tex}
+
+\section{Formalizing the Signalling Domain}
+\label{sec:formalization}
+\input{4_formalizing_intro.tex}
+\input{41_CaslAndModalCasl.tex}
+\input{42_comorphism.tex}
+\input{43_narrative_modelling.tex}
+
+\section{Automating Verification for the Signalling Domain}
+\label{sec:verification}
+\input{5_verification_intro.tex}
+\input{51_theorem_proving.tex}
+\input{52_unsuccessful_verification.tex}
+\input{53_supporting_verification.tex}
+
+\section{Encapsulation in a Graphical Tooling Environment}
+\label{sec:tooling}
+\input{6_graphical_intro.tex}
+\input{61_gmf_epsilon.tex}
+\input{62_ontrack.tex}
+\input{63_verification.tex}
+
+\section{Related Work}
+\input{7_relatedWork.tex}
+
+\section{Reflection on Industrial Collaboration}
+\input{8_reflection.tex}
+
+\section{Summary \& Conclusion}
+\input{9_conclusion.tex}
+
+
+\bibliographystyle{abbrv}
+\bibliography{doc}
+
+\pagebreak
+
+\appendix
+
+
+\input{appendix_proof.tex}
+
+\input{appendix_spec_structure.tex}
+
+\end{document}
+

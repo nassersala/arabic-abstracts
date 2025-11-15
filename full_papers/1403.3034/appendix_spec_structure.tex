@@ -1,0 +1,43 @@
+\section{Specification Structure}
+\label{app:struture}
+Throughout the paper, we have introduced various levels of
+specification that are structured as follows:
+
+
+\begin{small}
+\begin{hetcasl}
+\>\SPEC \SId{DSLForVerification} \Ax{=} \\
+\>\> \SId{Datatypes} \\
+\>\THEN \\
+\>\> \SId{DSL}\\
+\> \THEN\\
+\>\> \SId{DSLExtension}\\
+\>\THEN \={\small{}\KW{\%}\KW{implies}}\\
+\>\>  \SId{DSLemmas} \\
+\>\THEN \\
+\>\> \SId{ConcreteSchemePlan}\\
+\>\THEN \={\small{}\KW{\%}\KW{implies}}\\
+\>\> \SId{Safety}\\
+\>\KW{end}
+\end{hetcasl}
+\end{small}
+
+\noindent Here we can see, that our specifications begin with the Datatypes
+(\SId{Datatypes}) and DSL (\SId{DSL}) gained from our translation of
+the UML class diagram. We then extend these specifications with
+\SId{DSLExtension} for modelling the narrative aspects of the original
+informal DSL. Concretely this includes our modelling of movement
+authorities. Next, we can see that the property supporting lemmas
+(\SId{DSLemmas}) are added to aid with verification. These are added
+as implied axioms over the extended DSL. This illustrates that these
+lemmas are independent of any scheme plan formulated in the DSL. Next,
+we see the specification \SId{ConcreteSchemePlan} that encodes a
+particular track plan and its associated movement authorities and
+control tables. Finally, we can see the proof goals for proving safety
+are added (\SId{Safety}). These are again added as implied axioms, and
+are then proven relative to the given concrete scheme plan.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

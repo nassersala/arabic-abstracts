@@ -1,0 +1,88 @@
+\subsection{Contribution: The Design Steps of our Methodology}
+
+To achieve a faithful, scalable and accessible modelling and
+verification procedure, we present a new methodology that encapsulates
+formal methods within a DSL. This results in a tool based framework
+for verification.
+
+Considering Figure~\ref{fig:process}, the encapsulation process we
+propose is undertaken by a team comprising of computer scientists
+working in close collaboration with experts from the domain. Here, the
+close working relationship ensures the resulting domain modelling is
+faithful. The following steps are involved in the process:
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{images/methodology.png}
+  \caption{The proposed methodology.}
+  \label{fig:process}
+\end{figure}
+
+\paragraph{M1: Formalising (Industrial) DSLs}
+The starting point for our methodology is an informal domain
+description in the form of UML Class Diagrams and accompanying
+narrative. From such UML class diagrams, names, relations, and
+multiplicity constraints can be automatically extracted and translated
+into a formal specification in \ModalCASL. We suggest and support a
+particular automatic translation (see
+Section~\ref{sec:comorph}). Next, domain experts and computer
+scientists extend the resulting formal \ModalCASL specification with a
+modelling of the narrative that captures dynamics. This is possible as
+\ModalCASL allows the description of state changes in terms of modal
+operators. Here, we also encode proof goals for verification. Then,
+for the sake of better proof support, we apply an existing automatic
+translation from \ModalCASL to \CASL. Overall, starting from an
+existing DSL and involving domain experts ensures a faithful
+formalisation of the selected domain concepts.\\
+
+\paragraph{M2: DSL Analysis for Verification Support}
+The result of Step M1, the formalisation of the DSL, is a loose \CASL
+specification -- see Section \ref{ssec:spec_languages} for
+details. The logical closure of this specification, i.e., all theorems
+that one can prove from this \CASL specification, is what we call the
+implicitly encoded ``domain knowledge'' of the DSL. We make (part of)
+this domain knowledge explicit in the form of lemmas that allow one to
+refactor any proof goals into equivalent ones that are expressed on
+the right level of granularity. Naturally, there cannot be a universal
+solution to finding such domain specific lemmas. However, in our
+experience, for all DSLs we have considered, such lemmas have existed,
+follow from knowledge of the domain experts, and allow refactoring. We
+discuss such lemmas in Section~\ref{sec:dsl_lemmas} and show that
+these lemmas allow for scalable verification based on ideas that are
+often inherent to the domain. Overall, this step enables scalability
+of the verification approach.\\
+
+\paragraph{M3: Graphical Tool Support}
+
+DSLs are often accompanied by a development framework. For this we
+make use of the \emph{Graphical Modelling Framework},
+GMF~\cite{gronback09}. GMF provides the infrastructure to create, from
+a UML class diagram, a Java based graphical editor. Using GMF, domain
+experts and computer scientists create such a graphical tooling
+environment for the DSL. This allows for native graphical
+representations of domain elements. Such an editor is open (via
+Epsilon~\cite{kolovos2012}) to extension with model
+transformations~\cite{kolovos2012}. Such transformations allow for the
+graphical models produced by the editor to be translated to \CASL
+specifications. These specifications can be enriched with the domain
+knowledge developed in Step M2. We illustrate this approach in
+Section~\ref{sec:ontrack}, giving details of the OnTrack Toolset for
+the railway domain. The result of this step is a tool for generation
+of formal models that is readily usable by engineers from the domain
+under consideration.
+
+\subsubsection{Addressing the Issues}
+
+Overall, our methodology addresses the issues we started with:
+faithful modelling is achieved thanks to starting with an informal
+description and forming a formal specification in a close working
+relationship between the domain experts and computer scientists;
+scalability of the verification procedure is achieved thanks to the
+property supporting domain specific lemmas; accessibility to modelling
+and verification of systems is achieved thanks to graphical tooling
+incorporating domain specific concepts and constructs.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

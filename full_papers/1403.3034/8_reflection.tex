@@ -1,0 +1,72 @@
+Since 2007, the Railway Verification Group at Swansea University
+Computer Science has been working in collaboration with Invensys
+Rail. The group is supported by eight academics. It adopts formal
+techniques to railway systems. This setup has led to a rich process of
+information exchange, by mutual visits and internships, as well as
+regular meetings. Out of this collaboration, there have been several
+successful research projects covering research into verification of
+interlocking
+programs~\cite{kanso08b,kansoThesis,james10b,james10a,lawrence11,james13b},
+the verification of scheme plan
+designs~\cite{MNRST12,MNRST12HVC,nfm2013,james13a}, and capacity
+analysis~\cite{isobeMNR12}. These projects have involved many
+specification formalisms including propositional logic, CSP, Timed
+CSP, \CSPB, Scade, \CASL and Agda. Here, it appears that operational
+based models such as the one we have provided in \CASL are easier for
+railway engineers to follow and understand.
+
+The methodology outlined in this paper has also been successfully
+applied to the Invensys Rail Data Model~\cite{DataModel},
+see~\cite{james14} for full details. In this context, the DSL
+definition is provided by Invensys Rail in the form of UML class
+diagrams with accompanying narrative. This DSL definition has been
+completely designed by Invensys Rail without our support. Hence,
+developing the informal DSL that is used as a starting point for our
+methodology is clearly a task that can be undertaken purely within
+industry. With regards to the formalisation of the DSL in \CASL, this
+step was performed in a cyclic manner. Namely, the computer scientists
+would suggest a formalisation at a meeting with Invensys Rail, and
+then feedback would be provided on the formalisation. This process was
+repeated until both groups were happy with the resulting
+formalisation. Verification support (in terms of supporting lemmas)
+was then developed purely by the computer scientists at Swansea. As
+this step does not alter the DSL, the engineers were happy with the
+approach.
+
+Finally, the graphical front end to the OnTrack tool provides a view
+to scheme plans that is of the same nature as representations used
+within Invensys Rail. The railway engineers have seen the verification
+process we propose and are confident that they could follow it thanks
+to the automated nature of the process. They have expressed an
+interest in the extension of OnTrack to allow for importing and
+exporting of models using an industrial format such as the XLDL (XML
+Layout Description Language) format used by Invensys Rail. This would
+allow the toolset to be more easily integrated within current
+development processes at Invensys Rail. We note that even though
+Invensys Rail believe technologies such as the OnTrack toolset will
+improve their development processes, due to concerns around the
+integrity of automated verification tools, quality assurance of a
+scheme plan design will, in the near future, still rely upon
+traditional testing and inspection. Here, tool qualification is the
+issue: our tools are not yet ``proven-in-use'', i.e., there is no
+experience from previous industrial safety-critical projects
+suggesting that our tools are ``correct''; alternatively, our tools
+are not yet certified by a designated authority.
+
+Finally, it remains future work to perform a systematic evaluation
+into how usable the presented verification is for railway engineers.
+To do this, one could carry out a pilot project. This would involve
+thorough time measurement and documentation for all activities that
+our approach incurs including installing, using, and integrating
+OnTrack into the development process. Reflecting upon these results
+would allow us to check if our approach is indeed feasible. On the
+management level, such a pilot project would then have to be evaluated
+as to whether it is an improvement with respect to current
+practice. It should be both more effective, in that it allows one to
+achieve better results than current practice, and more efficient,
+i.e., it should offer a better cost/result ratio.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

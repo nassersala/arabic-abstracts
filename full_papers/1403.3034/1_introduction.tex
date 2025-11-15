@@ -1,0 +1,117 @@
+Formal methods in software engineering have existed at least as long
+as the term ``software engineering'' itself, which was coined at the
+NATO Science Conference, Garmisch, 1968. In many engineering-based
+application areas, such as in the railway domain, formal verification
+processes have reached an impressive level of maturity as demonstrated
+by various industrial case studies, e.g.\ see~\cite{boul00, winter02,
+  winter03, peleska04, james10a}. Authors like Barnes also demonstrate
+that formal methods can be cost effective~\cite{barnes11}.  Even
+though these studies successfully illustrate the use of formal methods
+from an academic perspective, adoption of formal methods within
+industry is still limited~\cite{bowen06}.
+%
+From the industrial perspective, issues include
+%
+\begin{description}
+\item[Faithful modelling] Do the proposed mathematical models
+  faithfully represent the systems of concern? Modelling approaches
+  offered from computer science are often in a form that is acceptable
+  to computer scientists, but not to the engineer working within the
+  domain. How can an engineer working within the domain come up with
+  new models?
+
+%% These presentations thus lead to doubts in the approach by
+%%   the engineers and a low level of confidence towards the capabilities
+%%   of the approach to correctly capture the systems being modelled.
+
+\item[Scalability] Does the proposed technology scale up to
+  industrially sized systems in a manner that is uniformly
+  applicable? Often, formal methods have been applied in a pilot to
+  specific systems, but require individual, hand-crafted adaptation
+  and optimisation for each new system under consideration.
+
+\item[Accessibility] Are the methods accessible to practitioners in
+  the domain of interest or is it just the developers of the approach
+  who can apply them? Handling of tools for verification procedures is
+  often aimed towards a computer science audience specialised in
+  verification, however they are usually not manageable by engineers
+  outside the field of formal methods.
+\end{description}
+%
+This paper presents a new methodology addressing these three issues. The
+underlying theme is that\begin{quote}
+  \centering ``Domain Specific Languages (DSLs) can aid with modelling,
+  verification and encapsulation of formal methods tools within a
+  given domain''.
+\end{quote}
+
+We first present our methodology in general terms and then demonstrate
+it on the concrete example of verifying scheme plans from the railway
+domain. Our methodology is centered around the algebraic specification
+language \CASL \cite{mosses04a}. \CASL provides us with a sound
+semantic foundation. Furthermore, \CASL offers mature tool support for
+verification. Our methodology takes as a starting point industrial
+documents describing a DSL, see for instance the Invensys Rail Data
+Model~\cite{DataModel}. We then stepwise develop a modelling and
+automated verification process. Thanks to elements such as graphical
+tooling, the process as a whole is accessible to practitioners in the
+domain, verification is scalable, and models are guaranteed to be
+faithful.
+
+The paper is organised as follows: First, we discuss our methodology
+in detail. Then, we introduce railway signalling as the domain in
+which we demonstrate our methodology and present the DSL which will
+serve as running example throughout the paper.  The next sections
+apply the methodology step by step: in Section \ref{sec:formalization}
+we give a method for \emph{formalising} a DSL within \CASL (Step
+M1); Section \ref{sec:verification} demonstrates how to \emph{exploit
+  implicit domain knowledge} for the purpose of verification (Step
+M2); Section \ref{sec:tooling} presents techniques to
+\emph{encapsulate formal methods} within a tooling framework (Step M3)
+-- this includes the presentation of competitive verification results
+for railway scheme plan verification. Finally, we place our work in
+context by discussing related work.
+
+While in the context of this paper we deal with an ``academic'' DSL,
+it is worth noting that we have successfully, i.e., with the same
+positive results, applied our methodology to the DSL~\cite{DataModel}
+of our industrial partner -- see \cite{james14}. The chosen academic
+language is of smaller extent, however, it ``covers'' all challenging
+elements.
+
+As the paper covers such diverse topics as railways, modelling in
+\CASL, verification, and tooling, we present their respective
+background distributed over the paper. We use the labels
+``background'' and ``contribution'' to signpost the status of each
+subsection. Our paper is based upon the PhD thesis of the first
+author~\cite{james14} and earlier results on the topic. Complete
+specifications, further details and further examples for the work we
+present in this paper can be found in the thesis~\cite{james14}. In 2011, we
+published a first version of our methodology~\cite{james11a}. In 2012,
+we gave a first report upon the exploitation of domain knowledge for
+verification~\cite{james12}. In 2013, we discussed in detail how to
+formalise DSLs within \CASL~\cite{james13}. However, this paper
+comprises the first complete presentation of the whole methodology.
+
+
+%% -- MR about 2 pages --
+
+%% we concentrate on the methodology, which we present in its entirety
+%% here for the first time. technical details support our constructions
+%% can be found in papers ...
+
+%% the completely new and therefore in full detail presented part is
+%% the exploitation for the domain knowledge for verification.
+
+
+%% Further development of the methodology published in ATE'11.
+%% Integrates work published in WADT'12, HVC'12, and NFM'13. 
+%% Based upon PhD thesis Swansea 2013, to appear.
+
+%% example based -- inspired by  Bjoerners DSL for the Railway Domain
+%% however, also successfully tried, e.g., on Invensys Data model
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

@@ -1,0 +1,83 @@
+\subsection{Contribution: Developing DSL Specific Knowledge}
+\label{sec:dsl_lemmas}
+
+Within the railway domain, it is understood that control tables are
+vital in ensuring safety. In our presentation we can see that movement
+authorities are extended depending on the rules of the control
+table. That is, for a movement authority to be extended by the regions
+of a route, that route must be open. Through domain analysis, we can
+reduce the reasoning on the level of movement authorities, to a
+reasoning on the level of topological routes and the control
+table. This is captured by following domain specific lemma:
+
+%% That is, under the condition that the predicate
+%% \IdDeclLabel{\Id{ext}}{ext} is encoded faithfully for the given model,
+%% i.e. that for all movement authorities $m1, m2$ and routes $r$
+%% $ext(m1,r, m2)$ holds if $m2$ is the extension of $m1$ with the
+%% regions of $r$, given a scheme plan exhibits the following property:
+%% \begin{center}
+%% \textit{for all routes, if a region of that route is assigned at a
+%%   particular time, then the route is not open at that time,}
+%% \end{center}
+%% then:
+%% \begin{center}
+%%  \textit{for all time, two overlapping movement
+%%   authorities are assigned at the same time.}
+%% \end{center}
+
+%% \noindent This is captured formally by the following lemma:
+\pagebreak
+\begin{lem}[Property Reduction to Routes]
+\label{lem:dsl}
+  Given a scheme plan $SP$ then
+\begin{small}
+\begin{hetcasl}
+\> \Ax{\forall} \Id{t} \Ax{:} \Id{Time}; \Id{m1}, \Id{m2} \Ax{:} \Id{MA}
+\Ax{\bullet} \IdApplLabel{\Id{share}}{share}(\Id{m1}, \Id{m2})\\
+\>\> \Ax{\Rightarrow} \Id{m1} \Ax{=} \Id{m2} \Ax{\vee} \Ax{\neg} (\IdApplLabel{\Id{assigned}}{assigned}(\Id{m1}, \IdApplLabel{\Ax{t}}{t}) \Ax{\wedge} \IdApplLabel{\Id{assigned}}{assigned}(\Id{m2}, \IdApplLabel{\Ax{t}}{t})) \`{\small{}\KW{\%}(*)\KW{\%}} 
+\end{hetcasl}
+\end{small}
+\noindent if and only if,
+\begin{small}
+\begin{hetcasl}
+\> \Ax{\forall} \Id{t} \Ax{:} \Id{Time}; \Id{r} \Ax{:} \Id{Route}; \Id{rg} \Ax{:} \IdApplLabel{\Id{Region}}{Region}; \Id{ma} \Ax{:} \Id{MA} 
+\\ 
+\>\>\Ax{\bullet} \IdApplLabel{\Id{assigned}}{assigned}(\Id{ma}, \Id{t}) \Ax{\wedge} \Id{rg} \IdApplLabel{\Id{eps}}{::eps::} \Id{ma} \Ax{\wedge} \Id{rg} \IdApplLabel{\Id{eps}}{::eps::} \IdApplLabel{\Id{regions}}{regions}(\Id{r})\\
+\>\>\> \Ax{\Rightarrow} \Ax{\neg} \Id{r} \IdApplLabel{\Id{isOpenAt}}{::isOpenAt::} \Id{t}  \`{\small{}\KW{\%}(**)\KW{\%}} 
+\end{hetcasl}
+\end{small}
+\end{lem}
+
+
+%%\end{lemma}
+
+The proof follows by induction on time from the axioms we have
+presented, including the induction axiom of Section
+\ref{ssec:failed_verification}. The full proof is given in
+Appendix~\ref{app:proof}. We first completed this proof by hand, and
+then attempted it with \Hets. Encoding the proof for automated theorem
+proving led us to consider the role of empty routes in more depth than
+in the hand written proof where we had assumed certain
+details. See~\cite{james14} for details on the encoding of the proof
+into steps within \CASL and how these steps allow the proof to be
+automatically discharged using \Hets.
+
+The result of this lemma is that we can reduce the verification
+problem over movement authorities to a simpler problem over route
+openness. At this point, we note that this lemma is completely
+independent of any concrete scheme plan formulated using our extended
+DSL. Hence, once it has been proven as a consequence of the DSL, it
+can be used to aid with verification of any scheme plan formulated
+using the extended DSL. In Section~\ref{ssec:verification} we show
+that this lemma is enough to make verification of large scheme plans
+highly feasible. 
+
+Finally, Appendix~\ref{app:struture} highlights, mainly for clarity,
+the specification structure that we have employed throughout our
+modelling.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

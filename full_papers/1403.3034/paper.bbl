@@ -1,0 +1,273 @@
+\begin{thebibliography}{10}
+
+\bibitem{barnes11}
+J.~E. Barnes.
+\newblock Experiences in the industrial use of formal methods.
+\newblock In A.~Romanovsky, C.~Jones, J.~Bendiposto, and M.~Leuschel, editors,
+  {\em AVoCS'11}. Electronic Communications of EASST, 2011.
+
+\bibitem{bjorner2003}
+D.~Bj{\o}rner.
+\newblock {Dynamics of Railway Nets: On an Interface between Automatic Control
+  and Software Engineering}.
+\newblock {\em {CTS2003: 10th IFAC Symposium on Control in Transportation
+  Systems}}, 2003.
+
+\bibitem{bjorner2009}
+D.~Bj{\o}rner.
+\newblock {\em {Domain Engineering Technology Management, Research and
+  Engineering}}.
+\newblock {Japan Advanced Institute of Science and Technology}, 2009.
+
+\bibitem{boul00}
+J.~Boulanger and M.~Gallardo.
+\newblock Validation and verification of {METEOR} safety software.
+\newblock In j.~Allen, R.~J. Hill, C.~A. Brebbia, G.~Sciutto, and S.~Sone,
+  editors, {\em {Computers in Railways VII}}, volume~7, pages 189--200. WIT
+  Press, 2000.
+
+\bibitem{bowen06}
+J.~P. Bowen and M.~G. Hinchey.
+\newblock Ten commandments of formal methods ...ten years later.
+\newblock {\em IEEE Computer}, 39(1):40--48, 2006.
+
+\bibitem{cengarle08}
+M.~V. Cengarle, A.~Knapp, A.~Tarlecki, and M.~Wirsing.
+\newblock {A Heterogeneous Approach to UML Semantics}.
+\newblock In P.~Degano, R.~{De Nicola}, and J.~Meseguer, editors, {\em
+  Concurrency, Graphs and Models}, LNCS 5065, pages 383--402. Springer, 2008.
+
+\bibitem{ic2011}
+O.~M. dos Santos, J.~Woodcock, and R.~F. Paige.
+\newblock Using model transformation to generate graphical counter-examples for
+  the formal analysis of {xUML} models.
+\newblock In {\em ICECCS}, pages 117--126. IEEE Computer Society, 2011.
+
+\bibitem{etcs}
+{ERTMS User Group}.
+\newblock {ERTMS/ETCS} system requirements specification, 2002.
+
+\bibitem{gronback09}
+R.~C. Gronback.
+\newblock {\em Eclipse Modeling Project: A Domain-Specific Language (DSL)
+  Toolkit}.
+\newblock Addison-Wesley Professional, 2009.
+
+\bibitem{peleska07}
+A.~Haxthausen and J.~Peleska.
+\newblock A domain-oriented, model-based approach for construction and
+  verification of railway control systems.
+\newblock In {\em Formal Methods and Hybrid Real-Time Systems}, volume 4700 of
+  {\em LNCS}, pages 320--348. Springer, 2007.
+
+\bibitem{iliasov2012b}
+A.~Iliasov and A.~Romanovsky.
+\newblock The {SafeCap} toolset for improving railway capacity while ensuring
+  its safety.
+\newblock Technical report, Newcastle University, 2012.
+
+\bibitem{DataModel}
+{Invensys Rail}.
+\newblock {Invensys Rail Data Model -- Version 1A}, 2010.
+
+\bibitem{isobeMNR12}
+Y.~Isobe, F.~Moller, H.~N. Nguyen, and M.~Roggenbach.
+\newblock {Safety and Line Capacity in Railways - An Approach in Timed CSP}.
+\newblock In J.~Derrick, S.~Gnesi, D.~Latella, and H.~Treharne, editors, {\em
+  IFM}, volume 7321 of {\em Lecture Notes in Computer Science}, pages 54--68.
+  Springer, 2012.
+
+\bibitem{topic11}
+R.~Jacquart, editor.
+\newblock {\em IFIP 18th World Computer Congress, Topical Sessions}.
+\newblock 2004.
+
+\bibitem{james10a}
+P.~James.
+\newblock {SAT-based Model Checking and its applications to Train Control
+  Software}.
+\newblock Master's thesis, Swansea University, 2010.
+
+\bibitem{james14}
+P.~James.
+\newblock {\em {Designing Domain Specific Languages for Verification and
+  Applications to the Railway Domain}}.
+\newblock PhD thesis, Swansea University, 2014.
+\newblock Available at: \url{http://cs.swan.ac.uk/~cspj/Papers/thesis.pdf}.
+
+\bibitem{james12}
+P.~James, A.~Beckmann, and M.~Roggenbach.
+\newblock Using domain specific languages to support verification in the
+  railway domain.
+\newblock In {\em Hardware and Software: Verification and Testing}, volume 7857
+  of {\em LNCS}. Springer, 2013.
+
+\bibitem{james13b}
+P.~James, K.~Kanso, A.~Lawrence, F.~Moller, M.~Roggenbach, M.~Seisenberger, and
+  A.~Setzer.
+\newblock Verification of solid state interlocking programs.
+\newblock In {\em FM-RAIL-BOK 2013}, To Appear, 2013.
+
+\bibitem{james13}
+P.~James, A.~Knapp, T.~Mossakowski, and M.~Roggenbach.
+\newblock {Designing Domain Specific Languages -- A Craftsman's Approach for
+  the Railway Domain using CASL}.
+\newblock In {\em WADT 2012}, volume 7841 of {\em LNCS}. Springer, 2013.
+
+\bibitem{james13a}
+P.~James, F.~Moller, H.~N. Nguyen, M.~Roggenbach, S.~Schneider, H.~Treharne,
+  M.~Trumble, and D.~Williams.
+\newblock {Verification of Scheme Plans using \CSPB}.
+\newblock In {\em FM-RAIL-BOK 2013}, To Appear, 2013.
+
+\bibitem{james10b}
+P.~James and M.~Roggenbach.
+\newblock {A}utomatically {V}erifying {R}ailway {I}nterlockings using
+  {SAT}-based {M}odel {C}hecking.
+\newblock In J.~Bendispoto, M.~Leuschel, and M.~Roggenbach, editors, {\em
+  AVoCS'10}. Electronic Communications of EASST, 2010.
+
+\bibitem{james11a}
+P.~James and M.~Roggenbach.
+\newblock Designing domain specific languages for verification: First steps.
+\newblock In G.~S. Peter~Hofner, Annabelle~McIver, editor, {\em ATE-2011},
+  volume 760 of {\em CEUR Workshop Proceedings}. CEUR-WS.org, 2011.
+
+\bibitem{nfm2013}
+P.~James, M.~Trumble, H.~Treharne, M.~Roggenbach, and S.~Schneider.
+\newblock {OnTrack}: An open tooling environment for railway verification.
+\newblock In {\em Proceedings of NFM'13}, 2013.
+
+\bibitem{kansoThesis}
+K.~Kanso.
+\newblock {Formal Verification of Ladder Logic}.
+\newblock Master's thesis, Swansea University, 2008.
+
+\bibitem{kanso08b}
+K.~Kanso, F.~Moller, and A.~Setzer.
+\newblock Verification of safety properties in railway interlocking systems
+  defined with ladder logic.
+\newblock In M.~Calder and A.~Miller, editors, {\em AVoCS'08}. Glasgow
+  University, 2008.
+
+\bibitem{kerr01}
+D.~Kerr and T.~Rowbotham.
+\newblock {\em Introduction To Railway Signalling}.
+\newblock {Institution of Railway Signal Engineers}, 2001.
+
+\bibitem{kolovos2012}
+D.~Kolovos, L.~Rose, R.~Paige, and F.~Polack.
+\newblock {The Epsilon Book}, 2013.
+
+\bibitem{lawrence11}
+A.~Lawrence.
+\newblock {Verification of Railway Interlockings in Scade}.
+\newblock Master's thesis, Swansea University, 2011.
+
+\bibitem{heering05}
+M.~Mernik, J.~Heering, and A.~M. Sloane.
+\newblock When and how to develop domain-specific languages.
+\newblock {\em ACM Computing Survey}, 37(4):316--344, 2005.
+
+\bibitem{mewes2010}
+K.~Mewes.
+\newblock {\em Domain-specific Modelling of Railway Control Systems with
+  Integrated Verification and Validation}.
+\newblock PhD thesis, University of Bremen, 2010.
+
+\bibitem{mirabadi2009}
+A.~Mirabadi and B.~Yazdi.
+\newblock Automatic generation and verification of railway interlocking control
+  tables using {FSM and NuSMV}.
+\newblock {\em Signal}, 3, 2009.
+
+\bibitem{MNRST12}
+F.~Moller, H.~N. Nguyen, M.~Roggenbach, S.~Schneider, and H.~Treharne.
+\newblock {\CSPB Modelling for Railway Verification: The Double Junction Case
+  Study}.
+\newblock In {\em AVoCS'12}. Electronic Communications of EASST, 2012.
+
+\bibitem{MNRST12HVC}
+F.~Moller, H.~N. Nguyen, M.~Roggenbach, S.~Schneider, and H.~Treharne.
+\newblock {Defining and Model Checking Abstractions of Complex Railway Models
+  using \CSPB}.
+\newblock In A.~Biere, A.~Nahir, and T.~Vos, editors, {\em Hardware and
+  Software: Verification and Testing}, volume 7857 of {\em LNCS}. Springer,
+  2013.
+
+\bibitem{mossakowski02}
+T.~Mossakowski.
+\newblock Relating {\CASL} with other specification languages: The institution
+  level.
+\newblock {\em Theoretical Computer Science}, 286(2):367--475, 2002.
+
+\bibitem{mossakowski2004}
+T.~Mossakowski.
+\newblock {ModalCASL --- Specification with Multi-Modal Logics. Language
+  Summary}, 2004.
+
+\bibitem{hets07}
+T.~Mossakowski, C.~Maeder, and K.~L{\"u}ttich.
+\newblock The {H}eterogeneous {T}ool {S}et, {\Hets}.
+\newblock In {\em TACAS}, volume 4424 of {\em LNCS}, pages 519--522. Springer,
+  2007.
+
+\bibitem{mosses04a}
+P.~D. Mosses, editor.
+\newblock {\em {CASL} {R}eference {M}anual}, volume 2960.
+\newblock Springer, 2004.
+
+\bibitem{uml}
+{Object Managment Group}.
+\newblock {Unified Modeling Language (UML), v2.4.1}, 2011.
+
+\bibitem{olad13}
+P.~C. Patrick~Oladimeji, Paolo~Masci and H.~Thimbleby.
+\newblock Pvsio-web: a tool for rapid prototyping device user interfaces in
+  {PVS}.
+\newblock In {\em Proceedings of the 5th International Workshop on Formal
+  Methods for Interactive Systems ({FMIS} 2013)}. Electronic Communications of
+  EASST, 2013.
+
+\bibitem{peleska04}
+J.~Peleska, D.~Gro{\ss}e, A.~E. Haxthausen, and R.~Drechsler.
+\newblock Automated verification for train control systems.
+\newblock In E.~Schnieder and G.~Tarnai, editors, {\em Proceedings of Formal
+  Methods for Automation and Safety in Railway and Automotive Systems}.
+  Technical University of Braunschweig, 2004.
+
+\bibitem{cspb}
+S.~Schneider and H.~Treharne.
+\newblock {CSP} theorems for communicating {B} machines.
+\newblock {\em Formal Aspects of Computing}, 17(4):390--422, 2005.
+
+\bibitem{schulz02}
+S.~Schulz.
+\newblock E-a brainiac theorem prover.
+\newblock {\em {AI Communications}}, 15(2):111--126, 2002.
+
+\bibitem{steinberg08}
+D.~Steinberg, F.~Budinsky, E.~Merks, and M.~Paternostro.
+\newblock {\em {EMF: Eclipse Modeling Framework}}.
+\newblock Pearson Education, 2008.
+
+\bibitem{weidenbach02}
+C.~Weidenbach, U.~Brahm, T.~Hillenbrand, E.~Keen, C.~Theobalt, and D.~Topic.
+\newblock {SPASS} version 2.0.
+\newblock In A.~Voronkov, editor, {\em Automated Deduction -- {CADE-18}},
+  volume 2392 of {\em LNCS}, pages 275--279. Springer, 2002.
+
+\bibitem{winter02}
+K.~Winter.
+\newblock Model checking railway interlocking systems.
+\newblock {\em Australian Computer Science Communications}, 24(1):303--310,
+  2002.
+
+\bibitem{winter03}
+K.~Winter and N.~J. Robinson.
+\newblock Modelling large railway interlockings and model checking small ones.
+\newblock In M.~J. Oudshoorn, editor, {\em {ACSC '03: Proceedings of the 26th
+  Australasian computer science conference}}. Australian Computer Society,
+  2003.
+
+\end{thebibliography}

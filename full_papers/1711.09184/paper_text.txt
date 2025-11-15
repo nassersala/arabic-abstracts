@@ -1,0 +1,630 @@
+
+--- PAGE 1 ---
+1
+A Formal Speciﬁcation Framework for Smart Grid
+Components
+Waseem Akram, and Muaz Niazi, Senior Member, IEEE
+Abstract —Smart grid can be considered as the next step in the
+evolution of power systems. It comprises of different entities and
+objects ranging from smart appliances, smart meters, generators,
+smart storages, and more. One key problem in modeling smart
+grid is that while currently there is a considerable focus on the
+practical aspects of smart grid, there are very few modeling
+attempts and even lesser attempts at formalization. To the best of
+our knowledge, among other formal methods, formal speciﬁcation
+has previously not been applied in the domain of smart grid. In
+this paper, we attempt to bridge this gap by presenting a novel
+approach to modeling smart grid components using a formal
+speciﬁcation approach. We use a state-based formal speciﬁcation
+language namely Z (pronounced as ‘Zed’) since we believe Z
+is particularly suited for modeling smart grid components.We
+demonstrate the application of Z on key smart grid components.
+The presented formal speciﬁcation can be considered as ﬁrst steps
+towards modeling of smart grid using a Software Engineering
+formalism. It also demonstrates how complex systems, such as the
+smart grid, can be modeled elegantly using formal speciﬁcation.
+Index Terms —Formal speciﬁcation, Smart grid, Complex
+Adaptive System
+I. I NTRODUCTION
+A smart grid can be considered as an advanced and radically
+evolved version of traditional power systems. The term ’smart’
+in the smart grid exempliﬁes the use of bi-directional com-
+munication, artiﬁcial intelligence, Complex systems theory,
+modeling and simulation, and more, all employed with the
+goal of converting the legacy power grid into an advanced
+proactive and reactive system. At the lowest level however, the
+Smart grid can be considered as an integrated system made up
+of a variety of interacting components - ranging from smart
+appliances and smart storages to smart generators, Internet of
+Things (IoT), and beyond. Another key focus of the Smart
+grid is in the integration of renewable energy resources, such
+as, but not limited to, wind turbines and solar panels [1]. By
+integrating advanced communication and information systems,
+Smart grid components can communicate and coordinate with
+each other with the goal of constructing a sustainable and
+efﬁcient energy production system [2] for the future.
+As the size of smart grid increases, however, it is coupled
+with an increase in its intrinsic complexity [3]. Smart grid
+implies complexity[4]. To understand this complexity, it is
+necessary to ponder on the fact that, in any modern large-
+scale power system, each component can itself be dynamic
+in its very nature. As such, the states of the system, which
+are a function of and the result of emergent properties of the
+numerous interacting components, can also vary temporally.
+The result of what we see at the macro-level cannot thus be
+Corresponding author muaz.niazi@ieee.orgeasily discernible as a direct function of the micro-level. This
+behavior can thus be considered as the outcome of numerous
+interactive events occurring in relation to each component -
+quite similar to a natural Complex Adaptive Systems (CAS)
+[5]. With so much complexity at hand, it is clear that modeling
+the smart grid certainly needs considerable number of practical
+examples and case studies [6]. It is also evident that developing
+various types of formalisms for the domain is needed. This will
+allow for the selection of better and more elegant solution
+to models - which in turn can be used to develop a better
+understanding of the complex domain. Essentially, modeling
+any system can be considered as an activity which allows
+for a better understanding of the system. In the smart grid
+domain, better modeling approaches can not only simplify
+system complexity but also allow for a better understanding
+and implementation of the system. Besides, it can also allow
+for ensuring a reduction in system failures.
+Formal methods provide facilities for the modeling of each
+component of any complex system [7]. It allows for developing
+models for each component of the system allowing for a
+clear focus on understanding consistency as well as semantic
+correctness. The behavior of each system can be analyzed
+and observed with the help of these formal models. A key
+beneﬁt to this approach is that it helps in the detection of
+faults and ﬂaws in the design phase of system development,
+thereby considerably improving system reliability.
+In previous studies, formal speciﬁcation framework has
+been successfully applied for the mathematical modeling of
+different CAS ranging across various domains. Some key
+examples of such work includes a formal speciﬁcation used for
+the modeling of AIDS spread using agent-based modeling [8].
+Likewise, it has been developed for modeling the progression
+of researchers in their domain [9], and for the modeling of
+wireless sensor networks [10]. The use of formal speciﬁcation
+models for modeling CAS also include studies such as [11],
+[12]. Suggestions to use formal speciﬁcation for the Smart
+grid have also previously been mentioned in literature [13].
+Another example is the use of state machine formalism [14].
+However, to the best of our knowledge, the same approach has
+not been applied much in the domain of the smart grid domain.
+It is thus clear that there is a growing need to model the key
+components in a smart grid by means of an elegant formal
+framework among other tools such as noted previously [15].
+Such a prudent approach allows for a better understanding of
+the domain besides allowing for systems to be veriﬁed using
+the given speciﬁcation.
+In this paper, we present ﬁrst steps towards a basic formal
+speciﬁcation modeling framework for smart grid components.
+We ﬁrst consider different types of entities and then elaboratearXiv:1711.09184v1  [cs.LO]  25 Nov 2017
+--- PAGE 2 ---
+2
+their detailed formal speciﬁcations.
+The rest of the paper is structured as follows: Section 2
+provides basic concept of a formal framework and a smart grid
+scenario is discussed. Section 3 presents formal speciﬁcation
+of different entities of smart grid system. The paper ends with
+a conclusion in section 4.
+II. T HEORETICAL FOUNDATION
+In this section, we present the theoretical foundations
+needed for understand the presented formal speciﬁcation
+model.
+A. Formal Frameworks
+A formal speciﬁcation is a software engineering approach
+that is used for mathematical modeling of different compo-
+nents of a system [7]. During engineering of any system,
+it is important to ensure that all the system components
+are integrated and working correctly without any error. A
+formal speciﬁcation provides this facility to accurately specify
+each requirement of the system before going to the real
+implementation [16].
+A formal speciﬁcation decomposes the large system into the
+subsystem. Then provides a speciﬁcation for each individual
+subsystems. It follows two approaches; one is the algebraic
+approach in which each operation and relationships can be
+described, second is a model-based approach which concerns
+with the state and transitions of each individual components.
+The model-based approach uses the Z language speciﬁcation
+which involves the utilization of mathematical notations, sets,
+sequences, and states [17].
+B. Scenario of the Smart grid
+We can think of a smart grid as a complex system in
+which different consumers and generation units are connected
+through power communication lines [18]. Generation units
+generate power and transmit toward consumer’s side. Con-
+sumers demand energy according to their usage proﬁle and
+generation units response according to the consumer’s demand
+[19].
+On the consumer’s side, the process of monitoring and
+controlling consumer’s demand energy usage proﬁle is called
+home energy management (HEM) [20]. This process involves
+the use of smart meters, smart appliances, information and
+communication technology etc. the smart meters collect data
+about consumer’s demand at the different time period and
+transmit this collected data to the power generation unit. On
+the power generation unit side, this data is analyzed and
+response according to the consumer’s demand. Sometimes,
+consumer’s demands exceed from available energy power at
+the grid side. This creates unbalance situation of the power
+system. To handle this issue, the concept of demand response
+management (DRM)[21] has been introduced.
+DRM is the process of adjusting consumer’s demand in
+response to the price of energy and incentives from grid side.
+The generation unit sends their energy cost pattern of different
+time periods. The time in which power cost is high is calledhigh peak hour and the time in which power cost is low is
+called off peak hour. So during high peak hour, consumers
+can keep their ﬂexible appliances off and run at low peak
+hour.
+To reduce burden on generation unit, the concept of renew-
+able energy sources (RES) is also introduced in a smart grid
+application [22]. RES can be in the form of photo-voltaic (PV)
+or wind energy sources. These energy sources can be installed
+and provide energy to the consumer’s side. Consumers can
+use this energy at an off-peak hour, so this solves the energy
+unbalance as well as high-cost issues. The energy collected
+from RES can be stored using storage devices. Sometimes, if
+the available energy is larger than consumer’s demands, then
+it can be sold back to the grid unit by using some buyback
+mechanism [23]. However, RES has unpredictable nature and
+depends on weather and time. PV energy can only be produced
+during the daytime i.e. at sunny day. Wind energy can only
+be produced in windy environments.
+Regarding RES, a new concept has also been included in
+a smart grid called electric vehicles (EVs) [24]. These EVs
+are using energy storage devices which can be charged either
+using PV or electric station. The stored energy is then used
+for drive vehicles. In case if the energy demands of consumers
+exceed at grid unit. These EVs can also provide energy to the
+grid unit by using the vehicle to grid (V2G) mechanism.
+III. F ORMAL SPECIFICATION FRAMEWORK
+In this section, we present formal speciﬁcation models for
+the smart grid components. In our study, we consider four
+different entities in a smart grid system. These entities are:
+appliance, solar, turbine, and storage devices. Each entity has
+different states as well as associated events that cause state
+transitions. In table I, summary of each object, states and
+events are given.
+A. Smart appliance
+An appliance object has three distinct states along with
+events associated with states. As we can see in ﬁgure 1,
+Whenever an unplugged event occurs, the appliance enters
+in the disconnected state. By plugged-in event, the appliance
+enters in the connected state. And whenever an in-use event
+occurs, the appliance remains in the running state.
+Next, we present formal speciﬁcation for an appliance
+object.
+A free type “APPLIANCESTATE” is used to represent dif-
+ferent states of an appliance that are disconnected, connected
+and running.
+[APPLIANCESTATE ] == fdisconnected ;connected ;running g
+Next, we deﬁne an appliance schema that contains “appState”
+variable of type “APPLIANCESTATE”. The value of “app-
+State” can be either disconnected, connected or running.
+Appliance
+appState :APPLIANCESTATE
+As we have deﬁned appliance state and appliance schema.
+Now we can move towards operational schemas.
+--- PAGE 3 ---
+3
+TABLE I: Smart grid components, their states and events
+Object States Events
+ApplianceDisconnected Unplugged
+Connected Plugged-in, not in-use
+Running In use
+TurbineNot running No wind
+Slow running Slow wind
+Fast running Fast wind
+SolarNo energy generation Night time
+Partial energy generation Day, cloudy
+Full energy generation Day, sunny
+StorageCharging Store energy
+Discharging Consume energy
+Not-in-use remove storage
+First, we start by presenting initialization schema named as
+InitAppliance . In this schema, we declare “Appliance” schema
+as a variable. In predicate section, we say that on initialization,
+the state of an appliance must be equal to disconnected.
+InitAppliance
+Appliance
+appState =disconnected
+As the plugged-in event occurs, the state of an appliance
+becomes connected. To show this transition, we deﬁne an
+operational schema called PluggedInAppliance . In the schema,
+the changing state of an appliance is shown by a delta sign ().
+In predicate, we say that the state of an appliance is changed
+from disconnected to the connected state.
+PluggedInAppliance
+Appliance
+appState =disconnected
+appState0=connected
+The state of an appliance is also changing whenever an in-
+use event occurs. Then the appliance remains in a running
+state. This transition is shown by deﬁning InUseAppliance .
+Here, again we declare the changing state of an appliance
+with a delta sign. In predicate, ﬁrst an appliance must be in
+the connected state, then we say that the state changes to the
+running state.
+InUseAppliance
+Appliance
+appState =connected
+appState0=running
+As we noted before, when an unplugged event occurs, an
+appliance goes to the disconnected state. This transition is
+shown by another schema called UnPluggedAppliance . In the
+predicate section, we can see that the state of an appliance
+changes from connected to the disconnected state.
+UnPluggedAppliance
+Appliance
+appState =connected
+appState0=disconnectedAn appliance can be in connected but not in use state. This
+operation is shown by introducing another schema called
+NotInUseAppliance .
+NotInUseAppliance
+Appliance
+appState =running
+appState0=connected
+There can be some scenario in which a schema can be suc-
+cess or there may some error. To understanding the success and
+error conditions of schemas, we present free type deﬁnitions
+in the form of table II. In the given table, for each schema we
+deﬁne the success and failure conditions.
+B. Wind turbine system
+A wind turbine object has three distinct states named as
+turbine not running, turbine slow running, and turbine fast
+running. There are also different events associated with each
+state that causes a state transition. In ﬁgure 2 we can see that
+when there is no wind, the turbine enters in the “Turbine not
+running” state. When there is slow wind, turbine runs slowly.
+And if there is fast wind, the turbine is running fast.
+--- PAGE 4 ---
+4
+TABLE II: Success and error outcomes of the schemas for an appliance entity
+Schema Pre-condition for success Condition for error
+PluggedInApplianceAppliance is disconnected
+appState =disconnectedAlready connected
+appState =connected
+InUseApplianceAppliance is connected
+appState =connectedAlready in running state
+appState =running
+UnPluggedApplianceAppliance is connected
+appState =connectedAlready in disconnected state
+appState =disconnected
+NotInUseApplianceAppliance is running
+appState =runningAlready not in not running state
+appState 6=running
+Fig. 1: An Appliance lifetime
+Next, we present formal speciﬁcation for a turbine object.
+First, we start by deﬁning a free type “TURBINESTATE”
+set. This set comprises of a turbine different states that
+are “turbineNotRunning, turbineSlowRunning, and turbineFas-
+tRunning”.
+[TURBINESTATE ] == ftrubineNotRunning ;
+turbineSlowRunning ;turbineFastRunning g
+Now, we deﬁne a wind turbine system schema by presenting
+WindTurbine . This schema consists of a variable “trbState” of
+type TURBINESTATE . The value of this variable can be either
+“turbineNotRunning”, “turbineSlowRunning”, or “turbineFas-
+tRunning”.
+WindTurbine
+trbState :TURBINESTATE
+As we have deﬁned turbine’s states and turbine’s schema, now
+we move to operational schemas.
+First, we start by initializing a turbine entity by presenting
+InitTurbine schema. In the schema, ﬁrst, we call the Wind-
+Fig. 2: Wind turbine lifetime
+Turbine schema. Then in the predicate, we say that the initial
+state of a turbine must be equal to “turbineNotRunning” state.
+InitTurbine
+WindTurbine
+trbState =turbineNotRunning
+As we noted in the state diagram when during slow wind,
+the state of a turbine becomes “turbineSlowRunning”. This
+transition is shown by deﬁning SlowWind schema. In the
+schema, we call the WindTurbine schema with a delta sign.
+In predicate, we say that the state of a turbine is changing
+from “turbineNotRunning” to the “turbineSlowRunning”.
+SlowWind
+WindTurbine
+trbState =turbineNotRunning
+trbState0=turbineSlowRunning
+--- PAGE 5 ---
+5
+In case of fast wind, a turbine runs fast. To show this process,
+we present another schema called FastWind . In the schema,
+again we call WindTurbine schema with a delta sign. In
+predicate, we say that the state of a turbine changes from
+slow to fast running.
+FastWind
+WindTurbine
+trbState =turbineSlowRunning
+trbState0=turbineFastRunning
+A turbine’s state also changes to not running when there
+is no wind. This transition is shown by introducing NoWind
+schema. The schema shows that a turbine’s state is changed
+from slow running to not running state.
+NoWind
+WindTurbine
+trbState =turbineSlowRunning
+trbState0=turbineNotRunning
+The schemas of the turbine entity can be success or fail
+when errors occur. So to understand the success and error
+conditions of each turbine’s schemas, we present free type
+deﬁnitions in table III.
+C. Solar system
+A solar object has three distinct states named as “no
+energy generation, partial energy generation, and full energy
+generation”. There are also different events associated with
+each state that causes a state transition. The states and it’s
+associated events have shown in the ﬁgure 3. Next, we present
+formal speciﬁcation for a solar object.
+First, we begin by introducing a free type “SOLARSTATE”
+that is used for presenting different states of a solar entity. This
+set comprises of “noEnergyGeneration, partialEnergyGenera-
+tion, and fullEnergyGeneration” states.
+[SOLARSTATE ] == fnoEnergyGeneration ;
+partialEnergyGeneration ;fullEnergyGeneration g
+Here, we present a solar system by introducing SolarPanel
+schema. The schema takes a variable “slrState” of type SO-
+LARSTATE . The value of this variable can be either “noEner-
+gyGenreation”, “partialEnergyGeneration” or “fullEnergyGen-
+eration”.
+SolarPanel
+slrState :SOLARSTATE
+As we have deﬁned solar state and schema, now we move
+towards the operational schemas.
+The initialization process is shown by presenting InitSolar
+schema. First, the schema calls the SolarPanel schema in the
+declaration part. In predicate, we deﬁned that the state of a
+solar is “noEnergyGeneration” at the initial time.
+Fig. 3: A solar lifetime
+InitSolar
+SolarPanel
+slrState =noEnergyGeneration
+As we know that when there is a cloud at daytime, then
+the solar generates partial energy. During this time period,
+the solar remains in a partial energy generation state. This
+process is shown by introducing DayAndCloudy schema. In
+the schema, the changing state of a solar is shown by a delta
+sign. In predicate, it shows that the state of solar changes from
+no generation to the partial generation.
+DayAndCloudy
+SolarPanel
+slrState =noEnergyGeneration
+slrState0=partialEnergyGeneration
+In case of the sunny day, a solar remains in a full genera-
+tion state. This process is shown by deﬁning DayAndSunny
+schema. Here, we again deﬁne the changing state of a solar
+with delta sign. In predicate, we say that the state of solar
+changes from partial to full energy generation.
+DayAndSunny
+SolarPanel
+slrState =partialEnergyGeneration
+slrState0=fullEnergyGeneration
+As we know that a solar does not generate any energy during
+night time. At this time period, solar remains in a no generation
+--- PAGE 6 ---
+6
+TABLE III: Success and error outcomes of the schemas for a wind turbine entity
+Schema Pre-condition for success Condition for error
+SlowWindTurbine not running
+trbState =notRunningAlready in slow running state
+trbState =turbineSlowRunning
+FastWindTurbine is running slowly
+trbState =turbineSlowRunningAlready in Fast running state
+trbState =turbineFastRunning
+NoWindTurbine is running slowly
+trbState =turbineSlowRunningAlready in not running state
+trbState =turbineNotRunning
+state. Here, we present another schema called “Night”. In the
+schema, we say that the current state of a solar can be partial
+or full energy generation. Then we change solar state to the
+no energy generation state.
+Night
+SolarPanel
+slrState =partialEnergyGeneration _fullEnergyGeneration
+slrState0=noEnergyGeneration
+The success and failure conditions for the solar’s schemas
+is summarized in table IV.
+D. Storage system
+A storage device also has different states as well as events
+that cause the transition of states. As we can see in the ﬁgure 4
+that there are three states named as “charging, discharging, and
+not in use” of a storage object. When a store energy or battery
+low event occurs, the storage enters in the charging state.
+In case of energy consumption, the state of storage becomes
+discharging, In case remove event, the state of storage becomes
+not in use.
+Next, we present formal speciﬁcation for a storage system.
+First, we start by deﬁning a free type STORAGESTATE set
+that comprises of different state of a storage device.
+[STORAGESTATE ] == fcharging ;discharging ;notInUse g
+Here, we deﬁne a storage system schema. In the schema, we
+declare a variable “strState” of type STORAGESTATE that has
+any single value from the storage state set.
+StorageDevice
+strState :STORAGESTATE
+As we have deﬁned storage state and system schema. Now,
+we move towards operational schema.
+First, we start by introducing an initialization schema called
+InitSorage . This schema calls the StorageDevice schema as a
+variable. In predicate, it shows that the state of a storage is
+“notInUse” at the initial time.
+InitStorage
+StorageDevice
+strState =notInUse
+As we noted before, when a store energy event occurs, a
+storage goes to the charging state. This process is shown by
+StoreEnergy schema. The changing of a storage is shown by
+a delta sign. In predicate, it shows that the current state of
+Fig. 4: A storage lifetime
+a storage is “notInUse” which is changed to the “charging”
+state.
+StoreEnergy
+StorageDevice
+strState =notInUse
+strState0=charging
+We also know that when a consume energy event occurs, a
+storage device goes to the discharging state. This process is
+shown by presenting ConsumeEnergy schema. In the schema,
+we can see that the state of a storage changes from charging
+to the discharging state.
+ConsumeEnergy
+StorageDevice
+strState =charging
+strState0=discharging
+A storage can also enter in the charging state whenever the
+storage state is low. This process is presented by means of
+BatteryLow schema.
+--- PAGE 7 ---
+7
+TABLE IV: Success and error outcomes of the schemas for a solar entity
+Schema Pre-condition for success Condition for error
+DayAndCloudySolar is in no generation state
+slrState =noGenerationAlready in partial generation state
+slrState =
+partialEnergyGeneration
+DayAndSunnySolar is in partial state
+slrState =
+partialEnergyGenerationAlready in full generation state
+slrState =
+fullEnergyGeneration
+NightSolar is in partial or full state
+slrState =
+PartialEnergyGerention _
+fullEnergyGenerationAlready in no generation state
+slrState =
+noEnergyGeneration
+BatteryLow
+StorageDevice
+strState =discharging
+strState0=charging
+When a storage is removed from the system, then it goes to
+the “notInUse” state. This process is shown by introducing
+another schema called RemoveStorage . In the schema, we can
+see a storage can be in either charging or discharging state.
+Then it’s state changes to the “notInUse” state.
+RemoveStorage
+StorageDevice
+strState =charging _discharging
+strState0=notInUse
+The schemas of the storage devices can be success and may
+be there some errors at the execution time. So there is also
+need to deﬁne the success and error criteria for schemas. Here,
+in table V, we summarized all success and failure conditions
+of the storage’s schemas.
+IV. C ONCLUSIONS & F UTURE WORK
+In this paper, we focused on formal speciﬁcation of smart
+grid components. We considered four different components of
+a smart grid system. We identiﬁed states and events which
+cause state transitions of each individual component. Then
+we modeled each component of the smart grid system by
+using a formal speciﬁcation approach. This provides a clear
+understanding the behavior of each component involved in the
+system. The presented formal framework clearly demonstrates
+the utility of using a formal speciﬁcation approach to modeling
+complex systems including technological systems such as
+the smart grid. Here we would like to mention that the
+presented framework currently considers only four key smart
+grid components. However, the same can be further expanded
+for a large number of devices. Additionally, in the future,
+the work can be expanded to formally model using other
+approaches such as Petri nets, among others.REFERENCES
+[1] S. Wong and J.-P. Pinard, “Opportunities for smart electric thermal
+storage on electric grids with renewable energy,” IEEE Transactions
+on Smart Grid , vol. 8, no. 2, pp. 1014–1022, 2017.
+[2] V . C. Gungor, D. Sahin, T. Kocak, S. Ergut, C. Buccella, C. Cecati, and
+G. P. Hancke, “Smart grid technologies: Communication technologies
+and standards,” IEEE transactions on Industrial informatics , vol. 7,
+no. 4, pp. 529–539, 2011.
+[3] M. H. Cintuglu, O. A. Mohammed, K. Akkaya, and A. S. Uluagac, “A
+survey on smart grid cyber-physical system testbeds,” IEEE Communi-
+cations Surveys & Tutorials , vol. 19, no. 1, pp. 446–464, 2017.
+[4] A. Monti and F. Ponci, “Power grids of the future: Why smart means
+complex,” in Complexity in Engineering, 2010. COMPENG’10. IEEE,
+2010, pp. 7–11.
+[5] S. M. Amin and B. F. Wollenberg, “Toward a smart grid: power delivery
+for the 21st century,” IEEE power and energy magazine , vol. 3, no. 5,
+pp. 34–41, 2005.
+[6] G. A. Pagani and M. Aiello, “Power grid complex network evolutions for
+the smart grid,” Physica A: Statistical Mechanics and its Applications ,
+vol. 396, pp. 248–266, 2014.
+[7] A. Hall, “Seven myths of formal methods,” IEEE software , vol. 7, no. 5,
+pp. 11–19, 1990.
+[8] A. Siddiqa and M. Niazi, “A novel formal agent-based simulation
+modeling framework of an aids complex adaptive system,” International
+Journal of Agent Technologies and Systems , vol. 5, no. 3, pp. 33–53,
+2013.
+[9] A. Hussain and M. Niazi, “Toward a formal, visual framework of
+emergent cognitive development of scholars,” Cognitive Computation ,
+vol. 6, no. 1, pp. 113–124, 2014.
+[10] M. A. Niazi and A. Hussain, “A novel agent-based simulation framework
+for sensing in complex adaptive environments,” IEEE Sensors Journal ,
+vol. 11, no. 2, pp. 404–412, 2011.
+[11] N. A. Zafar and H. Afzaal, “Formal model of earthquake disaster
+mitigation and management system,” Complex Adaptive Systems
+Modeling , vol. 5, no. 1, p. 10, Sep 2017. [Online]. Available:
+https://doi.org/10.1186/s40294-017-0049-8
+[12] H. Afzaal and N. A. Zafar, “Formal analysis of subnet-based failure
+recovery algorithm in wireless sensor and actor and network,” Complex
+Adaptive Systems Modeling , vol. 4, no. 1, p. 27, 2016.
+[13] G. Hackenberg, M. Irlbeck, V . Koutsoumpas, and D. Bytschkow, “Apply-
+ing formal software engineering techniques to smart grids,” in Software
+Engineering for the Smart Grid (SE4SG), 2012 International Workshop
+on. IEEE, 2012, pp. 50–56.
+[14] G. K. Turner, A formalized method for state machine software imple-
+mentation in smart microgrid control systems . The University of Texas
+at Arlington, 2014.
+[15] S. Rohjans, S. Lehnhoff, S. Schutte, F. Andren, and T. Strasser, “Re-
+quirements for smart grid simulation tools,” in Industrial Electronics
+(ISIE), 2014 IEEE 23rd International Symposium on . IEEE, 2014, pp.
+1730–1736.
+[16] J. Woodcock and J. Davies, Using Z: speciﬁcation, reﬁnement, and proof .
+Prentice Hall Englewood Cliffs, 1996, vol. 39.
+[17] J. P. Bowen, Formal speciﬁcation and documentation using Z: A case
+study approach . International Thomson Computer Press London, 1996,
+vol. 66.
+[18] J. V . Milanovic and W. Zhu, “Modelling of interconnected critical in-
+frastructure systems using complex network theory,” IEEE Transactions
+on Smart Grid , 2017.
+[19] Z. Yang, J. Xiang, and Y . Li, “Distributed consensus based supply–
+demand balance algorithm for economic dispatch problem in a smart
+--- PAGE 8 ---
+8
+TABLE V: Success and error outcomes of the schemas for a wind turbine entity
+Schema Pre-condition for success Condition for error
+StoreEnergyStorage is in not-in use
+strState =notInUseAlready in charging state
+strState =charging
+ConsumeEnergyStorage is in charging state
+strState =chargingAlready in discharging state
+strState =discharging
+BatteryLowStorage is in discharging state
+strState =dischargingAlready in charging state
+strState =charging
+RemoveStorage is in charging or dischargig state
+strState =discharging _chargingAlready in not-in-use state
+strState =notInUse
+grid with switching graph,” IEEE Transactions on Industrial Electronics ,
+vol. 64, no. 2, pp. 1600–1610, 2017.
+[20] S. S. Hosseini, K. Agbossou, S. Kelouwani, and A. Cardenas, “Non-
+intrusive load monitoring through home energy management systems:
+A comprehensive review,” Renewable and Sustainable Energy Reviews ,
+vol. 79, pp. 1266–1274, 2017.
+[21] J. Soares, M. A. F. Ghazvini, N. Borges, and Z. Vale, “A stochastic
+model for energy resources management considering demand response
+in smart grids,” Electric Power Systems Research , vol. 143, pp. 599–610,
+2017.
+[22] L. Park, Y . Jang, S. Cho, and J. Kim, “Residential demand response for
+renewable energy resources in smart grid systems,” IEEE Transactions
+on Industrial Informatics , 2017.
+[23] T.-C. Chiu, Y .-Y . Shih, A.-C. Pang, and C.-W. Pai, “Optimized day-
+ahead pricing with renewable energy demand-side management for smart
+grids,” IEEE Internet of Things Journal , vol. 4, no. 2, pp. 374–383, 2017.
+[24] A. Ahmadian, M. Sedghi, A. Elkamel, M. Fowler, and M. A. Golkar,
+“Plug-in electric vehicle batteries degradation modeling for smart grid
+studies: Review, assessment and conceptual framework,” Renewable and
+Sustainable Energy Reviews , 2017.
