@@ -1,0 +1,105 @@
+5
+
+Examples
+
+Let’s now look at some AD examples, to which we will return later in the paper:
+sqr :: Num a ⇒ a → a
+sqr a = a · a
+magSqr :: Num a ⇒ a × a → a
+magSqr (a, b) = sqr a + sqr b
+cosSinProd :: Floating a ⇒ a × a → a × a
+cosSinProd (x , y) = (cos z , sin z ) where z = x · y
+A compiler plugin converts these definitions to categorical vocabulary [Elliott, 2017]:
+sqr = mulC ◦ (id M id )
+12 The derivative of uncurried multiplication generalizes to an arbitrary bilinear function f :: a × b → c [Spivak, 1965, Problem
+2-12]: D f (a, b) = λ(da, db) → f (da, b) + f (a, db).
+
+The Simple Essence of Automatic Differentiation
+
+13
+
+×
+
+cos
+
+In
+
++
+
+Out
+
+In
+
+×
+
+Out
+sin
+
+×
+
+Figure 3: cosSinProd
+
+Figure 2: magSqr
+×
+
+In
+
+×
+
+In
+
+×
+
+In
+
+×
+
+×
+Out
+
+Out
+×
+
++
+
+×
+
++
+
++
+
++
+
+Out
+×
+
+negate
+
+Out
+×
+
+In
+
+cos
+
++
+
+sin
+
+Figure 5: D̂ cosSinProd
+Figure 4: D̂ magSqr
+magSqr = addC ◦ (mulC ◦ (exl M exl ) M mulC ◦ (exr M exr ))
+cosSinProd = (cosC M sinC ) ◦ mulC
+To visualize computations before differentiation, we can interpret these categorical expressions in a category of
+graphs [Elliott, 2017, Section 7], with the results rendered in Figures 2 and 3. To see the differentiable versions,
+interpret these same expressions in the category of differentiable functions (D from Section 4.1), remove the D
+constructors to reveal the function representation, convert these functions to categorical form as well, and finally
+interpret the result in the graph category. The results are rendered in Figures 4 and 5. Some remarks:
+• The derivatives are (linear) functions, as depicted in boxes.
+• Work is shared between the function’s result (sometimes called the “primal”) and its derivative in Figure 5.
+• The graphs shown here are used solely for visualizing functions before and after differentiation, playing no
+role in the programming interface or in the implementation of differentiation.
+
+6
+
+Programming as Defining and Solving Algebra Problems

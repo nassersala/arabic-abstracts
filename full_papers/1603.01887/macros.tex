@@ -1,0 +1,202 @@
+\def\draft{0}   % 1 for working draft
+
+\ifnum\draft=0 % remove non-submission details
+    \newcommand{\submitremove}[1]{}
+\else
+    \newcommand{\submitremove}[1]{#1}
+\fi
+
+\ifnum\draft=0 %myparagraph - toggles for space saving in submission
+\newcommand{\myparagraph}[1]{\paragraph{#1}}
+\else
+\newcommand{\myparagraph}[1]{\noindent \textbf{#1}.}
+\fi
+
+
+\ifnum\draft=1 % show authors' note if draft
+    \def\ShowAuthNotes{1}
+\else
+    \def\ShowAuthNotes{0}
+\fi
+% Author's notes
+\ifnum\ShowAuthNotes=1
+%\newcommand{\authnote}[2]{{ \footnotesize \bf{\color{Red}[#1's Note: {\color{Blue}#2}]}}}
+\newcommand{\authnote}[2]{{ \footnotesize \bf{[#1's Note: #2]} }}
+\else
+\newcommand{\authnote}[2]{}
+\fi
+
+\newcommand{\cnote}[1]{{\authnote{Cynthia} {#1}}}
+\newcommand{\gnote}[1]{{\authnote{Guy} {#1}}}
+\newcommand{\snote}[1]{{\authnote{Salil} {#1}}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+
+\newtheorem{lemma}[theorem]{Lemma}%[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{claim}[theorem]{Claim}%[section]
+\newtheorem{fact}{Fact}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\newcommand{\getsr}{{\leftarrow}}
+\newcommand{\Range}{{\rm Range}}
+\newcommand{\dfp}{{differentially private}}
+\newcommand{\pdp}{{probabilistically differentially private}}
+\newcommand{\semantic}{{\rm strong}}
+\newcommand{\poly}{{\rm poly}}
+\newcommand{\polylog}{{\rm polylog}}
+\newcommand{\Alg}{{\bf Alg}}
+\newcommand{\Int}{{\rm I}}
+\newcommand{\Intp}{{\rm I'}}
+\newcommand{\Ext}{{\rm E}}
+\newcommand{\Extp}{{\rm E'}}
+\newcommand{\ExtSeq}{{\sigma}}
+\newcommand{\ExtpSeq}{{\sigma'}}
+\newcommand{\Q}{{\cal Q}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\A}{{\cal A}}
+\newcommand{\C}{{\cal C}}
+\newcommand{\F}{{\cal F}}
+\newcommand{\E}{{\cal E}}
+\newcommand{\K}{{\cal K}}
+\newcommand{\M}{{\cal M}}
+\newcommand{\N}{{\cal N}}
+\newcommand{\T}{{\mathcal{T}}}
+\newcommand{\X}{{\mathcal{X}}}
+
+
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Nt}{\mathbb{N}}
+
+%\newcommand{\NR}{{\it NR}}
+\newcommand{\NR}{\bot}
+\newcommand{\IQR}{{\rm IQR}}
+\newcommand{\n}{\hat{n}}
+
+
+\newcommand{\sub}{\tau}
+\newcommand{\eg}{{\it e.g.}}
+\newcommand{\CDP}{Concentrated Differential Privacy}
+\newcommand{\Cdp}{Concentrated differential privacy}
+\newcommand{\cdp}{concentrated differential privacy}
+
+\newcommand{\D}{D}
+\newcommand{\DKL}{D_{\mathit{KL}}}
+\newcommand{\DsubG}{D_{\mathit{subG}}}
+\newcommand{\Dmax}{D_{\infty}}
+\newcommand{\Dapprox}{D_{\infty}^{\delta}}
+
+
+\newcommand{\Var}{\mathit{Var}}
+\DeclareMathOperator*{\Ex}{\mathbb{E}}
+
+\newcommand{\by}{{ \bf y}}
+
+\newcommand{\acc}{\lambda}
+\newcommand{\noise}{\mu}
+\newcommand{\Rt}{\mathbb{R}}
+\newcommand{\epsboost}{\eps_{\mathit{boost}}}
+\newcommand{\deltaboost}{\delta_{\mathit{boost}}}
+\newcommand{\epsbase}{\eps_{\mathit{base}}}
+\newcommand{\deltabase}{\delta_{\mathit{base}}}
+
+
+\newcommand{\MD}{antipodal} %another option is maximally discrepant
+\newcommand{\MDcaps}{Antipodal}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\rationals}{\mathbb{Q}}
+%\newcommand{\DB}{{\it DB}}
+\newcommand{\DB}{{\it d}}
+\newcommand{\DBz}{{\it DB}}
+\newcommand{\dba}{x}
+\newcommand{\dbb}{y}
+\newcommand{\dbc}{z}
+\newcommand{\iid}{i.i.d.\ }
+\newcommand{\IF}{{\rm IF}}
+\newcommand{\EIF}{{\rm EIF}}
+\newcommand{\Lap}{\mathrm{Lap}}
+\newcommand{\Laplace}{\mathrm{Lap}}
+\newcommand{\Adj}{\mathrm{Adj}}
+\newcommand{\eqdef}{\mathbin{\stackrel{\rm def}{=}}}
+\newcommand{\Supp}{\mathrm{Supp}}
+\newcommand{\horrible}{{\bf H}}
+\newcommand{\PTR}{{\rm Propose-Test-Release}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\secp}{\kappa}
+\newcommand{\negl}{\nu}
+
+
+\newcommand{\tail}{{\rm tail}}
+\newcommand{\sens}{\Delta f}
+\newcommand{\lap}{\mathit{Laplace}}
+\newcommand{\sign}{{\mathit sign}}
+\newcommand{\signa}{\sign(\alpha)}
+
+
+\newcommand{\Loss}{L}
+
+% Caligraphic alphabet
+
+\newcommand{\calr}{\mathcal{R}} % only because \cr already taken
+
+\newcommand{\ca}{\mathcal{A}} \newcommand{\cb}{\mathcal{B}} \newcommand{\cc}{\mathcal{C}} \newcommand{\cd}{\mathcal{D}} \newcommand{\ce}{\mathcal{E}} \newcommand{\cf}{\mathcal{F}} \newcommand{\cg}{\mathcal{G}} \newcommand{\ch}{\mathcal{H}} \newcommand{\ci}{\mathcal{I}} \newcommand{\cj}{\mathcal{J}} \newcommand{\ck}{\mathcal{K}} \newcommand{\cl}{\mathcal{L}} \newcommand{\cm}{\mathcal{M}} \newcommand{\cn}{\mathcal{N}} \newcommand{\co}{\mathcal{O}} \newcommand{\cp}{\mathcal{P}} \newcommand{\cq}{\mathcal{Q}} \newcommand{\cs}{\mathcal{S}} \newcommand{\ct}{\mathcal{T}} \newcommand{\cu}{\mathcal{U}} \newcommand{\cv}{\mathcal{V}} \newcommand{\cw}{\mathcal{W}} \newcommand{\cx}{\mathcal{X}} \newcommand{\cy}{\mathcal{Y}} \newcommand{\cz}{\mathcal{Z}}
+
+
+
+\newcommand{\ind}[1]{1_{#1}} % Indicator function
+
+\newcommand{\p}{P} % Probability when database is D
+\newcommand{\pp}{P'} % Probability when database is D'
+%\newcommand{\Pr}{Pr} % Generic probability
+\newcommand{\pr}{\textrm{Pr}} % Generic probability
+%\newcommand{\pr'}{\textrm{Pr'}} % Generic probability
+
+\newcommand{\ex}{\mathrm{E}} % Generic expectation
+
+\newcommand{\var}{\textrm{Var}}
+
+\newcommand{\cov}{\textrm{Cov}}
+
+\newcommand{\sgn}{\textrm{sgn}}
+
+\newcommand{\kl}{\textrm{KL}}
+
+
+
+\newcommand{\law}{\mathcal{L}}  % \law{X}, the measure associated with r.v. X
+
+\newcommand{\normal}{N} % for normal distribution (can probably skip this)
+
+\newcommand{\eps}{\varepsilon}
+%\newcommand{\Laplace}{\mathit{Lap}}
+\newcommand{\ocount}{\mathit{ocount}}
+\newcommand{\threshold}{\ell}
+
+
+% Convergence
+
+\newcommand{\convd}{\stackrel{d}{\longrightarrow}} % convergence in distribution/law/measure
+
+\newcommand{\convp}{\stackrel{P}{\longrightarrow}} % convergence in probability
+
+\newcommand{\convas}{\stackrel{\textrm{a.s.}}{\longrightarrow}} % convergence almost surely
+
+\newcommand{\convL}{\stackrel{\mathcal{L}}{\longrightarrow}}% convergence in law
+
+
+\newcommand{\eqd}{\stackrel{d}{=}} % equal in distribution/law/measure
+
+\newcommand{\argmax}{\textrm{argmax}}
+
+\newcommand{\argmin}{\textrm{argmin}}
+
+\newcommand{\conv}{\textrm{conv}} % for denoting the convex hull
+
+\newcommand{\remove}[1]{}
+
+\newcommand{\err}{\mathit{err}}

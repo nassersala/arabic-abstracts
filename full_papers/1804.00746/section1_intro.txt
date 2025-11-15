@@ -1,0 +1,74 @@
+Introduction
+
+Accurate, efficient, and reliable computation of derivatives has become increasingly important over the last several
+years, thanks in large part to the successful use of backpropagation in machine learning, including multi-layer
+neural networks, also known as “deep learning” [Lecun et al., 2015; Goodfellow et al., 2016]. Backpropagation
+is a specialization and independent invention of the reverse mode of automatic differentiation (AD) and is
+used to tune a parametric model to closely match observed data, using gradient descent (or stochastic gradient
+descent). Machine learning and other gradient-based optimization problems typically rely on derivatives of
+functions with very high dimensional domains and a scalar codomain—exactly the conditions under which reversemode AD is much more efficient than forward-mode AD (by a factor proportional to the domain dimension).
+Unfortunately, while forward-mode AD (FAD) is easily understood and implemented, reverse-mode AD (RAD)
+and backpropagation have had much more complicated explanations and implementations, involving mutation,
+graph construction and traversal, and “tapes” (sequences of reified, interpretable assignments, also called “traces”
+or “Wengert lists”). Mutation, while motivated by efficiency concerns, makes parallel execution difficult and
+so undermines efficiency as well. Construction and interpretation (or compilation) of graphs and tapes also
+add execution overhead. The importance of RAD makes its current complicated and bulky implementations
+especially problematic. The increasingly large machine learning (and other optimization) problems being solved
+with RAD (usually via backpropagation) suggest the need to find more streamlined, efficient implementations,
+especially with the massive hardware parallelism now readily and inexpensively available in the form of graphics
+processors (GPUs) and FPGAs.
+Another difficulty in the practical application of AD in machine learning (ML) comes from the nature of many
+currently popular ML frameworks, including Caffe [Jia et al., 2014], TensorFlow [Abadi et al., 2016], and Keras
+[Chollet, 2016]. These frameworks are designed around the notion of a “graph” (or “network”) of interconnected
+nodes, each of which represents a mathematical operation—a sort of data flow graph. Application programs
+∗ The appendices of this extended version include proofs omitted in the conference article [Elliott, 2018].
+
+1
+
+2
+
+Conal Elliott
+
+construct these graphs explicitly, creating nodes and connecting them to other nodes. After construction, the
+graphs must then be processed into a representation that is more efficient to train and to evaluate. These graphs
+are essentially mathematical expressions with sharing, hence directed acyclic graphs (DAGs). This paradigm of
+graph construction, compilation, and execution bears a striking resemblance to what programmers and compilers
+do all the time:
+• Programs are written by a human.
+• The compiler or interpreter front-end parses the program into a DAG representation.
+• The compiler back-end transforms the DAGs into a form efficient for execution.
+• A human runs the result of compilation.
+When using a typical ML framework, programmers experience this sequence of steps at two levels: working
+with their code and with the graphs that their code generates. Both levels have notions of operations, variables,
+information flow, values, types, and parametrization. Both have execution models that must be understood.
+A much simpler and cleaner foundation for ML would be to have just the programming language, omitting
+the graphs/networks altogether. Since ML is about (mathematical) functions, one would want to choose a
+programming language that supports functions well, i.e., a functional language, or at least a language with strong
+functional features. One might call this alternative “differentiable functional programming”. In this paradigm,
+programmers directly define their functions of interest, using the standard tools of functional programming, with
+the addition of a differentiation operator (a typed higher-order function, though partial since not all computable
+functions are differentiable). Assuming a purely functional language or language subset (with simple and precise
+mathematical denotation), the meaning of differentiation is exactly as defined in traditional calculus.
+How can we realize this vision of differentiable functional programming? One way is to create new languages,
+but doing so requires enormous effort to define and implement efficiently, and perhaps still more effort to
+evangelize. Alternatively, we might choose a suitable purely functional language like Haskell and then add
+differentiation. The present paper embodies the latter choice, augmenting the popular Haskell compiler GHC
+with a plugin that converts standard Haskell code into categorical form to be instantiated in any of a variety of
+categories, including differentiable functions [Elliott, 2017].
+This paper makes the following specific contributions:
+• Beginning with a simple category of derivative-augmented functions, specify AD simply and precisely by
+requiring this augmentation (relative to regular functions) to be homomorphic with respect to a collection
+of standard categorical abstractions and primitive mathematical operations.
+• Calculate a correct-by-construction AD implementation from the homomorphic specification.
+• Generalizing AD by replacing linear maps (general derivative values) with an arbitrary cartesian category
+[Elliott, 2017], define several AD variations, all stemming from different representations of linear maps:
+functions (satisfying linearity), “generalized matrices” (composed representable functors), continuation-based
+transformations of any linear map representation, and dualized versions of any linear map representation.
+The latter two variations yield correct-by-construction implementations of reverse-mode AD that are
+much simpler than previously known and are composed from generally useful components. The choice
+of dualized linear functions for gradient computations is particularly compelling in simplicity. It also
+appears to be quite efficient—requiring no matrix-level representations or computations—and is suitable
+for gradient-based optimization, e.g., for machine learning. In contrast to conventional reverse-mode
+AD algorithms, all algorithms in this paper are free of mutation and hence naturally parallel. A similar
+construction yields forward-mode AD.
+
