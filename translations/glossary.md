@@ -83,7 +83,7 @@
 | auxiliary | مساعد | 0.9 | 1 | Auxiliary or helper component |
 | avionics | إلكترونيات الطيران | 0.9 | 2 | Aircraft electronics |
 | axiom | بديهية | 1.0 | 5 | Self-evident truth |
-| B-tree | شجرة B | 0.95 | 1 | Balanced tree data structure |
+| B-tree | شجرة B | 0.95 | 2 | Balanced tree data structure for disk-based indexes |
 | backpropagation | الانتشار العكسي | 0.9 | 1 | Gradient backpropagation |
 | baseline | خط الأساس | 0.9 | 3 | Reference point for comparison |
 | backward pass | المرور العكسي | 0.9 | 1 | Backpropagation phase in neural network training |
@@ -1693,3 +1693,288 @@
 | aggregate privacy loss | خسارة الخصوصية الكلية | 0.9 | 1 | Combined privacy loss across mechanisms |
 | tightness | إحكام | 0.9 | 1 | How close a bound is to optimal |
 | exponential mechanism | آلية الأسية | 0.9 | 1 | Exponential mechanism for DP |
+| happened before | حدث قبل | 0.95 | 1 | Lamport's causality relation (→) in distributed systems |
+| logical clock | ساعة منطقية | 0.95 | 1 | Counter-based clock for event ordering (Lamport clock) |
+| physical clock | ساعة فيزيائية | 0.95 | 1 | Actual time-keeping device with bounded drift |
+| partial ordering | ترتيب جزئي | 0.95 | 1 | Ordering where not all elements are comparable |
+| total ordering | ترتيب كامل | 0.95 | 1 | Complete ordering of all elements |
+| Lamport timestamp | طابع زمني لامبورت | 0.95 | 1 | Logical timestamp assigned using Lamport's algorithm |
+| concurrent events | أحداث متزامنة | 0.95 | 1 | Events with no causal relationship (neither a→b nor b→a) |
+| FIFO channel | قناة FIFO | 0.95 | 1 | First-in-first-out message channel |
+| space-time diagram | مخطط زمكاني | 0.90 | 1 | Diagram showing processes (space) and time |
+| irreflexive | لا انعكاسي | 0.90 | 1 | Relation where no element relates to itself |
+| transitive relation | علاقة متعدية | 0.95 | 1 | If a→b and b→c then a→c |
+| critical section | قسم حرج | 0.95 | 2 | Code region requiring mutual exclusion |
+| request queue | قائمة الطلبات | 0.95 | 1 | Queue for resource requests in mutual exclusion |
+| acknowledgment message | رسالة إقرار | 0.95 | 1 | Message confirming receipt |
+| clock drift | انحراف الساعة | 0.95 | 1 | Deviation of clock rate from true time (κ) |
+| network diameter | قطر الشبكة | 0.95 | 1 | Maximum distance between any two nodes |
+| clock synchronization | تزامن الساعات | 0.95 | 2 | Keeping clocks within bound ε of each other |
+| message delay | تأخير الرسالة | 0.95 | 1 | Time for message transmission |
+| causal ordering | ترتيب سببي | 0.95 | 1 | Ordering based on causality (happened before) |
+| global state | حالة عامة | 0.95 | 1 | Complete state of all processes in distributed system |
+| CNF | الصيغة العادية الارتباطية | 0.9 | 1 | Conjunctive Normal Form - conjunction of clauses |
+| literal | حرفي | 0.95 | 2 | Variable or its negation in propositional logic |
+| clause | عبارة | 0.95 | 3 | Disjunction of literals in CNF |
+| configuration | تشكيل | 0.9 | 2 | Instantaneous description of Turing machine state |
+| tape head | رأس الشريط | 0.95 | 2 | Read/write head position on Turing machine tape |
+| accepting state | حالة قبول | 0.95 | 3 | Turing machine state indicating acceptance |
+| time complexity | التعقيد الزمني | 0.95 | 4 | Computational time as function of input size |
+| space complexity | التعقيد المكاني | 0.95 | 2 | Memory usage as function of input size |
+| co-NP | co-NP | 1.0 | 1 | Complement complexity class of NP |
+| NP-hard | صعب بالنسبة لـ NP | 0.9 | 2 | At least as hard as hardest problems in NP |
+| clique | مجموعة كاملة | 0.9 | 2 | Fully connected subgraph |
+| vertex cover | غطاء رأسي | 0.9 | 1 | Set of vertices covering all edges |
+| Hamiltonian path | مسار هاميلتوني | 0.95 | 1 | Path visiting each vertex exactly once |
+| subgraph isomorphism | تشاكل الرسم البياني الفرعي | 0.9 | 1 | Determining if one graph is isomorphic to subgraph of another |
+| 3-SAT | 3-SAT | 1.0 | 1 | SAT with exactly 3 literals per clause |
+| truth assignment | إسناد الحقيقة | 0.95 | 3 | Assignment of truth values to propositional variables |
+| recognition problem | مسألة تعرف | 0.9 | 2 | Decision problem of recognizing language membership |
+| decision problem | مسألة قرار | 0.95 | 3 | Problem with yes/no answer |
+| polynomial degree | درجة متعددة الحدود | 0.9 | 1 | Equivalence class under polynomial reducibility |
+| worst-case complexity | تعقيد أسوأ الحالات | 0.95 | 2 | Complexity for hardest input of given size |
+| Cook-Levin theorem | نظرية كوك-ليفين | 0.95 | 1 | SAT is NP-complete (independently proven) |
+| polynomial-time bounded | محدود بزمن متعدد حدود | 0.9 | 2 | Runs in time polynomial in input size |
+| propositional formula | صيغة قضوية | 0.95 | 4 | Formula in propositional logic |
+| propositional variable | متغير قضوي | 0.95 | 2 | Boolean variable in propositional logic |
+| logical connective | رابط منطقي | 0.95 | 2 | Operator connecting propositions (and, or, not, implies) |
+| Turing reducibility | اختزال تورينغ | 0.9 | 1 | Classical oracle-based reducibility |
+| oracle call | استدعاء الأوراكل | 0.9 | 2 | Query to oracle in oracle computation |
+| graph matching | مطابقة الرسوم البيانية | 0.9 | 1 | Finding correspondences between graphs |
+| node cover | غطاء عقدي | 0.9 | 1 | Alternative term for vertex cover |
+| maximum clique | المجموعة الكاملة القصوى | 0.9 | 1 | Largest clique in graph |
+| minimum vertex cover | الغطاء الرأسي الأدنى | 0.9 | 1 | Smallest vertex cover |
+| satisfying assignment | إسناد مُرضي | 0.95 | 2 | Truth assignment that satisfies formula |
+| exhaustive search | بحث شامل | 0.95 | 1 | Checking all possibilities |
+| computational intractability | عدم القابلية للتعامل حسابياً | 0.85 | 1 | Inability to solve efficiently |
+| approximation algorithm | خوارزمية تقريب | 0.95 | 2 | Algorithm finding approximate solutions |
+| heuristic | استدلالي | 0.9 | 2 | Practical rule for problem solving |
+| intermediate complexity | تعقيد وسيط | 0.9 | 1 | Between P and NP-complete |
+| Karp reduction | اختزال كارب | 0.9 | 1 | Many-one polynomial reduction |
+| imperceptible | غير محسوس | 0.9 | 1 | Not detectable by human perception |
+| Lipschitz constant | ثابت ليبشيتز | 0.9 | 1 | Bound on function sensitivity to input changes |
+| operator norm | معيار المشغل | 0.9 | 1 | Largest singular value of an operator/matrix |
+| box-constrained optimization | تحسين مقيد بالصندوق | 0.85 | 1 | Optimization with box constraints |
+| cross-model generalization | التعميم عبر النماذج | 0.9 | 1 | Adversarial examples transferring across models |
+| cross-training-set generalization | التعميم عبر مجموعات التدريب | 0.88 | 1 | Adversarial examples transferring across training sets |
+| minimum distortion | الحد الأدنى من التشويه | 0.87 | 1 | Smallest perturbation needed for misclassification |
+| hard-negative mining | تعدين السلبيات الصعبة | 0.85 | 1 | Finding difficult negative examples for training |
+| weakly-supervised localization | التوطين الضعيف الإشراف | 0.82 | 1 | Localization with weak supervision |
+| smoothness prior | افتراض مسبق للنعومة | 0.83 | 1 | Prior assumption that function is smooth |
+| non-local generalization | تعميم غير محلي | 0.84 | 1 | Generalization across distant regions |
+| half-rectified layer | طبقة نصف مُصححة | 0.82 | 1 | Layer with ReLU activation |
+| contractive | انكماشي | 0.87 | 1 | Non-expanding mapping |
+| Parseval's formula | صيغة بارسيفال | 0.9 | 1 | Energy preservation in Fourier domain |
+| spatial kernel | النواة المكانية | 0.88 | 1 | Convolutional kernel |
+| spatial stride | خطوة مكانية | 0.88 | 1 | Stride in convolution |
+| 4-tensor | موتر 4 | 0.9 | 1 | Four-dimensional tensor |
+| frame bounds | حدود الإطار | 0.83 | 1 | Upper and lower bounds on frame |
+| adversarial negatives | السلبيات الخصامية | 0.88 | 1 | Alternative term for adversarial examples |
+| dense set | مجموعة كثيفة | 0.9 | 1 | Set dense in a space (like rationals in reals) |
+| held-out set | مجموعة محجوزة | 0.87 | 1 | Data set aside for validation |
+| natural basis | أساس طبيعي | 0.88 | 1 | Standard coordinate basis |
+| random direction | اتجاه عشوائي | 0.9 | 1 | Random vector in feature space |
+| basis vector | متجه الأساس | 0.9 | 1 | Vector in a basis |
+| semantic meaning | معنى دلالي | 0.88 | 1 | Interpretable meaning |
+| disjoint datasets | مجموعات بيانات منفصلة | 0.9 | 1 | Non-overlapping datasets |
+| learnable parameters | معاملات قابلة للتعلم | 0.88 | 1 | Trainable model parameters |
+| test case | حالة اختبار | 0.9 | 1 | Individual test example |
+| discontinuities | عدم استمرارية | 0.87 | 1 | Points where function is not continuous |
+| branching factor | عامل التفرع | 0.95 | 1 | Number of children per node in tree structure |
+| bulk loading | تحميل جماعي | 0.90 | 1 | Building tree from sorted data bottom-up |
+| cache locality | موضعية الذاكرة المؤقتة | 0.90 | 1 | Sequential access pattern that improves cache performance |
+| cache-oblivious | غافل عن الذاكرة المؤقتة | 0.85 | 1 | Algorithm unaware of cache size |
+| crash recovery | استرداد الأعطال | 0.92 | 1 | Restoring consistency after system failure |
+| degree | درجة | 0.95 | 1 | Another term for order in B-tree context |
+| eager deletion | حذف حريص | 0.88 | 1 | Immediately fixing underflow during deletion |
+| internal node | عقدة داخلية | 0.95 | 1 | Non-leaf node in tree structure |
+| key redistribution | إعادة توزيع المفاتيح | 0.92 | 1 | Borrowing keys from sibling to fix underflow |
+| latching | قفل | 0.90 | 2 | Locking mechanism for concurrent access |
+| lazy deletion | حذف كسول | 0.88 | 1 | Allowing temporary underflow, fixing later |
+| leaf node | عقدة ورقية | 0.95 | 1 | Terminal node in tree with no children |
+| linear search | بحث خطي | 0.95 | 1 | Sequential search through elements |
+| median key | مفتاح وسيط | 0.92 | 1 | Middle key used during node splitting |
+| minimum occupancy | الإشغال الأدنى | 0.90 | 1 | Minimum number of keys per node |
+| multi-version concurrency control | التحكم في التزامن متعدد النسخ | 0.85 | 1 | MVCC - maintaining multiple versions for concurrency |
+| node merging | دمج العقد | 0.92 | 1 | Combining two nodes into one during deletion |
+| node splitting | تقسيم العقدة | 0.92 | 1 | Dividing full node into two during insertion |
+| order | رتبة | 0.95 | 1 | Parameter k defining B-tree capacity (min k, max 2k keys) |
+| overflow | فيض | 0.90 | 2 | Node exceeding maximum capacity |
+| page | صفحة | 0.95 | 3 | Unit of data transfer to/from disk |
+| predecessor | سابق | 0.92 | 1 | Largest key smaller than given key |
+| promotion | ترقية | 0.90 | 1 | Moving key up to parent during split |
+| R-trees | أشجار R | 0.90 | 1 | Multi-dimensional variant of B-trees for spatial data |
+| range query | استعلام النطاق | 0.92 | 1 | Finding all keys in interval [a, b] |
+| random access | وصول عشوائي | 0.95 | 2 | Direct access to any data location |
+| rotational delay | تأخير دوراني | 0.92 | 1 | Time waiting for disk rotation |
+| secondary storage | تخزين ثانوي | 0.95 | 2 | Disk or drum storage vs. main memory |
+| seek time | وقت البحث | 0.92 | 1 | Time for disk head to move to track |
+| separator key | مفتاح الفاصل | 0.92 | 1 | Key separating ranges in parent node |
+| sequential access | وصول متسلسل | 0.95 | 1 | Accessing data in order |
+| storage efficiency | كفاءة التخزين | 0.92 | 1 | Percentage of allocated space actually used |
+| successor | لاحق | 0.92 | 1 | Smallest key larger than given key |
+| underflow | نقص | 0.90 | 1 | Node below minimum capacity |
+| write-ahead logging | سجل الكتابة المسبقة | 0.90 | 1 | WAL - logging changes before applying them |
+| gateway | بوابة | 0.95 | 9 | Intermediate system connecting networks |
+| internet | إنترنت | 1.0 | 15 | Network of networks |
+| host | مضيف | 0.95 | 12 | Computer connected to network |
+| port | منفذ | 0.95 | 10 | Communication endpoint identifier |
+| socket | مقبس | 0.95 | 8 | Internet address + port number |
+| TCP segment | مقطع TCP | 0.95 | 7 | TCP unit of data transmission |
+| fragmentation | تجزئة | 0.95 | 5 | Breaking packets into smaller pieces (networking) |
+| reassembly | إعادة التجميع | 0.95 | 5 | Reconstructing original packet from fragments |
+| sequence number | رقم تسلسلي | 0.95 | 8 | Byte sequence identifier in TCP |
+| acknowledgment | إقرار | 0.95 | 10 | Confirmation of data receipt |
+| window | نافذة | 0.95 | 8 | Flow control mechanism in TCP |
+| window size | حجم النافذة | 0.95 | 6 | Amount of data receiver can accept |
+| checksum | مجموع فحص | 0.95 | 6 | Error detection field |
+| retransmission | إعادة الإرسال | 0.95 | 8 | Resending lost or corrupted data |
+| timeout | مهلة زمنية | 0.95 | 7 | Time limit for operation |
+| routing table | جدول التوجيه | 0.95 | 5 | Table mapping destinations to next hops |
+| connection state | حالة الاتصال | 0.95 | 6 | Information maintained about connection |
+| three-way handshake | مصافحة ثلاثية | 0.95 | 3 | TCP connection establishment (SYN, SYN-ACK, ACK) |
+| four-way handshake | مصافحة رباعية | 0.95 | 3 | TCP connection termination (FIN, ACK, FIN, ACK) |
+| end-to-end | من طرف إلى طرف | 0.95 | 6 | Between ultimate source and destination |
+| round-trip time | وقت الرحلة ذهاباً وإياباً | 0.95 | 5 | RTT - time for packet to destination and back |
+| congestion control | التحكم في الازدحام | 0.95 | 4 | Mechanism to prevent network overload |
+| flow control | التحكم في التدفق | 0.95 | 7 | Preventing sender from overwhelming receiver |
+| best-effort delivery | التسليم بأفضل جهد | 0.90 | 3 | Unreliable datagram service |
+| datagram | مخطط بيانات | 0.90 | 4 | Self-contained packet |
+| full-duplex | كامل الازدواجية | 0.90 | 3 | Simultaneous bidirectional communication |
+| half-duplex | نصف الازدواجية | 0.90 | 2 | Alternating direction communication |
+| Maximum Segment Size | الحد الأقصى لحجم المقطع | 0.95 | 3 | MSS - largest segment size |
+| initial sequence number | رقم التسلسل الأولي | 0.95 | 3 | ISN - starting sequence number |
+| urgent pointer | مؤشر العاجل | 0.90 | 2 | Points to urgent data in TCP |
+| PUSH flag | علم الدفع | 0.90 | 2 | TCP flag for immediate delivery |
+| SYN flag | علم المزامنة | 0.95 | 3 | TCP synchronization flag |
+| FIN flag | علم الإنهاء | 0.95 | 3 | TCP finish flag |
+| ACK flag | علم الإقرار | 0.95 | 4 | TCP acknowledgment flag |
+| RST flag | علم إعادة التعيين | 0.90 | 2 | TCP reset flag |
+| internetwork | شبكة مترابطة | 0.90 | 4 | Network of interconnected networks |
+| packet switching | تبديل الحزم | 0.95 | 8 | Network technique using packets |
+| local network protocol | بروتوكول الشبكة المحلية | 0.90 | 3 | Protocol for single network |
+| internet protocol | بروتوكول الإنترنت | 0.95 | 6 | IP - network layer protocol |
+| end-to-end principle | مبدأ طرف إلى طرف | 0.90 | 3 | Reliability at endpoints not in network |
+| group privacy | الخصوصية الجماعية | 0.9 | 1 | Privacy guarantees for groups of individuals |
+| centered random variable | متغير عشوائي مركز | 0.88 | 1 | Random variable with mean subtracted |
+| Taylor expansion | تطوير تايلور | 0.9 | 1 | Series expansion of function around point |
+| Taylor series | متسلسلة تايلور | 0.9 | 1 | Infinite sum representation of function |
+| moment generating function | دالة توليد العزوم | 0.87 | 1 | Function characterizing probability distribution |
+| induction | استقراء | 0.95 | 1 | Mathematical proof technique |
+| mathematical induction | الاستقراء الرياضي | 0.95 | 1 | Proof by induction |
+| Cauchy-Schwartz inequality | متباينة كوشي-شفارتز | 0.85 | 1 | Fundamental inequality in analysis |
+| Jensen's inequality | متباينة جنسن | 0.85 | 1 | Inequality for convex functions |
+| recursive relation | علاقة تكرارية | 0.9 | 1 | Equation defined in terms of itself |
+| midpoint database | قاعدة بيانات نقطة وسط | 0.85 | 1 | Database intermediate between two others |
+| privacy loss random variable | متغير خسارة الخصوصية العشوائي | 0.88 | 2 | Random variable measuring privacy loss |
+| experience replay | إعادة تشغيل الخبرة | 0.9 | 1 | DQN technique for breaking temporal correlations |
+| replay memory | ذاكرة إعادة التشغيل | 0.9 | 1 | Buffer storing past experiences for replay |
+| Q-network | شبكة-Q | 0.9 | 1 | Neural network approximating Q-value function |
+| action-value function | دالة قيمة الإجراء | 0.9 | 1 | Q-function mapping state-action pairs to values |
+| Bellman equation | معادلة بيلمان | 0.95 | 1 | Fundamental equation in dynamic programming and RL |
+| epsilon-greedy | إبسيلون-جشعة | 0.9 | 1 | Exploration strategy mixing greedy and random actions |
+| discounted return | العائد المخصوم | 0.9 | 1 | Future rewards weighted by discount factor |
+| value iteration | تكرار القيمة | 0.9 | 1 | Dynamic programming algorithm for computing optimal values |
+| function approximator | مقرب دالي | 0.85 | 1 | Function representing another function approximately |
+| behaviour distribution | توزيع السلوك | 0.85 | 1 | Distribution over states and actions during training |
+| model-free | خالية من النموذج | 0.9 | 1 | RL without explicit environment model |
+| off-policy | خارج السياسة | 0.85 | 1 | Learning about policy different from behavior policy |
+| on-policy | على السياسة | 0.85 | 1 | Learning about the policy being followed |
+| greedy strategy | استراتيجية جشعة | 0.9 | 1 | Always selecting action with highest value |
+| perceptually aliased | مستعارة إدراكيًا | 0.75 | 1 | States that appear identical but are different |
+| frame-skipping | تخطي الإطارات | 0.9 | 1 | Repeating actions over multiple frames |
+| minibatch | مجموعة صغيرة | 0.9 | 1 | Small batch of training samples |
+| rectifier | مُقوِّمة | 0.9 | 1 | ReLU activation function |
+| target network | الشبكة الهدف | 0.9 | 1 | Periodically updated network for stable targets |
+| ablation study | دراسة استئصال | 0.9 | 1 | Removing components to test their importance |
+| annealing | التناقص | 0.9 | 1 | Gradually reducing a parameter value |
+| hyperparameter tuning | ضبط المعاملات الفائقة | 0.9 | 1 | Optimizing hyperparameters |
+| grid search | بحث شبكي | 0.9 | 1 | Exhaustive search over hyperparameter space |
+| heat map | خريطة حرارية | 0.9 | 1 | Visual representation using color gradients |
+| overfitting | الإفراط في التجهيز | 0.9 | 1 | Model fitting training data too closely |
+| edge detector | كاشف الحواف | 0.9 | 1 | Feature detector for image edges |
+| blob detector | كاشف النقط | 0.85 | 1 | Feature detector for blob-like patterns |
+| super-human performance | أداء فائق على البشر | 0.9 | 1 | AI performance exceeding human experts |
+| transfer learning | التعلم بالنقل | 0.9 | 1 | Applying knowledge from one task to another |
+| trial and error | التجربة والخطأ | 0.95 | 1 | Learning by trying and adjusting |
+| domain knowledge | المعرفة بالمجال | 0.9 | 1 | Expert knowledge about specific domain |
+| internal representation | تمثيل داخلي | 0.9 | 1 | Hidden features learned by model |
+| exploration strategy | استراتيجية استكشاف | 0.9 | 1 | Method for exploring state-action space |
+| autonomous navigation | الملاحة المستقلة | 0.9 | 1 | Self-guided movement through environment |
+| conventional wisdom | الحكمة التقليدية | 0.85 | 1 | Commonly accepted beliefs |
+| frame rate | معدل الإطارات | 0.95 | 1 | Frames per second in video/animation |
+| Markov decision process | عملية قرار ماركوف | 0.95 | 1 | MDP - mathematical framework for sequential decisions |
+| feedback loop | حلقة ردود فعل | 0.9 | 1 | System where output affects input |
+| prioritized sweeping | المسح ذي الأولوية | 0.8 | 1 | RL technique prioritizing important updates |
+| temporal correlation | الارتباط الزمني | 0.9 | 1 | Correlation between sequential observations |
+| non-stationary distribution | توزيع غير ثابت | 0.85 | 1 | Distribution that changes over time |
+| tuple | صف | 0.95 | 1 | Row in a relation (n-tuple) |
+| domain (database) | نطاق | 0.95 | 1 | Set of possible values for an attribute |
+| cardinality | العددية | 0.9 | 2 | Number of tuples in a relation |
+| degree | درجة | 0.9 | 1 | Number of attributes in a relation |
+| projection (database) | إسقاط | 0.95 | 1 | Selecting columns from a relation |
+| selection (database) | تحديد | 0.95 | 1 | Selecting rows from a relation based on condition |
+| restriction | تقييد | 0.9 | 1 | Another term for selection |
+| natural join | ربط طبيعي | 0.95 | 1 | Join operation matching common attributes |
+| superkey | مفتاح فائق | 0.9 | 1 | Set of attributes that uniquely identifies tuples |
+| referential integrity | سلامة المراجع | 0.95 | 1 | Foreign key values must match primary key values |
+| first normal form | الشكل الطبيعي الأول | 0.95 | 1 | 1NF - all attributes atomic |
+| second normal form | الشكل الطبيعي الثاني | 0.95 | 1 | 2NF - in 1NF plus full functional dependency |
+| third normal form | الشكل الطبيعي الثالث | 0.95 | 1 | 3NF - in 2NF plus no transitive dependencies |
+| BCNF | BCNF | 0.9 | 1 | Boyce-Codd Normal Form |
+| lossless decomposition | تحليل بدون فقدان | 0.95 | 1 | Decomposition preserving all information |
+| base relation | علاقة أساسية | 0.95 | 1 | Stored relation representing fundamental facts |
+| derived relation | علاقة مشتقة | 0.95 | 1 | Relation computed from base relations |
+| view (database) | عرض | 0.95 | 1 | Virtual relation derived from base relations |
+| materialized view | عرض مادي | 0.95 | 1 | Stored derived relation |
+| relational algebra | جبر علائقي | 0.95 | 1 | Mathematical operations on relations |
+| relational calculus | حساب علائقي | 0.9 | 1 | Declarative query language for relations |
+| relational completeness | اكتمال علائقي | 0.9 | 1 | Language as powerful as relational algebra |
+| functional dependency | تبعية وظيفية | 0.95 | 1 | Attribute values determine other attribute values |
+| multivalued dependency | تبعية متعددة القيم | 0.9 | 1 | Attribute determines set of values for another |
+| join dependency | تبعية الربط | 0.9 | 1 | Relation can be losslessly decomposed |
+| update anomaly | شذوذ التحديث | 0.95 | 1 | Inconsistency from redundant data updates |
+| insertion anomaly | شذوذ الإدراج | 0.95 | 1 | Cannot insert data without unrelated data |
+| deletion anomaly | شذوذ الحذف | 0.95 | 1 | Deleting data loses other independent facts |
+| data independence | استقلالية البيانات | 0.95 | 1 | Applications insulated from data structure changes |
+| logical data independence | استقلالية البيانات المنطقية | 0.95 | 1 | Independence from logical schema changes |
+| physical data independence | استقلالية البيانات الفيزيائية | 0.95 | 1 | Independence from physical storage changes |
+| universal data sublanguage | لغة فرعية عامة للبيانات | 0.9 | 1 | General-purpose database query/manipulation language |
+| domain constraint | قيد النطاق | 0.95 | 1 | Constraint on attribute value ranges |
+| transitive closure | إغلاق متعدي | 0.9 | 1 | Finding all indirect relationships |
+| canonical ordering | ترتيب أساسي | 0.85 | 1 | Standard ordering for relations |
+| clustering (database) | تجميع | 0.9 | 1 | Physical ordering of data for performance |
+| denormalization | إلغاء التطبيع | 0.95 | 1 | Introducing redundancy for performance |
+| data sublanguage | لغة فرعية للبيانات | 0.9 | 1 | Language for database operations |
+| expressible relation | علاقة قابلة للتعبير | 0.85 | 1 | Relation definable using relational operations |
+| named relation | علاقة مسماة | 0.9 | 1 | Relation with assigned name known to system |
+| stored relation | علاقة مخزنة | 0.95 | 1 | Relation physically stored in database |
+| algebra of programs | جبر البرامج | 0.88 | 1 | Algebraic laws for program transformation (Backus 1978) |
+| applicative programming | البرمجة التطبيقية | 0.85 | 1 | Programming based on function application |
+| applicative state transition | الانتقال الحالي التطبيقي | 0.86 | 1 | Functional approach to state management (AST) |
+| AST systems | أنظمة AST | 0.86 | 1 | Applicative State Transition systems |
+| atoms | الذرات | 0.9 | 1 | Basic indivisible objects in FP systems |
+| composition operator | معامل التركيب | 0.88 | 1 | Operator (∘) for function composition |
+| conditional expression | تعبير شرطي | 0.87 | 1 | Expression that evaluates conditionally |
+| construction operator | معامل البناء | 0.87 | 1 | Operator ([f,g,h]) for building vector of results |
+| deforestation | إزالة الغابات | 0.8 | 1 | Optimization eliminating intermediate tree structures |
+| equational reasoning | الاستدلال المعادلاتي | 0.88 | 1 | Reasoning using algebraic equations |
+| FFP systems | أنظمة FFP | 0.87 | 1 | Formal Functional Programming systems |
+| FP systems | أنظمة FP | 0.89 | 1 | Functional Programming systems (Backus) |
+| function-level programming | البرمجة على مستوى الدوال | 0.87 | 1 | Programming with operations on entire functions |
+| functional form | شكل وظيفي | 0.88 | 1 | Higher-order function combinator |
+| fusion | الدمج | 0.85 | 1 | Optimization eliminating intermediate data structures |
+| history-sensitive | حساس للتاريخ | 0.84 | 1 | Functions that can access previous states |
+| insert/reduce | الإدراج/الاختزال | 0.87 | 1 | FP operator (/) for reduction |
+| linear function | دالة خطية | 0.88 | 1 | Function satisfying f∘[g,h]=[f∘g,f∘h] |
+| meta-function | دالة ميتا | 0.85 | 1 | Function operating on function representations |
+| meta-programming | برمجة ميتا | 0.86 | 1 | Programs that manipulate other programs |
+| persistent data structure | بنية بيانات مستمرة | 0.88 | 1 | Immutable data structure preserving old versions |
+| program counter | عداد البرنامج | 0.9 | 1 | Register tracking current instruction |
+| selector function | دالة اختيار | 0.89 | 1 | Function selecting element from sequence (1,2,3...) |
+| sequences | المتتاليات | 0.9 | 1 | Ordered collections in FP systems |
+| state space | فضاء الحالة | 0.87 | 1 | Set of all possible states in AST system |
+| state transition function | دالة انتقال الحالة | 0.88 | 1 | Function computing next state from current state |
+| von Neumann bottleneck | عنق زجاجة فون نيومان | 0.89 | 1 | Limitation of sequential word-at-a-time architecture |
+| von Neumann computer | حاسوب فون نيومان | 0.9 | 1 | Traditional sequential architecture with shared memory |
+| word-at-a-time | كلمة بكلمة | 0.88 | 1 | Sequential operation on individual memory words |
