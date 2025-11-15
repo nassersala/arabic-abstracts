@@ -13,6 +13,7 @@
 | ACID | خصائص ACID | 0.9 | 1 | Atomicity, Consistency, Isolation, Durability |
 | actegory | فئة الفعل | 0.8 | 1 | Action category structure |
 | adaptive | تكيفية | 0.9 | 1 | Adaptive methods |
+| activation function | دالة التنشيط | 0.95 | 1 | Non-linear function in neural networks |
 | adaptive optimization | تحسين تكيفي | 0.9 | 1 | Runtime adaptive optimization |
 | additive category | فئة جمعية | 0.9 | 1 | Additive category |
 | address space | فضاء عنونة | 0.9 | 2 | Virtual memory addressing |
@@ -24,6 +25,7 @@
 | affine monad | موناد أفيني | 0.7 | 1 | Affine monad structure |
 | affine spline | شرائح أفينية | 0.7 | 1 | Affine spline functions |
 | affordance | إمكانات | 0.8 | 1 | Action affordances |
+| affine transformation | تحويل أفيني | 0.95 | 1 | Linear transformation followed by translation |
 | agency | فاعلية | 0.8 | 1 | Human agency in quantum physics |
 | aggregation | تجميع | 0.9 | 1 | Data aggregation |
 | algebraic | جبري | 0.9 | 5 | Algebraic mathematics |
@@ -84,6 +86,7 @@
 | B-tree | شجرة B | 0.95 | 1 | Balanced tree data structure |
 | backpropagation | الانتشار العكسي | 0.9 | 1 | Gradient backpropagation |
 | baseline | خط الأساس | 0.9 | 3 | Reference point for comparison |
+| backward pass | المرور العكسي | 0.9 | 1 | Backpropagation phase in neural network training |
 | Bayesian inverse problem | مسألة بايزية عكسية | 0.8 | 1 | Bayesian inverse problems |
 | Bayesian optimization | التحسين البايزي | 0.8 | 1 | Bayesian optimization method |
 | benchmark | معيار | 0.9 | 14 | Performance evaluation |
@@ -125,6 +128,7 @@
 | camera pose | وضعية الكاميرا | 0.8 | 1 | Camera pose estimation |
 | caption | تسمية نصية | 0.85 | 1 | Text caption for images |
 | cardinality | العددية | 0.9 | 1 | Number of distinct elements in a set |
+| carry gate | بوابة الحمل | 0.9 | 1 | Gate that controls information passing in highway networks |
 | Cartesian closed | ديكارتي مغلق | 0.9 | 2 | Cartesian closed |
 | Cartesian Merkle tree | شجرة ميركل الديكارتية | 0.9 | 1 | Merkle tree with BST and heap properties |
 | case table | جدول حالات | 0.85 | 1 | Lookup table for algorithm cases |
@@ -426,6 +430,7 @@
 | formalization | الصياغة الرسمية | 0.9 | 11 | Making formal |
 | foundation | أساس | 0.9 | 4 | Foundational basis |
 | Fourier series | متسلسلة فورييه | 0.9 | 1 | Complex Fourier series |
+| forward pass | المرور الأمامي | 0.9 | 1 | Forward propagation in neural networks |
 | FPGA | مصفوفات البوابات القابلة للبرمجة | 0.9 | 10 | Field-Programmable Gate Array |
 | fps | إطار في الثانية | 1.0 | 1 | Frames per second |
 | fragment | جزء | 0.9 | 2 | Code fragment |
@@ -489,6 +494,7 @@
 | high-level synthesis | التوليف عالي المستوى | 0.8 | 1 | HLS for hardware design |
 | higher-kinded | عالي النوع | 0.8 | 1 | Type constructor taking type constructors |
 | higher-order | من الرتبة العليا | 0.9 | 8 | Higher-order functions |
+| highway networks | شبكات الطرق السريعة | 0.9 | 1 | Deep learning architecture with gating mechanisms |
 | Hilbert space | فضاء هيلبرت | 0.9 | 1 | Mathematical foundation of quantum mechanics |
 | histogram | رسم بياني هيستوغرامي | 0.8 | 1 | Histogram data structure |
 | historical state | حالة تاريخية | 0.8 | 1 | Historical state data |
@@ -922,6 +928,7 @@
 | recoverable | قابل للاسترداد | 0.9 | 1 | Can be recovered after failure |
 | recovery (database) | استرداد | 0.9 | 1 | Database recovery process |
 | rectangle | مستطيل | 1.0 | 2 | Geometric rectangle |
+| rectified linear | خطي مقوم | 0.9 | 1 | ReLU activation function |
 | recurrent neural network | الشبكة العصبية المتكررة | 0.9 | 2 | RNN architecture |
 | recursive | عودي | 0.9 | 1 | Recursive function or definition |
 | redo | إعادة | 0.9 | 1 | Redo operation in recovery |
@@ -1142,6 +1149,7 @@
 | transaction-based | قائم على المعاملات | 0.9 | 1 | Based on transactions |
 | transactional memory | ذاكرة معاملات | 0.9 | 2 | Transactional memory system |
 | transfer (ML) | نقل | 0.9 | 1 | Transfer of learned knowledge to new tasks |
+| transform gate | بوابة التحويل | 0.9 | 1 | Gate that controls transformation in highway networks |
 | transfer learning | التعلم بالنقل | 0.9 | 2 | Transfer learning technique |
 | transferability | قابلية النقل | 0.8 | 1 | Ability to transfer across contexts |
 | transformer | محول | 0.9 | 14 | Deep learning architecture |
@@ -1282,3 +1290,35 @@
 | sparse maps | خرائط متفرقة | 0.85 | 1 | Feature maps with many zero values |
 | transfer learning | التعلم بالنقل | 0.95 | 2 | Using pre-trained models for new tasks |
 | volumetric data | البيانات الحجمية | 0.9 | 1 | 3D volumetric data representation |
+| anchor (triplet) | المرساة | 0.9 | 1 | Anchor image in triplet loss |
+| backward compatibility | التوافق العكسي | 0.9 | 1 | Compatibility with older versions |
+| bottleneck layer | طبقة الاختناق | 0.9 | 1 | Intermediate layer with reduced dimensionality |
+| collapsed model | نموذج منهار | 0.85 | 1 | Model that outputs zero or constant values |
+| contrastive loss | خسارة تباينية | 0.9 | 1 | Loss function for comparing pairs |
+| face clustering | تجميع الوجوه | 0.95 | 1 | Grouping similar faces together |
+| face recognition | التعرف على الوجوه | 0.95 | 1 | Identifying individuals from facial features |
+| face verification | التحقق من الوجوه | 0.95 | 1 | Verifying if two faces belong to same person |
+| false accept rate | معدل القبول الخاطئ | 0.9 | 1 | FAR - rate of incorrectly accepting impostor pairs |
+| frame-level verification | التحقق على مستوى الإطار | 0.85 | 1 | Verification using single video frames |
+| hard negative | سلبي صعب | 0.85 | 1 | Negative example that is hardest to distinguish |
+| hard positive | إيجابي صعب | 0.85 | 1 | Positive example that is hardest to match |
+| harmonic embeddings | التضمينات التوافقية | 0.85 | 1 | Embeddings with compatibility across dimensions |
+| hold-out test set | مجموعة الاختبار المحتفظ بها | 0.9 | 1 | Test set separated from training data |
+| hypersphere | الكرة الفائقة | 0.85 | 1 | High-dimensional sphere surface |
+| impostor pairs | أزواج المحتالين | 0.85 | 1 | Pairs of faces from different people |
+| k-NN classification | تصنيف k-NN | 0.9 | 1 | k-Nearest Neighbors classification |
+| landmarks | المعالم | 0.9 | 1 | Facial landmarks or keypoints |
+| margin-based loss | الخسارة القائمة على الهامش | 0.9 | 1 | Loss function with enforced margin |
+| mini-batch | الدفعة الصغيرة | 0.95 | 1 | Small batch of training examples |
+| negative pair | زوج سلبي | 0.9 | 1 | Pair of dissimilar examples |
+| online triplet mining | التعدين الثلاثي المتصل | 0.85 | 1 | Selecting triplets during training |
+| pairwise accuracy | الدقة الزوجية | 0.9 | 1 | Accuracy on pairs of examples |
+| positive pair | زوج إيجابي | 0.9 | 1 | Pair of similar examples |
+| semi-hard negative | سلبي شبه صعب | 0.85 | 1 | Negative harder than anchor-positive but with positive loss |
+| set-wise accuracy | الدقة على مستوى المجموعة | 0.85 | 1 | Accuracy computed over sets of examples |
+| Siamese architecture | معمارية سيامية | 0.9 | 1 | Network with shared weights processing pairs |
+| similarity transform | تحويل التشابه | 0.9 | 1 | Transformation preserving shape |
+| state-of-the-art | متطور | 0.95 | 1 | Best current performance |
+| triplet loss | الخسارة الثلاثية | 0.9 | 1 | Loss function using anchor, positive, and negative |
+| truncated embedding | التضمين المقتطع | 0.85 | 1 | Embedding using only first k dimensions |
+| validation rate | معدل التحقق | 0.9 | 1 | Rate of correct validation |

@@ -9,8 +9,8 @@
 **DOI:** 10.1109/CVPR.2015.7298965
 **PDF:** https://arxiv.org/pdf/1411.4038.pdf
 
-**Abstract Translation Quality:** TBD
-**Full Paper Translation Quality:** TBD
+**Abstract Translation Quality:** 0.89
+**Full Paper Translation Quality:** 0.877
 
 ## Citation
 
@@ -28,7 +28,7 @@
 - Translator: Claude Code AI Assistant
 - Reviewer: TBD
 - Started: 2025-11-15
-- Completed: TBD
+- Completed: 2025-11-15
 
 ## Paper Overview
 
