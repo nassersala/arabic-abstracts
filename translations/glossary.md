@@ -1252,3 +1252,33 @@
 | latent feature | ميزة كامنة | 0.9 | 1 | Hidden representation learned by model |
 | user-item interaction | التفاعل بين المستخدم والعنصر | 0.8 | 1 | Interaction between user and item |
 | non-linearity | لاخطية | 0.9 | 1 | Non-linear transformation |
+| bilinear interpolation | الاستيفاء ثنائي الخطي | 0.9 | 1 | Interpolation using bilinear method for upsampling |
+| boundary delineation | تحديد الحدود | 0.9 | 3 | Accurate boundary localization in segmentation |
+| boundary F1-measure | مقياس F1 للحدود | 0.9 | 1 | Metric for boundary accuracy |
+| class imbalance | عدم توازن الفئات | 0.9 | 1 | Unequal distribution of classes in dataset |
+| conditional random fields | الحقول العشوائية الشرطية | 0.9 | 1 | CRF for structured prediction |
+| cross-modal attention | الانتباه عبر الأنماط | 0.85 | 1 | Attention mechanism across different modalities |
+| dense feature maps | خرائط ميزات كثيفة | 0.9 | 1 | Feature maps with all values populated |
+| edge devices | أجهزة الحافة | 0.9 | 1 | Computing devices at network edge |
+| height above ground | الارتفاع عن الأرض | 0.9 | 1 | Vertical distance from ground plane |
+| HHA encoding | ترميز HHA | 0.85 | 1 | Horizontal disparity, Height, Angle encoding for depth |
+| horizontal disparity | التفاوت الأفقي | 0.85 | 1 | Horizontal pixel displacement in stereo vision |
+| intra-class variation | التباين داخل الفئة | 0.9 | 1 | Variation within same class |
+| knowledge distillation | التقطير المعرفي | 0.9 | 1 | Transferring knowledge from large to small model |
+| median frequency balancing | موازنة التردد الوسيط | 0.85 | 1 | Class balancing using median frequency |
+| memory footprint | البصمة الذاكرية | 0.9 | 1 | Amount of memory consumed |
+| multi-modal input | المدخلات متعددة الأنماط | 0.9 | 1 | Input from multiple modalities (RGB, depth, etc.) |
+| multi-scale feature fusion | دمج الميزات متعدد المقاييس | 0.85 | 1 | Combining features from multiple scales |
+| neural architecture search | البحث عن المعمارية العصبية | 0.9 | 1 | Automated search for optimal network architecture |
+| non-linear upsampling | ارتقاء غير خطي | 0.9 | 1 | Upsampling using non-linear operations |
+| per-class IoU | IoU لكل فئة | 0.9 | 1 | Intersection over Union calculated per class |
+| point clouds | سحب النقاط | 0.9 | 1 | 3D point cloud data |
+| pooling indices | مؤشرات التجميع | 0.95 | 3 | Indices from max-pooling operation |
+| quantization | التكميم | 0.9 | 1 | Reducing numerical precision for efficiency |
+| receptive field | مجال الاستقبال | 0.9 | 1 | Region of input that affects a neuron |
+| resource-constrained platforms | المنصات ذات الموارد المحدودة | 0.85 | 1 | Platforms with limited computational resources |
+| RGB-D sensors | مستشعرات RGB-D | 0.95 | 2 | Sensors capturing RGB and depth information |
+| shortcut connections | اتصالات مختصرة | 0.9 | 1 | Skip connections in neural networks |
+| sparse maps | خرائط متفرقة | 0.85 | 1 | Feature maps with many zero values |
+| transfer learning | التعلم بالنقل | 0.95 | 2 | Using pre-trained models for new tasks |
+| volumetric data | البيانات الحجمية | 0.9 | 1 | 3D volumetric data representation |

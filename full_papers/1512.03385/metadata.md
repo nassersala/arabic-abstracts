@@ -10,7 +10,7 @@
 **PDF:** https://arxiv.org/pdf/1512.03385.pdf
 
 **Abstract Translation Quality:** 0.91 (from translations/)
-**Full Paper Translation Quality:** TBD
+**Full Paper Translation Quality:** 0.88 (completed)
 
 ## Citation
 
@@ -28,7 +28,7 @@
 - Translator: Claude (Session: 01BQsyKEx9ZBycrhgieoDZuk)
 - Reviewer: TBD
 - Started: 2025-11-14
-- Completed: TBD
+- Completed: 2025-11-14
 
 ## Paper Significance
 
