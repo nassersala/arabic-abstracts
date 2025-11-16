@@ -1,0 +1,16 @@
+We have presented an approach for learning from suboptimal experts for complex dexterous robotic
+manipulation. We demonstrated that our algorithm, Relative Entropy Q-Learning (REQ), is effective
+in many different learning scenarios – including off-policy and ofﬂine RL as well as RL from demon-
+stration (RLfD). In addition, our proposed approach for Reinforcement Learning from Suboptimal
+Experts (RLfSE), signiﬁcantly outperforms competitive baselines. In particular, REQfSE leverages
+intertwining exploration to solve highly complex tasks that are otherwise intractable. To achieve
+this, we proposed using waypoint tracking controllers as the suboptimal experts. We argue that this
+approach can provide an intuitive and simple interface for humans to specify the desired behaviors
+for the task without requiring human demonstrations or engineering shaped reward functions.
+8Acknowledgments
+We would like to thank Abbas Abdolmaleki, Akhil Raju, Antoine Laurens, Charles Game, Ce-
+line Smith, Christopher Schuster, Claudio Fantacci, Dave Barker, David Khosid, Emre Karagozler,
+Federico Casarini, Francesco Romano, Giulia Vezzani, Jon Scholz, Jose Enrique Chen, Michael
+Neunert, Murilo Martins, Nathan Batchelor, Nicole Hurley, Nimrod Gileadi, Nylda Adelise, Oleg
+Sushkov, Stefano Saliceti, Thomas Lampe, Thomas Roth ¨orl, Tom Erez, Tuomas Haarnoja and Yuval
+Tassa for fruitful discussion and support.
