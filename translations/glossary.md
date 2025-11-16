@@ -2064,3 +2064,188 @@
 | physically-based rendering | التقديم القائم على الفيزياء | 0.9 | 3 | Rendering respecting physics of light |
 | coherence | تماسك | 0.85 | 3 | Similarity/correlation exploitable for optimization |
 | spatial coherence | تماسك مكاني | 0.85 | 1 | Nearby pixels/rays behaving similarly |
+| contrastive learning | التعلم التبايني | 0.9 | 1 | Learning by contrasting positive and negative examples |
+| prompt engineering | هندسة التوجيهات | 0.85 | 1 | Designing text prompts to improve model performance |
+| linear probe | المسبار الخطي | 0.85 | 1 | Linear classifier trained on frozen features |
+| multi-modal embedding | تضمين متعدد الأنماط | 0.9 | 1 | Joint embedding space for multiple modalities |
+| symmetric cross entropy | الإنتروبيا المتقاطعة المتماثلة | 0.9 | 1 | Bidirectional cross-entropy loss |
+| N-pair loss | خسارة N-pair | 0.85 | 1 | Contrastive loss over N pairs |
+| prompt ensembling | تجميع التوجيهات | 0.85 | 1 | Averaging predictions over multiple prompts |
+| paradigm shift | تحول نموذجي | 0.9 | 1 | Fundamental change in approach |
+| task-agnostic | مستقل عن المهمة | 0.9 | 1 | Not specific to any particular task |
+| compositionality | التركيبية | 0.85 | 1 | Ability to combine concepts |
+| democratizing | إضفاء الطابع الديمقراطي | 0.85 | 1 | Making accessible to everyone |
+| foundation model | نموذج أساسي | 0.9 | 1 | Large pretrained model serving as foundation |
+| cosine similarity | تشابه جيب التمام | 0.9 | 1 | Similarity measure using cosine of angle |
+| vision transformer | محول الرؤية | 0.9 | 1 | Transformer architecture for image processing |
+| batch size | حجم الدفعة | 0.9 | 1 | Number of samples processed together |
+| learning rate schedule | جدول معدل التعلم | 0.9 | 1 | Strategy for adjusting learning rate |
+| decoupled weight decay | اضمحلال الأوزان المفصول | 0.85 | 1 | Weight decay separate from gradient update |
+| patch size | حجم الرقعة | 0.9 | 1 | Size of image patches in Vision Transformer |
+| context length | طول السياق | 0.9 | 1 | Maximum sequence length for text |
+| vocab size | حجم المفردات | 0.9 | 1 | Number of tokens in vocabulary |
+| asymmetric attention | انتباه غير متماثل | 0.85 | 1 | Attention where Q comes from different input than K,V (Perceiver) |
+| latent bottleneck | عنق زجاجة كامن | 0.85 | 1 | Compressed latent representation (Perceiver architecture) |
+| Fourier features | ميزات فورييه | 0.85 | 1 | Position encoding using sine/cosine at multiple frequencies |
+| permutation invariance | عدم التباين التبديلي | 0.8 | 1 | Property of being invariant to input ordering |
+| space-time patches | رقع المكان-الزمان | 0.85 | 1 | Video patches across spatial and temporal dimensions |
+| video dropout | إسقاط الفيديو | 0.8 | 1 | Regularization technique zeroing video input during training |
+| inducing points | نقاط الاستحثاث | 0.75 | 1 | Learnable points for efficient attention (Set Transformer) |
+| general-purpose architecture | معمارية عامة الغرض | 0.9 | 1 | Architecture designed for multiple tasks/modalities |
+| modality-agnostic | مستقل عن النمط | 0.85 | 1 | Not dependent on specific input modality |
+| cross-modal reasoning | استدلال عبر الأنماط | 0.85 | 1 | Reasoning across different input modalities |
+| mel-spectrogram | طيف ميل | 0.9 | 1 | Audio representation using mel-frequency scale |
+| mean average precision | متوسط الدقة المتوسطة | 0.9 | 1 | mAP metric for multi-label classification |
+| late fusion | الدمج المتأخر | 0.9 | 1 | Combining modality features after separate processing |
+| computation scaffold | هيكل حسابي | 0.8 | 1 | General computational framework/structure |
+| Cartesian differential category | الفئة التفاضلية الديكارتية | 0.85 | 1 | Category theory concept for differentiation |
+| reverse derivative | المشتقة العكسية | 0.85 | 1 | Reverse-mode differentiation |
+| optics | البصريات | 0.85 | 1 | General construction for bidirectional processes |
+| lens | عدسة | 0.85 | 1 | Bidirectional accessor pattern |
+| learner | متعلم | 0.85 | 1 | Machine learning model in categorical setting |
+| Markov category | فئة ماركوف | 0.85 | 1 | Categorical framework for probability |
+| channel | قناة | 0.85 | 1 | Probabilistic morphism |
+| joint distribution | التوزيع المشترك | 0.9 | 1 | Probability over multiple variables |
+| marginalization | التهميش | 0.85 | 1 | Integrating out variables |
+| conditional | شرطي | 0.9 | 1 | Conditional probability |
+| Bayesian inverse | المعكوس البايزي | 0.85 | 1 | Bayesian inversion |
+| epistemic uncertainty | عدم اليقين المعرفي | 0.85 | 1 | Uncertainty due to lack of knowledge |
+| aleatoric uncertainty | عدم اليقين العشوائي | 0.85 | 1 | Inherent randomness |
+| Markov kernel | نواة ماركوف | 0.85 | 1 | Stochastic map between spaces |
+| comonoid | شبه أحادي | 0.8 | 1 | Dual of monoid |
+| Kleisli category | فئة كليسلي | 0.8 | 1 | Category from monad |
+| synthetic probability theory | نظرية الاحتمالات التركيبية | 0.8 | 1 | Axiomatic framework for probability |
+| probabilistic programming | البرمجة الاحتمالية | 0.85 | 1 | Programming with randomness |
+| deterministic morphism | تشاكل حتمي | 0.85 | 1 | Non-random morphism |
+| independence | استقلالية | 0.9 | 1 | Statistical independence |
+| unsupervised learning | التعلم غير المُراقب | 0.9 | 1 | Learning without labels |
+| supervised learning | التعلم المُراقب | 0.9 | 1 | Learning with labels |
+| overlapping clustering | التجميع المتداخل | 0.85 | 1 | Clusters with shared elements |
+| homogeneous space | فضاء متجانس | 0.85 | 1 | Space with group action |
+| learning theory | نظرية التعلم | 0.9 | 1 | Theory of learning algorithms |
+| optimal solution | الحل الأمثل | 0.9 | 1 | Best solution |
+| universal property | الخاصية الشاملة | 0.85 | 1 | Category theory concept |
+| Kan extension | امتداد كان | 0.8 | 1 | Universal construction |
+| geometric deep learning | التعلم العميق الهندسي | 0.85 | 1 | Deep learning on non-Euclidean domains |
+| compositionality | التركيبية | 0.9 | 1 | Property of being compositional |
+| research debt | الدَيْن البحثي | 0.8 | 1 | Accumulated understanding deficit |
+| string diagram | المخطط الخيطي | 0.85 | 1 | Graphical notation in category theory |
+| diagrammatic order | الترتيب التخطيطي | 0.85 | 1 | Left-to-right composition |
+| implementation map | خريطة التنفيذ | 0.85 | 1 | Forward pass of learner |
+| update map | خريطة التحديث | 0.85 | 1 | Parameter update function |
+| request map | خريطة الطلب | 0.85 | 1 | Backward error propagation |
+| DDIM | DDIM | 1.0 | 1 | Denoising Diffusion Implicit Models (keep acronym) |
+| DDPM | DDPM | 1.0 | 1 | Denoising Diffusion Probabilistic Models (keep acronym) |
+| non-Markovian process | عملية غير ماركوفية | 0.9 | 1 | Process that doesn't satisfy Markov property |
+| Markovian process | عملية ماركوفية | 0.9 | 1 | Process where future depends only on present |
+| marginal distribution | التوزيع الهامشي | 0.9 | 2 | Distribution of subset of variables |
+| inference distribution | توزيع استدلالي | 0.9 | 1 | Distribution used for inference/forward process |
+| surrogate objective | الهدف البديل | 0.9 | 1 | Simplified training objective |
+| variance schedule | جدول زمني للتباين | 0.9 | 1 | Schedule of noise variance over time |
+| reparametrization trick | حيلة إعادة المعايرة | 0.9 | 1 | Technique to make sampling differentiable |
+| forward process posterior | التوزيع اللاحق للعملية الأمامية | 0.85 | 1 | Posterior distribution in forward diffusion |
+| Euler discretization | تحويلات أويلر المنفصلة | 0.85 | 1 | First-order ODE numerical method |
+| Runge-Kutta method | طرق رونج-كوتا | 0.85 | 1 | Higher-order ODE numerical methods |
+| semantic interpolation | الاستيفاء الدلالي | 0.9 | 1 | Interpolation preserving semantic meaning |
+| image encoding | ترميز الصور | 0.9 | 1 | Mapping images to latent representations |
+| image reconstruction | إعادة بناء الصور | 0.9 | 1 | Reconstructing images from latent codes |
+| consistency property | خاصية الاتساق | 0.9 | 1 | Property of deterministic generation |
+| deterministic sampling | أخذ عينات حتمي | 0.9 | 1 | Sampling without randomness |
+| stochastic sampling | أخذ عينات عشوائي | 0.9 | 1 | Sampling with randomness |
+| timestep subsampling | أخذ عينة فرعية من الخطوات الزمنية | 0.85 | 1 | Using subset of diffusion timesteps |
+| accelerated generation | التوليد المتسارع | 0.9 | 1 | Faster generation procedure |
+| wall-clock time | الوقت الفعلي | 0.9 | 1 | Actual elapsed time |
+| strided sampling | أخذ عينات متقطع | 0.85 | 1 | Sampling with large gaps between steps |
+| Fréchet Inception Distance | مسافة Fréchet Inception | 0.85 | 1 | FID metric for generative model quality |
+| Inception Score | نقاط Inception | 0.85 | 1 | IS metric for sample quality |
+| mean squared error | متوسط الخطأ التربيعي | 0.9 | 1 | MSE metric |
+| score-based model | نموذج قائم على النقاط | 0.85 | 2 | Generative model using score function |
+| probability flow ODE | ODE لتدفق الاحتمال | 0.85 | 1 | Deterministic ODE for score-based models |
+| mode collapse | انهيار النمط | 0.9 | 1 | GAN failure mode losing diversity |
+| classifier guidance | توجيه المصنف | 0.85 | 1 | Using classifier gradients to guide generation |
+| cascaded diffusion | الانتشار المتتالي | 0.85 | 1 | Multi-resolution cascade of diffusion models |
+| autoregressive model | نموذج انحداري ذاتي | 0.9 | 1 | Sequential generative model |
+| SMT (Satisfiability Modulo Theories) | نظرية الإرضاء بالقياس | 0.9 | 6 | Logic framework for verification |
+| model checking | فحص النماذج | 0.9 | 4 | Exhaustive state space exploration |
+| theorem proving | إثبات النظريات | 0.9 | 3 | Mathematical proof construction |
+| static analysis | التحليل الثابت | 0.9 | 4 | Code analysis without execution |
+| soundness | السلامة المنطقية | 0.9 | 8 | Logical correctness guarantee |
+| completeness | الاكتمال | 0.9 | 5 | Finding all solutions |
+| overapproximation | التقريب الزائد | 0.85 | 5 | Conservative approximation |
+| local robustness | المتانة المحلية | 0.9 | 4 | Robustness in input neighborhood |
+| kernel trick | حيلة النواة | 0.85 | 2 | SVM high-dimensional mapping |
+| ensemble methods | أساليب المجموعة | 0.9 | 3 | Multiple model combination |
+| random forest | الغابات العشوائية | 0.9 | 3 | Tree ensemble method |
+| gradient boosting | التعزيز التدرجي | 0.9 | 3 | Sequential tree training |
+| data poisoning | تسميم البيانات | 0.9 | 3 | Malicious training data corruption |
+| distribution shift | تحول التوزيع | 0.9 | 4 | Change in data distribution |
+| provenance tracking | تتبع المصدر | 0.85 | 2 | Data lineage verification |
+| certified training | التدريب المعتمد | 0.85 | 3 | Training with verification guarantees |
+| Lipschitz continuity | استمرارية ليبشيتز | 0.85 | 2 | Bounded function sensitivity |
+| avionic software | برمجيات الطيران | 0.9 | 3 | Aircraft software systems |
+| safety-critical systems | الأنظمة الحرجة من حيث السلامة | 0.95 | 6 | Systems where failure is catastrophic |
+| false alarms | إنذارات كاذبة | 0.9 | 4 | Incorrect verification warnings |
+| counterexample | مثال مضاد | 0.9 | 4 | Example disproving property |
+| abstract domain | النطاق المجرد | 0.85 | 5 | Abstract interpretation domain |
+| zonotope | zonotope | 0.8 | 3 | Geometric abstract domain |
+| polyhedra | المضلعات | 0.85 | 3 | Polyhedral abstract domain |
+| ReLU (Rectified Linear Unit) | وحدة التصحيح الخطية | 0.9 | 5 | Neural network activation function |
+| activation function | دالة التنشيط | 0.95 | 6 | Neural network nonlinearity |
+| certification | الاعتماد | 0.9 | 5 | Formal approval process |
+| trustworthy AI | ذكاء اصطناعي موثوق | 0.9 | 3 | Reliable and safe AI systems |
+| PAC (Probably Approximately Correct) | صحيح محتمل تقريبي | 0.8 | 2 | Learning theory framework |
+| compositional verification | التحقق التركيبي | 0.85 | 2 | Modular verification approach |
+| runtime monitoring | المراقبة في وقت التشغيل | 0.9 | 3 | Dynamic system monitoring |
+| polyhedral model | النموذج متعدد السطوح | 0.95 | 1 | Mathematical framework for loop optimization |
+| polyhedral compilation | التجميع متعدد السطوح | 0.95 | 1 | Compilation using polyhedral model |
+| pragma directive | توجيه pragma | 0.95 | 1 | Compiler directive annotation |
+| loop tiling | تجزئة الحلقة | 0.95 | 1 | Loop blocking optimization |
+| loop interchange | تبديل الحلقة | 0.95 | 1 | Reordering nested loops |
+| loop reversal | عكس الحلقة | 0.95 | 1 | Reversing loop iteration order |
+| array packing | تعبئة المصفوفة | 0.95 | 1 | Data layout transformation for arrays |
+| thread parallelization | التوازي بالخيوط | 0.95 | 1 | Multi-threading parallelization |
+| Monte Carlo Tree Search | بحث شجرة مونت كارلو | 0.95 | 1 | Heuristic search algorithm for trees |
+| MCTS | MCTS | 1.0 | 1 | Abbreviation for Monte Carlo Tree Search |
+| UCT | UCT | 0.95 | 1 | Upper Confidence bounds applied to Trees |
+| restart mechanism | آلية إعادة التشغيل | 0.9 | 1 | Strategy to avoid local optima |
+| quantile | شريحة ربعية | 0.9 | 1 | Statistical quantile |
+| moving average | متوسط متحرك | 0.95 | 1 | Statistical moving average |
+| reward function | دالة المكافأة | 0.95 | 1 | Function assigning rewards in MCTS |
+| tree policy | سياسة الشجرة | 0.9 | 1 | Selection policy in tree search |
+| exploration weight | وزن الاستكشاف | 0.9 | 1 | Parameter balancing exploration vs exploitation |
+| exploitation | استغلال | 0.95 | 1 | Using known good solutions |
+| transfer learning | نقل التعلم | 0.95 | 1 | Transferring knowledge between tasks |
+| convergence | تقارب | 0.95 | 1 | Reaching a stable solution |
+| configuration | تكوين | 0.95 | 1 | Specific combination of transformations |
+| speedup | تسريع | 0.95 | 1 | Performance improvement ratio |
+| heuristic | استدلالي | 0.95 | 1 | Rule-of-thumb approach |
+| autotuning framework | إطار ضبط تلقائي | 0.95 | 1 | Framework for automatic optimization |
+| search space | فضاء البحث | 0.95 | 1 | Space of possible solutions |
+| tree-shaped search space | فضاء بحث شجري | 0.95 | 1 | Search space with tree structure |
+| random walk | سير عشوائي | 0.9 | 1 | Random path through search space |
+| backpropagation | انتشار عكسي | 0.95 | 1 | Propagating rewards backward in MCTS |
+| loop nest | عش الحلقة | 0.95 | 1 | Nested loop structure |
+| perfectly nested loop | حلقة متداخلة بشكل مثالي | 0.9 | 1 | Loop nest without intervening code |
+| tile size | حجم التجزئة | 0.95 | 1 | Block size in loop tiling |
+| unroll factor | عامل الفك | 0.95 | 1 | Factor for loop unrolling |
+| loop distribution | توزيع الحلقة | 0.9 | 1 | Splitting loop into multiple loops |
+| loop fusion | دمج الحلقات | 0.9 | 1 | Combining multiple loops |
+| unroll-and-jam | فك الحلقات والدمج | 0.9 | 1 | Combined unrolling and fusion |
+| loop peeling | تقشير الحلقات | 0.9 | 1 | Separating loop iterations |
+| wavefronting | الموجة الأمامية | 0.85 | 1 | Parallel execution pattern |
+| skewing | انحراف | 0.85 | 1 | Loop transformation technique |
+| index set splitting | تقسيم مجموعة الفهرس | 0.85 | 1 | Splitting iteration space |
+| code motion | حركة الشفرة | 0.9 | 1 | Moving code between loop levels |
+| intermediate representation | تمثيل وسيط | 0.95 | 1 | Compiler IR |
+| metadata node | عقدة البيانات الوصفية | 0.9 | 1 | Metadata in compiler IR |
+| compile-time heuristic | استدلالات وقت التجميع | 0.95 | 1 | Heuristics applied during compilation |
+| wall-clock time | وقت الحائط | 0.9 | 1 | Real elapsed time |
+| priority queue | قائمة انتظار الأولوية | 0.95 | 1 | Data structure with priorities |
+| decision tree regression | انحدار شجرة القرار | 0.9 | 1 | ML regression using decision trees |
+| beam search | بحث شعاعي | 0.9 | 1 | Limited breadth-first search |
+| cost model | نموذج التكلفة | 0.9 | 1 | Model predicting execution cost |
+| directed acyclic graph | رسم بياني لاحلقي موجه | 0.9 | 1 | DAG structure |
+| proxy application | تطبيق بديل | 0.9 | 1 | Simplified benchmark application |
+| molecular dynamics | ديناميكيات جزيئية | 0.9 | 1 | MD simulation |
+| adaptive mesh refinement | تنقيح شبكة تكيفية | 0.85 | 1 | AMR technique |
+| stencil computation | حساب القوالب | 0.9 | 1 | Grid-based computation pattern |
