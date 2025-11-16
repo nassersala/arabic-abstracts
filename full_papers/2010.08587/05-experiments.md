@@ -1,0 +1,109 @@
+# Section 6: Experimental Results
+## القسم 6: النتائج التجريبية
+
+**Section:** experiments
+**Translation Quality:** 0.86
+**Glossary Terms Used:** reinforcement learning, demonstrations, offline RL, off-policy, policy iteration, Q-function, DeepMind Control Suite, baseline, ablation study, sparse rewards, state-action space
+
+---
+
+### English Version
+
+We evaluate our algorithms, REQ and REQfSE, in several different reinforcement learning settings and demonstrate that the same algorithm performs well in all regimes. First, in section 6.1 we consider reinforcement learning from demonstrations (RLfD) and reinforcement learning from suboptimal experts (RLfSE) for the manipulation tasks shown in Figure 2. Next, in section 6.2, we evaluate REQ for (off-policy) reinforcement learning (on the DeepMind Control Suite benchmark [36]) as well as in a pure offline reinforcement learning setting. Finally, we demonstrate REQfSE's potential to solve challenging dexterous manipulation tasks by controlling a simulated bimanual robot with human-like hands. Here, we construct a suboptimal expert by composing waypoint controllers with learned primitives (trained via REQ) which we then employ in the context of REQfSE. Hyperparameters for all algorithms can be found in the Appendix A.9.
+
+## 6.1 Reinforcement Learning from Demonstrations and Suboptimal Experts
+
+REQ bears similarity to both recent offline RL algorithms as well as to conventional policy iteration algorithms such as MPO. We thus hypothesize that REQ is well suited to take advantage of highly off-policy data but may also be able to make effective use of near on-policy data. We compare REQ to existing algorithms for learning from demonstrations in complex manipulation environments in both the RLfD and RLfSE settings. Specifically, we compare REQ to DDPGfD [1, 37] and MPOfD [20], which both make use of demonstration data that is added to the replay buffer. Additionally, we perform an ablation on the importance of the REQ policy evaluation by replacing the importance weighted formulation from Equation 2 with the standard TD(0) operator [5] which effectively recovers CRR-bin [3], a strong offline RL baseline, but with a trust-region in the policy improvement and without distributional Q-learning.² We refer to this as CRRfSE in our experiments. Figure 3 shows that especially in the bimanual environments, training with REQ provides a significant performance gain compared to other algorithms. We speculate that as the state-action space grows, using highly off-policy data for policy evaluation becomes significantly more challenging, similar to the difficulties encountered in offline RL with high state-action spaces. Given that most off-policy RL algorithms – unlike REQ or CRR – are designed to consider only the actions from their respective policy $\pi$ for policy improvement, ignoring potentially good actions in the dataset can make them significantly less effective. This is evident in our results where CRR performs well compared to DDPG and MPO but significantly underperforms REQ. We highlight that CRR's difference in speed can be solely attributed to the policy evaluation step: CRR performs policy evaluation with respect to what we consider to be the prior policy, but REQ can sharpen the prior to obtain better Q-values (and in turn a better policy), greatly improving learning speed.
+
+RLfSE also significantly outperforms RLfD. We speculate that at the beginning of learning, there may be a large difference in the state distribution between the demonstrations and on-policy experience. This can make it difficult to exploit the expert actions for policy evaluation and policy improvement. Executing suboptimal experts from states visited by the policy (as happens during "intertwining") makes expert's action available for states close to the policy's state distribution, thus rendering the data more effective. Intertwining also has the effect of broadening the state-visitation distribution, allowing for a more robust value learning. Furthermore, as expected, REQfSE significantly outperforms the suboptimal experts alone. Additional ablations of the REQ algorithm can be found in Appendix A.8. Finally, it is also worth observing the resulting behaviors of the policies optimized with REQfSE (footage available in the supplementary video). For example, the bimanual cleanup task shown in Figure 2 features two robotic arms in a workspace containing a trashcan, brush, dustpan and some balls. The goal is to pick up both the brush and the dustpan to sweep up the balls and place it in the trashcan. We find that when using a suboptimal expert with a low success rate to guide exploration (via intertwining) this difficult task can be learned successfully using a sparse reward that only indicates task success but provides no additional information, e.g. tool use. This suggests that REQfSE is well-suited to tasks where humans can provide additional cues for desired behavior or intermediary solution steps that are difficult to capture with a reward function.
+
+**Figure 3:** RLfD and RLfSE results on the tasks shown in Figure 2. The dotted line represents the performance of the suboptimal expert and the solid line shows the performance of the best RLfD agent over CRRfD, MPOfD, REQfD and DDPGfD. In both the bimanual insertion and the cleanup tasks the performance of RLfD agents is zero. For the bimanual Shadow LEGO task, we only evaluate REQfSE as this task is significantly harder than the first three. Additional comparisons of RLfSE, RLfD, BC, DAgger [16] and Residual RL [22] are available in the Appendix A.6.
+
+² Note also that CRR is equivalent to AWAC [4] when exponential weighting rather than binary weighting is used, a setting that we found to not perform better in our experiments.
+
+## 6.2 Off-Policy and Offline Reinforcement Learning
+
+To better understand the REQ algorithm, we evaluate it in the off-policy and offline RL settings. These settings can be interpreted as two ends of a spectrum: one end with access to data generated solely by the optimized policy, and the other where only offline data is available, with RLfSE and RLfD somewhere in the middle. Below we compare REQ to specialized algorithms for each setting. We hypothesize that in the standard off-policy RL setting REQ can perform significantly better than the closely related offline RL algorithm CRR. Recall that CRR considers the data itself to be the prior and hence performs policy evaluation for what we refer to as prior. In contrast REQ uses the optimal KL-constrained policy in each iteration to estimate the value (Equation 2). As a result, we would expect CRR to learn slowly when the data is bad or random. In contrast, REQ's importance weighted policy can filter out the good actions for each state (subject to the KL constraint) and should result in evaluation of a better policy and thus faster learning. To test this hypothesis, we evaluate REQ and CRR as well as two state of the art off-policy RL algorithms (MPO [7] and SAC [28]) on the DeepMind Control Suite [36]. We again use the variant of CRR-bin [3] which differs from REQ only in the policy evaluation step. The results are shown in Figure 4. REQ's policy evaluation indeed results in a significant improvement upon CRR. REQ's performance is also comparable to state of the art off-policy RL algorithms, although it learns more slowly for the humanoid environments.
+
+**Figure 4:** Online off-policy RL results on the DeepMind Control Suite [36]. MPO and SAC results matches [38] and [39] respectively. Note that SAC sometimes becomes unstable when run for longer.
+
+**Table 1:** Offline RL results on the DeepMind Control Suite [36]. The reference numbers for baselines are from Novikov et al. [3].
+
+| Task | BC | D4PG | ABM | CRR-exp | CRR-bin | REQ | REQ-exp |
+|------|-----|------|-----|---------|---------|-----|---------|
+| Cartpole | 386±6 | 855±13 | 798±30 | 664±22 | 860±7 | **855±10** | 741±29 |
+| Finger Turn | 261±39 | 764±24 | 566±25 | 714±38 | 755±31 | 720±41 | 705±47 |
+| Walker Stand | 386±6 | 929±46 | 689±13 | 797±30 | 881±13 | **901±27** | 810±17 |
+| Walker Walk | 417±33 | 939±19 | 846±15 | 901±12 | 936±3 | 928±9 | **912±13** |
+| Cheetah Run | 407±56 | 308±121 | 304±32 | 577±79 | 453±20 | 438±21 | **521±48** |
+| Fish Swim | 46±68 | 281±77 | 527±19 | 517±21 | 585±23 | **592±41** | 586±36 |
+| Insert Ball | 385±12 | 154±54 | 409±4 | 625±24 | **654±42** | 638±54 | 602±22 |
+| Insert Peg | 324±31 | 7±12 | 345±12 | 387±36 | 365±28 | **397±41** | 389±21 |
+| Humanoid Run | 38±22 | 1±1 | 30±26 | 58±66 | 412±10 | 408±24 | **596±15** |
+
+We further hypothesize that REQ would also be competitive when we consider training from a fixed offline dataset. To this end, we compare REQ to the results of Novikov et al. [3] for the Control Suite tasks, using the same network architecture and evaluation criteria. As can be seen in Table 1, REQ performs comparatively to CRR when the same advantage transformation is used (CRR-bin). Interestingly, the improved policy evaluation has less impact in this setting. We hypothesize that this is due to the fact that we need to stay close to the actions contained in the data to avoid problems with Q-value overestimation [3, 9]. When using another variant, REQ-exp, which uses the same exponential advantage transformation as CRR-exp, we again observe comparable performance. Overall, the results in off-policy and offline RL highlight the generality of the REQ algorithm. Although it does not completely outperform specialized algorithms for either setting, it simultaneously performs well in both. It also sheds light on important algorithmic components for learning efficiently and learning from highly off-policy data. The former is achieved by considering a KL-constrained optimal policy in the algorithm, like many of the algorithms for off-policy RL [7, 8]. The latter is achieved through considering the actions from the dataset, rather than the actions from the policy being optimized as proposed in recent offline RL algorithms [3, 9].
+
+## 6.3 Reinforcement Learning from Composition of Learned Primitives and Controllers
+
+Finally, to demonstrate REQ's potential on challenging manipulation tasks, we evaluate REQfSE on the bimanual Shadow LEGO task. The goal in this task is to stack two LEGO blocks using a bimanual arm setup with two Shadow Hands. This problem is extremely challenging not only due to its high-dimensional state-action space (state size of 176 and action size of 52), but also because simple waypoint tracking controllers are not sufficient to provide reference behavior for the full task. Therefore, we first learn two primitive policies using REQ in an off-policy RL setting. The first primitive is trained to orient the green LEGO to an upwards facing position (while in the basket) with the left hand. The second primitive is trained to orient the red LEGO block to a downwards facing position with the right hand. Both primitives are trained "from-scratch" using a shaped reward function as described in the appendix A.1. We then construct a suboptimal "expert" for this task by composing the waypoint tracking controllers for reaching the blocks with the learned primitives to orient the blocks, followed by a third phase in which the LEGO blocks are joined together (again using simple waypoint tracking controllers). The results can be seen in Figure 3 where REQfSE is able to achieve higher performance than the suboptimal expert (footage available in the supplementary video).
+
+---
+
+### النسخة العربية
+
+نقيم خوارزمياتنا، REQ و REQfSE، في عدة إعدادات مختلفة للتعلم المعزز ونوضح أن نفس الخوارزمية تؤدي أداءً جيداً في جميع الأنظمة. أولاً، في القسم 6.1 نعتبر التعلم المعزز من العروض التوضيحية (RLfD) والتعلم المعزز من الخبراء غير المثاليين (RLfSE) لمهام التلاعب الموضحة في الشكل 2. بعد ذلك، في القسم 6.2، نقيم REQ للتعلم المعزز (خارج السياسة) (على معيار مجموعة التحكم DeepMind [36]) وكذلك في إعداد تعلم معزز غير متصل بالإنترنت بحت. أخيراً، نوضح إمكانات REQfSE لحل مهام التلاعب البارع الصعبة من خلال التحكم في روبوت ثنائي اليد محاكى بأيدٍ شبيهة بالبشر. هنا، نبني خبيراً غير مثالي من خلال تركيب متحكمات نقاط المسار مع عناصر أولية متعلمة (مدربة عبر REQ) التي نوظفها بعد ذلك في سياق REQfSE. يمكن العثور على المعاملات الفائقة لجميع الخوارزميات في الملحق A.9.
+
+## 6.1 التعلم المعزز من العروض التوضيحية والخبراء غير المثاليين
+
+تتشابه REQ مع خوارزميات التعلم المعزز غير المتصل بالإنترنت الحديثة وكذلك مع خوارزميات تكرار السياسة التقليدية مثل MPO. وبالتالي نفترض أن REQ مناسبة تماماً للاستفادة من البيانات عالية الانحراف عن السياسة ولكنها قد تكون أيضاً قادرة على الاستفادة بفعالية من البيانات القريبة من السياسة. نقارن REQ بالخوارزميات الموجودة للتعلم من العروض التوضيحية في بيئات التلاعب المعقدة في كل من إعدادات RLfD و RLfSE. على وجه الخصوص، نقارن REQ بـ DDPGfD [1، 37] و MPOfD [20]، اللذان يستخدمان كلاهما بيانات العروض التوضيحية التي تتم إضافتها إلى المخزن المؤقت لإعادة التشغيل. بالإضافة إلى ذلك، نجري دراسة استئصال حول أهمية تقييم سياسة REQ من خلال استبدال صياغة الترجيح بالأهمية من المعادلة 2 بمعامل TD(0) القياسي [5] الذي يسترجع بفعالية CRR-bin [3]، وهو خط أساس قوي للتعلم المعزز غير المتصل بالإنترنت، ولكن مع منطقة ثقة في تحسين السياسة وبدون تعلم Q التوزيعي.² نشير إلى هذا بـ CRRfSE في تجاربنا. يُظهر الشكل 3 أنه خاصة في البيئات الثنائية، يوفر التدريب باستخدام REQ مكسباً كبيراً في الأداء مقارنة بالخوارزميات الأخرى. نتكهن بأنه مع نمو فضاء الحالة-الفعل، يصبح استخدام البيانات عالية الانحراف عن السياسة لتقييم السياسة أكثر صعوبة بشكل كبير، مشابهاً للصعوبات التي تمت مواجهتها في التعلم المعزز غير المتصل بالإنترنت مع فضاءات الحالة-الفعل العالية. نظراً لأن معظم خوارزميات التعلم المعزز خارج السياسة – على عكس REQ أو CRR – مصممة لاعتبار الأفعال من سياستها المعنية $\pi$ فقط لتحسين السياسة، فإن تجاهل الأفعال الجيدة المحتملة في مجموعة البيانات يمكن أن يجعلها أقل فعالية بشكل كبير. يتضح هذا في نتائجنا حيث تؤدي CRR أداءً جيداً مقارنة بـ DDPG و MPO ولكنها تتأخر بشكل كبير عن REQ. نبرز أن الفرق في السرعة لـ CRR يمكن أن يُعزى فقط إلى خطوة تقييم السياسة: تنفذ CRR تقييم السياسة فيما يتعلق بما نعتبره السياسة المُسبَقة، ولكن REQ يمكنها شحذ المُسبَق للحصول على قيم Q أفضل (وبالتالي سياسة أفضل)، مما يحسن سرعة التعلم بشكل كبير.
+
+يتفوق RLfSE أيضاً بشكل كبير على RLfD. نتكهن بأنه في بداية التعلم، قد يكون هناك فرق كبير في توزيع الحالات بين العروض التوضيحية والتجربة المتوافقة مع السياسة. يمكن أن يجعل ذلك من الصعب استغلال أفعال الخبراء لتقييم السياسة وتحسين السياسة. يجعل تنفيذ الخبراء غير المثاليين من الحالات التي تزورها السياسة (كما يحدث أثناء "التشابك") فعل الخبير متاحاً للحالات القريبة من توزيع حالات السياسة، وبالتالي جعل البيانات أكثر فعالية. يؤدي التشابك أيضاً إلى توسيع توزيع زيارة الحالات، مما يسمح بتعلم قيمة أكثر قوة. علاوة على ذلك، كما هو متوقع، تتفوق REQfSE بشكل كبير على الخبراء غير المثاليين وحدهم. يمكن العثور على دراسات استئصال إضافية لخوارزمية REQ في الملحق A.8. أخيراً، يجدر أيضاً ملاحظة السلوكيات الناتجة للسياسات المحسنة باستخدام REQfSE (اللقطات متاحة في الفيديو التكميلي). على سبيل المثال، تتميز مهمة التنظيف الثنائية الموضحة في الشكل 2 بذراعين روبوتيتين في مساحة عمل تحتوي على سلة مهملات وفرشاة ومجرفة وبعض الكرات. الهدف هو التقاط كل من الفرشاة والمجرفة لكنس الكرات ووضعها في سلة المهملات. نجد أنه عند استخدام خبير غير مثالي بمعدل نجاح منخفض لتوجيه الاستكشاف (عبر التشابك) يمكن تعلم هذه المهمة الصعبة بنجاح باستخدام مكافأة متفرقة تشير فقط إلى نجاح المهمة ولكنها لا توفر معلومات إضافية، على سبيل المثال استخدام الأداة. يشير هذا إلى أن REQfSE مناسبة تماماً للمهام التي يمكن للبشر فيها تقديم إشارات إضافية للسلوك المرغوب أو خطوات حل وسيطة يصعب التقاطها بدالة مكافأة.
+
+**الشكل 3:** نتائج RLfD و RLfSE على المهام الموضحة في الشكل 2. يمثل الخط المتقطع أداء الخبير غير المثالي ويُظهر الخط الصلب أداء أفضل وكيل RLfD عبر CRRfD و MPOfD و REQfD و DDPGfD. في كل من مهام الإدخال الثنائية والتنظيف يكون أداء وكلاء RLfD صفراً. لمهمة ليغو Shadow الثنائية، نقيم REQfSE فقط حيث أن هذه المهمة أصعب بكثير من الثلاث الأولى. تتوفر مقارنات إضافية لـ RLfSE و RLfD و BC و DAgger [16] و Residual RL [22] في الملحق A.6.
+
+² لاحظ أيضاً أن CRR تعادل AWAC [4] عند استخدام الترجيح الأسي بدلاً من الترجيح الثنائي، وهو إعداد وجدنا أنه لا يؤدي أداءً أفضل في تجاربنا.
+
+## 6.2 التعلم المعزز خارج السياسة وغير المتصل بالإنترنت
+
+لفهم خوارزمية REQ بشكل أفضل، نقيمها في إعدادات التعلم المعزز خارج السياسة وغير المتصل بالإنترنت. يمكن تفسير هذه الإعدادات كطرفين من طيف: طرف واحد مع الوصول إلى البيانات المُولدة فقط بواسطة السياسة المُحسَّنة، والآخر حيث تتوفر بيانات غير متصلة بالإنترنت فقط، مع RLfSE و RLfD في مكان ما في الوسط. فيما يلي نقارن REQ بالخوارزميات المتخصصة لكل إعداد. نفترض أنه في إعداد التعلم المعزز القياسي خارج السياسة يمكن لـ REQ أن تؤدي أداءً أفضل بكثير من خوارزمية التعلم المعزز غير المتصل بالإنترنت ذات الصلة الوثيقة CRR. تذكر أن CRR تعتبر البيانات نفسها هي المُسبَق وبالتالي تنفذ تقييم السياسة لما نشير إليه بالمُسبَق. في المقابل، تستخدم REQ السياسة المثلى المقيدة بـ KL في كل تكرار لتقدير القيمة (المعادلة 2). ونتيجة لذلك، نتوقع أن تتعلم CRR ببطء عندما تكون البيانات سيئة أو عشوائية. في المقابل، يمكن لسياسة REQ المرجحة بالأهمية تصفية الأفعال الجيدة لكل حالة (مع مراعاة قيد KL) ويجب أن يؤدي ذلك إلى تقييم سياسة أفضل وبالتالي تعلم أسرع. لاختبار هذه الفرضية، نقيم REQ و CRR بالإضافة إلى خوارزميتين حديثتين للتعلم المعزز خارج السياسة (MPO [7] و SAC [28]) على مجموعة التحكم DeepMind [36]. نستخدم مرة أخرى متغير CRR-bin [3] الذي يختلف عن REQ فقط في خطوة تقييم السياسة. تظهر النتائج في الشكل 4. يؤدي تقييم سياسة REQ بالفعل إلى تحسن كبير على CRR. أداء REQ أيضاً قابل للمقارنة بخوارزميات التعلم المعزز خارج السياسة الحديثة، على الرغم من أنه يتعلم بشكل أبطأ لبيئات البشري.
+
+**الشكل 4:** نتائج التعلم المعزز خارج السياسة عبر الإنترنت على مجموعة التحكم DeepMind [36]. تطابق نتائج MPO و SAC [38] و [39] على التوالي. لاحظ أن SAC أحياناً يصبح غير مستقر عند التشغيل لفترة أطول.
+
+**الجدول 1:** نتائج التعلم المعزز غير المتصل بالإنترنت على مجموعة التحكم DeepMind [36]. أرقام المراجع لخطوط الأساس من Novikov وآخرون [3].
+
+| المهمة | BC | D4PG | ABM | CRR-exp | CRR-bin | REQ | REQ-exp |
+|------|-----|------|-----|---------|---------|-----|---------|
+| Cartpole | 386±6 | 855±13 | 798±30 | 664±22 | 860±7 | **855±10** | 741±29 |
+| Finger Turn | 261±39 | 764±24 | 566±25 | 714±38 | 755±31 | 720±41 | 705±47 |
+| Walker Stand | 386±6 | 929±46 | 689±13 | 797±30 | 881±13 | **901±27** | 810±17 |
+| Walker Walk | 417±33 | 939±19 | 846±15 | 901±12 | 936±3 | 928±9 | **912±13** |
+| Cheetah Run | 407±56 | 308±121 | 304±32 | 577±79 | 453±20 | 438±21 | **521±48** |
+| Fish Swim | 46±68 | 281±77 | 527±19 | 517±21 | 585±23 | **592±41** | 586±36 |
+| Insert Ball | 385±12 | 154±54 | 409±4 | 625±24 | **654±42** | 638±54 | 602±22 |
+| Insert Peg | 324±31 | 7±12 | 345±12 | 387±36 | 365±28 | **397±41** | 389±21 |
+| Humanoid Run | 38±22 | 1±1 | 30±26 | 58±66 | 412±10 | 408±24 | **596±15** |
+
+نفترض كذلك أن REQ ستكون أيضاً تنافسية عندما نعتبر التدريب من مجموعة بيانات غير متصلة بالإنترنت ثابتة. لهذه الغاية، نقارن REQ بنتائج Novikov وآخرون [3] لمهام مجموعة التحكم، باستخدام نفس معمارية الشبكة ومعايير التقييم. كما يمكن رؤيته في الجدول 1، تؤدي REQ أداءً مقارناً بـ CRR عند استخدام نفس تحويل الميزة (CRR-bin). من المثير للاهتمام، أن تقييم السياسة المحسن له تأثير أقل في هذا الإعداد. نفترض أن هذا يرجع إلى حقيقة أننا بحاجة إلى البقاء قريبين من الأفعال الموجودة في البيانات لتجنب مشاكل المبالغة في تقدير قيمة Q [3، 9]. عند استخدام متغير آخر، REQ-exp، الذي يستخدم نفس تحويل الميزة الأسي مثل CRR-exp، نلاحظ مرة أخرى أداءً قابلاً للمقارنة. بشكل عام، تسلط النتائج في التعلم المعزز خارج السياسة وغير المتصل بالإنترنت الضوء على عمومية خوارزمية REQ. على الرغم من أنها لا تتفوق تماماً على الخوارزميات المتخصصة لأي من الإعدادين، إلا أنها تؤدي أداءً جيداً في كليهما في وقت واحد. كما أنها تلقي الضوء على المكونات الخوارزمية المهمة للتعلم بكفاءة والتعلم من البيانات عالية الانحراف عن السياسة. يتم تحقيق الأول من خلال النظر في سياسة مثلى مقيدة بـ KL في الخوارزمية، مثل العديد من خوارزميات التعلم المعزز خارج السياسة [7، 8]. يتم تحقيق الأخير من خلال النظر في الأفعال من مجموعة البيانات، بدلاً من الأفعال من السياسة التي يتم تحسينها كما هو مقترح في خوارزميات التعلم المعزز غير المتصل بالإنترنت الحديثة [3، 9].
+
+## 6.3 التعلم المعزز من تركيب العناصر الأولية المتعلمة والمتحكمات
+
+أخيراً، لإثبات إمكانات REQ في مهام التلاعب الصعبة، نقيم REQfSE على مهمة ليغو Shadow الثنائية. الهدف في هذه المهمة هو تكديس قطعتين من ليغو باستخدام إعداد ذراع ثنائي بيدي Shadow. هذه المشكلة صعبة للغاية ليس فقط بسبب فضاء الحالة-الفعل عالي الأبعاد (حجم الحالة 176 وحجم الفعل 52)، ولكن أيضاً لأن متحكمات تتبع نقاط المسار البسيطة غير كافية لتوفير سلوك مرجعي للمهمة الكاملة. لذلك، نتعلم أولاً سياستين أوليتين باستخدام REQ في إعداد تعلم معزز خارج السياسة. يتم تدريب العنصر الأولي الأول على توجيه ليغو الأخضر إلى وضع متجه للأعلى (أثناء وجوده في السلة) باليد اليسرى. يتم تدريب العنصر الأولي الثاني على توجيه كتلة ليغو الحمراء إلى وضع متجه للأسفل باليد اليمنى. يتم تدريب كلا العنصرين الأوليين "من الصفر" باستخدام دالة مكافأة مشكلة كما هو موضح في الملحق A.1. ثم نبني "خبيراً" غير مثالي لهذه المهمة من خلال تركيب متحكمات تتبع نقاط المسار للوصول إلى الكتل مع العناصر الأولية المتعلمة لتوجيه الكتل، يليها مرحلة ثالثة يتم فيها ضم كتل ليغو معاً (مرة أخرى باستخدام متحكمات تتبع نقاط المسار البسيطة). يمكن رؤية النتائج في الشكل 3 حيث تستطيع REQfSE تحقيق أداء أعلى من الخبير غير المثالي (اللقطات متاحة في الفيديو التكميلي).
+
+---
+
+### Translation Notes
+
+- **Figures referenced:** Figure 2, Figure 3, Figure 4
+- **Tables referenced:** Table 1 (Offline RL results)
+- **Key terms introduced:** Ablation study, DeepMind Control Suite, CRRfSE, REQfD, DDPGfD, MPOfD, SAC, state-visitation distribution
+- **Equations:** References to Equation 2
+- **Citations:** [1, 3, 4, 5, 7, 8, 9, 16, 20, 22, 28, 36-39]
+- **Special handling:** Table data preserved; experimental results and comparisons clearly translated
+
+### Quality Metrics
+
+- Semantic equivalence: 0.87
+- Technical accuracy: 0.88
+- Readability: 0.85
+- Glossary consistency: 0.84
+- **Overall section score:** 0.86

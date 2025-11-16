@@ -1,0 +1,640 @@
+Applying a Formal Method in Industry: a
+25-Year Trajectory
+Thierry Lecomte1, David Deharbe, Etienne Prun, and Erwan Mottin
+ClearSy, 320 avenue Archim ede, Aix en Provence, France
+thierry.lecomte@clearsy.com
+Abstract. Industrial applications involving formal methods are still ex-
+ceptions to the general rule. Lack of understanding, employees without
+proper education, diculty to integrate existing development cycles, no
+explicit requirement from the market, etc. are explanations often heard
+for not being more formal. Hence the feedback provided by industry to
+academics is not as constructive as it might be.
+Summarizing a 25-year return of experience in the eective application
+of a formal method { namely B and Event-B { in diverse application
+domains (railways, smartcard, automotive), this article makes clear why
+and where formal methods have been applied, explains the added value
+obtained so far, and tries to anticipate the future of these two formalisms
+for safety critical systems.
+Keywords: B method, Event-B, integrated development environment,
+code generation, formal data validation
+1 Introduction
+Formal methods and industry are not so often associated in the same sentence as
+the formers are not seen as an enabling technology but rather as dicult to apply
+and linked with increased costs.In [11], the introduction of the B method and the
+Event-B language into several industrial development processes was witnessed
+with more or less success, even if new tools and new practices were available to
+ease acceptance in industry. At that time, these two formal methods had been
+backed by a number of research projects and non-trivial industrial applications.
+Almost 10 years later, after several real size experiments in diverse application
+domains, the situation has slightly evolved. Some standards, like the D0-178C
+for aeronautics, are now accepting formal methods in their certication process
+with sometimes some restrictions on the perimeter where they are applied (unit
+testing replaced by unit proof for example). The newborn ISO 26262 automo-
+tive functional safety standard is also recommending the use of formal methods
+during development. On the opposite side, the Common Criteria 3.1 standard
+(compared to its version 2.3) has decreased the need for formal methods that are
+now only required at level 6+ and higher (instead of 5+ previously) while the
+maximum security is reached at level 7 (EAL). However, even if the standards
+have made some room for them, these methods haven't spread much out of thearXiv:2005.07190v1  [cs.SE]  13 May 2020
+
+railway sphere as it might have been expected. Their usage though have slightly
+evolved over the years as a reaction to industry needs in direct relation with
+erce international competition.
+This article presents in a rst chapter the dierent ways B and Event-B were
+used for modeling software, systems and data, and for proving static and dynamic
+properties. In a second chapter, new technology and techniques are presented.
+Their tight combination is expecting to converge to a new, more automated way
+of developing safety critical applications that are not restricted to the railways.
+2 Modeling
+2.1 B for Software
+The B Method was introduced in the late 80's to correctly design safe software.
+The main idea was to avoid introducing errors by proving the software while
+being built, instead of trying to nd errors with testing after the software was
+produced.
+Promoted and supported by RATP, B and Atelier B1have been successfully
+applied to the industry of transportation, through metros automatic pilots in-
+stalled worldwide. Paris Meteor line 14 driverless metro is the rst reference
+application with over 110,000 lines of B models, translated into 86 000 lines of
+Ada. No bugs were detected after the proof was completed, neither at the func-
+tional validation, at the integration validation, and at the on-site testing, nor
+since the beginning of the metro line operation (October 1998).
+For years, Alstom Transportation Systems and Siemens Transportation Sys-
+tems (representing a major part of the worldwide metro market) have been the
+two main actors in the development of B safety-critical software. Both compa-
+nies have a product based strategy and reuse as much as possible existing B
+models for future metros. As an example, the Alstom Urbalis 400 CBTC (Radio
+communication based train control) equips more than 100 metros in the world,
+representing 1250 km of lines and 25 % of the CBTC market.
+2.1.1 Structure and metrics For such applications, B modeling is used for
+safety critical functions for both track-side (zone controller, interlocking) and
+on-board (automatic train pilot or ATP) software. The interlocking part has to
+avoid having two trains on the same track section. It computes boolean equations
+that represent the tracks status as seen from diverse sensors. The automatic pilot
+is mainly in charge of triggering the emergency brake in case of over-speed. It
+requires several functions such as the localization ( where is the train ? ) that
+involve several graph-based algorithms, and the energy control which computes
+the braking curve of the train, based on the geometry of the tracks (in particular
+the positive and negative slopes). Data types used are: integer for the energy
+control, booleans for the interlocking and tables of integer for the tracks.
+1the tool implementing the B method
+
+A typical ATP software model is made of one top-level function executed
+every cycle.
+Fig. 1: Example of a non-deterministic post-condition of a function
+The specication of this function (see gure 1) is non-deterministic and is
+expressed as a large "variables become such as" substitution. The specication
+of the function, contained in the post-condition, is suciently abstract and dif-
+ferent from the implementation2to avoid to prove the copy-paste from the spec-
+ication to the implementation. This implementation imports 55 components.
+The complete B project is made of 233 machines (50 kloc3), 46 intermediate
+renements (6 kloc) and 213 implementations (45 kloc), as well the handwritten
+code for non-safety critical parts (110 kloc). It also contains 3000 denitions
+reused among several components. 23,000 proof obligations are generated, 83%
+of these of proved automatically, the remaining 17% requires interactive proof.
+3000 mathematical rules were added to ease the proof process, 85% of these are
+proved automatically, the remaining 15% requires human manual proof.
+To date, the biggest B software is a XML compiler enabling the execution
+of safety critical embedded applications by an interpreter. More than 300,000
+lines of Ada code are generated from B models, for this SIL4 T3-compliant
+(EN50128) program4. 300,000 lines do not represent the limit of the method
+as no bottleneck has been met until now. So the method is likely to scale up to
+larger, non-threaded software. A the other end of the scale, with platform screen
+doors controllers less demanding in term of computation, smaller applications
+are generated for both programmable logic controllers (PLC) and PIC32 micro-
+controllers, with a maximum of 64 KB in memory per software.
+2.1.2 Organization and acceptance Since 1998, Atelier B has been slightly
+improved in order to obtain proven software more quickly:
+{proof obligations (PO) contain traceability information (which parts of the
+B models have been used to obtain a PO), helping to better locate modeling
+errors and to improve modeling style
+{a model editor allowing to navigate models (abstraction, renement) and
+operations (caller, callee)
+2which contains the algorithm (statements, operation calls)
+3thousands lines of code
+4T3 means that the tool is able to generate a (faulty) binary program and as such
+requires a special attention in the safety process
+
+{a model editor merging model and proof (see gure 2) by displaying the num-
+ber of proof obligations associated to any line of a B model, its current proof
+status (fully proved or not) and the body of the related proof obligations.
+{a framework to automatically prove and review user added mathematical
+proof rules, that generates a report for the safety case.
+From a human point-of-view, usual organization requires a local guru acting
+as a technical referee (usually - but not necessarily - a PhD ) and a team of soft-
+ware engineers able to handle abstraction. Introductory B courses (B language,
+projects with B) and close support during the rst months have been enough
+to set up development teams. The forthcoming MOOC on B5and a dedicated
+YouTube channel for Atelier B practitioners would speed up the learning process.
+Fig. 2: Text-based model editor combining proof information with modeling
+The B software development process is now well-oiled, accepted by certi-
+cation bodies and several rail operators worldwide. Without being formally
+developed, Atelier B 3.6 was used for METEOR in 1998 while Atelier B 4.2/4.3
+is used for Alstom Urbalis 400/500 product line. Atelier B 4.2 is at the core of
+the SIL4 certicate obtained for the platform screen-doors controller installed in
+2017 in Stockholm (line Citybanan).
+2.2 B for Systems
+A broader use of B appeared in the mid `90s, called Event-B, to analyze, study
+and specify not only software, but also systems (system is here considered in
+its widest denition). It extends the usage of B to systems that might contain
+software, hardware and pieces of equipment, but also to intangible objects like
+process, procedure, business rule, etc.. In that respect, one of the outcome of
+5https://moocs.imd.ufrn.br
+
+Event-B is the proved denition of systems architecture and, more generally,
+the proved development of, so called, \system studies", which are performed
+before the specication and design of the software. This enlargement allows
+one to perform failure studies right from the beginning, even in a large system
+development.
+2.2.1 Research and development Several European projects were required
+to set-up Event-B, among them:
+{MATISSE aimed at providing a rst denition of the language,
+{PUSSEE specically aimed at hardware/software embedded systems,
+{Rodin for the development of the eponymous platform and
+{DEPLOY for its deployment in the industry.
+Several system studies from diverse application domains (banking, air trac
+control, defense, satellites, etc.) were initially performed with Atelier B before
+naturally moving to the Rodin platform. The modeling of the Mazurkiewicz enu-
+meration algorithm ands its proof during the project RIMEL6was the perfect
+demonstration of the suitability of Event-B for small, distributed systems. In
+2008, during the certication for a smart-card microcircuit, Event-B was seam-
+lessly integrated to Atelier B7. The supported language slightly diers from the
+one supported by Rodin but doesn't restrict its usability regarding target appli-
+cations. Several EAL5+ (CC2.3) and EAL6+ (CC3.1) certications were per-
+formed in France, Germany and Spain, and functional specication were proved
+to comply with security policies.
+A follow-up project, FORCOMENT [2], was initiated with STMicroelectron-
+ics and aimed at providing a proven path from specication to VHDL. Spe-
+cic proof obligations were added to ensure a deterministic behavior. Resulting
+VHDL was quite dierent from the one developed manually (similar numbers
+of gates, but architecture more easily analyzable) and went successfully through
+product test benches. However the technology failed to nd its audience because
+of:
+{(the complexity of) the input formalism,
+{the necessity to specify the target system several tens of times (renements)
+with dierent levels of detail,
+{the time and the number of iterations8to converge to a nal model,
+{the obligation to allocate our best practitioners to complete the duty.
+6http://rimel.loria.fr/
+7because of the inability, at that time, for the Rodin platform to handle a model with
+17 levels of renement
+8Our maximum is 190 iterations and 5 major refactoring, many modications having
+a slight impact on the structure of the model
+
+2.2.2 Flat specication Event-B was also used as a descriptive language for
+behavioral specication (at specication, no renement), mainly for document
+generation, structural analysis (dependencies among variables) and model ani-
+mation with application in the automotive (enhanced diagnosis { Peugeot), in
+the defense (military vehicles integration testing scheduling { CNIM) and in the
+railways (platform screen doors preliminary studies { RATP).
+The main reason for not modeling with renement was the complexity of
+the target systems and the level of detail required to perform an analysis that
+would have led to both practical and economical impossibilities (models too large
+to be handled by human modelers; too much eort to complete, if reachable).
+The Event-B models were sided by a dictionary containing natural language
+descriptions of the variables, events and substitutions, allowing for the automatic
+generation of document. Events were allocated to "sub-systems", allowing to
+analyze data-ows (see gure 3) between these sub-systems (where the variables
+are read/modied).
+A dedicated tool, Composys [10], was developed and maintained to support
+this approach until 2012.
+Fig. 3: All the dependencies between the sub-systems of a military vehicle an-
+alyzed with Composys, and used for dening a non-trivial ecient integration
+testing policy. This drawing is for illustrating the complexity of the model.
+This approach was more aimed at nding ambiguities in the existing technical
+documentation, and at animating the specication than at proving a correct
+behavior and was nally abandoned.
+2.2.3 Collection of separate models Instead of developing a model of the
+whole signaling system , verbose, complex and not containing enough details9
+to ensure a denitive conclusion on the safety of the system, another approach
+9this demonstration requires for example to know the algorithm used for the odome-
+ter, to rediscover how the distance between signals and switches is computed based
+on the minimum curve radius, tunnel width, maximum slope, minimum train braking
+capability, etc.
+
+was tried. The fundamental goal was to extract the rigorous reasoning establish-
+ing that the considered system ensures its requested properties, and to assert
+that this reasoning is correct and fully expressed. At system level, this rigorous
+reasoning involves the properties of dierent kind of subsystems (from computer
+subsystems to operational procedures), that the formal proof shall all encompass.
+Event-B is used to formalize the reasoning with a collection of separate models:
+each model is readable and understandable by a non-expert and doesn't require
+to dig into hundreds of events and tens of renement levels. This approach was
+used for the system formal verication for the CBTC of New York subway line
+7 in 2012 and Flushing in 2014 (eort divided by two due to models reuse).
+It is now deployed in Paris for all the new automatic metro lines [15]. Even if
+based on renement, the formal modeling eort is now manageable (each model
+is one or two pages long) and only requires engineers able to reason (not our
+best practitioners any more). The Event-B language as implemented in Atelier
+B in 2008 is still enough to support this modeling approach.
+2.3 Formal Data Validation
+The verication of a behavior, based on Event-B system specication or B soft-
+ware specication, is achievable by semi-automated proof. However the verica-
+tion of static properties of parameters (that tune the system or the software)
+against properties may turn out to be a nightmare in case of large data sets
+(10,000+ items) and complex relationships among data, as the built-in Atelier
+B prover is not able to handle them properly. In the early 2000's data valida-
+tion in the railways [8] used to be entirely human, leading to painful, error-prone,
+long-term activities (usually more than six months to manually check constantly
+changing10100,000 items of data against 1,000 rules).
+In 2003, this human process was made more formal while:
+{formalizing data properties with the B mathematical language (set theory,
+rst order logic)
+{generating a B machine containing the properties (the data model) and in-
+stantiated with the data to verify,
+{checking the correctness of the B machine
+2.3.1 Rules Properties, issued from international standards, national reg-
+ulations, local practices, rail operator requirements, metro manufacturer con-
+straints, are modeled as rules (see gure 4). The clause WHERE allows the
+selection and ltering of data11. The clause VERIFY species the conditions
+expected for all ltered signals. In case the predicates of this clause are not
+veried, an error message is displayed for each signal found.
+10CAD data is replaced by real plant data, topology is modied after in situ testing,
+etc.
+11that could be stored in les like JSON, Xml, Ecxel, CSV, TXT, etc.
+
+Fig. 4: Example of verication rule. Signals belonging to an interlocking territory
+are searched; such signals have to be linked to this interlocking. If not, an error
+message is displayed for each faulty signal found.
+Most of the rules t in one page, but some rules are really large, up to
+10 pages, as they embed several small steps or they contain a lot of implicit
+information. To ensure compliance with safety standard, rules have to be cross-
+read and tested by independent engineers. A specic testing environment has
+been developed to ease to set up of testing scenarios demonstrating that a rule
+triggers a KO conclusion for all error classes.
+2.3.2 Deployment The PredicateB predicate evaluator was rst used for
+checking the correctness. The PredicateB tool is a symbolic calculator able to
+manipulate B mathematical language predicates in order to animate a B formal
+model: constants and variables initial values are calculated, then operations are
+executed depending on enabling conditions and their substitutions. Symbolic
+values are scalars, sets, functions, etc. PredicateB has limited capabilities for
+non-deterministic computations and was replaced by ProB [9]. The ProB model-
+checker embeds several well performing heuristics for reducing search space (sym-
+metry detection for example), is able to better handle non-deterministic substi-
+tution and to provide a more complete set of counter examples. It has been
+modied in order to produce a le containing all counter examples detected and
+slightly improved to better support some B keywords.
+The major outcome of this decision to introduce formalities and to automate
+the verication [13] was a dramatic reduction of the validation duration from
+about six months of human verication to some minutes of computation (if we
+set aside the time to formalize verication rules). Since then the resulting tools
+(certied as T2 and T3 compliant, EN50128 standard) have been experimented
+
+with success12on several metro lines worldwide for dierent metro manufactur-
+ers. In this context, more than 2,500 rules have been developed, cross-veried
+and applied. The French Railways (SNCF) is going to deploy these tools for
+the main lines to check new interlocking parameters for the 10 coming years,
+requiring the development of 2,500 more rules.
+From a human point-of-view, usual organization requires engineers able to
+manipulate mathematical predicates and to understand railways signaling. A
+technical referee provides feedback and support on how to model certain tricky
+aspects like non-deterministic choices ("nd a bijection such as ..."), quantied
+predicates, etc. The verication process is well accepted by certication bodies
+and by several rail operators worldwide, and is ready to be deployed in other
+industries with safety-critical constraints.
+2.4 Adoption by Industry
+From our experience, industry is not particularly interested in using formal meth-
+ods except if it is required by the standards (1) or by the customers (2), or if it
+allows to speed up a process by an order of magnitude (3).
+Tool BEDUsage Availability
+Atelier B XX modeling environment Free
+100+ automatic metro lines http://www.atelier.eu/en
+ProB XX model-checker Free
+https://www3.hhu.de/stups/prob
+BMotionWeb XX model animator Free
+http://wiki.event-b.org/index.php/BMotion Studio
+PredicateB X model animator Free
+https://sourceforge.net/p/rodin-b-sharp
+PredicateB++ X model animator Proprietary (ClearSy)
+Rodin X modeling environment Free
+http://www.event-b.org/
+DTVT Xdata validation environment Proprietary (Alstom)
+20+ metro and tramway lines
+Dave Xdata validation environment Proprietary (General Electrics)
+Singapour metro line
+Ovado Xdata validation environment Proprietary (RATP)
+Paris metro lines
+Table 1: Summary of the main tools used during the last 25 years for industrial
+projects. B/E/D columns refer to B language (B), Event-B language (E) and
+formal data validation (D) supports.
+12metro line fully and positively analyzed, results validated by certication body and
+independent expert
+
+In our history, (1) is related to smartcard industry ( x2.2.1), (2) is associated
+with Meteor/RATP ( x2.1) and with L7/NYCT ( x2.2.3), while (3) is represented
+by the formal data validation ( x2.3).
+In any case, a formal method without a proper tool support is useless. We
+have used several tools over the years (Table 1) that were applied in industrial
+settings. As such, formal data validation is much appreciated because as a V&V
+tool, it doesn't impact the development cycle (on the contrary of B for software
+development) and the verication phase is a "push-button" activity (once the
+formal data model is completed).
+3 Convergence
+We have seen from the previous chapter that B and Event-B have matured
+over the last decade and are addressing well safety-critical industry topics13, at
+system level, at software level, and at conguration level. However using a formal
+method is not enough to demonstrate safety. For example, a software can't be
+SIL4-compliant by itself, even if it is developed with B. The hardware executing
+it has to be considered, especially its failure modes, and a sound specication at
+system level has to be elaborated accordingly. A safety demonstration requires
+a lot of experience, skills, time and energy to complete successfully.
+We present in this chapter several new features, linked with B, that are
+directly contributing to the safety demonstration and that would ease the devel-
+opment and the certication processes of safety-critical systems.
+3.1 Low Cost High Integrity Platform
+LCHIP14is a new technology, combining a complete software development envi-
+ronment based on the B language and a secured execution hardware platform, to
+ease the development of safety critical applications. It relies on several building
+blocks already used in certied railways products.
+LCHIP relies on a software factory that automatically transforms function
+into binary code that runs on redundant hardware. The starting point is a text-
+based, B formal model that species the function to implement. This model may
+contain static and dynamic properties that dene the functional boundaries of
+the target software.
+This formal specication is then rened automatically into a B implementable
+model. Transformation rules are applied to the specication to gradually replace
+abstract variables and substitutions with concrete ones.
+The implementable model is then translated using two dierent chains:
+13even if re-targeted to address more specic issues
+14A short form of Low Cost High Integrity Platform
+
+{Translation into C ANSI code, with the C4B Atelier B code generator (in-
+stance I1). This C code is then compiled into HEX15binary code with an
+o-the-shelf compiler.
+{Translation into MIPS Assembly then to HEX binary code, with a specic
+compiler developed for this purpose (instance I2). The translation in two
+steps allows to better debug the translation process as a MIPS assembly
+instruction corresponds to a HEX line.
+Fig. 5: The safe generation and execution of a function on the double processor.
+3.1.1 Safety These two dierent instances I1 and I2 of the same function are
+then executed in sequence, one after the other, on two PIC32 micro-controllers.
+Each micro-controller hosts both I1 and I2, so at any time 4 instances of the
+function are being executed on the micro-controllers. The results obtained by I1
+and I2 are rst compared locally on each micro-controller then they are compared
+between micro-controllers by using messages. In case of a divergent behavior (at
+least one of the four instances exhibits a dierent behavior), the faulty micro-
+controller reboots. The sequencer and the safety functions are developed once
+for all in B by the IDE design team and come along as a library. This way, the
+safety functions are out of reach of the developers and can't be altered. The
+safety is based on several features such as the detection of a divergent behavior,
+the detection of the inability for a processor to execute an instruction properly16
+and the ability to command outputs17. Memory areas (code, data for the two
+instances) are also checked (no overlap, no address outside memory range).
+15a le format that conveys binary information in ASCII text form. It is commonly
+used for programming micro-controllers
+16all instructions are tested regularly against an oracle
+17outputs are read to check if commands are eective, a system not able to change the
+state of its outputs has to shutdown
+
+3.1.2 Target software The execution platform is based on two PIC32 micro-
+controllers and provides an available power of 100 MIPS. This processing power
+is sucient to update 50k interlocking Boolean equations per second, compatible
+with light-rail signaling requirements. The execution platform can be redesigned
+seamlessly for any kind of mono-core processor if a higher level of performance is
+required. Similar secured platforms are operating platform-screen doors in S~ ao
+Paulo L15 metro and in Stockholm City line. The Brazilian one has been recently
+certied at level SIL3 by CERTIFER on the inopportune opening failure of the
+doors.
+The IDE provides a restricted modeling framework for software where:
+{No operating system is used
+{Software behavior is cyclic (no parallelism)
+{No interruption modies the software state variables
+{Supported types are Boolean and integer types (and arrays of)
+{Only bounded-complexity algorithms are supported (the price to pay to keep
+the renement and proof process automatic)
+The whole process, starting from the B model and nishing with the software
+running on the hardware platform, is expected to be fully automatic with the
+integration of the results obtained from some R&D projects18. In addition several
+in-house projects have helped to optimize the automatic renement process by
+improving the renement engine and by dening a subset of the B language,
+Simple B.
+3.1.3 Research and development LCHIP [12] is developed by the epony-
+mous French R&D project. It is aimed at allowing any engineer to develop a
+function by using its usual Domain Specic Language and to obtain this func-
+tion running safely on a hardware platform. With the automatic development
+process, the B formal method will remain "behind the curtain" in order to avoid
+expert transactions.
+As the safety demonstration doesn't require any specic feature for the input
+B model, it could be handwritten or the by-product of a translation process. So
+several DSL are planned to be supported at once (relays schematic, grafcet)
+based on an Open API (Bxml). The translation from relays schematic is being
+studied for the French Railways with a strong focus on the feedback between
+DSL and B: in case of unproven B proof obligations, it is mandatory to exhibit
+its source in the DSL model.
+The project reuses a number of building blocks such as the C4B19C code
+generator extended to support PIC memory model, and the B to Hex binary le
+in-house compiler supporting PIC32.
+The IDE will be based on Atelier B 5.0, providing a simplied process-
+oriented GUI. A rst starter kit, containing the IDE and the execution platform,
+will be publicly released by the end of 2017.
+18to implement automatic renement (ANR-RIMEL) and improve automatic proof
+performances (ANR-BWARE)
+19Atelier B C code generator
+
+3.2 Proof Support Advances
+3.2.1 Proof Support in Atelier B A formal development demands that
+dierent aspects are veried using a mathematical proof. To this end, Atelier B
+produces automatically a number of proof obligations (POs). To assist the user
+in discharging POs, Atelier B has included a theorem prover since its inception.
+This "historical" theorem prover is an inference engine and an (extensible) rule
+database. It has been certied in the railway domain by expert review of both
+the inference engine and a core rule base. The architecture of the theorem prover
+is such that it can be used interactively, or automatically, at dierent force levels.
+The user applies the theorem prover in batch to all the proof obligations, and
+is then left with a number of open POs. The remaining POs can be classied
+in three categories: valid, the theorem prover being unable to nd the proof;
+unprovable, because the rule database is essentially incomplete; unprovable, be-
+cause the user made a mistake in the formal development.
+The top priority of the user is to ensure that there is no mistake, i.e., there
+is no PO of the last category. Visually inspecting the POs is often enough to
+detect most such errors, although there are also trickier mistakes that are only
+uncovered in the course of an interactive proof.
+The user has then to discharge the unproved POs by interactive proof, and
+this is the most time-consuming task in a formal development. The prover of
+Atelier-B supports a number of commands to develop interactive proofs: hy-
+potheses selection, case split, quantier instantiation, equality rewriting, rule
+application, etc. A proof script is successful when the proof obligation has been
+shown valid. One a script is successful, it is saved in the project data base, and
+can be applied to other proof obligations. Actually, a script is often successful for
+more than one PO. To improve scripting capabilities and eciency, the language
+has been enriched with pattern-matching constructs that enable more general
+proofs. However, we feel that the interactive proof process should be improved
+so that the user would only need to address "interesting" goals and sub-goals
+that require some human insight.
+Since the specication language of the B method is undecidable, the user
+is allowed to write new rules to be taken into account by the inference engine.
+The risk of introducing inconsistencies is mitigated by two measures. The rst
+measure consists in the inclusion of an alternative prover, based on tableaux, that
+is able to prove some of the rules automatically. The second measure applies to
+those rules that could not be proved automatically. It consists in the user writing
+a textual proof in natural language, that is then subject to validation by a third-
+party.
+In the past year, Atelier B support for PO verication has been improved
+with two dierent tools, addressing this issue at dierent levels:
+iapa (Interface to Automatic Proof Agents) for batch processing of POs;
+drudges of the theorem prover for rapid processing of sub-goals in the interac-
+tive prover.
+They are presented in turn in the following.
+
+3.2.2 iapa The iapa extension for Atelier B gives access to a number of third-
+party provers to discharge POs [5]. In iapa, POs are not translated directly to
+the input format of these provers; instead the translation targets the format of
+a program verication platform that plays here the role of a gateway to such
+automatic provers, namely Why3 [3]. Each PO thus includes a prelude where the
+logic of the B expression language is formalized in Why3 [14]. The axiomatization
+of the B operators in Why3 has been ne tuned based on an industrial bench-
+mark, resulting in signicant improvement of the automatic proving capabilities
+in Atelier B on that benchmark [6].
+Fig. 6: An annotated screenshot of iapa
+As the proof obligations are produced automatically, they include all the
+hypotheses that are in scope at the point the PO is concerned about. It is often
+the case that the validity of the goal only depends on a small number of such
+hypotheses. However, at times, provers are not able to identify these relevant
+hypotheses and end up lost in the proof search space.
+In order to address this issue, iapa includes a hypotheses selection functional-
+ity, where the user can identify a subset of the hypotheses, and only this subset
+is included in the proof obligation that is translated to Why3 and eventually
+processed by the provers. This functionality is available both through a graph-
+ical, point-and-click, interface and through a command line language. Subsets
+of hypotheses can be created according to the presence of some identier or set
+of identiers, then added to the proof obligation. Of course iapa also provides a
+function to extract a set of free identiers from the goal or from some subset of
+
+hypotheses. These functionalities are built upon two kinds of entities that the
+user can create and manipulate: contexts (subsets of hypotheses) and lexicons
+(subsets of identiers). Full details are available in [5] ; iapa is part of Atelier B
+starting from version 4.5.
+3.2.3 Drudges of the interactive prover The motivation for this function-
+ality was born out of the feeling of frustration that the user of the interactive
+prover sometimes feels when she is faced with a seemingly trivial sub-goal, yet
+single command is able to discharge it. An example of such situation is when
+the current goal can be shown to be a consequence of the hypotheses using the
+theory of equality and propositional reasoning, but the terms involved are large
+or contain operators that get the automatic prover lost.
+Fig. 7: Interface to the drudges in the window of the interactive prover
+A general rule is that the less procient the proof engine, the more ecient
+it is. So the rationale of the drudges of the interactive prover is to use automatic
+provers for simpler logics that are able to produce not only the result of the
+validity check, but also information on how they have reached their conclusion,
+and this information is then processed to produce guidance for the automatic
+prover of Atelier B.
+Fig. 8: State after the successful completion of the drudges : with a single click,
+a new rule has been created (right panel) and applied (left panel) automatically,
+discharging the goal.
+
+Candidate drudges are provers that are either proof producing , or at least
+able to generate a so-called unsat core , i.e. a subset of the hypotheses that are
+actually used in the proof. Such functions have been standardized through at
+least two initiatives: TPTP [16] and SMT [1]. The drudges currently in the latter
+category only (veriT [4] and Z3 [7]), as they implement the unsat core function-
+ality. Given the unsat core, a proof rule for the Atelier B prover can be produced
+automatically, compiled and applied to the current goal. The drudges are avail-
+able as a single click on a new button in the tool bar of the interactive prover
+(see gure 7). If the drudges are successful, the current goal is automatically
+discharged and the proof rule is added to the rule base of the component (see
+gure 8).
+4 Conclusion and Perspectives
+4.1 Aimed at Industry
+Introducing formal methods in industry is dicult. We have experienced this
+situation with B in almost all industries, with a wide range of arguments:
+{"we do not want to change of development cycle"
+{"we do not recruit PhD"
+{"formal methods work for train in 1-D, but planes ight in 3-D"
+{"trains and planes have professional drivers, but car drivers are mostly non-
+professional"
+{"we are not able to understand your deliverable"
+{etc.
+The real chance for the B-method was the very dicult development of the
+automatic speed control system for rapid transit railways in Paris, SACEM, in
+1977, and the decision by the RATP to promote the B-method for the develop-
+ment of the rst driver-less metro Meteor in 1993.
+Several new usages at system-level and at conguration level have emerged
+over the last decade, scaling up to industry-strength deployments and oering
+new verication means with increased levels of condence. These techniques
+allow to better manage complexity when dealing with large systems. However,
+since 1994, B uses have been contained to a narrow scope of industrial software
+applications in the railways because of:
+{the specic development cycle where unit and integration testing almost
+completely disappears,
+{the mandatory ability to handle abstraction for ecient modeling,
+{a specic code generator per target application to address hardware specics.
+The LCHIP technology, combined with improved proof performances and
+provers diversity, pave the way to an easier way of developing SIL4 functions
+(including both hardware and software). The platform safety being out of reach
+
+of the software developer, the automation of the redundant binary code genera-
+tion process and the certicates already obtained for products embedding LCHIP
+building blocks, would enable the repetition of similar performances without re-
+quiring highly qualied engineers. The hardware platform is generic enough to
+host a large number of complexity-bounded industry applications, with a special
+focus on the IoT and nuclear energy20domains.
+4.2 Challenges
+Safety-critical systems are certainly privileged targets when considering the ap-
+plication formal methods. The risk to injure or kill people may entitle to con-
+sider more easily "exotic" development, verication or validation means. With
+the raise of the IoT and the "connect-anything-to-anything" paradigm, secu-
+rity adds a new dimension to analyze and being able to model and prove at
+the same time safety and security properties could facilitate the acceptance of
+formal methods in the forthcoming standards releases.
+Every industry has its own challenges. Based on our experience, our advice
+is to know and understand very well a particular application domain, especially
+its problems and imagine a usage of your formal method, even for a tiny / very
+specic scope21. Aim for the most automated process as industry is very fond of
+any "push-button" tool22.
+References
+1. Barrett, C., Fontaine, P., Tinelli, C.: The SMT-LIB Standard: Version 2.5. Tech.
+rep., Department of Computer Science, The University of Iowa (2015), available
+atwww.SMT-LIB.org
+2. Benveniste, M.V.: On using B in the design of secure micro-controllers: An expe-
+rience report. Electr. Notes Theor. Comput. Sci. 280, 3{22 (2011)
+3. Bobot, F., Filli^ atre, J.C., March e, C., Paskevich, A.: Why3: Shepherd your herd
+of provers. In: Boogie 2011: 1st Int'l Workshop on Intermediate Verication Lan-
+guages. pp. 53{64. Wroc law, Poland (August 2011)
+4. Bouton, T., De Oliveira, D.C.B., D eharbe, D., Fontaine, P., et al.: verit: An open,
+trustable and ecient smt-solver. In: CADE. vol. 9, pp. 151{156. Springer (2009)
+5. Burdy, L., D eharbe, D., Prun, E.: Interfacing automatic proof agents in atelier
+B: introducing "iapa". In: Dubois, C., Masci, P., M ery, D. (eds.) Proc. of the
+Third Workshop on Formal Integrated Development Environment, F-IDE@FM
+2016, Limassol, Cyprus, November 8, 2016. EPTCS, vol. 240, pp. 82{90 (2016)
+6. Conchon, S., Iguernelala, M.: Tuning the Alt-Ergo SMT Solver for B Proof Obli-
+gations, pp. 294{297. Springer (2014)
+20In France several nuclear plants will have to be decommissioned in the coming years,
+requiring to develop supervision systems complying with current standards
+21As such, LCHIP is a potential solution for small memory footprint safety-critical
+systems.
+22Formal data validation is "usual" model-checking connected to a Domain Specic
+Language and traceability means to support certication.
+
+7. De Moura, L., Bjrner, N.: Z3: An ecient smt solver. Tools and Algorithms for
+the Construction and Analysis of Systems pp. 337{340 (2008)
+8. Falampin, J., Le-Dang, H., Leuschel, M., Mokrani, M., Plagge, D.: Improving rail-
+way data validation with prob. In: Romanovsky, A., Thomas, M. (eds.) Industrial
+Deployment of System Engineering Methods, pp. 27{43. Springer (2013)
+9. Hansen, D., Schneider, D., Leuschel, M.: Using B and prob for data validation
+projects. In: Butler, M.J., Schewe, K., Mashkoor, A., Bir o, M. (eds.) Abstract
+State Machines, Alloy, B, TLA, VDM, and Z - 5th Int'l Conf., ABZ 2016, Linz,
+Austria, May 23-27, 2016, Proc. LNCS, vol. 9675, pp. 167{182. Springer (2016)
+10. Lecomte, T.: Safe and reliable metro platform screen doors control/command sys-
+tems. In: Cu ellar, J., Maibaum, T.S.E., Sere, K. (eds.) FM 2008: Formal Methods,
+15th Int'l Symposium on Formal Methods, Turku, Finland, May 26-30, 2008, Proc.
+LNCS, vol. 5014, pp. 430{434. Springer (2008)
+11. Lecomte, T.: Applying a formal method in industry: A 15-year trajectory. In:
+Alpuente, M., Cook, B., Joubert, C. (eds.) Formal Methods for Industrial Critical
+Systems, 14th Int'l Workshop, FMICS 2009, Eindhoven, The Netherlands, Novem-
+ber 2-3, 2009. Proc. LNCS, vol. 5825, pp. 26{34. Springer (2009)
+12. Lecomte, T.: Double cur et preuve formelle pour automatismes sil4. 8E-Mod eles
+formels/preuves formelles-s^ uret e du logiciel (2016)
+13. Lecomte, T., Burdy, L., Leuschel, M.: Formally checking large data sets in the
+railways. CoRR abs/1210.6815 (2012)
+14. Mentr e, D., March e, C., Filli^ atre, J.C., Asuka, M.: Discharging proof obligations
+from Atelier B using multiple automated provers. In: Reeves, S., Riccobene, E.
+(eds.) ABZ'2012 - 3rd Int'l Conf. on Abstract State Machines, Alloy, B and Z.
+LNCS, vol. 7316, pp. 238{251. Springer, Pisa, Italy (Jun 2012), http://hal.inria.
+fr/hal-00681781/en/
+15. Sabatier, D.: Using formal proof and B method at system level for industrial
+projects. In: Lecomte, T., Pinger, R., Romanovsky, A. (eds.) Reliability, Safety,
+and Security of Railway Systems. Modelling, Analysis, Verication, and Certica-
+tion - 1st Int'l Conf., RSSRail 2016, Paris, France, June 28-30, 2016, Proc. LNCS,
+vol. 9707, pp. 20{31. Springer (2016)
+16. Sutclie, G.: The tptp problem library and associated infrastructure. Journal of
+Automated Reasoning 43(4), 337 (2009)
+
