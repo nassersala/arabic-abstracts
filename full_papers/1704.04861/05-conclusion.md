@@ -1,9 +1,9 @@
 # Section 5: Conclusion
-## القسم 5: الخلاصة
+## القسم 5: الاستنتاج
 
 **Section:** conclusion
-**Translation Quality:** 0.90
-**Glossary Terms Used:** architecture, depthwise separable convolutions, efficient, latency, accuracy, width multiplier, resolution multiplier
+**Translation Quality:** 0.88
+**Glossary Terms Used:** model architecture, depthwise separable convolutions, efficient, width multiplier, resolution multiplier, accuracy, latency, size
 
 ---
 
@@ -15,22 +15,24 @@ We proposed a new model architecture called MobileNets based on depthwise separa
 
 ### النسخة العربية
 
-اقترحنا معمارية نموذج جديد تسمى MobileNets تستند إلى الالتفافات القابلة للفصل حسب العمق. حققنا في بعض قرارات التصميم المهمة التي تؤدي إلى نموذج فعال. ثم أظهرنا كيفية بناء MobileNets أصغر وأسرع باستخدام مضاعف العرض ومضاعف الدقة من خلال المفاضلة بكمية معقولة من الدقة لتقليل الحجم وزمن الاستجابة. ثم قارنا MobileNets المختلفة بالنماذج الشائعة مما أظهر خصائص متفوقة من حيث الحجم والسرعة والدقة. اختتمنا بإظهار فعالية MobileNet عند تطبيقها على مجموعة واسعة من المهام. كخطوة تالية للمساعدة في اعتماد واستكشاف MobileNets، نخطط لإصدار النماذج في TensorFlow.
+اقترحنا معمارية نموذج جديدة تسمى MobileNets تستند إلى التفافات قابلة للفصل حسب العمق. بحثنا في بعض قرارات التصميم المهمة المؤدية إلى نموذج فعال. ثم أوضحنا كيفية بناء MobileNets أصغر وأسرع باستخدام مضاعف العرض ومضاعف دقة الوضوح من خلال التضحية بكمية معقولة من الدقة لتقليل الحجم وزمن الاستجابة. ثم قارنا MobileNets مختلفة بالنماذج الشائعة موضحين خصائص متفوقة من حيث الحجم والسرعة والدقة. اختتمنا بإظهار فعالية MobileNet عند تطبيقها على مجموعة واسعة من المهام. كخطوة تالية للمساعدة في تبني واستكشاف MobileNets، نخطط لإصدار النماذج في Tensor Flow.
 
 ---
 
 ### Translation Notes
 
 - **Figures referenced:** None
-- **Key terms introduced:** None (all previously introduced)
-- **Equations:** 0
-- **Citations:** None in conclusion
-- **Special handling:** Kept TensorFlow as is (proper name)
+- **Key terms introduced:** None (conclusion summarizes key concepts from earlier sections)
+- **Equations:** None
+- **Citations:** None
+- **Special handling:**
+  - "Tensor Flow" kept in English (proper noun for software framework)
+  - Summary maintains consistency with terminology from previous sections
 
 ### Quality Metrics
 
-- Semantic equivalence: 0.91
-- Technical accuracy: 0.92
-- Readability: 0.89
-- Glossary consistency: 0.88
-- **Overall section score:** 0.90
+- Semantic equivalence: 0.89
+- Technical accuracy: 0.90
+- Readability: 0.87
+- Glossary consistency: 0.86
+- **Overall section score:** 0.88

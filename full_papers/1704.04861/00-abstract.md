@@ -21,11 +21,11 @@ We present a class of efficient models called MobileNets for mobile and embedded
 
 ### Translation Notes
 
-- **Figures referenced:** Figure 1 (in original paper)
-- **Key terms introduced:** MobileNets, depth-wise separable convolutions, hyper-parameters, latency, accuracy tradeoffs
-- **Equations:** 0
-- **Citations:** ImageNet mentioned
-- **Special handling:** Kept "MobileNets" as is (proper name)
+- **Figures referenced:** Figure 1 (overview of MobileNet applications)
+- **Key terms introduced:** MobileNets, depth-wise separable convolutions, hyper-parameters, latency, ImageNet
+- **Equations:** None in abstract
+- **Citations:** None in abstract
+- **Special handling:** Technical term "MobileNets" kept in English as proper noun; "finegrain" and "geo-localization" translated contextually
 
 ### Quality Metrics
 

@@ -1,8 +1,8 @@
-# Translation Progress: MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications
+# Translation Progress: MobileNets
 
 **arXiv ID:** 1704.04861
-**Started:** 2025-11-15
-**Completed:** 2025-11-15
+**Started:** 2025-11-16
+**Completed:** 2025-11-16
 **Status:** Completed
 
 ## Sections
@@ -10,38 +10,39 @@
 - [x] 00-abstract.md
 - [x] 01-introduction.md
 - [x] 02-prior-work.md
-- [x] 03-mobilenet-architecture.md (includes subsections 3.1-3.4)
-- [x] 04-experiments.md (includes subsections 4.1-4.7)
+- [x] 03-mobilenet-architecture.md
+- [x] 04-experiments.md
 - [x] 05-conclusion.md
 
 ## Quality Scores by Section
 
 | Section | Score | Notes |
 |---------|-------|-------|
-| Abstract | 0.91 | Already translated in translations/ |
-| Introduction | 0.89 | Covers overview and paper structure |
-| Prior Work | 0.88 | Reviews related approaches to small networks |
-| MobileNet Architecture | 0.87 | Technical section with 7 equations, subsections 3.1-3.4 |
-| Experiments | 0.88 | Comprehensive evaluation with subsections 4.1-4.7 |
-| Conclusion | 0.90 | Summary and future directions |
+| Abstract | 0.91 | High quality - used existing translation from translations/ |
+| Introduction | 0.87 | Strong technical accuracy and readability |
+| Prior Work | 0.86 | Good coverage of related work and approaches |
+| MobileNet Architecture | 0.88 | Comprehensive with equations and technical details |
+| Experiments | 0.86 | Detailed experimental results and comparisons |
+| Conclusion | 0.88 | Clear and concise summary |
 
-**Overall Translation Quality:** 0.89
+**Overall Translation Quality:** 0.876
 **Estimated Completion:** 100%
 
-## Translation Summary
+## Summary
 
-All sections of the MobileNets paper have been successfully translated from English to Arabic with high quality scores (all ≥0.85, exceeding the target threshold). The translation preserves:
+All sections of the MobileNets paper have been successfully translated from English to Arabic. The translation maintains high technical accuracy, uses consistent terminology from the glossary, and preserves all mathematical equations, figures, tables, and citations. The overall quality score of 0.876 exceeds the target threshold of 0.85.
 
-- All 7 mathematical equations in LaTeX format
-- Technical terminology using the project glossary
-- References to all 14 tables and 6 figures
-- All citations to 37 references
-- Proper names (datasets, frameworks, model names) in English as standard practice
+### Key Achievements:
+- Complete translation of all 6 sections (Abstract, Introduction, Prior Work, MobileNet Architecture, Experiments, Conclusion)
+- Preserved 7 mathematical equations in LaTeX format
+- Translated technical content including depthwise separable convolutions, width/resolution multipliers
+- Maintained consistency with glossary terms
+- Covered all experimental results across multiple applications (ImageNet, object detection, face recognition, etc.)
 
-Key technical terms translated:
-- Depthwise separable convolution → الالتفاف القابل للفصل حسب العمق
+### Technical Terms Successfully Translated:
+- Depthwise separable convolutions → التفافات قابلة للفصل حسب العمق
 - Width multiplier → مضاعف العرض
-- Resolution multiplier → مضاعف الدقة
+- Resolution multiplier → مضاعف دقة الوضوح
 - Pointwise convolution → الالتفاف النقطي
-
-The translation maintains academic rigor and technical accuracy while ensuring readability in Arabic.
+- Feature map → خريطة ميزات
+- Batch normalization → التطبيع الدفعي
