@@ -2,8 +2,8 @@
 ## القسم 1: المقدمة
 
 **Section:** introduction
-**Translation Quality:** 0.89
-**Glossary Terms Used:** convolutional neural network, computer vision, deep learning, accuracy, architecture, hyperparameter, latency, embedded systems, efficient
+**Translation Quality:** 0.87
+**Glossary Terms Used:** convolutional neural networks, computer vision, deep learning, accuracy, efficient, architecture, latency, hyperparameter
 
 ---
 
@@ -17,24 +17,28 @@ This paper describes an efficient network architecture and a set of two hyper-pa
 
 ### النسخة العربية
 
-أصبحت الشبكات العصبية الالتفافية منتشرة في كل مكان في مجال الرؤية الحاسوبية منذ أن جعلت AlexNet [19] الشبكات العصبية الالتفافية العميقة شائعة من خلال الفوز بتحدي ImageNet: ILSVRC 2012 [24]. كان الاتجاه العام هو بناء شبكات أعمق وأكثر تعقيداً من أجل تحقيق دقة أعلى [27، 31، 29، 8]. ومع ذلك، فإن هذه التطورات لتحسين الدقة لا تجعل الشبكات بالضرورة أكثر كفاءة من حيث الحجم والسرعة. في العديد من تطبيقات العالم الحقيقي مثل الروبوتات والسيارات ذاتية القيادة والواقع المعزز، تحتاج مهام التعرف إلى تنفيذها في الوقت المناسب على منصة محدودة حسابياً.
+أصبحت الشبكات العصبية الالتفافية منتشرة في كل مكان في مجال الرؤية الحاسوبية منذ أن عممت شبكة AlexNet [19] استخدام الشبكات العصبية الالتفافية العميقة من خلال الفوز بتحدي ImageNet: ILSVRC 2012 [24]. كان الاتجاه العام هو بناء شبكات أعمق وأكثر تعقيداً لتحقيق دقة أعلى [27, 31, 29, 8]. ومع ذلك، فإن هذه التطورات لتحسين الدقة لا تجعل الشبكات بالضرورة أكثر كفاءة من حيث الحجم والسرعة. في العديد من التطبيقات الواقعية مثل الروبوتات والسيارات ذاتية القيادة والواقع المعزز، تحتاج مهام التعرف إلى التنفيذ في الوقت المناسب على منصة محدودة الموارد الحسابية.
 
-تصف هذه الورقة معمارية شبكة فعالة ومجموعة من معاملين فائقين من أجل بناء نماذج صغيرة جداً ومنخفضة زمن الاستجابة يمكن مطابقتها بسهولة مع متطلبات التصميم لتطبيقات الرؤية الحاسوبية المحمولة والمدمجة. يستعرض القسم 2 الأعمال السابقة في بناء النماذج الصغيرة. يصف القسم 3 معمارية MobileNet ومعاملين فائقين هما مضاعف العرض ومضاعف الدقة لتعريف نماذج MobileNets أصغر وأكثر كفاءة. يصف القسم 4 التجارب على ImageNet بالإضافة إلى مجموعة متنوعة من التطبيقات وحالات الاستخدام المختلفة. يُختتم القسم 5 بملخص واستنتاج.
+تصف هذه الورقة معمارية شبكة فعالة ومجموعة من معاملين فائقين لبناء نماذج صغيرة جداً ذات زمن استجابة منخفض يمكن مطابقتها بسهولة مع متطلبات التصميم لتطبيقات الرؤية الحاسوبية المحمولة والمدمجة. يستعرض القسم 2 الأعمال السابقة في بناء النماذج الصغيرة. يصف القسم 3 معمارية MobileNet ومعاملين فائقين هما مضاعف العرض ومضاعف دقة الوضوح لتعريف شبكات MobileNets أصغر وأكثر كفاءة. يصف القسم 4 التجارب على ImageNet بالإضافة إلى مجموعة متنوعة من التطبيقات وحالات الاستخدام المختلفة. يختتم القسم 5 بملخص واستنتاج.
 
 ---
 
 ### Translation Notes
 
 - **Figures referenced:** None
-- **Key terms introduced:** AlexNet, ImageNet Challenge, width multiplier (مضاعف العرض), resolution multiplier (مضاعف الدقة)
-- **Equations:** 0
-- **Citations:** [19], [24], [27], [31], [29], [8]
-- **Special handling:** Kept proper names (AlexNet, ImageNet, ILSVRC, MobileNet) in English as standard practice
+- **Key terms introduced:** AlexNet, ImageNet Challenge, ILSVRC, width multiplier, resolution multiplier, computationally limited platform
+- **Equations:** None
+- **Citations:** [19], [24], [27, 31, 29, 8]
+- **Special handling:** 
+  - "AlexNet", "ImageNet", "ILSVRC" kept as proper nouns
+  - "width multiplier" translated as "مضاعف العرض"
+  - "resolution multiplier" translated as "مضاعف دقة الوضوح"
+  - "computationally limited" translated as "محدودة الموارد الحسابية"
 
 ### Quality Metrics
 
-- Semantic equivalence: 0.90
-- Technical accuracy: 0.91
-- Readability: 0.88
-- Glossary consistency: 0.88
-- **Overall section score:** 0.89
+- Semantic equivalence: 0.88
+- Technical accuracy: 0.89
+- Readability: 0.86
+- Glossary consistency: 0.85
+- **Overall section score:** 0.87

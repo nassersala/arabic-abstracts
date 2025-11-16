@@ -1,0 +1,1825 @@
+arXiv:0908.4116v1  [cs.CR]  28 Aug 2009Eﬃcient Authenticated Data Structures for
+Graph Connectivity and Geometric Search Problems∗
+Michael T. Goodrich†Roberto Tamassia‡Nikos Triandopoulos‡,§
+University of California, Irvine Brown University Boston University
+goodrich@ics.uci.edu rt@cs.brown.edu nikos@cs.bu.edu
+October 28, 2018
+Abstract
+Authenticated data structures provide cryptographic proofs t hat their answers are as accu-
+rate as the author intended, even if the data structure is being co ntrolled by a remote untrusted
+host. In this paper we present eﬃcient techniques for authentica ting data structures that rep-
+resent graphs and collections of geometric objects. We use a data -querying model where a data
+structure maintained by a trusted source is mirrored at distribute d untrusted servers, called
+responders, with the responders answering queries made by user s: when a user queries a respon-
+der, along with the answer to the issued query, he receives a crypt ographic proof that allows
+the veriﬁcation of the answer trusting only a short statement (dig est) signed by the source.
+We introduce the path hash accumulator , a new primitive based on cryptographichashing for
+eﬃciently authenticating various properties of structured data r epresented as paths, including
+any decomposable query over sequences of elements. We show how to employ our primitive to
+authenticate queries about properties of paths in graphs and sea rch queries on multi-catalogs.
+This allows the design of new, eﬃcient authenticated data structur es for fundamental problems
+on networks, such as path and connectivity queries over graphs, and complex queries on two-
+dimensional geometric objects, such as intersection and containm ent queries.
+Keywords : authenticated data structures, data authentication, inf ormation integrity, graph con-
+nectivity, geometric searching
+∗A preliminary version of this paper [33] was presented at the 2003RSA Conference (Cryptographers’ Track ).
+†Department of Computer Science, University of California, Irvine, CA 92697, USA.
+‡Department of Computer Science, Brown University, Provide nce, RI 02912, USA.
+§Department of Computer Science, Boston University, Boston , MA 02215, USA.
+1Contents
+1 Introduction 3
+1.1 A Model for Authenticated Data Structures . . . . . . . . . . . . . . . . . . . . . . . 4
+1.2 Related Work . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+1.3 Our Contributions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+2 Hash-Based Data Authentication 8
+2.1 Cryptographic Primitives . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.2 Hashing Scheme and Authentication Framework . . . . . . . . . . . . . . . . . . . . 10
+2.3 Security . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3 Authenticated Path Properties 13
+3.1 Paths and Path Properties . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.2 Path Hash Accumulator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+4 Authenticated Graph Searching 20
+4.1 Hierarchy of Paths . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+4.2 Path Properties in a Forest . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.3 Path, Connectivity and Type Queries on Forests . . . . . . . . . . . . . . . . . . . . 27
+4.4 Path and Connectivity Queries on Graphs . . . . . . . . . . . . . . . . . . . . . . . . 30
+4.5 Biconnectivity Queries on Graphs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+4.6 Triconnectivity Queries on Graphs . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+5 Authenticated Geometric Searching 34
+5.1 Fractional Cascading . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+5.2 Location Process . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+5.3 Hashing Scheme for Fractional Cascading . . . . . . . . . . . . . . . . . . . . . . . . 36
+5.4 Answer Authentication Information . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+5.5 Answer Veriﬁcation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+5.6 Applications of Authenticated Iterative Search . . . . . . . . . . . . . . . . . . . . . 40
+6 Conclusion 41
+21 Introduction
+Verifying information that at ﬁrst appears authentic is an o ften neglected task in data structure
+and algorithm usage. Fortunately, there is a growing litera ture on correctness checking that aims
+to rectify this omission. Following early work on program ch ecking and certiﬁcation (e.g., [8, 56,
+57]), several researchers have developed eﬃcient schemes f or checking the results of various data
+structures (e.g., [9, 10, 11, 24, 42]), graph algorithms (e. g., [20, 35]), and geometric algorithms
+(e.g., [19, 43]). These schemes are directed mainly at defen ding the user against an inadvertent
+error made during implementation. In addition, these previ ous approaches have primarily assumed
+that usage is limited to a single user on an individual machin e.
+With the advent of Web services and Internet computing, data structures and algorithms are no
+longer being used just by a single user on an individual machi ne. Indeed, with the development of
+Web applications and cloud computing services, the machine responding to a user’s query could be
+unknown to both the data-structure author and the user. More generally, it is very common that
+the data source and the data distributor are diﬀerent entitie s or machines with distinct identities,
+and consequently, the owner of a data set does not control the data structure used to answer
+queries on this set. We must recognize that, although they be neﬁt eﬃciency, such scenarios open
+the possibility that an agent hosting a data structure or an a lgorithm could deliberately falsify
+query responses to users. When the information represented by the response to a query is crucial
+to the target application (e.g., it has security or ﬁnancial implications), such falsiﬁcation could
+cause signiﬁcant adverse consequences. We want to guard aga inst this possibility.
+In this paper we are interested in studying a new dimension in data structure and algorithm
+checking—how can we design sophisticated data structures a nd algorithms so that their responses
+can be veriﬁed as accurately as if they were coming from their author, even when the response
+is coming from an untrusted host? Examples of the kind of info rmation we want to authenti-
+cate include dynamic documents, online catalog entries and the responses to queries in geographic
+information systems, ﬁnancial databases, medical informa tion systems and scientiﬁc databases.
+In particular, we are interested in eﬃciently verifying pat hs and connectivity information in trans-
+portationandcomputernetworks, evenwhenthenetwork isch anging. Inaddition, weareinterested
+in verifying complex geometric queries in spatial database s, such as ray shooting, point location
+and range searching queries, which are used extensively in g eographic information systems.
+Digital signatures, used in a per-query basis, can be used to verify simple static documents, but
+they are ineﬃcient for dynamic data structures. We therefor e need new techniques for authenticat-
+ing data structures. The main challenge in providing an inte grity service in the above contexts is
+that the space of possible answers is much larger than the dat a size itself. For example, there are
+O(n2) diﬀerent paths in a tree of nnodes, and each of these paths can have O(n) edges. Requiring
+an authenticator to digitally sign every possible response is therefore prohibitive, especially when
+the data is changing due to the insertion or deletion of eleme nts in the set.
+Instead, the state-of-the-art solution for this problem is signature amortization . Ideally, we
+would like our authenticator to sign just a single digest, i.e., a secure short description, of our
+entire data structure. In our work, collision-resistant ha shing is the cryptographic primitive used
+to produce the data digest, the latter being built from the ca reful combination of cryptographic
+hashes of subsets of our data. Thus, we consider hash-based data authentication . The computation
+of the data digest and the hashes of partial data must be perfo rmed in accordance with the type
+of issued queries such that answer veriﬁcations can be suppo rtedeﬃciently and securely . If we can
+achieve such a scheme, then verifying the answer to a query in our database can be reduced to the
+3problemofcollecting theappropriatehashesofpartialdat athatallow ausertorecomputethedigest
+of the entire structure and, further, compare it to the diges t that is signed by the authenticator.
+Even when we follow this approach, however, we are faced with the challenge of how to subdi-
+vide the data in a way that allows eﬃcient assembly of partial cryptographic hashes and eﬃcient
+computation of the digest of the entire structure for any possible query. For simple data structures,
+such as dictionaries, this subdivision is fairly straightf orward (say, using a linear ordering and a
+Merkle hash tree [44]; see also [29, 46]), but for complex str uctures, such as graphs, geometric
+structures, and structures built using the fractional casc ading paradigm, this subdivision method
+is far from obvious. For instance, there is no linear orderin g among the data items of problems of
+the above examples upon which one could build a hash tree.
+1.1 A Model for Authenticated Data Structures
+Our authentication model involves three parties: a trusted source, an untrusted responder , and a
+user. The source holds a structured collection Sof objects, where we assume that a repertoire of
+query operations are deﬁned over S. IfSis ﬁxed over time, we say that it is static. Otherwise, we
+say that Sisdynamic and assume that a repertoire of update operations are deﬁned that modify S.
+For example, Scan represent a network whose nodes and edges store data item s on which the
+following two query operations are deﬁned: a connectivity query onSasks whether two given nodes
+ofSare in the same connected component and a path query returns a path, if any, between two
+given nodes. We can also deﬁne update operations on Sthat add and/or remove nodes and edges.
+As a second example, Scan be a collection of line segments in the plane forming a pol ygonal chain,
+where an intersection query returns all the segments intersected by a given query line. I n this case
+we can deﬁne update operations that insert and/or remove seg ments.
+Theresponder maintains a copy of the collection Stogether with structure authentication infor-
+mation, which consists of hashes (of partial data) and one time-sta mped—indicating its freshness—
+digest about Ssigned by the source. If Sis dynamic, the responder receives, together with each
+update on S, someupdate authentication information , which consists of a signed time-stamped
+digest describing the updated state of S. Theuserperforms queries on S, but instead of contacting
+the source directly, it queries the responder. The responde r provides the user with an answer to the
+query together with answer authentication information , which yields a cryptographic proof of the
+validity of the answer. The answer authentication informat ion includes the signed time-stamped
+digest and a collection of hashes, carefully chosen from the structure authentication information.
+The user veriﬁes the answer relying solely on trusting the so urce’s signature: from the hashes the
+user recomputes the digest of Sand accepts the answer only if the computed digest matches th e
+veriﬁed, fresh and authentic signed digest. In terms of secu rity, we allow the untrusted responder to
+be controlled by a polynomial-time adversary and require th at, subject to standard cryptographic
+assumptions, the responder cannot successfully cheat the u ser, i.e., for any query no false answer
+can be accepted as authentic.
+The data structures used by the source and the responder to st ore collection S, together with
+the protocols and algorithms for queries, updates, and veri ﬁcations executed by the various parties,
+form what we call an authenticated data structure [29, 40, 46, 58]. In a practical deployment of
+an authenticated data structure, there would be various ins tances of geographically distributed
+responders. Such a distribution scheme reduces latency, al lows for load balancing, and reduces the
+risk of denial-of-service attacks. Also, scalability is ac hieved by simply increasing the number of
+responders.
+4The design of authenticated data structures should address the following goals: (1) low compu-
+tational cost: the computations performed internally by each entity (sour ce, responder and user)
+should be simple and fast; also, the memory space used by the d ata structures supporting the
+computation should be as small as possible; (2) low communication overhead: source-to-responder
+communication (updates and update authentication informa tion) and responder-to-user communi-
+cation (answer and answer authentication information) sho uld be kept as small as possible; (3) high
+security: the authenticity of answers should be veriﬁable with a high d egree of reliability. Thus, the
+cost parameters measuring the performance of authenticate d data structures are: 1) total storage
+used; 2) update cost at the source/responder; 3) query cost a t the responder; 4) veriﬁcation cost
+at the user; and 5) source-to-responder and responder-to-u ser communication costs.
+1.2 Related Work
+Work related to authenticated data structures was initiall y motivated by its applications to the
+issue of certiﬁcate revocation in public key infrastructures (see, e.g., [1, 12, 25, 36, 46] ), where
+the underlying problem involves authenticating membershi p or non-membership (namely, of issued
+digital certiﬁcates) in dynamic sets (i.e., the set of expir ed, revoked or compromised certiﬁcates).
+Therefore, early work is mostly concerned with authenticated dictionaries .
+Thehash tree scheme introduced by Merkle [44] can beusedto implement ast atic authenticated
+dictionary. A hash tree Tfor a set Sstores cryptographic hashes of the elements of Sat its leaves
+and a value L(v) at each internal node v, computed by hashing the concatenation of the values of
+the children of v. The authenticated dictionary for Sconsists of the hash tree Tplus the signature
+of the value L(r) stored at the root rofT. An element eis proven to belong in Sby reporting the
+values of all nodes that are siblings of the nodes lying on the path inTconnecting eto the root.
+With this approach, space is linear, and the answer authenti cation information and the query and
+veriﬁcation time are logarithmic in the size of the set S. Kocher [36] also advocates a static hash
+tree approach for realizing an authenticated dictionary, b ut simpliﬁes somewhat the processing
+needed to verify non-membership in S, by storing intervals instead of individual elements. Othe r
+certiﬁcate revocation schemes based on variations of hash t rees are described in [12, 25].
+Naor and Nissim [46] use techniques that allow the dynamizat ion of hash trees and support the
+insertion and deletion of elements in logarithmic time, thu s implementing a dynamic authenticated
+dictionary. In their scheme, the source and the responder ma intain identically-implemented 2–
+3 trees (or Seidel’s randomized search trees). The update au thentication information has O(1)
+size and the answer authentication information has logarit hmic size. Goodrich and Tamassia [29]
+presentadatastructureforanauthenticated dictionaryba sedonotherrandomizedstructures, skip-
+lists [54]. They introduce the notion of commutative hashin g and show how to embed in the nodes
+of a skip-list a computational directed acyclic graph (DAG) of cryptographic computations based
+on commutative hashing. This scheme matches the asymptotic performance of the Naor-Nissim
+approach [46], while simplifying the details of a software a rchitecture and an actual implementation
+of a dynamic authenticated dictionary as shown in [31]. An al ternative skip-list based scheme is
+proposed in [59]. Anagnostopoulos et al.[2] introduce persistent authenticated dictionaries , where
+the user can issue historical queries of the type “was elemen tein setSat timet”. Work related
+to persistence and historical queries appears in [39].
+Additional work on authenticated dictionaries includes di stributed [61] and two-party [21, 52]
+extensions in the recently studied outsourced data model, where data resides onlyat the responder,
+not at the source, and where typically the source itself is th eonlyuser issuing queries. We note
+5that although our three-party model and the outsourced data model are related, sharing beneﬁts
+and allowing for similar authentication techniques (see al so [53, 60]), they individually face diﬀerent
+challenges. For instance, more sophisticated techniques a re required when no data resides at the
+source and fewer cryptographic techniques are applicable i n a multi-user setting.
+Originally introduced in [5] based on the strong RSA assumpt ion, and later extended in [4],
+cryptographic accumulators constitute an alternative cry ptographic primitive for authenticating
+membership in sets. In [13], Camenisch and Lysyanskaya intr oduced a dynamic extension of the
+RSA accumulator, which applied to our authentication model provides short membership proofs
+but expensive, linear, update costs. Goodrich et al.[30] show how to use the RSA accumulator to
+realize a dynamic authenticated dictionary for a set of nelements with O(1) answer authentication
+information and veriﬁcation time. Their scheme allows a tra deoﬀ between the query and update
+times; for example, one can balance the two times and achieve O(√n) query and update time and
+O(√n) update authentication information. Papamanthou et al.[53] further improved the update
+cost toO(nǫ) for any ﬁxed constant ǫ >0, while keeping all other costs constant. Work on accu-
+mulators includes the support of non-membership proofs [38 ] and an alternative construction [48].
+A ﬁrststep towards the design of more general authenticated data structures (beyond dictionar-
+ies) is made by Devanbu et al.[18]. Using an extension of hash trees, they show how to authe nticate
+operations select,projectandjoinin a relational database. Moreover, they present an authent i-
+cated data structure for a set of multidimensional points th at supports orthogonal range queries.
+This latter result goes beyond simple authenticated dictio naries, but it is restricted to hashing over
+range trees. Martel et al. [40] initiated a study of authenticated queries beyond tre e structures and
+skip-lists. They consider the class of data structures such that (i) the links of the structure form
+a DAGGof bounded degree and with a single source node; and ( ii) queries on the data structure
+correspond to a traversal of a subdigraph of Gstarting at the source. Such data structures can be
+authenticated by means of a hashing structure that digests t he entire digraph Ginto a hash value
+at its source, where the size of the answer authentication in formation and the veriﬁcation time
+are proportional to the size of the subdigraph traversed. Th ey showed how this general technique
+can be applied to authenticate static structures for patter n matching in tries and orthogonal range
+searching, and presented an initial treatment of authentic ating fractional cascading structures, but
+only for range tree data structures, where catalogs are arra nged as unions in a tree. Recently, a
+certiﬁcation-based authentication framework for general queries over dynamic data was proposed
+in [60]. Other work includes the authentication of XML docum ents [7, 17] and grid searching [3].
+By combining cryptographic hashing with accumulators, Nuc kolls in [49] and Goodrich et al.
+in [32] present techniques for super eﬃcient authentication of one-dimensional range search queries
+with veriﬁcation costs that depend only on the answer size bu t not the size of the data set. Related
+workalsoappearsin[47, 51]where(aggregate) signaturesa reemployed inhashtreestoauthenticate
+queries over outsourced databases. The model used is essent ially the one of authenticated data
+structures, but now the data sets are relational databases r esiding in external memory and are
+queried through SQL queries which are founded on one-dimens ional range search. Authentication
+of operations on outsourced ﬁle systems is also studied in [2 8, 34]. Authentication models in more
+adversarial settings where the data source can act unreliab ly have been also studied: undeniable
+attestation by Buldas et al.[12], zero-knowledge sets by Micali et al.[45] and consistency proofs
+by Ostrovsky et al.[50] eliminate the possibility that the source produces diﬀe rent authenticated
+answers to the samequery. Theworks in [45, 50] also consider privacy-preservingquery veriﬁcation.
+Finally, Tamassia and Triandopoulos in [59] study the cost t hat is associated with authenticated
+6data structures, deriving the ﬁrst lower bounds for set-mem bership using cryptographic hashing.
+Theyshowthat anyhash-basedauthenticated dictionaryof s izenhasauthentication overheads that
+are at least logarithmic in nin the worst case, even when the structure authentication in formation
+hasO(n1−ǫ) size,ǫ >0, i.e., even when that many data digests are totally signed b y the source.
+Additional comprehensive studies on the cost of authentica ted data structures have been presented
+by Liet al.[37] and Goodrich et al.[27] on B-trees and skip-lists respectively.
+1.3 Our Contributions
+In this paper, we present general techniques for building au thenticated data structures for a broad
+class of query problems on graphs and geometric objects. Fir st, we describe an authenticated data
+structure that represents a general graph Gand supports the authentication of a large set of graph
+queries. Through the authentication of a generic abstract t ype of queries related to properties
+about paths in G, we provide authentication for a large number of query probl ems on general
+graphs, including the following queries, where v,ware nodes of graph G:areConnected (v,w),
+areBiconnected (v,w),areTriconnected (v,w), reporting respectively whether vandware in same
+connected, biconnected and triconnected component, as wel l aspath(v,w) andpathLength (v,w),
+reporting respectively the nodes and the length of a path con nectingvtow. We also support
+eﬃcient update operations that involve insertions of nodes and edges in G. Our data structure uses
+linear space and supports connectivity queries and update o perations in O(logn) time and path
+queries in O(logn+k) time, where kis the length of the path reported. The update authenticatio n
+information has O(1) size. The size of the answer authentication information and the veriﬁcation
+time are each O(logn) for connectivity, biconnectivity and triconnectivity qu eries and O(logn+k)
+for path queries. If the graph is planar, the data structure i s fully dynamic and supports arbitrary
+series of intermixed insertions and deletions of nodes/edg es. For general graphs, the data structure
+supports insertions but not deletions. These results have a pplications to the authentication of
+network and ﬁle management systems.
+In addition, we address several geometric search problems, showing how to authenticate the full,
+general version of the powerful fractional cascading technique [14]. Our authentication technique
+provides a general framework capable to authenticate any da ta structure built using the fractional
+cascading technique. In particular, we can eﬃciently authe nticate any query for the iterative
+search problem , where we have a collection of kdictionaries of total size nstored at the nodes of
+a connected graph and we want to search for an element in each d ictionary in a subgraph of this
+graph. Fractional cascading yields a data structure with li near-space that supports iterative search
+queries in O(logn+k) time. This is better than the O(klogn) time of separate searches and the
+O(kn)spacethat resultsbysearchinginamergedmasterdictiona ry. Anumberoffundamentaltwo-
+dimensional geometric searching problems can be solved wit h data structures based on fractional
+cascading [15]. These problems include: line intersection andray shooting queries on a polygon P,
+to report the edges and respectively the ﬁrst edge of Pintersected by a query line, point location
+on a planar subdivision, to report the region containing a qu ery point, orthogonal range search on
+a set of points in R2, to report the points inside a query rectangle, as well as orthogonal point
+enclosure andorthogonal intersection queries on a set of rectangles, to report those that contain a
+query point and respectively are intersected by a query rect angle. We show that our authenticated
+fractional cascading data structure can be extended to yiel d eﬃcient authenticated data structures
+for all the above problems. Our authentication schemes have applications to database management
+and geographic information systems.
+7Our authentication schemes are based on a new authenticatio n primitive, the path hash accu-
+mulator, an eﬃcient hash-based structure for authenticating vario us properties of structured data
+represented as paths. In particular, path hash accumulator supports the authentication of any
+decomposable query over data items stored as paths or over se quences of elements. By building
+on our new primitive we achieve eﬃciency and modularity: our schemes can be easily analyzed in
+terms of complexity and security and are simple to implement . Our new primitive can be used as a
+general-purpose authentication tool in the design of more c omplex authenticated data structures.
+Based on widely-used cryptographic primitives, such as col lision-resistant hashing and digital
+signatures, are scheme are practical and secure under stand ard hardness assumptions.
+Paper Structure. Our paper is organized as follows. In Section 2 we deﬁne our da ta authentica-
+tion model, state our cryptographic assumptions and presen t the general authentication technique
+used in our work. In Section 3 we present the path hash accumul ator, an authentication scheme for
+verifying properties on sequences of elements, or more gene rally properties on paths. In Section 4
+we present our authenticated data structures for various pa th and connectivity queries on graphs.
+In Section 5 we present the authentication of the fractional cascading algorithmic paradigm, which
+leads to the authentication of various geometric data struc tures. We conclude in Section 6.
+2 Hash-Based Data Authentication
+In this section, we present the general cryptographic techn ique that is used in our authenticated
+data structures and discuss security issues related to our a uthentication model.
+LetS={e1,e2,...,en}be a data set owned by the source and let Qbe the set of all possible
+queries that a user can issue about S. In an extreme solution, the source can just digitally sign t he
+answer to every possible query q∈Q. SinceQcan be inﬁnitely large, this solution is almost always
+not viable. Thus, directly applying well-known message aut hentication techniques for data authen-
+tication (e.g., signing whatever piece of information need s authentication) is not suitable per se,
+and additional machinery is needed. Alternatively, the sou rce can sign a set C(S) ={s1,s2,...,sc}
+of “statements” or, in fact, relations over elements in Sthat completely describe data set S, mean-
+ing that each query q∈ Qcan be answered and validated by providing some minimal subs et
+A(q)⊆C(S) of such statements to the user and proving A(q) to be authentic, where cis a quantity
+that typically depends on n. In particular, the source can sign all statements of C(S) and provide
+them to the responder, so that they are appropriately forwar ded to the user along with the answer
+to an issued query. Set C(S) must be chosen the minimal possible one. For instance, if Srepresents
+an ordered sequence of nelements andQis the set of all one dimensional range queries about S
+(i.e., “report elements of Sin range [ x1,x2]”), thenC(S) ={s1,s2,...,sc}could consist of state-
+ments of the form “ ei+1is the successor of eiinS”, where c=n+1, since an ordered sequence of
+nelements deﬁnes exactly n+1 relations of the form ( ei,ei+1), where ei+1is the successor of ei.
+Our approach is signature amortization , which constitutes the state-of-the-art solution for data
+authentication and is common in concept in all works on authe nticated data structures [40, 46, 58].
+The idea is to compute (at the source) and maintain (at the res ponder) a digestof the data set
+S, that is, a short cryptographic description of S, and to have this digest be the onlystatement
+signed by the source. Upon a query q, along with the answer, the user is provided by the responder
+with this signed digest and with some auxiliary information (i.e., a proof) that is suﬃcient for
+verifying the answer. This veriﬁcation step at the user amou nts to using the answer and the
+8auxiliary information for locally computing the digest of S, and comparing this against the signed
+and veriﬁed digest (the one directly provided by the respond er). Once the two digests have been
+checked by the user to be identical, the user has a cryptograp hic proof about the correctness of the
+answer. This is the case because the signed digest has been co nstructed (by the source) in such
+a way so that it carries certain cryptographic properties an d encodes certain structural properties
+ofSthat allow the secure transmission of trust from the signed ( and veriﬁed) digest to the entire
+data set S, as well as, for any query q, the eﬃcient veriﬁcation of the corresponding answer. In
+this way, one signature over the digest of the data set is amor tized over all queries in QonS.
+In this work, we consider the case where the data digest is com puted using cryptographic
+collision-resistant hashing (e.g., the SHA family of functions) and call this technique hash-based
+data authentication . Note that the use of accumulators (e.g., as in [13, 30, 53]) t o produce the
+digest constitutes an alternative, though computationall y signiﬁcantly more expensive, approach.
+We next describe more formally our approach, starting by the used cryptographic primitives.
+2.1 Cryptographic Primitives
+Before presenting the cryptographic primitives that are us ed in our work, we introduce some no-
+tation. By y←A(x), we denote that ywas obtained by running algorithm Aon input x. IfA
+is probabilistic, then yis a random variable. If Sis a ﬁnite set, then y←Sdenotes that ywas
+chosen from Suniformly at random. By AO(·), we denote an algorithm Athat has oracle access
+toO, i.e., makes queries to an oracle O. ByQ=Q(AO(x))←AO(x) we denote the contents of the
+query tape once Aterminates, with oracle Oand input x. By (q,a)∈Qwe denote the event that
+Aissued query qandOanswered a. Ifbis a boolean function, by ( y←A(x) :b(y)), we denote the
+event that b(y) istrueafterywas generated by running Aon input x. Finally, a function ν:N→R
+isnegligible if for every positive polynomial p(·) and for suﬃciently large k,ν(k)<1
+p(k).
+To realize signature amortization in our authentication mo del, the basis of trust is the postulate
+that the user trusts the data source. In the public-key crypt ographic model this is expressed by
+means of a digital signature scheme . The user knows the public key of the source and trusts that
+anything signed under the corresponding private key is auth entic. For completeness we present the
+standard deﬁnition of the signature-scheme primitive as in [26]. Schemes that satisfy the following
+security requirement are said to be secure against adaptive chosen-message attack .
+Deﬁnition 2.1 (Signature Scheme) .Probabilistic polynomial-time algorithms (G(·),Sign(·)(·),
+Verify(·)(·,·)), whereGis the key generation algorithm, Signis the signing algorithm, and Verifythe
+veriﬁcation algorithm, constitute a digital signature sch eme for a family (indexed by the public key
+PK) of message spaces M(·)if the following two hold:
+Correctness If a message mis in the message space for a given public key P K, and SKis
+the corresponding secret key, then the output of SignSK(m)will always be accepted by the
+veriﬁcation algorithm VerifyPK. More formally, for all values of mand security parameter k:
+Pr[(PK,SK)←G(1k);σ←SignSK(m) :m←MPK∧¬VerifyPK(m,σ)] = 0.
+Security Even if an adversary has oracle access to the signing algorit hm that provides signatures
+on messages of the adversary’s choice, the adversary cannot create a valid signature on a
+9message not explicitly queried. More formally, for all fami lies of probabilistic polynomial-
+time oracle Turing machines {A(·)
+k}, there exists a negligible function ν(k)such that
+Pr[(PK,SK)←G(1k);(Q(ASignSK(·)
+k(1k)),m,σ)←ASignSK(·)
+k(1k) :
+VerifyPK(m,σ) = 1∧¬(∃σ′|(m,σ′)∈Q)] =ν(k).
+Hash-based data authentication employs a cryptographic hash function hto produce the digest
+of the data set. Function hoperates on a variable-length message Mproducing a hash value h(M)
+of short and ﬁxed length. Moreover, function his called collision-resistant if it is computationally
+hardtoﬁndtwodiﬀerentstrings x/ne}ationslash=ythathashtothesamevalue, i.e., formacollision h(x) =h(y).
+For completeness, we give a standard deﬁnition of a family of collision-resistant hash functions.
+Deﬁnition 2.2 (Collision-resistant Hash Function) .LetHbe a probabilistic polynomial-time algo-
+rithm that, on input 1k, outputs an algorithm h:{0,1}∗/ma√sto→{0,1}k. ThenHdeﬁnes a family of
+collision-resistant hash functions if:
+Eﬃciency For allh∈H(1k), for all x∈{0,1}∗, it takes polynomial time in k+|x|to compute
+h(x).
+Collision-resistance For all families of probabilistic polynomial-time Turing m achines{Ak},
+there exists a negligible function ν(k)such that
+Pr[h←H(1k);(x1,x2)←Ak(h) :x1/ne}ationslash=x2∧h(x1) =h(x2)] =ν(k).
+2.2 Hashing Scheme and Authentication Framework
+We now describe the general framework that our authenticati on techniques are based on. Working
+in the public-key cryptographic model and given a security p arameter, a signature scheme and
+a collision-resistant hash function hare available for use to all parties (source, responder, use r).
+Thus, there is always available information that allows the user to validate a signature produced
+by the source.
+To achieve signature amortization, what is signed by the sou rce is a digest dof the data set
+S={e1,...,en}the source owns. In our authentication schemes, the collisi on-resistant hash
+function his used to produce this digest. To achieve this, we assume som e well-deﬁned binary
+representation for any data element eofS, so that hcan operate on eto produce hash value h(e).
+Also, we assume that rules have been deﬁned so that hcan operate over any ﬁnite sequence of
+elements, i.e., h(ei1,...,eik) represents a hash value computed over kelements ei1,...,eikofS. For
+instance, h(ei1,...,eik) can denote that hoperates on the concatenation ei1/bardbl.../bardbleikofei1,...,eik,
+or on the concatenation h(ei1)/bardbl.../bardblh(eik) of their hashes; in both cases, hoperates on a binary
+stringσ, where the cost of the operation of honσis proportional to the length |σ|(in particular,
+this is true for the SHA family of hash functions; see also [59 ]).
+We next deﬁne hashing schemes , our general approach for computing a digest din a systematic
+way over set S. In particular, dis computed by means of a single-sink directed acyclic graph deﬁned
+overS, whose nodes are associated with elements in Sand are labeled with hash values.
+Deﬁnition 2.3 (Hashing Scheme) .LetS={e1,...,en}be a data set and Gbe a single-sink
+directed acyclic graph. A hashing scheme forSusingGis a node-labeling in Gcreated as follows.
+Sequences of data elements of Sare associated with nodes of G, where each sequence has constant
+size with respect to n, and each node u∈Gis assigned a hash value or labelL(u), such that:
+10•ifuis a source node of G, and(eu1,...,eum)is the sequence of elements of Sassociated with
+nodeu, wherem≥0is some constant integer, then
+L(u) =h(eu1,...,eum);otherwise
+•ifuis a non-source node of G,(z1,u),...,(zk,u)are the incoming edges of uinG, and
+(eu1,...,eum)is the sequence of elements of Sassociated with node u, wherek,m≥0are
+some constant integers, then
+L(u) =h(eu1,...,eum,L(z1),...,L(zk)).
+Iftis the sink node of G, thedigestofSusing this hashing scheme is label L(t).
+Often, by the term hashing scheme we refer not only to the node -labeling of Gbut rather to the
+augmented graph G, includingthe association between data elements and graph nodesand the hash
+values. Observe that we explicitly require that each node of Gis associated with a constant number
+of data elements, and that we also implicitly assume that nod es inGhave constant in-degree, i.e.,
+the number of incoming edges of any node is constant. Note tha t as digest dofSis simply a hash
+value, it has short length. In general, Gis deﬁned in accordance with the data structure used to
+answer queries on S, but without necessarily exactly coinciding with it.
+Given a data set Sand a signature scheme, signature amortization is implemen ted using the
+following authentication scheme . Using a hashing scheme, the data source produces a digest dof
+Saccording to a speciﬁc query type Q, and using a signature scheme, the source digitally signs
+d. This signed digest is the core trusted component for authen ticating queries: the answer to
+a query q∈Qis authenticated by being checked against the validity of th e signed d. This is
+achieved by the collision-resistant property of hand the way digest dhas been computed through
+the hashing scheme G. In particular, Gis constructed such that it expresses structural informati on
+aboutSthat corresponds to a set of relations C(S) capable of verifying the answers to queries in
+Q. When the signed digest dis veriﬁed to be authentic, it is the collision-resistance p roperty of
+hthat transmits trust to the data elements of S—from the authentic dand through the graph
+G—essentially, authenticating the set C(S). This authentic information is ﬁnally used to check the
+validity of the provided answer. The hashing scheme should b e designed so that, depending on the
+query typeQ, checking the validity of answers can be performed eﬃciently, correctly and securely ,
+independently of the speciﬁc query q.
+For dynamic data evolving over time, new digests are compute d and signed by the source. To
+avoidreplay attacks launched by the responder, that is, attempts for answer veri ﬁcation subject
+to old, invalid data digests (that can be easily cached by the responder), the technique of time-
+stamping is used, as it was introduced in [46]. A digest is signed after a time-stamp is appended
+to it, which is used by the user to check the freshness of the si gnature on the digest. A veriﬁable
+answer is ﬁnally accepted only if it corresponds to a fresh si gnature, that is, only if the time-stamp
+is recent (according to some convention depending on the hig her level application). Accordingly,
+the source periodically resigns the current digest, even if no changes occur in the data set.
+Overall, our authentication techniques are based on the fol lowing general protocol. The source
+and the responder store identical copies1of the data structure representing Sand maintain the
+1When randomized data structures are in consideration, iden tical copies can be still maintained by having the
+source and the responder sharing the same randomness seed.
+11same hashing scheme GonS. The source periodically signs the digest dofStogether with a fresh
+time-stamp and sends this signed time-stamped digest to the responder. When updates occur on
+S, these are sent to the responder together with the new signed time-stamped digest. Note that
+in this setting (signature amortization and hash-based aut hentication), the update authentication
+information has O(1) size and the structure authentication information cons ists ofG(hash values).
+When the user poses a query, the responder returns to the user the answer along with the
+answer authentication information, i.e., it returns ( i) the answer to the query, ( ii) the signed time-
+stamped digest of Sand (iii) a proof, consisting of a small collection of labels (hash va lues) or data
+elements from the hashing scheme Gthat allows the recomputation of the digest and the semantic
+veriﬁcation of the answer. The user validates the answer by r ecomputing the digest (and checking
+its correctness as it is expressed by the hashing scheme and t he corresponding set C(S)), checking
+that it is equal to the signed one and verifying the signature on the digest. Accordingly, the user
+either veriﬁes the authenticity of the answer and acceptsit as authentic, or otherwise, the user
+rejectsthe answer. The total time spent for this process is called th eanswer veriﬁcation time .
+Note that, at the user side, the veriﬁcation algorithm opera tes on the three inputs: the answer,
+the proof and signed digest. The answer and the proof are used to recompute the digest. In
+doing this, the user employs the collision-resistant hash f unctionhin combination with the hashing
+schemeG. Bothhand the structure of Gare assumed to be available to the user as part of the
+public key. Alternatively, we can think the subgraph of Gused by the user to be part of the proof.
+The hashing scheme Gencodes setC(S) and is the means by which the user associates the answer
+with the proof and the issued query qand ﬁnally veriﬁes the answer. Note that our authentication
+framework is appropriate for any type of queries Qand depends on the hashing scheme in use
+(indeed, Deﬁnition 2.3 imposes no restriction on the exact s tructure of the used DAGs). As we
+discuss next, the design of eﬃcient and secure authenticate d data structures is based on the correct
+and careful deﬁnition of a hashing scheme Gin accordance with the type of queries Q.
+2.3 Security
+Finally, we discuss the security requirement for any authen tication scheme and how it is achieved
+using the above authentication method. Here, we present a se curity deﬁnition appropriate for the
+model of authenticated data structures. A more formal secur ity deﬁnition is available in [60].
+Starting from the basis that the user trusts the data source b ut not the responder, it is the
+responder that can act adversarially. We ﬁrst assume that th e responder always participates in the
+three-party protocol, i.e., it communicates with the sourc e and the user, as the protocol dictates.
+Thus, we do not consider denial-of-service attacks; they do not form an authentication attack but
+rather a data communication threat. Actually, although pra ctically nothing prevents the responder
+from denying to participate in the protocols (e.g., refusin gto respondto a user’s query), in principle
+nothing prevents the user from redirecting the query to anot her responder. Indeed, a practical
+deployment of authenticated data structures utilizes resp onders as geographically distributed—
+widely spread in a network—mirror sites of the source, thus, the user can contact more than
+one responders. Additionally, if a responder is a service pr ovider, denial-of-service attacks can be
+prevented using some form of penalties applied to non-coope rative responders.
+However, a responder can try to cheat, by not providing the co rrect answer to a query but
+attempting to forge a fake proof for a false answer. We model t his scenario by assuming that the
+responder is controlled by a computationally bounded (poly nomial-time) adversary A. The adver-
+sary performs a type of attack that is similar to an adaptive c hosen-message attack for signature
+12schemes. That is, Ahas oracle access to the authentication technique and posse sses the signed
+digest (using a particular hashing scheme) of any data set S′of his choice. Then, given a particular
+queryq∈Qfor a data set S, the goal of the adversary is to constructa false answer and a fake proof
+for this query that passes the veriﬁcation check performed a t the user. Accordingly, the security
+requirement that the authentication scheme of any authenti cated data structure should satisfy is as
+follows: given any query by a user, no polynomial-time respo nder can reply with a pair of answer
+and an associated proof, such that both the answer is not corr ect and the user (incorrectly) veriﬁes
+the authenticity of the answer and accepts it. More formally , we require the following property:
+Deﬁnition 2.4 (Security Requirement) .An authenticated scheme for an authenticated data struc-
+ture issecure, if for any query issued by a user, no polynomial-time advers aryA—controlling the
+responder that answers the query and having oracle access to the authentication scheme—has non-
+negligible in the security parameter advantage in causing a user to accept, i.e., to verify as correct,
+an incorrect answer.
+For hash-based data authentication, our techniques follow the standard “hash and sign” au-
+thentication paradigm, and the above property is achieved b y relying on the security properties of
+signatures and collision-resistant hashing. That is, if th e hashing scheme is carefully designed such
+that it encodes statements about the data set S(setC(S)) that allow answer veriﬁcation, then
+the authentication scheme is secure: using standard argume nts, any attack against the scheme is
+reduced to an attack either on the signature scheme or on the c ollision-resistant hash function.
+Thus, the security of an authentication scheme is fully char acterized by the hashing scheme.
+We close our discussion by noting that for search query probl ems, where the answer to a query
+is a subset of the data elements in S={e1,...,en}, we can further characterize the properties
+that the underlying hashing scheme should satisfy. Let a(q) ={ea1,...,eal}⊆Sbe the unique
+answer of a search query q∈Qfor a data set S, where 0≤l≤nis the size of the answer. If
+a′(q) ={ea′
+1,...,ea′
+k}is the answer of size k, 0≤k≤n, given by the responder to the user, then
+the hashing scheme Gshould be chosen such that it can be used to check whether a′(q) is correct.
+And in this case, answer a′(q) is said to be correct, if it contains: (1) only elements that satisfy the
+query parameters of qand (2) all elements that satisfy the query parameters of q, i.e., ifa′(q) =a(q)
+(see also [40]).
+3 Authenticated Path Properties
+We now present the path hash accumulator , our ﬁrst authentication scheme that provides authen-
+tication of a general class of queries on a sequence S= (e1,e2,...,en). That is, here the data set
+is an ordered collection of nelements, where the notion of predecessor andsuccessor are deﬁned
+on elements of Sand the notion of ﬁrstandlastare deﬁned on S. Our path hash accumulator will
+serve as a primitive authentication tool used in the rest of t he paper (Sections 4 and 5). We start
+by introducing some notation related to paths, the central t echnical concept in our work.
+3.1 Paths and Path Properties
+An abstract notion of a pathis used to represent sequence S. We use and extend the notation
+in [16]. A pathconsists of one or more nodesand is directed, in accordance with the need to
+capture the predecessor-successor relationship. Also, pa ths can be joined to form concatenation
+pathsand they can deﬁne subpaths. More formally:
+13Deﬁnition 3.1. Apathpis an ordered sequence of one or more nodes. The ﬁrst and last no des
+of a path pare called the headandtailofp, and are denoted as head(p)andtail(p). A path is
+considered to have a direction: each node is connected to its successor by a directed edge. If p′
+andp′′are paths, the concatenation p=p′/bardblp′′is a path formed by adding a directed edge from
+tail(p′)tohead(p′′). Asubpath ¯ p(v,u) = ¯pof a path pis the path consisting of the collection of
+consecutive nodes v,w1,...,w l,uofpwithhead(¯p) =v,tail(¯p) =u, wherew1,...,w l,l≥0, are
+the intermediate nodes of ¯pthat lie between vandu, and where v=uis possible whenever l= 0.
+The data set Sis associated with a path through the notion of node attributes andnode proper-
+ties, values that are stored in the nodes of the path. Similarly, path attributes andpath properties
+extend node attributes and node properties to a collection o f consecutive nodes, i.e., to paths.
+Deﬁnition 3.2. Anode attribute N(v)of nodevis a value related to and stored at v.N(v)can
+assume arbitrary values and occupies only O(1)storage. A node propertyN(v)of nodevis a
+sequence N1(v),...,N r(v)of node attributes, where ris a constant. For a node v, we require that
+vis included in any node property N(v)ofvas a node attribute of v. Apath attribute P(p)of
+pathpis a value that is related to pand occupies only O(1)storage. A path propertyP(p)ofpis
+a sequence of path attributes P1(p),...,P s(p), wheresis a constant. For a path p, we require that
+head(p)andtail(p)are included in any path property P(p)ofpas path attributes of p.
+A path property is a sequence of path attributes, that is, a se quence of values that relate to
+the path, in particular, values that depend on the data store d at the nodes of the path as node
+properties and possibly on the structural properties of the path (e.g., path size, node ordering
+etc.). Therefore, path properties depend on the correspond ing node properties deﬁned over the
+path. Moreover, the deﬁnition of path properties (and path a ttributes) is naturally extended to
+the case where subpaths of paths are considered. Accordingl y, we can view a path property as a
+mappingPfrom paths (and, actually, node properties of their nodes an d the path structure) to
+sequences of values. That is, path property P(p) of path pis a mapping from pto a sequence of
+values related to p. Thus,P(·) can be treated as a function. Also, note that a node property N(u)
+can be viewed as a corresponding path property P(¯p(u,u)) and vice versa.
+We are interested in path properties that satisfy the concatenation criterion .
+Deﬁnition 3.3. Letpbe a path and let p′andp′′be any subpaths of psuch that p=p′/bardblp′′. A path
+propertyPsatisﬁes the concatenation criterion ifP(p) =F(P(p′),P(p′′)), whereFis a function
+deﬁned on pairs of sequences of values (path attributes) tha t can be computed in O(1)time. Function
+Fis called the concatenation function ofP.
+In other words, a path property satisﬁes the concatenation c riterion when this path property
+evaluated for a path pcan be computed in constant time given the corresponding pat h properties of
+any two subpaths of p. Thus, a path property satisﬁes the concatenation criterio n when its corre-
+sponding concatenation function admits a computational ev aluation that is inherently associative .
+We wish to be able to locate nodes of a path that are of our inter est. This is achieved by a
+node selection query by means of a path selection function . Apath selection query extends a node
+selection query for locating subpaths using a path advance function .
+Deﬁnition 3.4. LetPbe a path property that satisﬁes the concatenation criterio n. Given a path
+pand a query argument q, anode selection query QNmapspinto a node v=QN(p,q)ofp. A
+node selection query is always associated with some path selection function . Given that p=p′/bardblp′′,
+14apath selection function σ(p,q)forQNdetermines in O(1)time whether vis inp′orp′′usingq
+and valuesP(p′)andP(p′′).
+Deﬁnition 3.5. LetPbe a path property that satisﬁes the concatenation criterio n. Given a path
+pand a query argument q, a path selection query QPmapspinto a subpath ¯p=QP(p,q)ofp. A
+path selection query is always associated with some path advance function . Given that p=p′/bardblp′′,
+apath advance function α(p,q)forQP, using valuesP(p′)andP(p′′), returns in O(1)time the
+subpath(s) among p′,p′′(possibly none) for which the query argument qholds.
+Letpbe a path,Pbe any path property that satisﬁes the concatenation criter ion and letNbe
+any node property. We are interested in authenticating the f ollowing query operations on p:
+•property(subpath ¯ p(v,u)): report the value of path property Pfor subpath ¯ p(v,u) ofp(¯pmay
+be equal to p);
+•property(nodev): report the value of node property Nfor node v;
+•locate(pathp, path selection function σ, argument q): ﬁnd node v=QN(p,q) ofpreturned
+by the node selection query QNexpressed by the path selection function σ;
+•subpath(pathp, path advance function α, argument q): ﬁnd the subpath ¯ p=QP(p,q) ofp
+returned by the path selection query QPexpressed by the path advance function α.
+That is, we are interested in authenticating the “path prope rty” query property(·) that returns the
+corresponding node or path property of its argument, and “se arch” queries locate(·),subpath(·)
+that, having a reverse role and using the path or node propert ies, return a path or node.
+3.2 Path Hash Accumulator
+We now present our ﬁrst authentication scheme for the above q uery operations on paths, discussing
+the details of the path representation and its associated ha shing scheme. Let PandNbe the path
+property satisfying the concatenation criterion and the no de property of our interest.
+We represent a path pas a balanced binary tree T(p), where each leaf of T(p) represents a node
+ofp, sothat theleft-to-right orderingof theleaves correspon dstop. (We donot distinguishbetween
+path nodes and corresponding tree leaves.) An internal node vofT(p) represents the subpath p(v)
+ofpthat corresponds to the leaves of the subtree rooted at v. Each leaf ustores the corresponding
+node propertyN(u) and each internal node vstores the corresponding path property P(p(v)). For
+simplicity, we denote the path property P(p(u)) of the subpath deﬁned by node uasP(u).
+Thepath hash accumulator for path pis the hashing scheme for the node and path properties
+ofpusing a DAG that is induced by tree T(p). Speciﬁcally, consider the data set consisting of:
+(1) for each leaf node vofT(p), the node property N(v) and (2) for each internal node uofT(p),
+the path property P(u) of the subpath p(u) associated with the leaves in the subtree rooted at u.
+LetGbe the DAG obtained from T(p) by directing each edge towards the parent node, and let h
+be a collision-resistant hash function. Also, for a node vofp, letpred(v) andsucc(v) denote the
+predecessor and the successor of vinp, respectively. In particular, pred(head(p)) andsucc(tail(p))
+are some special⊥(nil) values. Then given h, the hashing scheme of p(actually, of the above data
+set) using Gis deﬁned by computing a label L(u) for each node uofT(p) as follows:
+15r
+z
+v u¯pw3w2
+w5w1w4T(p)
+Figure 1: Answer authentication information for property(¯p(v,u)) consisting of: (1) the properties
+of allocation nodes w1,...,w 5(grey circle nodes); (2) the labels of the children of the all ocation
+nodes, if these children exist, or else the node properties o f their neighboring nodes in p(black
+square nodes); (3) the labels and properties of sibling node s of nodes in the leaf-to-root paths from
+vanduup torthat are not allocation nodes (grey square nodes).
+•Ifuis a source vertex of G, i.e., a leaf of T(p), then
+L(u) =h(N(pred(u)),N(u),N(succ(u))), (1)
+where, by convention, N(⊥) takes on a special, ﬁxed, hash value;
+•Ifuis a non source vertex of Gand (z1,u) and (z2,u) are edges of G, then
+L(u) =h(P(u),L(z1),L(z2)). (2)
+The digest of the above data set is the label L(r) of the sink rofG(i.e.,ris the root of T(p))
+and is called the path hash accumulation of pathp.
+We are interested in supporting the following two update ope rations on paths. Operation
+concatenate (pathp′, pathp′′) joins paths p′andp′′to the concatenation path p=p′/bardblp′′and
+operation split(nodev) splits the path pthat contains vin two subpaths p′andp′′such that
+p=p′/bardblp′′andv=head(p′′). These primitive operations are useful to support more com plex
+update operations of data structures built using path hash a ccumulators2(see Section 4), and they
+result in recomputing the path hash accumulation(s) of the p ath(s) involved in these operations.
+We next present and prove our ﬁrst result about the performan ce and the authentication prop-
+erties of path hash accumulators in the three-party authent ication model described in Section 1.1.
+Lemma 1. Based on the path hash accumulator hashing scheme, there exi sts an authenticated data
+structure for path pof length nthat supports query operations property(subpath), property(node),
+locateandsubpathand update operations concatenate andsplitwith the following performance:
+2Although the term path hash accumulator is deﬁned as a hashin g scheme (i.e., the authentication structure), we
+use the same term to also refer to the corresponding data stru cture (i.e., the binary tree); since the underlying DAG
+of the hashing scheme coincides with the binary tree, this in troduces no confusion.
+161. query operations property(subpath), property(node),locateandsubpath take each O(logn)
+time;
+2. for every query operation the answer authentication info rmation has size O(logn);
+3. for every query operation the answer veriﬁcation time is O(logn);
+4. the total space used is O(n);
+5. for every update operation the update authentication inf ormation has size O(1);
+6. ifqis a path of length m, update operation concatenate (p,q) takesO(log(max{n,m}))and
+update operation splitonptakesO(logn)time.
+Proof.(1) First consider the query property(¯p(v,u)) onp. LetA(¯p) be the set of allocation nodes
+inT(p) of subpath ¯ p= ¯p(v,u), deﬁned as follows. For a tree node w,w∈A(¯p) if the leaves of the
+subtree deﬁned by ware all nodes of ¯ pbut the same is not the case for w’s parent, if any. That is,
+A(¯p) is the minimal set of tree nodes deﬁning subtrees that exact ly cover ¯pand no other nodes of p,
+i.e., subtrees whose leaves form a partition of ¯ pinto subpaths, where each subpath consists of the
+leaves that correspond to one of the allocation nodes. So, ea chw∈A(¯p) corresponds to a subpath
+of path ¯p. SinceT(p) is a balanced binary tree, there are O(logn) allocation nodes for subpath
+¯pthat can be found in O(logn) time by tracing the leaf-to-root tree paths in T(p) fromvandu
+up to the root rofT(p). Since, the path property Psatisﬁes the concatenation criterion, we have
+that the path property P(¯p) can be computed by using the tree structure and by applying O(logn)
+times the concatenation function FofPon the path properties of the subpaths of ¯ pstored at the
+allocation nodes of ¯ p. Thus, query property(subpath) can be answered in O(logn) time.
+(2) Clearly, the answer given to the user is the property P(¯p). For any node wofT(p), let
+(w1,...,w k) be the node-to-root path connecting wwith the root r, withw1beingwandwkbeing
+a child of r. We deﬁne the veriﬁcation sequence ofwto be the sequence V(w) = (s1,s2,...,sk),
+where, for 1≤j≤k,
+sj= (L(¯wj),P(¯wj)), (3)
+and ¯wjis the sibling node of wj, i.e.,sjis the pair of the label of the sibling ¯ wjof nodewjand
+the path property of the path p(¯wj) that corresponds to this sibling node ¯ wj. (Recall, property
+P(p(¯wj)) is denoted simply as P(¯wj).) Letzbe the least common ancestor of vanduinT(p). The
+answer authentication information except from the signed t ime-stamped digest consists of three
+parts (see Figure 1):
+1. for each allocation node w∈A(¯p), the propertyP(w), ifwis not a leaf, or the property N(w)
+otherwise; these properties are given as a sequence ( α1,...,αm), such that the set of leaf nodes
+of any allocation nodes with properties αiandαi+1, 1≤i≤m−1, forms a subpath of ¯ p;
+2. for each allocation node w∈A(¯p), the labels of its children, if they exist, or the propertie s
+N(pred(w)) andN(succ(w)) otherwise; and
+3. the labels and the correspondingpath properties of the si blings of the nodes in the paths from
+the left most and right most allocation nodes up to the least c ommon ancestor z, if these
+siblings are not allocation nodes themselves, and the veriﬁ cation sequence of z.
+17Given that T(p) is balanced, thus, for every ¯ p, thesetA(¯p) of allocation nodesof ¯ phassizeO(logn),
+andthat apath propertyhas constant size, the answerauthen tication information hassize O(logn).
+(3) To accept the answer, the user ﬁrst recomputes P(¯p), by repeatedly applying the concatena-
+tion functionFon sequence ( α1,...,αm). IfP(¯p) is not veriﬁed, the answer is rejected. Otherwise,
+the veriﬁcation process is completed by the computation and veriﬁcation of the signed path hash
+accumulation. Observe that the user has all the necessary in formation needed for this procedure.
+The computation of the digest corresponds to tracing two lea f-to-root paths in T(p) and at each
+node of the paths computing a hash label and possibly applyin g the concatenation function F. The
+answer authentication information can begiven in such a way so that this sequence of computations
+is well-deﬁned for the user; e.g., O(logn) bits can beused to denote the left-right relation of siblin gs
+inT(p). Clearly, since computing the path hash accumulation corr esponds to tracing two paths of
+lengthO(logn), where at each node a constant amount of work is performed or , equivalently, to
+executing an amount of computations proportional to the ans wer authentication information which
+has sizeO(logn), the answer veriﬁcation time is O(logn).
+(1)−(3) (Other query operations ) Considering the other three query operations of the path
+hash accumulator, we note the following. For a property(v) query, we proceed as above and the
+property(¯p(v,u)) case: observe that property(v) corresponds to property(¯p(v,v)). For a locate(p,σ,q)
+query, we locate the target node vby performing a top-down search in T(p) starting from the root:
+at a node uwith children w1andw2, the path selection function σis used to select either the path
+that corresponds to w1or the path that corresponds to w2. Then, the answer is the located node v
+and the proof is the proof that corresponds to a property(¯p(v,v)) query. For a subpath(p,α,q) query,
+a similar top-down tree search is performed using the path ad vance function αto ﬁrst compute the
+target subpath ¯ p(v,u); the proof is constructed by considering the correspondin g allocation nodes.
+That is, the proof is the proof that corresponds to a property(¯p(v,u)) query. Thus, all these queries
+can be answered in O(logn) time, where the answer authentication information is of si zeO(logn)
+and the answer veriﬁcation time is O(logn).
+(4) Since a path property has constant size, the hash path acc umulator occupies O(n) space.
+(5) Since the signed digest of the data set representing path pis simply a hash value and, after
+any update operation on the path hash accumulator, 1 ( concatenate ) or 2 (split) digests are signed
+by the source and sent to the responder, the update authentic ation information has constant size.
+(6) Besides, the update operations can be implemented in log arithmic time using the following
+primitive update operations on trees (see, e.g., [55]): createroot(given two trees, create a root
+that merges them into one), deleteroot(delete the root of a tree to create two new trees) and
+rotate(perform a left or right rotation at a tree node). Observe tha t for all these operations the
+involved path properties can be computed or accordingly upd ated in constant time by applying
+the concatenation function F. In particular, operation concatenate (p,q) involves performing a
+createrootoperation, computing the new hash path accumulation for p/bardblq, and then rebalancing
+the resulted new tree and accordingly updating the involved path properties and hash labels in this
+tree, through rotations in O(log(max{n,m})) total time. Operation splitinvolves performing the
+necessary rotations so that a deleterootoperation creates the desired target trees, then rebalanci ng
+the resulted new trees and accordingly updating the involve d path properties and hash labels in
+these trees, through the necessary “reverse” rotations in O(logn) total time. Overall, for both
+operations, updating the path hash accumulations correspo nds to tracing at most two leaf-to-root
+paths and performing rotations and updating the hash labels at the visited nodes, thus resulting
+in logarithmic time complexities (see [62] for more details on these two path operations).
+18(Security) Considering the security provided by the hash path accumul ator scheme, we note
+that we achieve the desired security results by reducing any attack from the responder against the
+user to a collision on the cryptographic hash function hor a successful attack against the signature
+scheme in use by the source and the user. For every query, the a nswer authentication information
+includes the set of properties stored at the set of allocatio n nodesA(¯p) of a subpath ¯ pofp; these
+properties are checked against the query answer by the veriﬁ cation algorithm. Any attack against
+the validity of the answer corresponds to forging set A(¯p), i.e., providing the properties stored at
+a diﬀerent setA′(¯p) of allocation nodes, which set of properties, of course, ma y possibly include
+one or more properties that do not correspond to any subpath o fp, or one or more totally fake
+properties. A successful such attack corresponds to provid ing an incorrect path property that is
+not deﬁned by the correct path hash accumulator, or includin g at least one node w /∈A(¯p) in
+A′(¯p), or omitting at least one node w∈A(¯p) fromA′(¯p). By the path hash accumulator hashing
+scheme that takes into account the path properties as well as the left-right relation of siblings in
+T(p) and the successor-predecessor relation of path nodes, and since for every subpath ¯ pwe have
+thathead(¯p)∈P(¯p) andtail(¯p)∈P(¯p), we have that all of the three above attack cases can be
+successfully detected by the user. It follows that in order t o launch an attack the responder must
+forge the path hash accumulator hashing scheme, and in this c ase, the attack is successful either
+if the veriﬁed signed digest is not authentic, which corresp onds to a successful attack against the
+security of the signature scheme, or if the modiﬁed hashing s cheme produces at least one hash label
+that equals a hash value of the original, correct, hashing sc heme, which corresponds to a successful
+attack against the collision-resistance of the cryptograp hic hash function. Therefore, if the set of
+allocation nodes that corresponds to the answer given to the user is not the correct one, in order for
+the user to accept the incorrect answer as correct, either a f orgery against the signature scheme or
+at least one collision on hmust be computed by the responder. By the fact that our authen tication
+scheme uses a secure signature scheme and a collision-resis tant hash function, having a security
+parameter kthat equals the security parameter of the signature scheme a nd hash function in use,
+we have that any of these two events occurs with only negligib le inkprobability. Therefore, our
+scheme satisﬁes the security requirement of Deﬁnition 2.4.
+The path hash accumulator can be viewed as a generalization o f the Merkle’s hash tree. That is,
+it provides a tree-based authentication scheme capable in a uthenticating more sophisticated queries
+than membership queries and also, as we will see in the next tw o sections, a general framework for
+building more complex authenticated data structures. We en d this section with two useful remarks
+concerning Lemma 1.
+Remark 3.1.Path propertyP(u) of subpath p(u) is a sequence of constant size of path attributes.
+In Equation (2),P(u) participates in the hashing operation as the concatenatio n of a well-deﬁned
+binary representation of the corresponding path attribute s. That is, ifP(u) consists of path at-
+tributes a1,...,a kthat are related to path p(u), then, by choosing to implement the hash of
+a sequence of values as the hash of their concatenation (see S ection 2.2), Equation (2) reads
+L(u) =h(a1/bardbl.../bardblak/bardblL(z1)/bardblL(z2)). Similarly, in Equation (1), any node property N(w) partic-
+ipates in the hashing operation as the concatenation of a wel l-deﬁned binary representation of the
+corresponding node attributes of node w.
+Remark 3.2.For some speciﬁc applications, the path hash accumulator ca n be deﬁned using a
+slightly diﬀerent hashing scheme. In particular, we can hash the path property stored at a node of
+the tree before this is included in the label computation thr ough hashing. That is, in the deﬁnition
+19of the hashing scheme, we can replace the hash operation in Eq uation (2) with the operation
+L(u) =h(h(P(u)),L(z1),L(z2)). (4)
+This hashing scheme is more suitable in terms of performance in cases where the path property
+does not have constant size, but instead, it has size that is l inear on the size of the path. We will
+encounter such a case for a speciﬁc type of queries in Section 4. We deﬁne the hash h(P(u)) of
+the path property of subpath p(u) to be (as in one of the examples in Section 2.2) the hash of
+the concatenation of the hashes of a well-deﬁned binary repr esentation of the path attributes in
+P. That is, if a1,...,ak, wherekis some constant, are the path attributes in P(u), then the hash
+of path property P(u) ish(P(u)) =h(a1,...,a k)/definesh(h(a1),...,h(ak)). We note that the only
+changes that this modiﬁcation of the hashing scheme brings t o the results of Lemma 1 are: ( i) the
+answer authentication information is now slightly diﬀerent , but still of logarithmic size, namely,
+Equation 3 new reads
+sj= (L(¯uj),h(P(¯uj))), (5)
+and (ii) according to the basic construction above, in the case wher e the path property has size
+that is proportional to the size of the path, the storage of th e path hash accumulator becomes
+O(nlogn). However, by introducing a special type of pointers into th e data structure, a technique
+known with the name threading , we can actually reduce the storage needs of the data structu re
+back toO(n).
+4 Authenticated Graph Searching
+In this section, we consider authenticated data structures for graph searching problems. We wish
+to authenticate search queries on graphs, like queries that ask for a path connecting two nodes in
+a graph (if any), or for some information associated with thi s path, e.g., the size of the connecting
+path, as well as queries that ask structural information abo ut the graph, e.g., queries about the
+connectivity between two nodes. Such data structures have a pplications to the authentication of
+network management systems.
+Given the path hash accumulator authentication scheme desc ribed in the previous section, we
+follow a bottom-up approach in presenting our new authentic ated data structures. We ﬁrst develop
+a generic authenticated data structure for path property qu eries in a forest, that is, a collection
+of trees. The forest is dynamic, evolving through update ope rations that create, destroy, merge
+or separate trees. Trees store data items and querying infor mation about these data items can be
+expressed by path property queries for paths in the trees of t he forest for some path property that
+satisﬁes the concatenation criterion. Path hash accumulat ors are used as the primitive building
+blocks of this authenticated data structure. Furthermore, this new authentication structure for
+answering path properties queries on forests is then used to support more sophisticated queries on
+forests by appropriately deﬁning the path property in use. F inally, we consider general graphs and
+use our authentication structures for forests to authentic ate searching queries on these graphs.
+4.1 Hierarchy of Paths
+We start the construction of our authentication schemes by e xtending the use of path hash accu-
+mulators in collections of paths. In particular, we use the path hash accumulator aut hentication
+scheme over a dynamic collection Π of paths that is maintaine d through the update operations split
+20andconcatenate deﬁned over paths. At a high-level point of view, Π is organiz ed by means of a
+rooted treeTof paths, meaning that each node of Tcorresponds to a path in Π. Neighboring
+paths inTare generally interconnected and share information. This i s achieved by the deﬁnition
+of suitable node attributes and properties.
+A tree of pathsTis considered to be directed; the direction of an edge is from a child to
+a parent. Let µbe a node ofT, letµ1,...,µ kbe its children in Tand letpbe the path that
+corresponds to node µ. A node attribute N(v) of a node vofpis extended so that it depends
+not only on vbut possibly also on some path properties of the paths p1,...,pkthat correspond to
+nodesµ1,...,µ kofT. We say that path pis theparent path of paths p1,...,pkand these paths
+are thechildren paths ofp. This extension of the semantics of a node attribute, i.e., a llowing node
+attributes of a node of a path pto be related to the path properties of p’s children paths, eventually
+allows the path property P(p) of path pthat correspond to node µto include information about
+paths in the subtree of Trooted at node µ. As always, we consider path properties that satisfy the
+concatenation criterion.
+In general, the idea above can be further extended by using a d irected acyclic graph (instead
+a tree) as the high level graph for the organization of a path c ollection Π. In fact, using such a
+graph, we introduce a hierarchy over paths in Π, where, accordingly, path properties are ext ended
+to include information (expressed by path properties) abou t other paths subject to the hierarchy
+induced by the graph.
+4.2 Path Properties in a Forest
+We now develop an eﬃcient and fully dynamic authenticated da ta structure that supports path
+property queries in a forest, where the forest is realized as a hierarchy of paths. The data structure
+has fast, update, query, and veriﬁcation times.
+LetNbe any node property and Pbe any (corresponding) path property. We assume that P
+satisﬁes the concatenation criterion. Let Fbe a forest, a collection of trees. Forest Fis associated
+with a data set by storing at each tree node usome information as node attributes, or equivalently
+as node property N(u). Additionally, using the framework presented in Section 3 , any path pin a
+tree ofFis associated with some path property P(p).
+We study the implementation of the authenticated query oper ationproperty(u,v)—return the
+path propertyPof the path from utovinF, if such a path exists—while the following update
+operations over trees in Fare performed:
+•destroyTree (w)—it destroys the tree with root w;
+•newTree()—it creates a new tree in Fthat consists of a new, single, node;
+•link(u,v)—it merges two trees into one by adding an edge between the ro otuof some tree to
+a leafvof another tree;
+•cut(u)—it separates a tree to two new trees by removing the edge bet ween non-root node u
+and its parent.
+Note that any tree can be assembled or disassembled using the se operations.
+Our data structure is based on dynamic trees [55] introduced by Sleator and Tarjan. Concep-
+tually, a dynamic tree Tis a rooted tree whose edges are classiﬁed (according to some criteria)
+as being either solidordashed, with the property that any internal node of Thas at most one
+21child connected by a solid edge. This edge classiﬁcation par titions the tree into solid paths , i.e.,
+consecutive nodes connected with each other through solid e dges, whereas these solid paths are
+connected with each other by dashed edges (see Figure 2(a)). Note that a solid path may consist
+of only a single tree node that is incident to no solid edge. Us ing the framework of Section 3, we
+view every solid path of a dynamic tree as a path, i.e., a seque nce of nodes, directed towards the
+root ofT, that is, the successor of any node that is not the tail of the p ath is its parent node.
+Moreover, by deﬁnition, every non-leaf node vof a dynamic tree Thas at most one child u0such
+that a solid edge connects them. Assume that vhas more children and consider all these children,
+say nodes u1,...,u kinT(connected with vthrough dashed edges). Using again the framework of
+Section 3, we deﬁne the dashed path d(v) of node vto be a path, i.e., a sequence of nodes of length
+k, such that there is a one-to-one correspondence between edg es (ui,v) inTand path nodes of
+d(v). The ordering of the nodes in d(v) is thus in accordance with the ordering of nodes u1,...,u k,
+which, in turn, can be arbitrary.
+Having at hand the solid and dash paths deﬁned in a dynamic tre e, we now consider the trees
+of the forest Fto be dynamic trees, which allows us to perform a transformat ion of trees into solid
+and dash paths. In particular, let T1,...,T mbe the trees in F. We view all these trees as dynamic
+trees. Let Π( Ti) be the collection of all solid and dashed paths deﬁned for tr eeTiofFas explained
+above. Using the concept of hierarchies of paths discussed i n Section 4.1, we can associate Π( Ti)
+with a directed tree Tiof paths. This is performed as follows:
+•each path p(solid or dashed) in Π( Ti) corresponds to a vertex µpofTi;
+•ifpis solid, for each node vofpthat has only one child uinTisuch that uis node of path
+p′in Π(Ti) andp/ne}ationslash=p′(andvis connected with uthrough a dashed edge), the directed edge
+(µp′,µp) is an edge ofTi;
+•ifp′=d(v) is dashed with length k, that is, p′corresponds to the dashed edges of a node v
+inTi, letpbe the solid path that vbelongs to, let u1,...,u kbe the corresponding children
+ofvinTi, and let p1,...,pkbe the solid paths containing these children; then, the dire cted
+edges (µp′,µp) and (µpi,µp′), 1≤i≤k, are edges ofTi.
+Finally, given the directed trees of paths Ti,i= 1,...,m, we add a new root vertex ωwhich is
+the parent of all the roots of trees Ti, thus, obtaining a new tree F(representing the entire forest
+F).3All the newly added edges are directed towards ω. We consider one last root path π(ω) that
+corresponds to the root vertex ω. The nodes of this path correspond to trees TiofF, where any
+node ordering in π(ω) can be used. Our ﬁnal graph is a tree of solid and dash paths ro oted at this
+special root path π(ω).
+Consider the collection Π( F) of paths (solid, dash, root) associated with the nodes of tr eeF.
+The children of the root path π(ω) are solid paths. The children of a solid path are either soli d
+of dashed paths. The children of a dashed path are solid paths . Figure 2(b) shows such a tree F
+(corresponding to the forest Fof Figure 2(a)).
+Using this tree of paths, we implement our data structure as f ollows. Each path (root, solid
+or dashed) is implemented through the path hash accumulator authentication scheme (Section 3),
+where the individual data structure that implements each pa th hash accumulator is chosen to be a
+biased binary tree [6].
+3Root vertex ωis a ﬁctitious node, used only as a means to deﬁne a special roo t path on top of the trees Ti.
+22T1 T2
+T2F
+T1
+dashedroot
+solid
+(a) (b)
+Figure 2: ( a) The partition of trees into solid paths. ( b) Trees of paths and ﬁnal tree F.
+A path propertyPof our interest, i.e., a collection of path attributes, that satisﬁes the concate-
+nation criterion is deﬁned. By the implicit path interconne ction, through the idea of setting a path
+property of a path to be a node attribute of another neighbori ng path,P(p) includes information
+about the children paths of pand, in general, about all of its descendant paths in the hier archy of
+paths induced in F. We include path attributes in node properties, as follows. Ifvis a node of
+pathpandL(p′) denotes the path hash accumulation of path p′, then:
+1. ifpis root path or dashed path, then L(p′) andtail(p′) are included inN(v), where p′is the
+child solid path of pcorresponding to node v;
+2. ifpis solid path, then L(p′) andtail(p′) are included inN(v), ifvcorresponds to a solid child
+pathp′ofp, orL(p′) is included inN(v), ifvcorresponds to a dashed child path p′ofp.
+The above scheme of inclusions of path attributes and path pr operties of a path as a node
+attribute in the nodeproperty of a nodeof the parent path cor respondsto connecting the individual
+hashing schemes of the path hash accumulators implementing paths inFand composing them into
+one hashing scheme Gfor the entire data structure. This hashing scheme Gyields a digest for the
+entire data set that is stored in the forest F, namely, the path hash accumulation of the root path
+π(ω) ofF. Next, we present our ﬁrst theorem, which ﬁlls in the details of the entire authenticated
+data structure that supports update and query operations on forestF, analyze its performance and
+prove its eﬃciency.
+Theorem 2. LetFbe a forest of ttrees with nnodes. There exists a fully dynamic authenticated
+data structure that supports query operations property on paths in dynamic forest Fthat evolves
+through update operations destroyTree ,newTree,linkandcut, having the following performance:
+1. query operation property takesO(logn)time;
+2. for query operation property the answer authentication information has size O(logn);
+3. for query operation property the answer veriﬁcation time is O(logn);
+4. the total space used is O(n);
+235. for every update operation the update authentication inf ormation has size O(1);
+6. update operations destroyTree andnewTree takeO(logt)time each; update operations linkand
+cuttakeO(logn)time each.
+Proof.(Data Structure ) We ﬁrstcomplete the description of the data structure. As w e already have
+seen, the entire forest Fis represented as a collection of paths Π( F), which is organized using the
+hierarchy induced by the tree Fof paths in Π( F). Recall that the solid paths in Π( F) are deﬁned
+by considering each tree TiofFto be a dynamic tree and by using a partition of edges into soli d
+and dashed. In any tree Ti, letsize(v) denote the number of nodes in the subtree deﬁned by vand
+letuthe parent node of v. Edgee= (v,u) is called heavyifsize(v)>size(u)/2. The edge labeling
+of dynamic tree Tiofminodes with root w, such that an edge is labeled solid only if it is heavy,
+has the following important property [55]: for any node uofTithere are at most log midashed
+edges on the path from utow. We use this edge labeling to partition each tree Tiinto solid paths.
+Consider all the paths that correspond to the ﬁnal tree F, after the dashed paths and the
+root path have been added. Each path pofFis represented using the path hash accumulator
+authentication scheme of Section 3, with only one exception . Following the ideas in [55], path pis
+represented by a binary tree T(p), butT(p) is implemented as a biased binary tree T(p) (see [6]),
+thus, it is not necessarily height balanced. Note that this f act does not aﬀect the corresponding
+hashing scheme; the path hash accumulation L(p) ofpis still well-deﬁned.
+In a biased binary tree, each leaf node is associated with a we ight, each non-leaf node is as-
+sociated with the sum of the weights of its children, (conseq uently) tree’s root rcarries the sum
+Wof the weights of the leaves, and any node vwith weight w(v) lies at depth O(logW
+w(v)). In our
+data structure and as in the data structure of [55], node weig hts are deﬁned using function size(),
+where we consider weight w(v) of node vto be an additional node or path attribute, depending on
+whether vis a leaf node in T(p) or not.4Ifpis a path having no child path ( µpis a leaf inF),
+thenw(v) =size(v). Otherwise ( µpis not a leaf inF),w(v) =w(u1)+w(u2), ifvis internal node
+ofT(p) with children u1,u2. Otherwise, vis a node of path p. Ifpis solid, then w(v) =w(u)+1,
+whereuis the root of T(p′) andp′=d(v) is the dashed path of v, if such dashed path exists, or
+w(u) = 0, if vdoes not have a dashed path. If pis dashed, then w(v) =w(u)+1, where uis the
+root ofT(p′) andp′is the solid, child path of pinFthat corresponds to v. Ifpis root path, then
+w(v) =w(u)+1, where uis the root of T(p′) andp′is the child path of pinFcorresponding to v.
+To complete the description of the authenticated data struc ture, we note that the hashing
+scheme of the entire datastructureis deﬁnedthrough theind ividualpath hash accumulator hashing
+schemes of the pathsin F. All thesehashingschemes composeahashingscheme for thee ntire forest
+Fand the date structure as a whole, where the path hash accumul ation of a path pcontributes to
+the computation of the path hash accumulation of p’s parent path in F.
+(Eﬃciency ) Consider any tree TiinF, any two nodes uandvofTiand the path puvinTi
+that connects uandv. Our data structure represents Tiimplicitly through the path collection
+Π(Ti), where each path in Π( Ti) is implemented as a (biased) binary tree. For answering que ries
+regarding properties of path puv, we ﬁrst consider a multipath πuv, that is, a path of paths in Ti,
+that connects the paths in Π( Ti) whereuandvbelong, and using this multipath, we then consider
+a (diﬀerent of puv) pathPuv: the path that virtually connects uandvinTithroughthe binary
+trees that implement the paths of Π( Ti). PathPuvis a connecting path of nodes uandvin the
+4Related to the sumfunction and as any aggregate function (e.g., max,average), function w(·) satisﬁes the con-
+catenation criterion; thus, for convenience (and not for au thentication reasons) it can be treated as a path property.
+24hashing scheme of the entire data structure, when no edge dir ections are taken into consideration.
+These three type of paths puv,πuvandPuvare described in Figure 3.
+puvT1
+v
+uπuv
+u vT1
+Puv
+(a) ( b)
+Figure 3: ( a) Pathpuvin treeT1(grey nodes), connecting nodes uandv. (b) Multipath (path
+of paths) πuvinT1(indicated by dark arrows), connecting the paths containin guandv, and
+ﬁnally path Puv(indicated by dashed line) in the data structure, connectin g nodesuandvthrough
+the (biased) binary trees implementing paths in Π( T1). Triangles denote biased binary trees, not
+necessary height balanced. Path Puvis also a path in the hashing scheme Gof the entire data
+structure. Observe that Puvdeﬁnes allocation nodes in binary trees implementing solid paths in
+T1, which allocation nodes correspond to subpaths of puvand store path properties that constitute
+path propertyP(puv). Through the biased trees, Puvhas logarithmic length on the size of T1.
+Observe that path Puvpasses through nodes of the binary trees implementing solid paths inTi
+that have as children, tree nodes deﬁning subtrees whose lea ves are subpaths of puv, that is, nodes
+that are allocation nodes of subpaths of path puv. This is exactly what is needed: in authenticating
+a path property of puv, we will use the path properties stored at nodes (of the biase d binary trees)
+related to path Puvthat, given the fact that the path property in study satisﬁes the concatenation
+criterion, completely describe the path property of puv. Accordingly, the above considerations are
+also valid for paths in the data structure that connect nodes uandvof diﬀerent trees in F: in this
+case, a multipath in Fthat passes through the root path π(ω) connecting the paths in Π( F) of
+nodesuandvexists and the corresponding path Puv, connecting uandvin the hashing scheme of
+the data structure, passes through the binary tree implemen ting the root path π(ω).
+Using of the previously described biasing in our data struct ure, it holds that, when considered
+throughthe individual biased binary trees that implement paths in F, any path Puvin treeTiof
+sizemihas length O(logmi) and any leaf-to-root path in the data structure representi ngFhas
+lengthO(logn). Theproofisbasedexactly ontheanalysisofthepropertie sofdynamictreesstudied
+in [55], the idea beingthat through the solid-dashed path pa rtition andthe implementation of paths
+as biased binarytrees, any two nodesin a(possiblyhighly un balanced)tree areconnected—through
+shortcuts—with paths of total logarithmic size in the tree s ize, eﬀectively in a new, combined,
+balanced tree structure.
+(1)−(3) Consider query property(u,v). Although this query is deﬁned for nodes in forest F, to
+cover the most general case, we do not require that query node suandvnecessarily exist in F. So,
+we ﬁrst determine whether nodes uandvare in forest Fusing any authenticated data structure
+25that supports membership queries (e.g., [29]) in O(logn) time with authenticated responses of
+sizeO(logn). If one of the two nodes are not in F, a negative answer is given, along with a proof
+that veriﬁes the negative membership. If uandvare inF, the path property query is performed
+by accessing three multipaths in F(see Figure 4).
+πuℓ
+u vπω
+ℓT2
+πu πvr F
+πℓT1Pℓr
+PvℓPuℓπℓr
+πvℓ
+Figure 4: The answer and proof for property(u,v) query are computed by visiting paths πuℓ,πvℓ
+andπℓrin the data structure and by accessing information stored at nodes related to these paths.
+In particular, assume ﬁrst that uandvbelong to the same tree Tiof sizemiinF, i.e., there
+exists a connecting path puvinTi. Letπuandπvbe the paths inFthat contain uandvand letπℓ
+be the least common ancestor of πuandπvinF(πlmay overlap with πuand/orπv). Letπuℓ,πvℓ
+be the multipaths from πu,πvtoπℓ, and let πℓrbe the multipath from πlto the root path π(ω) of
+F. Multipaths πuℓ,πvℓandπℓr, when considered throughthe biased binary trees used to implement
+paths inF, deﬁne paths Puℓ,PvℓandPℓr, respectively, in the data structure. Speciﬁcally, paths Puℓ
+andPvℓareconnected at node ℓofthebinarytreeimplementingpath πℓ(nodeℓistheleast common
+ancestor of uandvin the data structure). The answer A(u,v) given to the user is computed by
+following paths πuℓandπvℓ, ﬁnding, at each traversed path hash accumulator that imple ments a
+solid path inF, the allocation nodes whose subtrees correspond to subpath s ofpuvand, ﬁnally,
+reporting the path properties stored at these allocation no des. Similarly, the proof given to the
+user is collected by providing path property proofs (i.e., c ollection of appropriate hash values and
+path properties as described in the proof of Lemma 1 in Sectio n 3)proof(πuℓ),proof(πvℓ), each
+corresponding to a traversed multipath to πℓand consisting of subproofs, one for each path hash
+accumulator that is visited. To compute the proof, followin g pathPℓrup to the root rof the binary
+tree implementing path π(ω), we compute the multipath veriﬁcation sequence V(ℓ), a collection of
+hash values and path properties (similar to the veriﬁcation sequence in the proof of Lemma 1) that
+allows the user to recalculate the signed hash value (hash pa th accumulation of π(ω)) givenA(u,v),
+proof(πuℓ) andproof(πvℓ). By the biased scheme used over F, the set of allocation nodes of path
+puvhas sizeO(logmi) andalso paths Puℓ,PvℓandPℓrhave each O(logn) size. Sincepath properties
+have constant size and for each node of these paths visited in the data structure a constant amount
+of information is included in the proof and a constant amount of work is performed, the answer
+A(u,v) hasO(logn) size, the proof ( V(ℓ),proof(πuℓ),proof(πvℓ)) has also size O(logn) and path
+26properties queries are answered in O(logn) time. Accordingly, the veriﬁcation time is also O(logn).
+Similarly, in the special case5where no path connecting uandvexists in F(uandvbelong
+in diﬀerent trees), a negative answer is given to the user, ind icating that no path connecting the
+query nodes exists in F) and the previous approach is used to provide proof of this fa ct: proofs
+corresponding to paths Puℓ,PvℓandPℓrverify the nonexistence of path puv, since the least common
+ancestor ℓofuandvin the data structure is node of the binary tree implementing root path π(ω).
+(4) Since a path property has constant size, the hash path acc umulator occupies O(n) space.
+(5) Since the signed digest of the entire data structure is si mply a hash value, the path hash
+accumulation of the root path in F, the update authentication information has constant size.
+(6) All update operations correspond to accessing and modif ying multipaths through the primi-
+tive pathoperations splitandconcatenate . Inparticular, operations linkandcutcan beimplemented
+inO(logn) time by modifying only O(logn) path hash accumulators and by examining, modifying
+and restructuring only O(logn) nodes in total. Restructuring means connecting a node to ne w
+children. Our scheme works by, every time a node vis restructured, recalculating L(v), which
+can be done in O(1) time, since the hash values and the path properties of the children, parent
+or neighbors of vare known, and because the path property in consideration sa tisﬁes the concate-
+nation criterion. Consequently, our update operations linkandcutcan be performed in O(logn)
+time. Finally, the update operations destroyTree andnewTree each involves modifying the path
+hash accumulator that corresponds to the root path in F, which has O(t) size. Therefore these two
+update operations take O(logt) time.
+(Security) Hashing scheme Gis based on the path hash accumulator. By allowing neighbori ng
+(inF) paths to share information (properties) we achieve the des ired security results based on the
+security of path hash accumulator authentication scheme: a ny attack to our data structure can
+be reduced to an attack on the security of the path hash accumu lator, thus, in turn to either a
+collision on the cryptographic hash function hor an attack against the signature scheme in use. In
+particular, thesecurity argumentsintheproofofLemma1ar egeneralized totheauthenticated data
+structure for path properties in forests in trees, as follow s. Any successful attack by the responder
+amounts to constructing a set of allocation nodes correspon ding to a set of path properties that is
+distinct to the correct set of path properties deﬁned by the a nswer of the query and the hashing
+scheme. Therefore, the responder must forge some path prope rties of at least one (solid, dashed or
+root) path inF. Through the interconnection of the path hash accumulators in our data structure
+to a single hashing scheme, this corresponds to forging the h ashing scheme of at least one hash
+path accumulator or to directly forging the signature on the data set digest. This yields the desired
+reduction to the security of the path hash accumulator which holds with all but negligible in the
+security parameter probability from Lemma 1.
+4.3 Path, Connectivity and Type Queries on Forests
+Theorem 2 supports the basis for an authenticated data struc ture that eﬃciently answers and
+authenticate the following queries on a dynamic forest F:
+•path(u,v): reports the path, if any, between nodes uandvinF;
+5This case is included in the proof only for completeness, sin ce, by deﬁnition, a path property query returns
+the path property of existing in Fpaths. Our used approach is similar with the one used in Secti on 4.3 for the
+authentication of higher-level path and connectivity quer ies: the nonexistence of a path in Fis authenticated by the
+existence of a path in Fpassing through the root path π(ω).
+27•pathLength (u,v): reports the length of the path, if any, between nodes uandvinF;
+•areConnected (u,v): reports whether there is a path between nodes uandvinF(i.e., whether
+uandvare nodes of the same tree);
+•type(u,v): reports whether there is a node of a given type in the path, i f any, connecting
+nodesuandvinF; here, we assume that the type of a node is a well-deﬁned notio n that can
+be checked in constant time.
+Our results are obtained by appropriately deﬁning a path pro perty that expresses each one of
+the above queries. In other words, each new query is answered as a path property query, as in
+Section 4.2, for a specially deﬁned path property, which, of course, satisﬁes the concatenation
+criterion. Each speciﬁc query corresponds to a specially ch osen individual path attribute that is
+included in the path property in use. The next theorem presen ts the details of these results.
+Theorem 3. LetFbe a forest of ttrees with nnodes. There exists a fully dynamic authenticated
+data structure that supports query operations path,pathLength ,areConnected andtypeon paths in
+dynamic forest Fthat evolves through update operations destroyTree ,newTree,linkandcuthaving
+the following performance, where kis the length of the path returned by operation path:
+1. query operations pathLength ,typeandareConnected
+•each takes O(logn)time;
+•each has answer authentication information of size O(logn);
+•each has O(logn)answer veriﬁcation time;
+2. query operation path
+•takesO(logn+k)time;
+•has responder-to-user communication cost6of sizeO(logn+k), where the answer has
+sizeO(k)and the answer authentication information has size O(logn);
+•hasO(logn+k)answer veriﬁcation time;
+3. the total space used is O(n);
+4. for every update operation the update authentication inf ormation is O(1);
+5. update operations destroyTree andnewTree takeO(logt)time each; update operations linkand
+cuttakeO(logn)time each.
+Proof.(Data Structure ) It is essentially the same data structure as the one of Theor em 2, except
+from two diﬀerences, one with respect to the support of query pathand one with respect to the
+exact form of the hashing scheme of the data structure, desig ned to simultaneously support all
+queries operations. In what follows, we explain in detail th ese diﬀerences, however noting that
+an alternative implementation of our data structure could b e as follows: the data structure simply
+consistsoftheaggregation offourdiﬀerenthashingschemes , oneforeachsupportedqueryoperation;
+that is, each query operation corresponds to a property query for a specially deﬁned path property.
+6Since the answer size in this case is not constant, we analyze the responder-to-user communication cost and
+accordingly distinguish the costs of the answer and the answ er authentication information.
+28The path property Pin use—except, by deﬁnition, from (the ids of) the head and the tail nodes
+of the corresponding path—includes four specially chosen p ath attributes a1,a2,a3anda4one for
+each of the supported query operations, respectively, path,pathLength ,areConnected andtype. In
+this way, path property Pcontains information for all supported queries and, more im portantly, it
+has size that is linearon the size of the corresponding path.
+Because of this, we use the implementation of the hashing ope ration of Equation 4 in deﬁning
+the hashing scheme of our data structure. In our implementat ion, the hashing operation over a
+path property is accordingly designed (see Section 2.1 and R emark 3.2) so that more eﬃciency is
+achieved. In particular, the path property Pis viewed as a sequence of path attributes a1,a2,a3,
+a4and, accordingly, its hash value is computed as
+h(P) =h(h(a1),h(a2),h(a3),h(a4)). (6)
+That is, the hash of a path property is the hash of the concaten ation of the hash values of the
+attributes that it consists of. The time complexity in compu ting this hash value is linear on the
+size of the path.
+Overall, the above choice for implementing the hashing oper ation used in the deﬁnition of the
+hashing scheme has two important consequences. First, the a nswer authentication information
+is still logarithmic in the size of the forest (regardless th e fact that the path property has size
+proportional to the path). Second, query operations can be a nswered separately, where path
+attributes are treated not as a whole (and not as a single path property query as in Theorem 2),
+but as individual pieces of information, namely individual path attributes. That is, attribute a1
+of a path, deﬁned in the straightforward way as the ids of the n odes contained in the path, can
+be authenticated without authenticating or revealing any o f the other three attributes. In essence,
+using this hashing scheme, a path property query can be answe red as in Theorem 2 but only with
+respect to a speciﬁc path attribute.
+Moreover, regarding the concatenation function Fof propertyP, it is simply deﬁned as a per-
+attribute application of function F. That is, if p=p′/bardblp′′,P(p′) = (a′
+1,a′
+2,a′
+3,a′
+4) andP(p′′) =
+(a′′
+1,a′′
+2,a′′
+3,a′′
+4), then we have that
+P(p) =F((a′
+1,a′
+2,a′
+3,a′
+4),(a′′
+1,a′′
+2,a′′
+3,a′′
+4)) = (F(a′
+1,a′′
+1),F(a′
+2,a′′
+2),F(a′
+3,a′′
+3),F(a′
+4,a′′
+4)).
+Additionally, since the path property is not of constant siz e, the concatenation function Foperates
+in time proportional to the path property.
+In what follows, we deﬁne the path attributes, discuss their concatenation function Fand
+complexity issues that are relevant to our authenticated da ta structure.
+(1) Clearly, operation pathcorresponds to the path attribute a1containing the ids of the nodes
+that a path consists of, and the concatenation function is ex actly the concatenation operator over
+sequences of path nodes.
+For query operation pathLength , we deﬁne the path attribute a2of a path to be simply the size
+of the path and the concatenation function is the addition fu nction.
+Query operation areConnected corresponds to the existence of a node of the root path π(ω) in
+the path Puvconnecting nodes uandvin the data structure representing forest F(or treeF).
+Note that path Puvalways exists. That is, the answer to the query is negative if such a node exists
+inPuvand positive if no node of the root path π(ω) exists in Puv. This property is expressed by
+assigning a unique idvalue to every path in the tree of paths F. Thus, attribute a3of a path pin
+the tree of paths Fand accordingly in our data structure is deﬁned to take on one of the following
+29two values: root-path-true , ifpis a subpath of π(ω), orroot-path-false . Concatenation function F
+operates in constant time as the ORboolean function on pairs of these values of a3.
+A similar idea is applied for query operation type. A node attribute corresponding to path
+attribute a1(or path attribute a4of path of size 1) takes on two values: either type-true ortype-
+false, depending on whether on not the corresponding node is of the type of interest (that the query
+operation asks about). Again, the concatenation function o perates as the boolean function OR.
+The complexity for all these three last query operations is s imilar to the complexity of the path
+property query operations of Theorem 2. Although, path attr ibutea1has size that is proportional
+to the size of the corresponding path, because of the hashing scheme, which hashes individually
+the path attributes in producing the hash of a path property ( Equation 6), no path attribute a1is
+included in the answer or in the answer authentication infor mation for any of the query operations
+pathLength ,areConnected ortype.
+(2) Query operation pathis answered by ﬁrst performing a query areConnected . If there is a
+path between nodes uandv, it can be found by answering a path property query with respe ct
+to path attribute a1, where attribute a1of pathpincludes all the ( ids of the) nodes of path p,
+that is, the path itself. To this end, we need a slightly diﬀere nt deﬁnition for the path attribute,
+namely, a path attribute can be of any size (not necessarily c onstant). Since|a1|=O(|p|), the
+introduced complexity is O(logn+k), where kis the length of the path from utov. In particular,
+both the query time and the answer veriﬁcation time are O(logn+k), since the answer itself is of
+sizeO(k) and both computations need to spend time proportional to th e answer (to compute and
+process the answer respectively). The logarithmic term is d ue to the complexity that is carried
+from Theorem 2. On the other hand, the answer authentication information is still logarithmic,
+since our hashing scheme applies an extra hashing operation over the path property, before hashing
+over the sibling hash labels (see Equation 4).
+(3) Although, according to the construction in Section 3 the path hash accumulator for a path
+property of linear size has O(nlogn) storage, using threadsin our data structure, we can reduce
+the storage needs to O(n). The idea is to store path attribute a1of pathp, the one corresponding
+to the subtree deﬁned by internal node u, at the leaves of this subtree (that is, at the path pitself),
+rather than storing it at node u. Then, we add a special pointer from node utohead(p) and a
+special pointer from tail(p) up to node uand pointers for every node in solid path towards its
+successor node in the path (if any). These pointers, called t hreads, can be used to traverse path
+pinO(|p|) time and compute (retrieve) the path attribute a1. Thus, the total storage can still be
+kept linear, even with the presence of a path property of non c onstant, but linear, size.
+(4),(5) & (Security) They follow directly from Theorem 2.
+We next show how this result can be extended to give authentic ated schemes for more advanced
+graph queries. These results can be applied to the authentic ation of network management systems.
+4.4 Path and Connectivity Queries on Graphs
+We now move our attention to graphs rather than forests. Supp ose we want to authenticate path
+and connectivity queries on a general graph G. That is, as before, we want to authenticate the
+answers to the following queries on G:
+•path(u,v): report the path, if any, between nodes uandvinG;
+30•areConnected (u,v): report whether there is a path between nodes uandvinG(i.e., whether
+uandvare nodes of the connected component in G).
+We can immediately apply Theorem 3 to design an authenticate d data structure for path and
+connectivity queries in a graph Gthat evolves through vertex and edge insertions. In particu lar,
+graphGis maintained through update operations:
+•makeVertex (v): create a new vertex vinG;
+•insertEdge (u,v,e): add edge ebetween vertices uandvinG.
+The new data structure has similar performance bounds with t he one in Theorem 3. The main
+idea in our data structure is to maintain a spanning forest Fof the graph G. We note that for
+embedded planar graphs our data structure can actually be ex tended to also support deletions of
+vertices and edges, through new update operations:
+•destroyEdge (e): destroy edge einG; and
+•destroyVertex (u): destroy isolated vertex uinG.
+The idea is to use techniques similar to the data structure de scribed in [23].
+Theorem 4. LetGbe a general graph with tconnected components and nnodes. There exists a
+semi-dynamic authenticated data structure that supports q uery operations path, andareConnected
+on pairs of nodes in graph Gthat evolves through update operations makeVertex andinsertEdge
+having the following performance, where kis the length of the path returned by operation path:
+1. query operation areConnected takesO(logn)time and query operation pathtakesO(logn+k)
+time;
+2. for query operation areConnected the answer authentication information has size O(logn); for
+query operation paththe responder-to-user communication cost has size O(logn+k), where
+the answer has size O(k)and the answer authentication information has size O(logn);
+3. for query operation areConnected the answer veriﬁcation time is O(logn); for query operation
+paththe answer veriﬁcation time is O(logn+k);
+4. the total space used is O(n);
+5. for every update operation the update authentication inf ormation is O(1);
+6. update operation makeVertex takesO(logt)time; update operation insertEdge takesO(logn)
+time;
+7. ifGis an embedded planar graph, additional update operations destroyEdge anddestroyVertex
+are supported in O(logn)andO(1)time, respectively.
+Proof.(Data Structure ) The idea is to use the data structure of Theorem 3 to maintain aspanning
+forestof graph G. That is, we maintain a forest Fthat spans through the entire graph, meaning
+that all nodes in Gare nodes of Fas well and that each connected component of Gcorresponds
+to a tree of F. The data structure of Theorem 3 allows us to authenticate an swers to path and
+31connectivity queries. Note the correctness of the data stru cture: if two nodes are connected in G,
+they are connected in Fas well, for they belong to the same connected component of G, thus to
+the same tree in F, and in this case, the path connecting them in this tree is obv iously a path
+connecting them in Gas well.
+Update operations are handled as follows. For general graph s, where only vertex and edge
+insertions are supported, each new vertex corresponds to a n ew connected component of G, thus, to
+simply a new tree in Fand anewTree update operation, whereas each new edge either corresponds
+to no action, when it connects nodes of the same tree (connect ed component in G) inF, or it
+corresponds to a linkoperation, when it connects nodes of diﬀerent trees (connect ed components
+inG) inF. Testing whether or not an edge connects nodes of the same tre e inFcan be performed
+by assigning unique ids to all trees in Fand checking whether or not the two nodes belong in
+trees with the same id. The last operation can be done by simply storing at each node ofFthe
+corresponding tree id(or even by accordingly deﬁning an additional path attribut e).
+Update operations for embedded planar graphs, which includ e not only edge and vertex inser-
+tions but also deletions, are a bit trickier to handle. First , any insertion of an edge connecting
+nodes of the same tree needs to be stored. After any deletion o f an edge or a vertex, the set of
+stored edges that are not edges in Fand, thus, not explicitly stored in the data structure repre -
+sentingF, is processed to decide whether or not this deletion results in a connected component
+destruction in G. Using the data structure described in [23], one can decide o n whether a new
+connected component is created or, instead, the connected c omponent stays the same but with
+a diﬀerent spanning tree this time. Both this decision and the update of the component can be
+done in logarithmic time on the size of the graph, using the fa ct that edges admit eﬃcient repre-
+sentation because of the planarity property of the graph G. The use the data structure in [23] is
+an orthogonal issue in our data structure, meaning that it is not connected with the operation of
+the authenticated data structure, but rather, it supports t he maintenance of the forest F. Once
+forestFis updated—always through the update operations that the da ta structure supports—the
+hashing scheme is accordingly updated and the new digest is c omputed.
+(1)−(7) & (Security) They follow immediately from Theorem 3.
+In the next two subsections we use the results of Theorems 2 an d 3 for connectivity queries
+for general graphs that evolve through edge and vertex inser tions. We use known techniques (data
+structures) that support these type of queries for regular ( non-authenticated) data structures and
+apply our authentication framework of Section 3, which is ba sed on paths and their properties,
+on these data structures by appropriately authenticating p ath properties that are related to the
+connectivity queries that we study. In other words, here, we have the ﬁrst applications of our
+authentication framework of the path hash accumulator to th e authentication of queries that are
+not directly related to paths.
+4.5 Biconnectivity Queries on Graphs
+As before, let Gbe a general graph that is maintained through update operati onsmakeVertex and
+insertEdge . We are interested in authenticating the query operation:
+•areBiconnected (u,v): determine whether uandvare in the same biconnected component
+ofG,
+which we call a biconnectivity query. Theorems 2 and 3 can be used to support an authenticate d
+data structure that answers biconnectivity queries.
+32Theorem 5. LetGbe a general graph with tconnected components and nnodes. There exists a
+semi-dynamic authenticated data structure that supports q uery operation areBiconnected on pairs
+of nodes in graph Gthat evolves through update operations makeVertex andinsertEdge having the
+following performance:
+1. query operation areBiconnected takesO(logn)time; for this query operation, the answer au-
+thentication information has size O(logn)and the answer veriﬁcation time is O(logn);
+2. the total space used is O(n);
+3. for every update operation the update authentication inf ormation is O(1);
+4. update operation makeVertex takesO(logt)time; update operation insertEdge takesO(logn)
+amortized time.
+Proof.(Data Structure ) We extend the data structure of [63]. We maintain the block-cut-vertex
+forestBofG. Each tree TinBcorresponds to a connected component of G. There are two types
+of nodes in T:block nodes that correspond to blocks (biconnected components) of Gandvertex
+nodesthat correspond to vertices of G. Each edge of Tconnects a vertex node to a block node. The
+block node associated with a block Bis adjacent to the vertex nodes associated with the vertices
+ofB. We have that two vertices uandvofGare in the same biconnected component if and only
+if there is a path between the vertex nodes of Bassociated with uandvand this path has length
+2. Thus, operation areBiconnected inGis reduced to performing operation pathLength inBand
+certifying that the returned path length equals 2.
+(1)−(4) & (Security) They follow immediately from Theorem 3. The time complexit y for edge
+insertions is amortized, because these are the guarantees f or the data structure in [63].
+4.6 Triconnectivity Queries on Graphs
+Finally, we show how to authenticate the following query ope ration:
+•areTriconnected (u,v): determine whether uandvare in the same triconnected component
+ofG,
+which we call a triconnectivity query, in a general graph Gmaintained through edge and vertex
+insertions as before. Again, we use the results of Theorem 2 a nd 3 to construct an authenticated
+data structure that answers triconnectivity queries.
+Theorem 6. LetGbe a general graph with nnodes. There exists a semi-dynamic authenticated
+data structure that supports query operation areTriconnected on pairs of nodes in graph Gthat
+evolves through update operations makeVertex andinsertEdge having the following performance:
+1. query operation areTriconnected takesO(logn)time; for this query operation, the answer
+authentication information has size O(logn)and the answer veriﬁcation time is O(logn);
+2. the total space used is O(n);
+3. for every update operation the update authentication inf ormation is O(1);
+4. update operation makeVertex takesO(logn)time; update operation insertEdge takesO(logn)
+amortized time.
+33Proof.(Data Structure ) We extend the data structure of [22], where a biconnected gr aph (or com-
+ponent) Gis associated with an SPQR tree Tthat represents a recursive decomposition of Gby
+means of separation pairsof vertices. Each S-, P-, and R-nod eofTis associated with a triconnected
+component CofGand stores a separation pair ( s,t), where vertices sandtare called the poles
+ofC. A Q-node of Tis associated with an edge of G. Each vertex vofGis allocated at several
+nodes of Tand has a unique proper allocation node inT.
+Our authenticated data structure augments tree Twith V-nodes associated with the vertices
+ofGand connects the V-node of a vertex vto the proper allocation node of vinT. Also, it uses
+node attributes to store the type (S, P, Q, R, or V) of a node of Tand its poles. In this setting,
+operation areTriconnected can be reduced to a small number of pathLength andtypequeries on the
+augmented SPQR tree.
+(1)−(4) & (Security) They follow immediately from Theorem 3 and the complexity b ounds of
+the data structure in [22].
+5 Authenticated Geometric Searching
+In this section, we consider authenticated data structures for geometric searching problems. Such
+data structures have applications to the authentication of geographic information systems.
+5.1 Fractional Cascading
+Fractional cascading, originally presented in [14], is a ge neral algorithmic technique used in a broad
+class of geometric data query problems. In fact, fractional cascading is an eﬃcient strategy for
+solving the iterative search problem which is described in the sequel.
+LetUbe an ordered universe and C={C1,C2,...,Ck}a collection of kcatalogs, where each
+catalogCiis an ordered collection of nielements chosen from U. For any element x∈U, the
+successor ofxinCiis deﬁned to be the smallest element in Cithat is equal or greater than x. We
+say that we locatexinCiwhen we ﬁnd the successor of xinCi. In the iterative search problem,
+given an element x∈U, we want to locate xin each catalog in C.
+Letn=/summationtextk
+i=1nibe the total number of stored elements. The straightforward solution is to
+performkseparate searches: the search in catalog Cican be performed in time O(logni) by binary
+search. The total time needed is O(klogn). An alternative approach is to merge the kcatalogs into
+a master catalog Mand keep a correspondence dictionary between positions in Mand positions
+in eachCi. Using binary search on this merged catalog, we solve the pro blem inO(k+logn) time,
+but we pay the overhead of increasing the storage from O(n) toO(kn).
+Fractional cascading succeeds in achieving an O(k+logn) time complexity for iterative search
+while keeping the storage linear. In comparison with the str aightforward solution, we can, for
+instance, see that if all catalogs have the same size and k=√nor, even k= logn, we have time
+improvement of O(logn). The key point is how the catalog correlation that guides th e search
+between incident catalogs is accomplished and still the sto rage is kept linear.
+We now review the fractional cascading framework as it is usu ally appeared in applications.
+The original work in [14] covers a more general model which is mostly interesting from a theoretical
+point of view. We consider a static setting where catalogs ar e ﬁxed and do not evolve over time.
+The dynamization of the technique has been studied in [41].
+34properB
+−∞+∞
+xz
+z′y
+y′
+properproper (y)
+|B|= 7Au Avu v
+non-u s
+x Bv
+BuBwBsw v
+HT
+(a) (b)
+Figure 5: ( a) The fractional cascading data structure over a path. Squar es and dots represent
+non-proper and proper elements respectively. Edge ( u,v) has three blocks. ( b) Inter-block hashing:
+DAGHdeﬁnes the second-level hashing. For any query element x, any query graph Qand any
+traversal of Q, the target blocks deﬁne a tree T.
+Given a collection Cof catalogs, we consider a one-to-one correspondence betwe en the catalogs
+inCand the nodes of a graph G. LetGbe asingle source directed acyclic graph, without multiple
+edges, that has bounded degree, i.e., each node of Ghas both in-degree and out-degree bounded
+by a constant d. Each node vofGis associated with a catalog Cv.Gis called a cataloggraph.
+Given a catalog graph G, we deﬁneQ(G) to be the family of all connected subgraphs Q= (V,E)
+ofGthat contain sand do not contain any other node (except s) having zero in-degree in Q. The
+iterative search problem for the catalog graph Gcan then be restated as: given an element x∈U
+and a member Q= (V,E) ofQ(G), locate xinCvfor allv∈V. We refer to Qas thequerygraph.
+Letkbe the number of vertices of Gand letnbe the total number of elements in the catalogs of
+G. In [14], it is showed that using the fractional cascading te chnique we can build a data structure
+overGinO(n) time using O(n) space and solve the iterative search problem in time O(k+logn).
+We will brieﬂy describe the data structure used and the fract ional cascading technique.
+Each catalog Cvis augmented to a catalog Avby storing some extra elements. In augmented
+catalogAv, elements in Cvare called properand the other (extra) elements are called non-proper .
+Augmentedcatalogs thatcorrespondtoadjacentnodesof Gareconnectedvia bridges. Lete= (u,v)
+bean edge of G. A bridgeconnecting AuandAvis a pair ( y,z) associating two non-properelements
+yandz, wherey∈Au,z∈Avandy=z. Elements yandzhave references to each other. Each
+non-proper element ybelongs to exactly one bridge. Two neighboring catalogs AuandAvare
+connected through at least two extreme bridges that corresp ond to non-proper elements + ∞and
+−∞respectively. Each pair of neighboring bridges ( y,z), (y′,z′) of edge ( u,v) deﬁnes a blockB
+which contains all elements of AuandAvlying between the two bridges. If y′≤y, then bridges
+(y,z) and (y′,z′) are respectively called the higherand the lowerbridge of B. The size|B|of a
+blockBis the number of the elements (both proper and non-proper) th at it contains. Block sizes
+constitute a crucial parameter for the performance of the da ta structure. If nis the total size of
+35the original catalogs, i.e., the total number of proper elem ents, then, as shown in [14], the total
+number of non-proper elements is O(n) only if block sizes are proportional to the bounded degree
+dofG. Thus, in fractional cascading blocks are chosen to have bou nded size both from above
+and below: for each block B,α≤|B|≤β, whereαandβare some constants proportional to d.
+Each non-proper element z∈Avis associated (by storing a reference) to its next proper ele ment
+proper(z) inAv, i.e., its successor in the original catalog Cv. Givenz,proper(z) can be retrieved in
+constant time (e.g. zpoints to proper(z)). Ifzis a proper element, then we deﬁne proper(z) =z.
+Figure 5(a) describes the data structure built over a path G. We next describe how this data
+structure is used to locate queried elements.
+5.2 Location Process
+Suppose that we know the successor, say l, ofxin an augmented catalog Au. Then we can locate x
+at the corresponding original catalog CuinO(1) time, by just retrieving proper(l). Moreover, and
+ife= (u,v)∈E, we can locate xinAvas follows: starting from l, we traverse Aumoving to higher
+elements until a bridge, say ( y,z), is reached that connects to Av, we then follow that bridge and
+ﬁnally traverse Avmoving to smaller elements until xhas been located. Bridge ( y,z) is called the
+entrance bridge of catalog Au. In this way, the search is propagated to a neighboring new no de by
+means of a block B(whose higher bridge is ( y,z)) in time O(|B|) =O(d) =O(1). Thus, having
+locatedxin an original catalog, we can locate xin an adjacent original catalog in constant time.
+Given the query value xand a query graph Q, we initially perform a binary search to locate
+xat the augmented catalog As, wheresis the unique source node of G(e.g., the root node if G
+is a tree—the typical case in many applications) in O(logn) time. Recall that the query graph Q
+always contains the source node s. Starting from node s, we traverse Qand visit all of its nodes
+once. Given Q, such a traversal of Qcan be performed by considering any topological order of Q.
+A move from a node uto an adjacent in Qnodev, corresponds to the procedure described above:
+having located xinCu, we locate xinCvin constant time. That is, we traverse edge ( u,v) by
+moving through the entrance bridge of Av. By traversing the query graph Qin this way, we can
+solve the iterative search problem in O(kd+logn) time, where kis the number of vertices of Q,n
+is the total number of proper elements in the catalogs of Ganddis the bounded degree of G(a
+constant).
+5.3 Hashing Scheme for Fractional Cascading
+Wenowmove totheauthentication oftheiterative search pro blemthat issolved usingthefractional
+cascading data structure. The idea is again to construct a ha shing scheme over the data structure,
+sothatadigestiscomputedandsignedbythesourceandshort answerauthentication informationis
+provided for any iterative search query for the catalog grap hG. We next describeour authenticated
+data structureDfor fractional cascading, which in turn is based on the path h ash accumulator
+hashing scheme presented in Section 3.
+Lethis a commutative cryptographic collision-resistant hash f unction. We assume that a
+set of rules have been deﬁned, so that hcan operate on elements of catalogs, nodes of graph G
+and previously computed hash values. The hashing scheme can be viewed as a two-level hashing
+structure, built using the path hash accumulator scheme: intra-block hashing is performed within
+each block deﬁned in the data structure and inter-block hashing of performed through all blocks of
+the data structure. In the sequel, we describe each hashing s tructure.
+36Intra-block hashing: Consider any edge ( u,v) ofG, i.e.,uis one of the parents (i.e., prede-
+cessor nodes) of v, and the corresponding augmented catalogs AuandAv. Also, consider any two
+neighboring bridges ( y′,z′) and (y,z) connecting AuandAvthat deﬁne block B. Assume that
+z,z′∈Av. We deﬁne Pto be the sequence of elements of Bthat exist in Avplus the non-proper
+elements of the corresponding bridges that lie in Av. That is, P={p1,p2,...,pt}is an increasing
+sequence, where, if z′≤z,p1=z′andpt=z. We refer to Pas thehash side ofB. Using the
+path hash accumulator scheme, we compute the digest D(P) of sequence P. For each element pi,
+we setN(pi) ={pi,proper(pi),v}and in that way the path hash accumulator can support authen-
+ticated membership queries and authenticated path propert y queries. Here, one property of Pis
+the corresponding node v.
+We iterate the process for all blocks deﬁned in the data struc ture: for each block Bhaving a
+hash side PinAv,HBis the hash path accumulation D(P) of sequence P. We also deﬁne Bsto
+be a ﬁctitious block, the augmented catalog As. The hash side of Bsis the whole block itself, so
+HBsis well deﬁned. All the path hash accumulators used deﬁne the ﬁrst-level hashing structure.
+Inter-block hashing: The second-level hashing structure is deﬁned through a dire cted acyclic
+graphHdeﬁned over blocks. In particular, nodes of Hare blocks of the data structure. Suppose
+thatwis a parent (i.e., predecessor node) of uanduis a parent of vinG. IfBis a block of edge
+(u,v), then we add to the set of edges of Hall the directed edges ( B,B′), where B′is a block of
+edge (w,u) that shares elements from AuwithB. Additionally, if vis a child (i.e., successor node)
+of the root (i.e., unique source node) sinG, then for all blocks Bthat correspond to edge ( s,v),
+we add to the set of edges of Hthe directed edge ( B,Bs). This completes the deﬁnition of graph
+H. Note that Bsis the unique sink node of H. Figure 5(b) shows the graph Hthat corresponds to
+a catalog graph Gthat is simply a path.
+Each block (node) BofHis associated with a label L(B). IfBis a source node (leaf) in
+H, thenL(B) =HB. IfBis the successor node (parent) of blocks B1,...,B tinH, listed in
+some ﬁxed order, then L(B) equals the path hash accumulation over sequence B1,...,B tusing
+N(Bi) ={L(Bi),HB}. We emphazise that in this case (i.e., for the inter-block ha shing) the path
+hash accumulator is merelyused for authenticating membership in a set (like a Merkle tr ee; thus,
+no path property is used). This hashing scheme over Hcorresponds to the second-level hashing
+structure.
+Finally, we set D(D)=L(Bs) to be the digest of the entire data structure D(which is signed
+by the data source).
+5.4 Answer Authentication Information
+Given a query xand a query graph Q, we describe now what is the authentication information
+given to the user. If vis a node of Q, letsvbe the successor of xinCv. In the location process, to
+locatexinAv, we ﬁnd two consecutive elements yandzofAvsuch that y≤x < z, where each of
+yandzmay be either proper or non-proper. They are both elements of a blockBsuch that the
+entrance bridge of Avis the higher bridge of B. Observe that zis the successor of xinAvand that
+sv=proper(y) wheny=x, orsv=proper(z) wheny < x. We call zandB, thetarget element
+and thetarget block ofAv, respectively.
+Two useful observations are that: (1) in the location proces s, the traversal of the query graph Q
+is chosen so that each node of Qis visited once and (2) any two target blocks visited by the lo cation
+process that correspond to incident edges in Qshare elements of the common augmented catalog,
+37and, thus, are adjacent in graph H. It follows that all the target blocks deﬁne a subgraph Tof
+H. This subgraph Tconsists of the all target blocks and the edges of Hthat connect neighboring
+target blocks (Figure 5(b)).
+Lemma 7. For any query graph Q, graphTis a tree.
+Proof.Consider the topological order used to deﬁne the traversal o f the query graph Q. This
+topological orderdeﬁnesadirected subtree TQofQ. Thereis anone-to-one correspondencebetween
+edges of TQand target blocks, i.e., between edges of TQand nodes of T.
+For any node v, letzvbe the target element of AvandBvthe target block of Av. Then, the
+answer authentication information for our hashing scheme c onsists of:
+1.Intra-block: for each node vofQ, the target element zvofAvand a veriﬁcation sequence pv
+fromzvup to the path hash accumulation of the hash side of Bv, and
+2.Inter-block: for every node (or target block) BvofTthat is not a leaf, the veriﬁcation
+sequences from every child of BvinTup to the path hash accumulation L(Bv).
+Lemma 8. Ifnis the total number of proper elements in the catalogs of Canddis the bounded
+degree of G, then for any query graph Qofknodes, the size of the answer authentication information
+isO(logn+klogd) =O(logn+k).
+Proof.The hash side of Bshas size|As|=O(n) and the hash side of any other target block has size
+O(d). Thus, the intra-block answer authentication informatio n consists of kveriﬁcation sequences:
+k−1 of size O(logd) and one of size O(logn). Therefore, this portion of the answer authentication
+information has O(logn+klogd) size. For the inter-block answer authentication informat ion, recall
+thatGand, thus, both QandTQ, have out-degree bounded by dand that every target block can
+share elements with at most O(d) other target blocks. Thus, HandThave in-degree bounded by
+O(d). Now, all, but L(Bs), the second-level path hash accumulations are built over s equences of
+lengthO(d). Path hashaccumulation L(Bs) is builtover at most dnblocksthat shareelements with
+As. Observe that there is a one-to-one correspondence between inter-block veriﬁcation sequences
+and edges in T. It follows that the inter-block answer authentication inf ormation consists of k−2
+veriﬁcation sequences of size O(logd) and one of size O(logn), thus, this second portion of the
+answer authentication information has also O(logn+klogd) size. In total, since dis a constant,
+the answer authentication information is of size O(logn+k).
+5.5 Answer Veriﬁcation
+For a given query element xand query graph Q= (V,E), we assume that the answer given to the
+user is a set A={(av,v) :v∈V}, whereavis claimed to be the successor of xinCv. The answer
+authentication information consists of two veriﬁcation se quences for each node (target block) of
+treeT: one intra-block and one inter-block. These sequences form a hash tree in our two-level
+hashing scheme. The veriﬁcation process is deﬁned by this ha sh tree. Intuitively, an intra-block
+veriﬁcation sequence of a target block Bvprovides a local proof thatavis the successor of xinCv,
+and then, all these local proofs are accumulated through int er-block veriﬁcation sequences into the
+(signed) digest.
+Given elements x,y,y′,z,z′and a node vofQ, consider the predicates (or, alternatively,
+relations): (1) y≤x < z, (2)yandzare consecutive elements in Av, (3)y=xandy′=proper(y)
+38inAvand (4)y < xandz′=proper(z) inAv. If (1), (2) and (3) hold simultaneously, then they
+constitute a proof that the successor of xinCvisy′, whereas if (1), (2) and (4) hold simultaneously,
+they constitute a proof that the successor of xinCvisz′. Such a proof must be provided for every
+vofQ.
+GivenA,xand the answer authentication information, the user ﬁrst ch ecks if there is any
+inconsistency between values avandzvfor every vofQwith respect to the two possible proofs
+above. Observe that, by the answer authentication informat ion, the user knows for each node v
+ofQthe target element zvand the corresponding element yv, such that yv< zvandyvandzv
+are consecutive elements in Av. If there is at least one inconsistency, the user rejects the answer.
+Otherwise, all that is needed is to verify thesigned digest D(D) of thedata structure. Observe, that
+the user possesses all the data needed for the recomputation of the signed digest. If the computed
+digest matches the veriﬁed signed digest, then based on the c ollision-resistance property of the hash
+function used in the scheme, the user has a proof that the answ er is correct and accordingly accepts
+the answer as authentic. Otherwise (if either the signed dig est is not veriﬁed or the recomputed
+digest does not match the signed one), the user rejects the an swer as invalid.
+Lemma 9. Ifnis the total number of proper elements in the catalogs of C, then for any query
+graphQofknodes, the answer veriﬁcation time is O(logn+klogd) =O(logn+k), wheredis the
+bounded degree of G.
+Proof.It follows directly from Lemma 8. Recall that the veriﬁcatio n time of a path hash accumu-
+lator is proportional to the size of the veriﬁcation sequenc e.
+If the digest is veriﬁed, then based on the collision-resist ance property of the hash function h,
+and, in particular, the security of the path hash accumulato r, the user has a proof that the answer
+is correct: for each vofQ, the user can verify all the three conditions previously dis cussed. A
+faulty answer can lead to a forged proof only if some collisio ns ofhhave been found: the responder
+needs to break the security of the path hash accumulator in au thenticating membership queries,
+which is further reduced to ﬁnding collisions of the cryptog raphic hash function hin use.
+Lemma 10. For any catalog graph Gofknodes and of total size n, both intra-block and inter-block
+hashing schemes can be computed in O(n)time using O(n)storage.
+Proof.Ghas in-degree that is bounded by d=O(1) and every target block can share elements
+with at most β=O(1) other blocks. Moreover, the path hash accumulation of a s equence of length
+mcan be computed in O(m) time and space.
+We have thus proved the following theorem.
+Theorem 11. LetGbe the catalog graph for a collection Coftcatalogs and nbe the total number
+of elements stored in C, wheret≤n. IfGis of bounded degree, then the authenticated fractional
+cascading data structure DforGsolves the authenticated iterative search problem for G, achieving
+the following performance:
+1.Dcan be constructed in O(n)time and uses O(n)storage;
+2. given a query element xand a query graph Qwithk≤tvertices, xcan be located in every
+catalog of QinO(logn+k)time;
+3. the answer authentication information has size O(logn+k)and the answer veriﬁcation time
+isO(logn+k).
+395.6 Applications of Authenticated Iterative Search
+Our authenticated fractional cascading scheme can be used t o design authenticated data structures
+for various fundamental two-dimensional geometric search problems, where iterative search is im-
+plicitly performed (see [15]). In all of these problems, the underlying catalog graph has degree
+bounded by a small constant, and in most cases the graph itsel f is a tree. We next describe how the
+authentication of the iterative search problem can be exten ded to provide authentication of this
+broad class of queries that involves searching in multi-cat alogs that are organized in a tree.
+Authentication scheme. The idea, here, is to extend the hashing scheme of the fractio nal
+cascading data structure over the graph structure in which c atalogs are organized. In essence,
+what we need to additionally authenticate is that the correc t subdigraph of the catalog graph
+is accessed by the responder and used to generate the answer. That is, so far (for the iterative
+search only) we assumed that this catalog subgraph is part of the query (query graph Q). In the
+applications of the fractional cascading data structure, h owever, this subgraph is not known in
+advance, but it is rather generated on-the-ﬂy as the answer i s being produced. In other words, the
+query graph is in essence part of the answer itself. Accordin gly, in order to verify the answer, the
+user needs ﬁrst to authenticate that the correct (authentic ) subgraph is generated by the responder
+and that the ﬁnal answer corresponds to this correct subgrap h of catalogs. Given that in our
+authentication schemes veriﬁcation is performed in a botto m-up fashion, the user essentially will
+ﬁrst authenticate the iterative search (as described in the previous subsections), and then he will
+authenticate that the subgraph that corresponds to the iter ative search is authentic (all nodes that
+should have been included in the graph have been included, bu t no extra nodes are included). This
+second veriﬁcation step (subgraph authentication) can be e asily performed as follows.
+The catalog graph is accessed by some search algorithm. The k ey property that we wish our
+authentication scheme to satisfy is to authenticate this se arch procedure. This is done by hashing
+over the graph structure (bottom-up hashing over the graph) as follows. Let vbe a node of the
+catalog graph G—recall, Gis a directed acyclic graph—that has u1,...,u ℓsuccessor nodes, where
+ℓis a constant (because the catalog graph Gis of bounded degree). Let dvbe the data that is
+used by the search algorithm to advance the search from node vto one or more successor nodes.
+Typically, especially for catalogs organized as trees, the search is performed over an ordered data
+set, and, in this case, dis a sequence of ℓ(orℓ−1) keys (members of the set) that are used along
+with the search items (deﬁned by the query) to decide in which node(s) to advance the search.
+Nodevis then associated with a hash value hv, deﬁned as
+hv=h(hu1,...,h uℓ,h(dv)).
+Thus, we have a recursive deﬁnition of the digest of the hashi ngscheme at the source of G. Depend-
+ing on exact format of data dv, additional improvements (up to some constant) may be consi dered
+in producing the hash value (digest) h(dv). Given, a traversed subgraph of G, now, the answer
+authentication information additionally contains the has h values and search information (i.e., keys)
+that are needed to recompute the ﬁnal data digest. Given this authentication scheme, the veriﬁca-
+tion of the answer ﬁrst involves the veriﬁcation of the itera tive search problem, as described earlier
+in the section, and then the veriﬁcation of the search subgra ph of catalogs (depending on the exact
+query problem, the order may be swapped). The connection of t he two individual hashing schemes
+can be easily performed at the root of the entire hashing stru cture: simply by hashing together the
+two individual digests to generate the digest of the entire h ashing scheme.
+40Given this extra layer of hashing and this extension of our au thentication scheme, we obtain
+authenticated versions of any data structure that uses iter ative search over set of catalogs organized
+as nodes of a DAG. The following results are obtained by using the results in [15] and the results
+of Theorem 11 for our authentication schemes of this section , wherendenotes the problem size.
+Corollary 12. There is an authenticated data structure for answering line- intersection queries on
+a polygon with nvertices that can be constructed in O(nlogn)time and uses O(nlogn)storage.
+Denoting with kthe output size, queries are answered in O(logn+k)time; the answer authentication
+information has size O((k+1)logn
+k+1); and the answer veriﬁcation time is O((k+1)logn
+k+1).
+Corollary 13. There are authenticated data structures for answering ray sh ooting and point loca-
+tion queries on a planar subdivision with nvertices that can be constructed in O(logn)time and use
+O(nlogn)storage. Queries are answered in O(logn)time; the answer authentication information
+has sizeO(logn); and the answer veriﬁcation time is O(logn).
+Corollary 14. There are authenticated data structures for answering ortho gonal range search,
+orthogonal point enclosure and orthogonal intersection qu eries that can be constructed in O(nlogn)
+time and use O(nlogn)storage, where nis the problem size. Denoting with kthe output size,
+queries are answered in O(logn+k)time; the answer authentication information has size O(logn+
+k); and the answer veriﬁcation time is O(logn+k).
+6 Conclusion
+In this paper, we have examined the problem of designing eﬃci ent authenticated data structures
+for broad classes of queries. We have developed the path hash accumulator, a new authentication
+scheme for general decomposable queries over sequences of d ata elements and, in particular, queries
+about properties of subsequences that involve any associat ive operation applied over their elements.
+Using this authentication scheme, we then design new authen ticated data structures for graph
+queries (e.g., path and connectivity queries) or search pro blems over two-dimensional geometric
+objects (e.g., point location and range search). Authentic ation of graph queries is performed by
+authenticating certain path properties in some tree graphs that are specially designed for the
+graph in question. Authentication of geometric search prob lems is performed by authenticating the
+general static version of the fractional cascading framewo rk that solves theiterative search problem.
+Our authentication techniques are eﬃcient and introduce as ymptotically no extra overhead to the
+underlying search structure.
+An interesting open problem is the design of dynamic version s of our authenticated data struc-
+tures based on fractional cascading.
+Acknowledgments
+Research supported in part by NSF grants CCF–0311510, IIS–0 324846, IIS–0713046, IIS–0713403,
+OCI–0724806, and CCF–0830149, and by a research gift from Su n Microsystems.
+We would like to thank Robert Cohen for contributing to the re sults of Section 4 and for
+coauthoring a preliminary version of this paper [33]. We als o thank the anonymous reviewers of
+this work for their useful comments.
+41References
+[1] W. Aiello, S. Lodha, and R. Ostrovsky. Fast digital ident ity revocation. In Advances in
+Cryptology—CRYPTO , volume 1462 of LNCS, pages 137–152. Springer, 1998.
+[2] A. Anagnostopoulos, M. T. Goodrich, and R. Tamassia. Per sistent authenticated dictionaries
+and their applications. In Proc. Inf. Security Conf. , volume 2200 of LNCS, pages 379–393.
+Springer, 2001.
+[3] M. J. Atallah, Y. Cho, and A. Kundu. Eﬃcient data authenti cation in an environment of
+untrusted third-party distributors. In Proc. Int. Conf. on Data Eng. , pages 696–704. IEEE,
+2008.
+[4] N.BaricandB.Pﬁtzmann. Collision-freeaccumulators a ndfail-stopsignatureschemeswithout
+trees. In Advances in Cryptology—EUROCRYPT , volume 1233 of LNCS, pages 480–494.
+Springer, 1997.
+[5] J. Benaloh and M. de Mare. One-way accumulators: A decent ralized alternative to digital
+signatures. In Advances in Cryptology—EUROCRYPT , volume 765 of LNCS, pages 274–285.
+Springer, 1993.
+[6] S. W. Bent, D. D. Sleator, and R. E. Tarjan. Biased search t rees.SIAM J. Comput. , 14:545–
+568, 1985.
+[7] E. Bertino, B. Carminati, E. Ferrari, B. Thuraisingham, and A. Gupta. Selective and au-
+thentic third-party distribution of XML documents. IEEE Trans. Knowledge and Data Eng. ,
+16(10):1263–1278, 2004.
+[8] M. Blum and S. Kannan. Designing programs that check thei r work.J. ACM, 42(1):269–291,
+1995.
+[9] J. D. Bright and G. Sullivan. Checking mergeable priorit y queues. In Digest Symp. on Fault-
+Tolerant Comput. , pages 144–153. IEEE, 1994.
+[10] J. D. Bright and G. Sullivan. On-line error monitoring f or several data structures. In Digest
+Symp. on Fault-Tolerant Comput. , pages 392–401. IEEE, 1995.
+[11] J. D. Bright, G. Sullivan, and G. M. Masson. Checking the integrity of trees. In Digest Symp.
+on Fault-Tolerant Comput. , pages 402–411. IEEE, 1995.
+[12] A. Buldas, P. Laud, and H. Lipmaa. Eliminating countere vidence with applications to ac-
+countable certiﬁcate management. J. Computer Security , 10(3):273–296, 2002.
+[13] J. Camenisch and A. Lysyanskaya. Dynamic accumulators and application to eﬃcient revoca-
+tion of anonymous credentials. In Advances in Cryptology—CRYPTO , volume 2442 of LNCS.
+Springer, 2002.
+[14] B. Chazelle and L. J. Guibas. Fractional cascading: I. A data structuring technique. Algorith-
+mica, 1(3):133–162, 1986.
+[15] B. Chazelle and L. J. Guibas. Fractional cascading: II. Applications. Algorithmica , 1:163–191,
+1986.
+[16] R. F. Cohen and R. Tamassia. Combine and conquer. Algorithmica , 18:342–362, 1997.
+[17] P. Devanbu, M. Gertz, A. Kwong, C. Martel, G. Nuckolls, a nd S. Stubblebine. Flexible
+authentication of XML documents. J. Computer Security , 6:841–864, 2004.
+[18] P. Devanbu, M. Gertz, C. Martel, and S. G. Stubblebine. A uthentic data publication over the
+42Internet. J. Computer Security , 11(3):291–314, 2003.
+[19] O. Devillers, G. Liotta, F. P. Preparata, and R. Tamassi a. Checking the convexity of polytopes
+and the planarity of subdivisions. Comput. Geom. Theory Appl. , 11:187–208, 1998.
+[20] G. Di Battista and G. Liotta. Upward planarity checking : “Faces are more than polygons”. In
+S. H. Whitesides, editor, Proc. Graph Drawing , volume 1547 of LNCS, pages 72–86. Springer,
+1998.
+[21] G. Di Battista and B. Palazzi. Authenticated relationa l tables and authenticated skip lists. In
+Proc. IFIP Conf. on Database Security , volume 4602 of LNCS, pages 31–46. Springer, 2007.
+[22] G. Di Battista and R. Tamassia. On-line maintenance of t riconnected components with SPQR-
+trees.Algorithmica , 15:302–318, 1996.
+[23] D. Eppstein, G. F. Italiano, R. Tamassia, R. E. Tarjan, J . Westbrook, and M. Yung. Main-
+tenance of a minimum spanning forest in a dynamic plane graph .J. Algorithms , 13(1):33–54,
+1992.
+[24] U. Finkler andK. Mehlhorn. Checkingpriority queues. I nProc. Symp. on Discrete Algorithms ,
+pages 901–902. SIAM, 1999.
+[25] I. Gassko, P. S. Gemmell, and P. MacKenzie. Eﬃcient and f resh certiﬁcation. In Proc. Int.
+Conf. on Pract. and Theory in Public Key Cryptography , volume1751 of LNCS,pages 342–353.
+Springer, 2000.
+[26] S. Goldwasser, S. Micali, and R. Rivest. A digital signa ture scheme secure against adaptive
+chosen-message attacks. SIAM J. Comput. , 17(2):281–308, 1988.
+[27] M. T. Goodrich, C. Papamanthou, and R. Tamassia. On the c ost of persistence and authen-
+tication in skip lists. In Proc. Int. Workshop on Experimental Algorithms , volume 4525 of
+LNCS, pages 94–107. Springer, 2007.
+[28] M. T. Goodrich, C. Papamanthou, R. Tamassia, and N. Tria ndopoulos. Athos: Eﬃcient
+authentication of outsourced ﬁle systems. In Proc. Inf. Security Conf. , volume 5222 of LNCS,
+pages 80–96. Springer, 2008.
+[29] M. T. Goodrich and R. Tamassia. Eﬃcient authenticated d ictionaries with skip lists and
+commutative hashing. Technical report, Johns Hopkins Info rmation Security Institute, 2000.
+Available from http://www.cs.brown.edu/cgc/stms/papers/hashskip.pd f.
+[30] M.T.Goodrich, R.Tamassia, andJ.Hasic. Aneﬃcient dyn amicanddistributedcryptographic
+accumulator. In Proc. Inf. Security Conf. , volume 2433 of LNCS, pages 372–388. Springer,
+2002.
+[31] M. T. Goodrich, R. Tamassia, and A. Schwerin. Implement ation of an authenticated dictio-
+nary with skip lists and commutative hashing. In Proc. DARPA Inf. Survivability Conf. and
+Exposition , volume 2, pages 68–82, 2001.
+[32] M. T. Goodrich, R. Tamassia, and N. Triandopoulos. Supe r-eﬃcient veriﬁcation of dynamic
+outsourced databases. In Proc. RSA Conf., Cryptographers’ Track , volume 4964 of LNCS,
+pages 407–424. Springer, 2008.
+[33] M. T. Goodrich, R. Tamassia, N. Triandopoulos, and R. Co hen. Authenticated data structures
+for graph and geometric searching. In Proc. RSA Conf., Cryptographers’ Track , volume 2612
+ofLNCS, pages 295–313. Springer, 2003.
+[34] A. Heitzmann, B. Palazzi, C. Papamanthou, and R. Tamass ia. Eﬃcient integrity checking
+43of untrusted network storage. In Proc. Int. Workshop on Storage Security and Survivability ,
+pages 43–54. ACM, 2008.
+[35] V. King. A simpler minimum spanning tree veriﬁcation al gorithm. In Proc. Int. Workshop on
+Algorithms and Data Structures , volume 955 of LNCS, pages 440–448. Springer, 1995.
+[36] P. C. Kocher. On certiﬁcate revocation and validation. InProc. Int. Conf. on Financial
+Cryptography , volume 1465 of LNCS, pages 172–177. Springer, 1998.
+[37] F. Li, M. Hadjieleftheriou, G. Kollios, and L. Reyzin. D ynamic authenticated index structures
+for outsourced databases. In Proc. Int. Conf. on Management of Data , pages 121–132. ACM,
+2006.
+[38] J. Li, N. Li, and R. Xue. Universal accumulators with eﬃc ient nonmembership proofs. In
+Proc. Int. Conf. on Applied Cryptography and Network Security , volume 4521 of LNCS, pages
+253–269, 2007.
+[39] P. Maniatis and M. Baker. Secure history preservation t hrough timeline entanglement. In
+Proc. USENIX Security Symp. , pages 297–312. USENIX, 2002.
+[40] C. Martel, G. Nuckolls, P. Devanbu, M. Gertz, A. Kwong, a nd S. G. Stubblebine. A general
+model for authenticated data structures. Algorithmica , 39(1):21–41, 2004.
+[41] K. Mehlhorn and S. N¨ aher. Dynamic fractional cascadin g.Algorithmica , 5(1–4):215–241, 1990.
+[42] K. Mehlhorn and S. N¨ aher. LEDA: A Platform for Combinatorial and Geometric Computing .
+Cambridge University, Cambridge, UK, 2000.
+[43] K. Mehlhorn, S. N¨ aher, M. Seel, R. Seidel, T. Schilz, S. Schirra, and C. Uhrig. Checking
+geometric programs or veriﬁcation of geometric structures .Comput. Geom. Theory Appl. ,
+12(1–2):85–103, 1999.
+[44] R. C. Merkle. A certiﬁed digital signature. In Advances in Cryptology—CRYPTO , volume 435
+ofLNCS, pages 218–238. Springer, 1989.
+[45] S. Micali, M. Rabin, and J. Kilian. Zero-Knowledge sets . InProc. Symp. on Foundations of
+Computer Science , pages 80–91. IEEE, 2003.
+[46] M. Naor and K. Nissim. Certiﬁcate revocation and certiﬁ cate update. In Proc. USENIX
+Security Symp. , pages 217–228. USENIX, 1998.
+[47] M. Narasimha and G. Tsudik. Authentication of outsourc ed databases using signature ag-
+gregation and chaining. In Proc. Int. Conf. on Database Systems for Advanced Application s,
+volume 3882 of LNCS, pages 420–436. Springer, 2006.
+[48] L. Nguyen. Accumulators from bilinear pairings and app lications. In Proc. RSA Conf., Cryp-
+tographers’ Track , volume 3376 of LNCS, pages 275–292. Springer, 2005.
+[49] G. Nuckolls. Veriﬁed query results from hybrid authent ication trees. In Proc. IFIP Conf. on
+Database Security , volume 3654 of LNCS, pages 84–98. Springer, 2005.
+[50] R. Ostrovsky, C. Rackoﬀ, and A. Smith. Eﬃcient consisten cy proofs for generalized queries on
+a committed database. In Proc. Int. Colloquium on Automata, Languages and Programming ,
+volume 3142 of LNCS, pages 1041–1053. Springer, 2004.
+[51] H. Pang, A. Jain, K. Ramamritham, and K.-L. Tan. Verifyi ng completeness of relational query
+results in data publishing. In Proc. Int. Conf. on Management of Data , pages 407–418. ACM,
+2005.
+44[52] C. Papamanthou and R. Tamassia. Time and space eﬃcient a lgorithms for two-party authen-
+ticated data structures. In Proc. Int. Conf. on Inf. and Commun. Security , volume 4861 of
+LNCS, pages 1–15. Springer, 2007.
+[53] C. Papamanthou, R. Tamassia, and N. Triandopoulos. Aut henticated hash tables. In Proc.
+Conf. on Comput. and Commun. Security , pages 437–448. ACM, 2008.
+[54] W. Pugh. Skip lists: a probabilistic alternative to bal anced trees. Commun. ACM , 33(6):668–
+676, 1990.
+[55] D. D. Sleator and R. E. Tarjan. A data structure for dynam ic trees. J. Comput. Syst. Sci. ,
+26(3):362–381, 1983.
+[56] G. F. Sullivan and G. M. Masson. Certiﬁcation trails for data structures. In Digest Symp. on
+Fault-Tolerant Comput. , pages 240–247. IEEE, 1991.
+[57] G. F. Sullivan, D. S. Wilson, and G. M. Masson. Certiﬁcat ion of computational results. IEEE
+Trans. Comput. , 44(7):833–847, 1995.
+[58] R. Tamassia. Authenticated data structures. In Proc. European Symp. on Algorithms , volume
+2832 ofLNCS, pages 2–5. Springer, 2003.
+[59] R. Tamassia and N. Triandopoulos. Computational bound s on hierarchical data processing
+with applications to information security. In Proc. Int. Colloquium on Automata, Languages
+and Programming , volume 3580 of LNCS, pages 153–165. Springer, 2005.
+[60] R. Tamassia and N. Triandopoulos. Certiﬁcation and aut hentication of data structures, 2007.
+Manuscript. Available at http://www.cs.brown.edu/cgc/stms/papers/cads.pdf .
+[61] R. Tamassia and N. Triandopoulos. Eﬃcient content auth entication in peer-to-peer networks.
+InProc. Int. Conf. on Applied Cryptography and Network Security , volume 4521 of LNCS,
+pages 354–372. Springer, 2007.
+[62] R. E. Tarjan. Data Structures and Network Algorithms , volume 44 of CBMS-NSF Regional
+Conference Series in Applied Mathematics . SIAM, 1983.
+[63] J. Westbrook and R. E. Tarjan. Maintaining bridge-conn ected and biconnected components
+on-line.Algorithmica , 7:433–464, 1992.
+45
