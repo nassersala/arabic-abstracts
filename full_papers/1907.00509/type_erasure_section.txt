@@ -1,0 +1,331 @@
+3 Type Erasure
+The dynamic semantics given in Section 2 relies on ubiquitou s type annotations in order
+to determine how function application will proceed or how a f rame of sub-arrays should
+collapse to a single array. While the possible case of constr ucting a frame with no actual
+--- Page 25 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+The Semantic Foundations of Rank Polymorphism 25
+result cells whose shape can be inspected can only be resolve d by consulting a type annota-
+tion, the types themselves contain more information than is strictly needed. For example, it
+does not matter whether we are collapsing an empty frame of fu nctions, an empty frame of
+integers, or an empty frame of boxes. The result shape is the s ame, regardless of the type of
+the atoms contained within the cells. All we truly need is the resulting shape (alternatively,
+the result cells’ shape). Similarly, evaluating a function application requires knowing the
+expected cell shapes for the arguments, but it could, in prin ciple, be done without knowing
+anything about their atoms. Function application is still t agged with a result shape, again
+to head off issues arising from mapping over an empty frame.
+In a type-erased version of Remora, we only need the term and i ndex levels—the syn-
+tactic class of types is discarded. The syntax for erased Rem ora is given in Figure 11. Note
+that the grammar of type indices from Figure 1 is still in use h ere, although expressions,
+atoms, and their corresponding function and value-form sub sets are now replaced with
+type-erased versions.
+Evaluation in erased Remora proceeds similarly to explicit Remora. A function-application
+form has a principal frame chosen to be the largest of the func tion and argument frames,
+and a liftreduction replicates the function and argument arrays’ ato ms to bring all of
+the frames into agreement. The argument frames themselves a re identiﬁed based on the
+individual argument positions’ cell-shape annotations, r ather than by inspecting a type
+annotation on the array in function position. A map reduction turns an application form
+where all pieces have the same frame into a frame form, where the end-result shape
+matches the result shape tag on the original application. In dex application also maps over
+an array of index functions, producing a frame of substituted function bodies. Since the
+type level has been eliminated, there are no tλandt-app forms and no need for a tβ
+reduction rule.
+The translation from explicit Remora to erased Remora consi sts of three erasure func-
+tions:E/llbracket·/rrbracket:Expr→/hatwidestExpr ,A/llbracket·/rrbracket:Atom→/hatwideAtom , andT/llbracket·/rrbracket:Type→Index . These functions
+are deﬁned in Figure 13.
+We also deﬁne C/llbracket·/rrbracket:Ctxt→/hatwidestCtxt, given in Figure 14, which is not needed for deﬁn-
+ing the erased form of an explicit Remora program but is usefu l for demonstrating their
+equivalence.
+Types in explicit Remora are turned into indices in erased Re mora. These indices are
+the dynamic residue of types, in the same sense that term-lev el values are dynamic, though
+the are still subject to a static discipline which governs th eir values and their relation to
+the array values they describe. Array types become just the s hapes used to construct them,
+whereas functions, universals, dependent sums and product s, and base types become the
+“scalar” shape. Extracting the index components of all type s means that type variables can
+be turned into index variables, which will stand for the inde x component of whatever type
+the variable originally stood for. This translation captur es exactly the information that a
+frame form needs in the event that there are no cells. By extension, the term and index
+application forms also get the bookkeeping information nee ded by the frame s they will
+eventually become.
+For example, consider a function term whose type is (-> (s (Arr t (Shp))) (Arr
+t (Shp k))) , wheres,t, andkare bound as Array ,Atom , andDim respectively. This
+function produces a vector of some statically uncertain len gth containing atoms of uncer-
+--- Page 26 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+26 Justin Slepak, Olin Shivers and Panagiotis Manolios
+/hatwidee∈/hatwidestExpr ::= Type-erased expressions
+x Variable reference
+|(array( n...)/hatwidea...) Array, containing atoms
+|(frame ι/hatwidee...) Frame, containing sub-arrays
+|(/hatwideef(/hatwideeaιa)...ιr) Term application
+|(i-app/hatwideefιa...ιr) Index application
+|(unbox( xi...xe/hatwidees)/hatwideebιb) Let-binding box contents
+/hatwidea∈/hatwideAtom ::= Type-erased atoms
+b Base value
+|/hatwidef Function
+|(Iλ(x...)/hatwidev) Index abstraction
+|(box ι.../hatwidee) Boxed array
+/hatwidef∈/hatwideFunc ::= Type-erased functions
+|o Primitive operator
+|(λ(x...)/hatwidee) Term abstraction
+/hatwidev∈/hatwiderVal::= Type-erased values
+x
+|(array( n...)/hatwidev...)
+/hatwidev∈/hatwideAtval ::= Type-erased atomic values
+b
+|/hatwidef
+|(Iλ(x...)/hatwidev)
+|(box ι.../hatwidev)
+/hatwideE∈/hatwidestCtxt ::= Type-erased evaluation contexts
+/square
+|(array( n...)/hatwidev...(box ι.../hatwideE)/hatwidea...)
+|(frame ι/hatwidev.../hatwideE/hatwidee...)
+|(/hatwideE(/hatwideeaιa)...ιr)
+|(/hatwideef(/hatwidevaιa)...(/hatwideEιa)(/hatwideeaιa)...ιr)
+|(i-app/hatwideEιa...ιr)
+|(unbox( xi...xe/hatwideE)/hatwideebιb)
+|(unbox( xi...xe/hatwidevs)/hatwideEιb)
+/hatwidet∈/hatwideTerm ::=/hatwidee|/hatwidea Type-erased terms
+Fig. 11. Abstract syntax for type-erased Remora
+tain type. When we apply this function, the explicitly typed application form describes the
+resulting array’s type. If our arguments are a single sand an×4 matrix of numbers, with n
+also bound as a Dim, the principal frame shape is (Shp n 4) . So we will have result type
+(Arr Num (Shp n 4 k)) . Type-erasing the application form must still preserve eno ugh
+information to produce an array of the correct shape, even if nturns out to be 0, leaving us
+with no result cells whose shape we can inspect. However, the dynamic semantics does not
+rely on knowing that the result array contains Nums. The binders for index variables nand
+k, which must be either Iλorunbox , are still present in the type-erased program, since the
+indices they eventually bind to those variables will affect the program’s semantics. The Tλs
+which bind sandtturn intoIλs, though the variable tis never used in the type-erased
+program. If any type argument was bound to sin the original program, we replace it with
+--- Page 27 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+The Semantic Foundations of Rank Polymorphism 27
+((array ( nf...)/hatwidevf...)
+((array ( na...ni...)/hatwideva...) (Shp ni...))...
+ιr)
+/maps⊔o→lift
+((array ( np...)Concat/Largellbracket
+Repnfe/largellbracket
+Split1/largellbracket/hatwidevf.../largerrbracket/largerrbracket/Largerrbracket
+)
+((array ( np...ni...)Concat/largellbracket
+Repnae/largellbracket
+Splitnac/largellbracket/hatwideva.../largerrbracket/largerrbracket/largerrbracket
+) (Shp ni...))...
+ιr)
+where
+Not all of/parenleftbig
+nf.../parenrightbig
+,(na...)...are equal
+np... =/unionsqdisplay/largellbracket/parenleftbig
+nf.../parenrightbig
+(na...).../largerrbracket
+nfe=∏/parenleftbig
+np.../parenrightbig
+∏/parenleftbig
+nf.../parenrightbig
+nae... =∏/parenleftbig
+np.../parenrightbig
+∏(na...)... nac... =/parenleftbig∏(ni...)/parenrightbig
+...
+((array ( nf...)/hatwidevf...)
+((array ( nf...ni...)/hatwideva...) (Shp ni...))...
+ιr)
+/maps⊔o→map
+(frame ιr
+((array () /hatwidevf) ((array ( ni...)/hatwidevc...) (Shp ni...))ιc)...)
+where
+nc... =(∏ni...)...
+((vc...)...)... =Transpose/largellbracket
+Splitnc/llbracketva.../rrbracket.../largerrbracket
+Length/largellbracket
+nf.../largerrbracket
+> 0
+ιc... =/parenleftbig
+ιr·−(Shp nf...)/parenrightbig
+...
+((array () ( λ(x...)/hatwidee)) ((array ( ni...)/hatwidev) (Shp ni...))...ιr)
+/maps⊔o→β/hatwidee[x/maps⊔o→/hatwidev,...]
+(i-app (array ( nf...) (i λ(x...)/hatwidee)...)ιa...ιr)
+/maps⊔o→iβ(frame ιr/hatwidee[x/maps⊔o→ιa,...]...)
+(frame (Shp n...) (array ( n′...)v...)...)
+/maps⊔o→collapse(array ( n...n′...)Concat /llbracket(v...).../rrbracket)
+(unbox ( xi...xe(array ( ns...) (box ι.../hatwidev)))/hatwideeιb)
+/maps⊔o→unbox(frame (++ (Shp ns...)ιb)e[xi/maps⊔o→ι,..., xe/maps⊔o→/hatwidev])
+Fig. 12. Dynamic semantics for erased Remora
+its shape. All occurrences of sfrom the original program now stand for an array shape
+rather than a full array type.
+We develop a bisimulation argument to show that the behavior of an explicitly typed
+term matches the behavior of its erased form. We deﬁne the spa ceSof machine states to
+be the sum of the set of well-typed explicit Remora terms and t he set of their type-erased
+forms. That is, S=ExprT⊎/hatwiderExprT, where ExprT={e∈Expr|·;·;·⊢e:τ}and/hatwiderExprT=
+{E/llbrackete/rrbracket|e∈ExprT}. Transitions in the machine match the explicit and erased la nguages’
+respective /maps⊔o→relations. We also deﬁne the “erasure equivalence” relatio n∼=Eon machine
+--- Page 28 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+28 Justin Slepak, Olin Shivers and Panagiotis Manolios
+E/llbracket(array( n...)a...)τr/rrbracket=(array( n...)A/llbracketa/rrbracket...)
+E/llbracket(frame( n...)e...)τr/rrbracket=(frame( T/llbracketτr/rrbracket)E/llbrackete/rrbracket...)
+E/Largellbracket
+(e(Arr(->( τi...)τo)ιf)
+fea...)τr/Largerrbracket
+=(E/largellbracket
+ef/largerrbracket
+(E/llbracketea/rrbracketT/llbracketτi/rrbracket)...T/llbracketτr/rrbracket)
+E/largellbracket
+(t-app efτa...)τr/largerrbracket
+=(i-app E/largellbracket
+ef/largerrbracket
+T/llbracketτa/rrbracket...T/llbracketτr/rrbracket)
+E/largellbracket
+(i-app efιa...)τr/largerrbracket
+=(i-app E/largellbracket
+ef/largerrbracket
+ιa...T/llbracketτr/rrbracket)
+E/largellbracket
+(unbox( xi...xees)eτb
+b)/largerrbracket
+=(unbox( xi...xeE/llbracketes/rrbracket)E/llbracketeb/rrbracketT/llbracketτb/rrbracket)
+A/llbracketo/rrbracket=o
+A/llbracketb/rrbracket=b
+A/llbracket(λ((xτ)...)e)/rrbracket=(λ(x...)E/llbrackete/rrbracket)
+A/llbracket(Tλ((x k)...)v)/rrbracket=(Iλ(x...)E/llbracketv/rrbracket)
+A/llbracket(Iλ((xγ)...)v)/rrbracket=(Iλ(x...)E/llbracketv/rrbracket)
+A/llbracket(box ι...eτ)/rrbracket=(box ι...E/llbrackete/rrbracket)
+T/llbracketx/rrbracket=x
+T/llbracket(Arr τ ι)/rrbracket=ι
+T/llbracketτ/rrbracket=(Shp) otherwise
+R/llbracketa/rrbracket=A/llbracketa/rrbracket R/llbrackete/rrbracket=E/llbrackete/rrbracket
+Fig. 13. Type erasure for Remora
+states as the equivalence closure of the relation imposed by E/llbracket·/rrbracket. Before we show that ∼=E
+is a bisimulation, several intermediate results are needed .
+First, the bisimulation proof will in one case need to reach d eep into an expression to
+ﬁnd the next redex. A compositionality property of the erasu re rule will make it possible
+to reason about the redex and its reduced form separately fro m the evaluation context in
+which it is embedded.
+Lemma 3.1 (Erasure in context )
+Given an evaluation context Eand expression e, whereE[e]is well-typed, E/llbracketE[e]/rrbracket=
+C/llbracketE/rrbracket[E/llbrackete/rrbracket].
+Proof
+This follows from straightforward induction on E.
+We will also rely on a series of lemmas showing that substitut ion commutes with erasure.
+Lemma 3.2
+R/llbrackett[x/maps⊔o→E/llbracketex/rrbracket]/rrbracket=R/llbrackett/rrbracket[x/maps⊔o→E/llbracketex/rrbracket]
+Proof
+This is straightforward induction on t.
+--- Page 29 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+The Semantic Foundations of Rank Polymorphism 29
+C/llbracket/square/rrbracket=/square
+C/llbracket(array( n...)v...(box ι...Eτ)a...)/rrbracket
+=(array( n...)A/llbracketv/rrbracket...(box ι...C/llbracketE/rrbracket)A/llbracketa/rrbracket...)
+C/llbracket(frame( n...)v...Ee...)τr/rrbracket
+=(frame( T/llbracketτr/rrbracket)E/llbracketv/rrbracket...C/llbracketE/rrbracketE/llbrackete/rrbracket...)
+C/Largellbracket
+(E(Arr(->( τi...)τo)ιf)ea...)τr/Largerrbracket
+=(C/llbracketE/rrbracket(E/llbracketea/rrbracketT/llbracketτi/rrbracket)...T/llbracketτr/rrbracket)
+C/Largellbracket
+(e(Arr(->( τ1...τ2τ3...)τo)ιf)
+fv1...Ee3...)τr/Largerrbracket
+=(E/largellbracket
+ef/largerrbracket
+(E/llbracketva/rrbracketT/llbracketτ1/rrbracket)...(C/llbracketE/rrbracketT/llbracketτ2/rrbracket)(E/llbrackete3/rrbracketT/llbracketτ3/rrbracket)...)
+C/llbracket(t-appEτa...)τr/rrbracket
+=(i-app C/llbracketE/rrbracketT/llbracketτa/rrbracket...T/llbracketτr/rrbracket)
+C/llbracket(i-appEιa...)τr/rrbracket
+=(i-app C/llbracketE/rrbracketιa...T/llbracketτr/rrbracket)
+C/llbracket(unbox( xi...xeE)eb)/rrbracket
+=(unbox( xi...xeC/llbracketE/rrbracket)E/llbracketeb/rrbracket)
+Fig. 14. Type-erasing Remora evaluation contexts
+Lemma 3.3
+T/llbracketτ[x/maps⊔o→τx]/rrbracket=T/llbracketτ/rrbracket[x/maps⊔o→T/llbracketτx/rrbracket]
+Proof
+This is straightforward induction on τ.
+Lemma 3.4
+R/llbrackett[x/maps⊔o→τx]/rrbracket=R/llbrackett/rrbracket[x/maps⊔o→T/llbracketτx/rrbracket]
+Proof
+This is straightforward induction on t.
+Lemma 3.5
+T/llbracketτ[x/maps⊔o→ιx]/rrbracket=T/llbracketτ/rrbracket[x/maps⊔o→ιx]
+Proof
+This is straightforward induction on τ.
+Lemma 3.6
+R/llbrackett[x/maps⊔o→ιx]/rrbracket=R/llbrackett/rrbracket[x/maps⊔o→ιx]
+Proof
+This is straightforward induction on t.
+Lemma 3.7 (Values erase to values )
+For any well-typed term t,
+•Ifthas the form v, thenR/llbrackett/rrbrackethas the form /hatwidev
+--- Page 30 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+30 Justin Slepak, Olin Shivers and Panagiotis Manolios
+•Ifthas the form v, thenR/llbrackett/rrbrackethas the form /hatwidev
+Proof
+We use induction on t. The only nontrivial cases are boxandarray forms, which may be
+values or may contain incomplete computation. The contents of aboxvalue must itself be
+a value, which the induction hypothesis implies will erase t o a value. Similarly, an array
+value contains only atomic values, which erase to atomic val ues.
+Lemma 3.8 (Lockstep )
+For any well-typed e, one of the following holds:
+•ehas the form v, andE/llbrackete/rrbrackethas the form /hatwidev
+•e/maps⊔o→e′, andE/llbrackete/rrbracket/maps⊔o→E/llbrackete′/rrbracket
+•e/ne}a⊔ionslash/maps⊔o→, andE/llbrackete/rrbracket/ne}a⊔ionslash/maps⊔o→
+Proof
+We prove this by induction on e.
+We rely on Lemma 3.1 (erasure in context) when eis a redex erwithin an evaluation
+contextEother than /square. Ifer/ne}a⊔ionslash/maps⊔o→because we have a mis-applied primitive operator, then the
+same is true for E/llbracketer/rrbracket, soE/llbrackete/rrbracketis also an evaluation context around a mis-applied primitiv e
+operator. Otherwise, er/maps⊔o→e′
+r, and the induction hypothesis implies that E/llbracketer/rrbracket/maps⊔o→E/llbrackete′
+r/rrbracket. So
+E/llbrackete/rrbracket/maps⊔o→E/llbrackete′/rrbracket, the erased context ﬁlled with e′
+r.
+Values are handled by Lemma 3.7. For the remaining cases—red exes—straightforward
+symbol pushing shows that erased Remora’s reduction rules f ollow those of Remora.
+Since we have a deterministic operational semantics for bot h explicitly typed Remora
+and type-erased Remora, the lockstep lemma also works in rev erse. If an erased term takes
+an evaluation step, its preimage cannot be a value form or stu ck state. The preimage must
+therefore step to some result expression, which itself eras es to the same result. Similarly,
+a value form or stuck state in erased Remora cannot have a prei mage which takes an
+evaluation step.
+Corollary 3.1 (Reverse lockstep )
+IfE/llbrackete/rrbracket/maps⊔o→E/llbrackete′/rrbracket, then for any e′′such that e/maps⊔o→e′′, we have e′∼=Ee′′, and at least one such
+e′′exists. If E/llbrackete/rrbracket/ne}a⊔ionslash/maps⊔o→, then e/ne}a⊔ionslash/maps⊔o→.
+Recall our relation ∼=Eon the set of machine states S=ExprT⊎/hatwiderExprT, where ExprT=
+{e∈Expr|·;·;· ⊢e:τ},i.e.the set of well-typed explicitly-typed terms, and/hatwiderExprTis the
+image of ExprTunder type erasure. ∼=Eis the equivalence closure of the relation given by
+the erasure function E/llbracket·/rrbracket. That is, ∼=Eis the least relation which relates two states sandw
+iff any of the following hold:
+1.s∈ExprTandE/llbrackets/rrbracket=w(erasure proper)
+2.s=αw(reﬂexivity)
+3.w∼=Es(symmetry)
+4.s∼=Es′ands′∼=Ew(transitivity)
+Expanding the erasure relation based on E/llbracket·/rrbracketto include both symmetry and transitivity re-
+lates any two explicitly typed expressions which produce α-equivalent erased terms. A ∼=E
+--- Page 31 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+The Semantic Foundations of Rank Polymorphism 31
+equivalence class consists of a single erased Remora expres sion and all of its preimages.
+There can be only one erased Remora expression because type e rasure is a well-deﬁned
+function ( i.e., no single explicitly typed expression can erase to multipl e different results).
+Formally, every ∼=Eequivalence class must have the form
+{/hatwidee}⊎{ e∈Expr|E/llbrackete/rrbracket=/hatwidee}
+Theorem 3.1
+∼=Eis a bisimulation. That is, for any states s,w∈Sifs∼=Ew, either(s/maps⊔o→u∧w/maps⊔o→v∧u∼=E
+v)or(s/ne}a⊔ionslash/maps⊔o→∧ w/ne}a⊔ionslash/maps⊔o→).
+Proof
+There are four cases to consider, depending on which of Expr or/hatwidestExpr each related term
+is drawn from, but we can merge the two cases where sandware drawn from different
+languages.
+s∈/hatwidestExpr and w∈Expr , or vice versa: Then sis the sole type-erased expression in its
+equivalence class, and E/llbracketw/rrbracket=s(or vice versa). Our proof obligation is exactly the lockste p
+lemma (Lemma 3.8).
+s,w∈/hatwidestExpr :Since each equivalence class contains only one type-erased expression, s=w.
+They must therefore have the same reduction behavior.
+s,w∈Expr :Ifs/ne}a⊔ionslash/maps⊔o→, then the lockstep lemma implies E/llbrackets/rrbracket=E/llbracketw/rrbracket/ne}a⊔ionslash/maps⊔o→. Then by reverse
+lockstep, w/ne}a⊔ionslash/maps⊔o→as well. On the other hand, if s/maps⊔o→s′, then E/llbrackets/rrbracket=E/llbracketw/rrbracket/maps⊔o→E/llbrackets′/rrbracket. Lockstep
+implies E/llbracketw/rrbracket/maps⊔o→E/llbracketw′/rrbracket. Since Erased Remora has deterministic operational semant ics,
+E/llbrackets′/rrbracket=E/llbracketw′/rrbracket(they are both the result of taking an evaluation step from th e same ex-
+pression). Therefore, all of their preimages, including s′andw′are erasure-equivalent, i.e.,
+s′∼=Ew′.

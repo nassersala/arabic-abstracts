@@ -1,0 +1,216 @@
+arXiv:1202.0426v1  [math.CT]  2 Feb 2012Abelian categories and deﬁnable additive
+categories
+Mike Prest,
+Alan Turing Building
+School of Mathematics
+University of Manchester
+Manchester M13 9PL
+UK
+mprest@manchester.ac.uk
+June 3, 2021
+Contents
+1 Introduction 1
+2 The category of small abelian categories and exact functor s 4
+2.1 Categorical properties of ABEX. . . . . . . . . . . . . . . . . . . 5
+2.2 Pullbacks in ABEX. . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.3ABEXis ﬁnitely accessible . . . . . . . . . . . . . . . . . . . . . . 12
+2.4 Abelian categories as schemes . . . . . . . . . . . . . . . . . . . . 16
+2.4.1 The functor of points view . . . . . . . . . . . . . . . . . . 17
+2.4.2 Rings to Abelian Categories . . . . . . . . . . . . . . . . . 17
+3 The 2-category of deﬁnable additive categories 19
+3.1 An intrinsic deﬁnition of deﬁnable category? . . . . . . . . . . . . 22
+3.2 Extending from Pinj( D) toD. . . . . . . . . . . . . . . . . . . . 23
+3.3 Ex(A,D) is deﬁnable when Dis Grothendieck . . . . . . . . . . . 30
+4 Locally coherent additive categories 32
+4.1 The additive version of the classifying topos . . . . . . . . . . . . 36
+4.2 Points of locally coherent categories . . . . . . . . . . . . . . . . 38
+1 Introduction
+This paper is about three 2-categories which sit an an intersection o f algebra,
+model theory and geometry (the last in the broad sense).
+Oneofthesecategories, ABEX, hasforits objectstheskeletallysmallabelian
+categories and for its morphisms the exact functors; another, DEF, is the cat-
+egory of deﬁnable additive categories and interpretation functor s; the third is
+the category, COH, of locally coherent Grothendieck categories and coherent
+1
+morphisms. In each case the 2-arrowsare just the natural tran sformations. The
+(anti-)equivalences between these were described in [45], which build s on [43]
+and [30], and are recalled below (see also [34] and [25] for analogous re sults).
+Here these categories and their connections are explored furthe r.
+I have tried to include enough explanation of background to make th e paper
+accessible to a variety of readers; for more details one should cons ult the various
+referencescited. I will use [42] as a convenientreference since it g atherstogether
+much of what I will need but [23], [29], [43] also contain much of that.
+Throughoutthispaper,categoriesare,bydefault, preadditive, functormeans
+additive functor, ( A,B) will denote the category of additive functors from the
+(usually skeletally small) preadditive category Ato the (usually at least addi-
+tive) categoryB,Abwill denote the category of abelian groups, Mod- Awill
+be an alternative notation for ( Aop,Ab) (whereopdenotes the opposite of a
+category) - it is the category of right A-modules - andA-Mod = (A,Ab) will
+denote the categoryofleft A-modules. The full subcategoryofﬁnitely presented
+modules is denoted by mod- A. We write PREADD for the 2-category of pread-
+ditive categories (additive functors and natural transformation s). We scarcely
+distinguish between a skeletally small category and a small version of it (i.e. a
+category to which it is equivalent but which has just a set of objects ).
+Now we show how the three 2-categories are related, then give a qu ick sum-
+mary of what is in each section.
+Theorem 1.1. [45, 2.3 and comments following] There is a diagram of equiv-
+alences and anti-equivalences between ABEX,COHandDEFas follows.
+ABEX≃op
+≃op■■■■■■■■■DEF
+COH≃✇✇✇✇✇✇✇✇✇
+Explicitly:
+A= fun(D) =Gfp/d46/d46
+/d39/d39D= Abs(G) = Ex(A,Ab) /d110/d110
+/d115/d115
+G= Flat-A= Fun(D)/d103/d103 /d51/d51
+We will need the details of these (anti-)equivalences, so here they a re.
+FromABEXtoDEF: to a skeletally small abelian category Awe associate
+the deﬁnable category Ex( A,Ab) - the full subcategory of A-Mod on those
+functors which are exact; to an exact functor F:A→B, we associate the
+functorF∗: Ex(B,Ab)→Ex(A,Ab) which is just precomposition with F.
+FromDEFtoABEX: to a deﬁnable category Dwe associate the category,
+fun(D) = (D,Ab)→/producttext
+, of functors from Dwhich commute with direct limits
+and direct products (we write fun- Rin the case that D= Mod-R); to an
+interpretation functor, that is, a functor I:C→Dwhich commutes with direct
+products and direct limits, we associate the functor I0: fun(D)→fun(C) which
+is precomposition with I.
+2
+Between ABEXandCOH(on objects): to a locally coherent Grothendieck
+categoryGwe assign its full subcategory, Gfp, of ﬁnitely presented objects;
+in the other direction, to a skeletally small abelian category Awe assign the
+category Lex(Aop,Ab) of left exact functors on Aop, thus right exact functors
+onA, so this includes the representable functors ( −,A) forA∈A. This is
+a locally coherent Grothendieck category and the image of Aunder the just-
+mentioned Yoneda embedding A/mapsto→(−,A) is equivalent to the full subcategory
+of ﬁnitely presented objects (see 4.1, also for the identiﬁcations L ex(Aop,Ab)≃
+Flat-A≃Ind(A)).
+Between ABEXandCOH(on morphisms): from a morphism f∈Ex(A,B)
+we deﬁne the coherent morphism (see Section 4) ( f∗,f∗) :H= Ind(B)→
+Ind(A) =Gwhich has f∗:H= Lex(Bop,Ab)→Lex(Aop,Ab) =Gjust
+precomposition with fopand hasf∗= Ind(f). In the other direction we take
+a coherent morphism ( f∗,f∗) to the restriction of the left adjoint, f∗, to the
+ﬁnitely presented objects of G.
+The as-yet-unexplained notation Abs( G) refers to the full subcategory of
+absolutely pure (orfp-injective ) objects ofG- those objects Gsuch that
+Ext1(Gfp,G) = 0.
+The next result, which is not diﬃcult to show (or see [44]), is one instan ce of
+this picture. ByA(R) we denote the smallest abelian (not necessarily full) sub-
+category of Mod-Rwhich contains mod- R(see [45,§6], also Section 2.4 below).
+By/a\}bracketle{tX/a\}bracketri}htwe denote the smallest deﬁnable subcategory of Mod- RcontainingX.
+Proposition 1.2. IfRis any skeletally small preadditive category then
+Ex(A(R)op,Ab)≃/a\}bracketle{tAbs-R/a\}bracketri}ht.
+IfRis right coherent, so Abs-Ris a deﬁnable subcategory of Mod-R, then
+Ex((mod -R)op,Ab)≃Abs-R.
+Note the duality which applies to the whole picture described above. I t is
+obvious for ABEX, on which it is the 2-category equivalence which takes each
+abelian category to its opposite. It follows that there is a correspo nding self-
+equivalence on each of the other two categories (which will be descr ibed in the
+relevant section). In the context of the model theory of deﬁnab le subcategories
+of module categories this duality was found ﬁrst for pp formulas, an d termed
+elementary duality ([39]) then extended to the category of pp-pair s and the
+Ziegler spectrum in [22]. In an algebraic form it is in [5] and [21].
+For instance, the dual to the result above is the following.
+Proposition 1.3. IfRis any skeletally small preadditive category then
+Ex(A(R),Ab)≃/a\}bracketle{tR-Flat/a\}bracketri}ht.
+IfRis right coherent, so A(R) = mod-RandR-Flatis a deﬁnable subcategory
+ofR-Mod, then
+Ex(mod-R,Ab)≃R-Flat.
+In Section 2 we identify the ﬁnitely presented objects of ABEXas the ﬁnite
+type localisations of free abelian categories of ﬁnitely presented rin gs and we
+3
+show that every small abelian category is a direct limit - “directed colim it” in
+the more category-theoretic terminology - of such categories. S inceABEXalso
+has directed colimits in a suitable 2-category sense we could therefo re say that
+ABEXis ﬁnitely accessible (in some 2-category sense). We show that ABEX
+has pullbacks and also characterise the monomorphisms (and say a lit tle about
+the epimorphisms) of this category.
+The main result of Section 3 is that the structure of DEF- arrows and 2-
+arrows as well as the objects - is essentially determined by the full s ubcategories
+of pure-injective objects. We also show that if Ais skeletally small abelian then
+Ex(A,D) is deﬁnable for any deﬁnable Grothendieck (so, 3.6, locally ﬁnitely
+presented) category D(not just whenD=Ab).
+Section 4 is devoted to developing an additive version of things (cohe r-
+ent morphisms, classifying toposes, points) that are familiar in the c ontext of
+toposes. The parallel is well-known but we develop it further here as part of the
+larger additive picture.
+2 The category of small abelian categories and
+exact functors
+The category ABEX, of skeletally small abelian categories and exact functors,
+belongs to algebra but it has a model-theoretic meaning (its objects are the
+categoriesof pp-sorts and pp-deﬁnable functions for the corre spondingdeﬁnable
+categories, see [43, Chpt. 22] or [42, Part III], also [44]). It can als o be seen as
+generalising the category of rings through the free abelian catego ryconstruction
+but also through a possibly more geometric construction (see Sect ion 2.4.2).
+Recall that an exactfunctorF:A→B between abelian categories is a
+functor such that if 0 →A′→A→A′′→0 is an exact sequence in Athen
+0→FA′→FA→FA′′→0 is an exact sequence in B. By the kernelof such a
+functor we mean the full subcategory ker( F) on the objects{A∈A:FA= 0}
+which are sent to 0 by F. This is a Serre subcategory ofA, meaning a
+full subcategorySofAwhich is closed under subobjects, quotient objects and
+extensions: otherwise said, if 0 →A′→A→A′′→0 is exact then A∈S
+iﬀA′,A′′∈S. Conversely every Serre subcategory Sis the kernel of an exact
+functor fromA. Alocalisation ofAis an exact functor F:A→Bwhich
+is such that the image of Fis full and includes an isomorphic copy of every
+object inB; that is, up to equivalence Bis the image of F. We deﬁne the
+quotient category ofAat the Serre subcategory Sto have the same objects
+asAbut deﬁne the morphisms from AtoBinA/Sto be equivalence classes of
+morphisms from subobjects A′ofA, withA/A′∈S, to factor objects B/B′of
+B, withB′∈S, under a natural (eventual agreement) equivalence relation. Se e,
+for instance, [49, §IX.1], for details but the idea is simply that one forces the
+objects inSto become zero. If F:A→Bis a localisation then Bis equivalent
+toA/ker(F) andFhas a right adjoint which is a full, though not in general
+exact, embedding iofBinA. Thus the image of iis a reﬂective subcategory
+ofA. We write/a\}bracketle{tX/a\}bracketri}htfor the Serre subcategory generated by a collection Xof
+objects ofA. We also write Ser( A) for the set of Serre subcategories of A.
+We will need the following theorem, the ﬁrst paragraph of which is [16, 4.1]
+(for fuller references see [42, §10.2.7] or [43,§4]).
+4
+Theorem 2.1. LetRbe a skeletally small preadditive category. Then there is
+an additive functor ifromRto a skeletally small abelian category Ab(R)such
+that ifα:R→Bis any additive functor to an abelian category Bthen there
+is a factorisation through ivia a unique-to-natural-equivalence exact functor
+Ab(R)→B.
+Ri/d47/d47
+α
+/d34/d34❋❋❋❋❋❋❋❋❋❋Ab(R)
+α′
+/d15/d15
+B
+The category Ab(R)may be identiﬁed with (R-mod,Ab)fp≃/parenleftbig
+(mod-R,Ab)fp/parenrightbigop
+and the embedding itakes an object PofRto((P,−),−)and has the then ob-
+vious action on morphisms.
+Corollary 2.2. IfRis a skeletally small preadditive category then Ab(Rop)≃
+Ab(R)op.
+The category Ab( R), more precisely the functor R→Ab(R), given by 2.1
+is thefree abelian category onR. In the case that we start with a ring R,
+that is a preadditive category with one object ∗Rwhich has endomorphism ring
+R, the image of that object in Ab( R) is the representable functor (( ∗R,−),−)
+on the representable functor ( ∗R,−)∈R-mod (this latter being the projective
+left module RR).
+Note that, taking B=Aband allowing αto roam over all (covariant) func-
+tors, i.e. leftR-modules, weobtainthat R-Modisequivalent toEx(Ab( R),Ab).
+ReplacingRbyRopto get the contravariant form, and noting 2.2, we have
+Mod-R≃Ex(Ab(R)op,Ab).
+If a ringRis von Neumann regular then Ab( R)≃mod-R, indeed these
+are exactly the rings for which this is true (see, e.g., [42, 10.2.38] (wh ere the
+statement is missing anop)).
+2.1 Categorical properties of ABEX
+IfA,B∈ABEXthen Ex(A,B) is a skeletally small category with objects the
+exact functors from AtoBand with morphisms the natural transformations
+between these. It isa preadditivecategory: for F,G∈Ex(A,B) the set (F,G) =
+Nat(F,G) of natural transformations from FtoGis an abelian group with
+0∈Nat(F,G) being given by 0 A= 0 :FA→GAfor each object A∈Aand,
+ifτ,µ∈Nat(F,G) thenτ−µis deﬁned at A∈Aby (τ−µ)A=τA−µA:
+FA→GA. Indeed, Ex(A,B) is additive: for a zero object, choose a zero object
+0B∈Band deﬁne the functor 0 : A→BbyA/mapsto→0Bfor allA∈A. And if
+F,G∈Ex(A,B) then we may, since Bhas ﬁnite direct sums, deﬁne F⊕Gby
+takingA∈AtoFA⊕GAandf:A→A′to(Ff,Gf) :FA⊕GA→FA′⊕GA′.
+ThusABEXmay be seen as a category enriched in additive categories.
+Example 2.3.(A,B) need not be abelian.
+LetRbe right coherent, so mod- R∈ABEXand Ex(mod- R,Ab)≃R-Flat,
+the category of ﬂat left R-modules (see 1.3). In particular Ex(mod- Z,Ab)≃
+Z-Flat (∗) and, we claim, Ex(mod- Z,mod-Z)≃Z-Flat∩Z-mod =Z-proj, the
+category of ﬁnitely generated projective Z-modules, which is not abelian. To
+5

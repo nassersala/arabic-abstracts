@@ -1,0 +1,107 @@
+5 Conclusion
+While APL and its descendant languages have attracted a devo ted userbase, there has been
+little cross talk between the array-language community and the broader programming
+language research community. Much of the analysis opportun ity taken for granted by
+lambda calculists has been unavailable in APL—despite the m any implementations, such
+languages lacked formal semantics amenable to proofs. Mean while, implementations of
+rank-polymorphic languages have struggled with compilati on due to control structure that
+is “too dynamic,” depending on run-time data to determine th e structure of a loop nest.
+Developing Remora’s semantics kills two birds with one ston e: Formally stated reduc-
+tion rules describe the results expected from the implicit, data-driven control structure, and
+typing rules give enough information about array shapes to i dentify that control structure
+statically. This necessarily entails recognizing program s which cannot have such a control
+structure due to incompatible array shapes—this is not what we set out to do but a beneﬁt
+realized by pursuing a larger goal. By casting the aggregate lifting as an extension to λ-
+calculus’s function application semantics, we escape from APL’s limitation on function
+arity and can treat functions as ﬁrst-class values.
+There are two things to look for in evaluating a type system. W e want to know the
+conclusions drawn by type checking reﬂect reality, which is handled by a conventional
+type soundness theorem. We also want to be sure that the types convey the information we
+seek. In Remora’s case, that information is the iteration st ructure implicit in each function
+application. The typing rule for function application (and similarly, the rules for type and
+index application) produces a static characterization of t hat implicit iteration structure.
+Our type erasure can be seen as a compilation pass which moves the decision about how
+to break arguments into cells from the function’s type into t he application term. While our
+primary purpose in presenting type erasure is to point out ty pe-level information which
+is not truly needed at run time, it also serves to make the cont rol structure one step more
+explicit. Arguments’ full shapes—available both at erasur e time and later by inspecting
+argument terms—sufﬁce to determine the arguments’ frames, the last puzzle piece needed
+to turn Remora’s implicit iteration structure into explici t calls to map andreplicate
+functions. Our intention for future work is to demonstrate u se of that shape information
+for fully static compilation of Remora code.
+References
+Abrams, Philip S. (1975). What’s wrong with APL? Pages 1–8 of: Proceedings of Seventh
+International Conference on APL . APL ’75. New York, NY , USA: ACM.
+Abrams, Philip Samuel. (1970). An apl machine . Ph.D. thesis, Stanford, CA, USA. AAI7022146.
+Backus, John. (1978). Can programming be liberated from the V on Neumann style?: A functional
+style and its algebra of programs. Commun. ACM ,21(8), 613–641.
+Bernecky, Robert. (1999). APEX, the APL parallel executor . M.Phil. thesis, National Library of
+Canada= Bibliothèque nationale du Canada.
+Blelloch, Guy. (1995). NESL: A nested data-parallel language (version 3.1) . Tech. rept.
+Budd, Timothy. (1988). An APL compiler . Springer-Verlag.
+Burstall, R. M., & Darlington, John. (1977). A transformati on system for developing recursive
+programs. J. acm ,24(1), 44–67.
+--- Page 36 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+36 Justin Slepak, Olin Shivers and Panagiotis Manolios
+Chamberlain, B., Choi, S., Lewis, E., Lin, C., Snyder, L., & W eathersby, W. (1998). ZPL’s
+WYSIWYG performance model. Pages 50– of: Proceedings of the High-Level Parallel
+Programming Models and Supportive Environments . HIPS ’98. Washington, DC, USA: IEEE
+Computer Society.
+Chen, Hanfeng, D&#39;silva, Joseph Vinish, Chen, Hongji, K emme, Bettina, & Hendren, Laurie.
+(2018). Horseir: Bringing array programming languages tog ether with database query processing.
+Pages 37–49 of: Proceedings of the 14th ACM SIGPLAN Internat ional Symposium on Dynamic
+Languages . DLS 2018. New York, NY , USA: ACM.
+Chiw, Charisee, Kindlmann, Gordon, Reppy, John, Samuels, L amont, & Seltzer, Nick. (2012).
+Diderot: A parallel DSL for image analysis and visualizatio n.Pages 111–120 of: Proceedings
+of the 33rd ACM SIGPLAN Conference on Programming Language D esign and Implementation .
+PLDI ’12. New York, NY , USA: ACM.
+Durnev, Valery G. (1995). Undecidability of the positive ∀∃3-theory of a free semigroup. Siberian
+mathematical journal ,36(5), 917–929.
+Elsman, Martin, & Dybdal, Martin. (2014). Compiling a subse t of APL into a typed intermediate
+language. Pages 101:101–101:106 of: Proceedings of ACM SIGPLAN Inter national Workshop on
+Libraries, Languages, and Compilers for Array Programming . ARRAY’14. New York, NY , USA:
+ACM.
+Gibbons, Jeremy. (2016). APLicative programming with nape rian functors (extended abstract).
+Pages 13–14 of: Proceedings of the 1st International Worksh op on Type-Driven Development .
+TyDe 2016. New York, NY , USA: ACM.
+Grelck, Clemens, & Scholz, Sven-Bodo. (1998). Acceleratin g APL programs with SAC. vol. 29.
+New York, NY , USA: ACM.
+Henriksen, Troels, & Oancea, Cosmin Eugen. (2013). A t2 grap h-reduction approach to fusion. Pages
+47–58 of: Proceedings of the 2Nd ACM SIGPLAN Workshop on Func tional High-performance
+Computing . FHPC ’13. New York, NY , USA: ACM.
+Hui, Roger K. W. (1995). Rank and uniformity. SIGAPL APL quote quad ,25(4), 83–90.
+Iverson, Kenneth E. (1962). A programming language . New York, NY , USA: John Wiley & Sons,
+Inc.
+Iverson, Kenneth E. (1980). Notation as a tool of thought. Commun. ACM ,23(8), 444–465.
+Jay, C. B. (1998). The FISh language deﬁnition . Tech. rept.
+Johnston, Ronald L. (1979). The dynamic incremental compil er of APL\3000. Pages 82–87 of:
+Proceedings of the International Conference on APL: Part 1 . APL ’79. New York, NY , USA:
+ACM.
+Jsoftware, Inc. Jsoftware: High-performance development platform .
+Lin, Calvin, & Snyder, Lawrence. (1994). ZPL: An array subla nguage. Pages 96–114 of: Proceedings
+of the 6th International Workshop on Languages and Compiler s for Parallel Computing . London,
+UK, UK: Springer-Verlag.
+Mathworks, Inc. (1992). Matlab, user’s guide . Natick, MA.
+Oliphant, Travis E. 2006 (12). Guide to numpy . Trelgol Publishing USA.
+Ragan-Kelley, Jonathan, Adams, Andrew, Paris, Sylvain, Le voy, Marc, Amarasinghe, Saman, &
+Durand, Frédo. (2012). Decoupling algorithms from schedul es for easy optimization of image
+processing pipelines. Acm trans. graph. ,31(4), 32:1–32:12.
+Scholz, Sven-Bodo. (2003). Single assignment C: efﬁcient s upport for high-level array operations in
+a functional setting. J. funct. program. ,13(6), 1005–1059.
+Thatte, Satish. (1991). A type system for implicit scaling. Sci. comput. program. ,17(1-3), 217–245.
+Trojahner, Kai, & Grelck, Clemens. (2009). Dependently typ ed array programs don’t go wrong.
+Journal of logic and algebraic programming ,78(7), 643–664.
+--- Page 37 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+The Semantic Foundations of Rank Polymorphism 37
+Wadler, Philip. (1984). Listlessness is better than lazine ss: Lazy evaluation and garbage collection at
+compile-time. Pages 45–52 of: Proceedings of the 1984 ACM Symposium on LISP and Functional
+Programming . LFP ’84. New York, NY , USA: ACM.
+Weiss, Zvi, & Saal, Harry J. (1981). Compile time syntax anal ysis of APL programs. Pages 313–320
+of: Proceedings of the International Conference on APL . APL ’81. New York, NY , USA: ACM.
+Xi, Hongwei. (1998). Dependent types in practical programming . Ph.D. thesis, Pittsburgh, PA, USA.
+AAI9918624.
+Xi, Hongwei, & Pfenning, Frank. (1998). Eliminating array b ound checking through dependent
+types. Pages 249–257 of: Proceedings of the ACM SIGPLAN 1998 Confer ence on Programming
+Language Design and Implementation . PLDI ’98. New York, NY , USA: ACM.

@@ -1,0 +1,2246 @@
+
+
+--- Page 1 ---
+
+arXiv:1202.0426v1  [math.CT]  2 Feb 2012Abelian categories and deﬁnable additive
+categories
+Mike Prest,
+Alan Turing Building
+School of Mathematics
+University of Manchester
+Manchester M13 9PL
+UK
+mprest@manchester.ac.uk
+June 3, 2021
+Contents
+1 Introduction 1
+2 The category of small abelian categories and exact functor s 4
+2.1 Categorical properties of ABEX. . . . . . . . . . . . . . . . . . . 5
+2.2 Pullbacks in ABEX. . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.3ABEXis ﬁnitely accessible . . . . . . . . . . . . . . . . . . . . . . 12
+2.4 Abelian categories as schemes . . . . . . . . . . . . . . . . . . . . 16
+2.4.1 The functor of points view . . . . . . . . . . . . . . . . . . 17
+2.4.2 Rings to Abelian Categories . . . . . . . . . . . . . . . . . 17
+3 The 2-category of deﬁnable additive categories 19
+3.1 An intrinsic deﬁnition of deﬁnable category? . . . . . . . . . . . . 22
+3.2 Extending from Pinj( D) toD. . . . . . . . . . . . . . . . . . . . 23
+3.3 Ex(A,D) is deﬁnable when Dis Grothendieck . . . . . . . . . . . 30
+4 Locally coherent additive categories 32
+4.1 The additive version of the classifying topos . . . . . . . . . . . . 36
+4.2 Points of locally coherent categories . . . . . . . . . . . . . . . . 38
+1 Introduction
+This paper is about three 2-categories which sit an an intersection o f algebra,
+model theory and geometry (the last in the broad sense).
+Oneofthesecategories, ABEX, hasforits objectstheskeletallysmallabelian
+categories and for its morphisms the exact functors; another, DEF, is the cat-
+egory of deﬁnable additive categories and interpretation functor s; the third is
+the category, COH, of locally coherent Grothendieck categories and coherent
+1
+
+--- Page 2 ---
+
+morphisms. In each case the 2-arrowsare just the natural tran sformations. The
+(anti-)equivalences between these were described in [45], which build s on [43]
+and [30], and are recalled below (see also [34] and [25] for analogous re sults).
+Here these categories and their connections are explored furthe r.
+I have tried to include enough explanation of background to make th e paper
+accessible to a variety of readers; for more details one should cons ult the various
+referencescited. I will use [42] as a convenientreference since it g atherstogether
+much of what I will need but [23], [29], [43] also contain much of that.
+Throughoutthispaper,categoriesare,bydefault, preadditive, functormeans
+additive functor, ( A,B) will denote the category of additive functors from the
+(usually skeletally small) preadditive category Ato the (usually at least addi-
+tive) categoryB,Abwill denote the category of abelian groups, Mod- Awill
+be an alternative notation for ( Aop,Ab) (whereopdenotes the opposite of a
+category) - it is the category of right A-modules - andA-Mod = (A,Ab) will
+denote the categoryofleft A-modules. The full subcategoryofﬁnitely presented
+modules is denoted by mod- A. We write PREADD for the 2-category of pread-
+ditive categories (additive functors and natural transformation s). We scarcely
+distinguish between a skeletally small category and a small version of it (i.e. a
+category to which it is equivalent but which has just a set of objects ).
+Now we show how the three 2-categories are related, then give a qu ick sum-
+mary of what is in each section.
+Theorem 1.1. [45, 2.3 and comments following] There is a diagram of equiv-
+alences and anti-equivalences between ABEX,COHandDEFas follows.
+ABEX≃op
+≃op■■■■■■■■■DEF
+COH≃✇✇✇✇✇✇✇✇✇
+Explicitly:
+A= fun(D) =Gfp/d46/d46
+/d39/d39D= Abs(G) = Ex(A,Ab) /d110/d110
+/d115/d115
+G= Flat-A= Fun(D)/d103/d103 /d51/d51
+We will need the details of these (anti-)equivalences, so here they a re.
+FromABEXtoDEF: to a skeletally small abelian category Awe associate
+the deﬁnable category Ex( A,Ab) - the full subcategory of A-Mod on those
+functors which are exact; to an exact functor F:A→B, we associate the
+functorF∗: Ex(B,Ab)→Ex(A,Ab) which is just precomposition with F.
+FromDEFtoABEX: to a deﬁnable category Dwe associate the category,
+fun(D) = (D,Ab)→/producttext
+, of functors from Dwhich commute with direct limits
+and direct products (we write fun- Rin the case that D= Mod-R); to an
+interpretation functor, that is, a functor I:C→Dwhich commutes with direct
+products and direct limits, we associate the functor I0: fun(D)→fun(C) which
+is precomposition with I.
+2
+
+--- Page 3 ---
+
+Between ABEXandCOH(on objects): to a locally coherent Grothendieck
+categoryGwe assign its full subcategory, Gfp, of ﬁnitely presented objects;
+in the other direction, to a skeletally small abelian category Awe assign the
+category Lex(Aop,Ab) of left exact functors on Aop, thus right exact functors
+onA, so this includes the representable functors ( −,A) forA∈A. This is
+a locally coherent Grothendieck category and the image of Aunder the just-
+mentioned Yoneda embedding A/mapsto→(−,A) is equivalent to the full subcategory
+of ﬁnitely presented objects (see 4.1, also for the identiﬁcations L ex(Aop,Ab)≃
+Flat-A≃Ind(A)).
+Between ABEXandCOH(on morphisms): from a morphism f∈Ex(A,B)
+we deﬁne the coherent morphism (see Section 4) ( f∗,f∗) :H= Ind(B)→
+Ind(A) =Gwhich has f∗:H= Lex(Bop,Ab)→Lex(Aop,Ab) =Gjust
+precomposition with fopand hasf∗= Ind(f). In the other direction we take
+a coherent morphism ( f∗,f∗) to the restriction of the left adjoint, f∗, to the
+ﬁnitely presented objects of G.
+The as-yet-unexplained notation Abs( G) refers to the full subcategory of
+absolutely pure (orfp-injective ) objects ofG- those objects Gsuch that
+Ext1(Gfp,G) = 0.
+The next result, which is not diﬃcult to show (or see [44]), is one instan ce of
+this picture. ByA(R) we denote the smallest abelian (not necessarily full) sub-
+category of Mod-Rwhich contains mod- R(see [45,§6], also Section 2.4 below).
+By/a\}bracketle{tX/a\}bracketri}htwe denote the smallest deﬁnable subcategory of Mod- RcontainingX.
+Proposition 1.2. IfRis any skeletally small preadditive category then
+Ex(A(R)op,Ab)≃/a\}bracketle{tAbs-R/a\}bracketri}ht.
+IfRis right coherent, so Abs-Ris a deﬁnable subcategory of Mod-R, then
+Ex((mod -R)op,Ab)≃Abs-R.
+Note the duality which applies to the whole picture described above. I t is
+obvious for ABEX, on which it is the 2-category equivalence which takes each
+abelian category to its opposite. It follows that there is a correspo nding self-
+equivalence on each of the other two categories (which will be descr ibed in the
+relevant section). In the context of the model theory of deﬁnab le subcategories
+of module categories this duality was found ﬁrst for pp formulas, an d termed
+elementary duality ([39]) then extended to the category of pp-pair s and the
+Ziegler spectrum in [22]. In an algebraic form it is in [5] and [21].
+For instance, the dual to the result above is the following.
+Proposition 1.3. IfRis any skeletally small preadditive category then
+Ex(A(R),Ab)≃/a\}bracketle{tR-Flat/a\}bracketri}ht.
+IfRis right coherent, so A(R) = mod-RandR-Flatis a deﬁnable subcategory
+ofR-Mod, then
+Ex(mod-R,Ab)≃R-Flat.
+In Section 2 we identify the ﬁnitely presented objects of ABEXas the ﬁnite
+type localisations of free abelian categories of ﬁnitely presented rin gs and we
+3
+
+--- Page 4 ---
+
+show that every small abelian category is a direct limit - “directed colim it” in
+the more category-theoretic terminology - of such categories. S inceABEXalso
+has directed colimits in a suitable 2-category sense we could therefo re say that
+ABEXis ﬁnitely accessible (in some 2-category sense). We show that ABEX
+has pullbacks and also characterise the monomorphisms (and say a lit tle about
+the epimorphisms) of this category.
+The main result of Section 3 is that the structure of DEF- arrows and 2-
+arrows as well as the objects - is essentially determined by the full s ubcategories
+of pure-injective objects. We also show that if Ais skeletally small abelian then
+Ex(A,D) is deﬁnable for any deﬁnable Grothendieck (so, 3.6, locally ﬁnitely
+presented) category D(not just whenD=Ab).
+Section 4 is devoted to developing an additive version of things (cohe r-
+ent morphisms, classifying toposes, points) that are familiar in the c ontext of
+toposes. The parallel is well-known but we develop it further here as part of the
+larger additive picture.
+2 The category of small abelian categories and
+exact functors
+The category ABEX, of skeletally small abelian categories and exact functors,
+belongs to algebra but it has a model-theoretic meaning (its objects are the
+categoriesof pp-sorts and pp-deﬁnable functions for the corre spondingdeﬁnable
+categories, see [43, Chpt. 22] or [42, Part III], also [44]). It can als o be seen as
+generalising the category of rings through the free abelian catego ryconstruction
+but also through a possibly more geometric construction (see Sect ion 2.4.2).
+Recall that an exactfunctorF:A→B between abelian categories is a
+functor such that if 0 →A′→A→A′′→0 is an exact sequence in Athen
+0→FA′→FA→FA′′→0 is an exact sequence in B. By the kernelof such a
+functor we mean the full subcategory ker( F) on the objects{A∈A:FA= 0}
+which are sent to 0 by F. This is a Serre subcategory ofA, meaning a
+full subcategorySofAwhich is closed under subobjects, quotient objects and
+extensions: otherwise said, if 0 →A′→A→A′′→0 is exact then A∈S
+iﬀA′,A′′∈S. Conversely every Serre subcategory Sis the kernel of an exact
+functor fromA. Alocalisation ofAis an exact functor F:A→Bwhich
+is such that the image of Fis full and includes an isomorphic copy of every
+object inB; that is, up to equivalence Bis the image of F. We deﬁne the
+quotient category ofAat the Serre subcategory Sto have the same objects
+asAbut deﬁne the morphisms from AtoBinA/Sto be equivalence classes of
+morphisms from subobjects A′ofA, withA/A′∈S, to factor objects B/B′of
+B, withB′∈S, under a natural (eventual agreement) equivalence relation. Se e,
+for instance, [49, §IX.1], for details but the idea is simply that one forces the
+objects inSto become zero. If F:A→Bis a localisation then Bis equivalent
+toA/ker(F) andFhas a right adjoint which is a full, though not in general
+exact, embedding iofBinA. Thus the image of iis a reﬂective subcategory
+ofA. We write/a\}bracketle{tX/a\}bracketri}htfor the Serre subcategory generated by a collection Xof
+objects ofA. We also write Ser( A) for the set of Serre subcategories of A.
+We will need the following theorem, the ﬁrst paragraph of which is [16, 4.1]
+(for fuller references see [42, §10.2.7] or [43,§4]).
+4
+
+--- Page 5 ---
+
+Theorem 2.1. LetRbe a skeletally small preadditive category. Then there is
+an additive functor ifromRto a skeletally small abelian category Ab(R)such
+that ifα:R→Bis any additive functor to an abelian category Bthen there
+is a factorisation through ivia a unique-to-natural-equivalence exact functor
+Ab(R)→B.
+Ri/d47/d47
+α
+/d34/d34❋❋❋❋❋❋❋❋❋❋Ab(R)
+α′
+/d15/d15
+B
+The category Ab(R)may be identiﬁed with (R-mod,Ab)fp≃/parenleftbig
+(mod-R,Ab)fp/parenrightbigop
+and the embedding itakes an object PofRto((P,−),−)and has the then ob-
+vious action on morphisms.
+Corollary 2.2. IfRis a skeletally small preadditive category then Ab(Rop)≃
+Ab(R)op.
+The category Ab( R), more precisely the functor R→Ab(R), given by 2.1
+is thefree abelian category onR. In the case that we start with a ring R,
+that is a preadditive category with one object ∗Rwhich has endomorphism ring
+R, the image of that object in Ab( R) is the representable functor (( ∗R,−),−)
+on the representable functor ( ∗R,−)∈R-mod (this latter being the projective
+left module RR).
+Note that, taking B=Aband allowing αto roam over all (covariant) func-
+tors, i.e. leftR-modules, weobtainthat R-Modisequivalent toEx(Ab( R),Ab).
+ReplacingRbyRopto get the contravariant form, and noting 2.2, we have
+Mod-R≃Ex(Ab(R)op,Ab).
+If a ringRis von Neumann regular then Ab( R)≃mod-R, indeed these
+are exactly the rings for which this is true (see, e.g., [42, 10.2.38] (wh ere the
+statement is missing anop)).
+2.1 Categorical properties of ABEX
+IfA,B∈ABEXthen Ex(A,B) is a skeletally small category with objects the
+exact functors from AtoBand with morphisms the natural transformations
+between these. It isa preadditivecategory: for F,G∈Ex(A,B) the set (F,G) =
+Nat(F,G) of natural transformations from FtoGis an abelian group with
+0∈Nat(F,G) being given by 0 A= 0 :FA→GAfor each object A∈Aand,
+ifτ,µ∈Nat(F,G) thenτ−µis deﬁned at A∈Aby (τ−µ)A=τA−µA:
+FA→GA. Indeed, Ex(A,B) is additive: for a zero object, choose a zero object
+0B∈Band deﬁne the functor 0 : A→BbyA/mapsto→0Bfor allA∈A. And if
+F,G∈Ex(A,B) then we may, since Bhas ﬁnite direct sums, deﬁne F⊕Gby
+takingA∈AtoFA⊕GAandf:A→A′to(Ff,Gf) :FA⊕GA→FA′⊕GA′.
+ThusABEXmay be seen as a category enriched in additive categories.
+Example 2.3.(A,B) need not be abelian.
+LetRbe right coherent, so mod- R∈ABEXand Ex(mod- R,Ab)≃R-Flat,
+the category of ﬂat left R-modules (see 1.3). In particular Ex(mod- Z,Ab)≃
+Z-Flat (∗) and, we claim, Ex(mod- Z,mod-Z)≃Z-Flat∩Z-mod =Z-proj, the
+category of ﬁnitely generated projective Z-modules, which is not abelian. To
+5
+
+--- Page 6 ---
+
+see the claim we just use that in the equivalence ( ∗) a ﬂat module Mon the
+right-hand side of the equivalence acts on mod- Zas the (exact) functor −⊗M;
+it is clear that if such a functor outputs only ﬁnitely presented value s thenM
+is ﬁnitely presented, and conversely.
+Bearing in mind that ABEXis a 2-category, so equality is generally replaced
+by natural equivalence, we will say that an exact functor F:A→BinABEX
+is amonomorphism if for allG,H:A′→Aifτ:FG→FHis a natural
+isomorphism then there is a natural isomorphism η:G→Hsuch thatτ=Fη.
+Lemma 2.4. For everyA∈ABEXandA∈Athere is a morphism Ab(Z)→A
+inABEXsuch that the single object, ((∗Z,−),−), of the image of ZinAb(Z)
+(2.1) is taken to A(and hence the ring, Z, of endomorphisms of ∗Zis taken to
+its natural image in End(A)).
+Proof.Deﬁne thefunctor bytaking ∗=∗ZtoA(andextending1 Z= id∗/mapsto→idA
+to a ring homomorphism) and then we have an extension to an exact f unctor
+(unique to natural equivalence) Ab( Z)→Aby 2.1. /square
+Lemma 2.5. IfF:A→Bis a monomorphism in ABEXthenFis full on
+isomorphisms in the strong sense that if g:FA1→FA2is an isomorphism then
+there is an isomorphism f:A1→A2such thatFf=g. This second condition
+onFis equivalent to Fbeing faithful and every isomorphism g:FA1→FA2
+being the image of some morphism A1→A2.
+Proof.Suppose that A1,A2∈Aand thatg:FA1→FA2is an isomorphismin
+B. LetGi: Ab(Z)→Abe as in the lemma above, taking ∗=∗ZtoAi; then, by
+2.1, we deduce that there is a natural isomorphism τ:FG1→FG2essentially
+determined by τ∗=gso, by assumption, there is a natural isomorphism η:
+G1→G2, in particular an isomorphism η∗:A1→A2, such that Fη∗=g, as
+required.
+For the equivalent condition, recall that a functor Fisfaithful if whenever
+f,f′:A1→A2are in its domain and Ff=Ff′thenf=f′. In the case of
+an additive functor, one replaces the pair f,f′byf−f′,0 and the condition
+becomesFf= 0 implies f= 0. In the case that Fis an exact functor between
+abelian categories then, since F(co)ker(f) = (co)ker( Ff), one deduces that F
+is faithful iﬀ the object kernel is zero, that is iﬀ FA= 0 implies A= 0. So
+ifFreﬂects isomorphism , meaning that FA1≃FA2impliesA1≃A2then
+Fis faithful. For the converse, if g:FA1→FA2is an isomorphism then, by
+assumption, there is a morphism f:A1→A2withg=Ff. If either ker( f)
+or coker(f) were non-zero then, by exactness and faithfulness of F,Ffwould
+have a non-zero kernel or cokernel, contradiction. So fis an isomorphism. /square
+Proposition 2.6. The following are equivalent for a morphism F:A→Bin
+ABEX:
+(i)Fis monic in ABEX;
+(ii)Fis full on isomorphisms in the strong sense of 2.5
+(iii)Fis faithful and full on isomorphisms.
+Proof.(i)⇔(ii) One direction is the lemma above. For the other suppose that
+Fis full on isomorphisms in the strong sense and that we have G,H:A′→A
+6
+
+--- Page 7 ---
+
+and a natural equivalence τ:FG→FH. So for each A′∈A′we have an
+isomorphism τA′:FGA′→FHA′; by assumption there is an isomorphism
+which we will denote ηA′:GA′→HA′such thatFηA′=τA′. We have to show
+that theηA′ﬁt together to form a natural transformation from GtoH.
+Givenf:A′→A′′inAwe consider the diagram
+GA′ηA′/d47/d47
+Gf
+/d15/d15HA′
+Hf
+/d15/d15
+GA′′
+ηA′′/d47/d47HA′′
+and the diﬀerence Hf.ηA′−ηA′′.Gf; applyFto obtain the diagram
+FGA′FηA′=τA′/d47/d47
+GGf
+/d15/d15FHA′
+FHf
+/d15/d15
+FGA′′
+FηA′′=τA′′/d47/d47FHA′′
+which commutes, that is F(Hf.ηA′−ηA′′.Gf) = 0, so it will suﬃce to show that
+the kernel of Fin the sense of arrows is zero. But we have this from (the proof
+of) 2.5, which also gives us the equivalence of (ii) and (iii). /square
+So a monomorphism in ABEXis, in particular, an embedding of an abelian
+(i.e. exact) subcategory and any such embedding which is full (e.g. t he embed-
+ding of the category of ﬁnite abelian groups in the category of ﬁnite ly generated
+ones) is a monomorphism.
+Example 2.7.A monomorphism in ABEXneed not be a kernel.
+LetRbe a tame hereditary ﬁnite-dimensional algebra, set B= mod-Rand
+letAbe the full, abelian, subcategory of regular modules. Then A→Bis a
+morphism in ABEXand is a full embedding so certainly is a monomorphism
+inABEX. If it were the kernel of an exact functor then Awould be a Serre
+subcategory - not so since RRembeds in a regular module and so the Serre
+subcategory generated by Ais all ofB.
+Example 2.8.A monomorphism in ABEXneed not be full. Consider the non-
+full functor F: mod-k→mod-kA2, whereA2is the quiver•→•, which takes
+kkto thekA2-modulekA2. IfP,Qare in the image of F, that is, are ﬁnitely
+generated free kA2-modules, then it is easily computed that any isomorphism
+P→Qis in the image of F. So, by 2.6, Fis a monomorphism in ABEXbut
+clearlyFis not full.
+Example 2.9.Consider the functor mod- kA2→mod-kwhich takes a represen-
+tationV1αV−−→V2of the quiver A2toV1⊕V2and which has the obvious action
+on morphisms (i.e. takes ( f1,f2) tof1⊕f2). This functor is clearly exact and
+faithful but is not full on isomorphisms hence is not a monomorphism in ABEX.
+Say thatF:A→BinABEXis anepimorphism if whenever G,H:B→C
+aresuchthat thereisanaturalequivalence τ:GF→HFthen thereisanatural
+equivalence µ:G→Hsuch thatµF=τ.
+Example 2.10.A morphism F:A→BinABEXwith/a\}bracketle{tFA/a\}bracketri}ht=Bneed not be
+an epimorphism.
+LetF: mod-(k×k)→mod-kA2be the functor which takes ( V1,V2) to the
+representation V10− →V2ofA2and consider the functors Id ,G: mod-k[A2]→
+7
+
+--- Page 8 ---
+
+mod-kA2whereGtakes a representation W1α− →W2toW10− →W2. BothFand
+Ghave the obvious deﬁnitions on morphisms. It is easily checked that t hese
+functors are exact and clearly GF= Id.Fbut there is no natural equivalence
+Id→G, soFis not an epimorphism.
+On the other hand, each of the two simple representations k→0 and 0→k
+ofA2is in the image of Fso, since every object of mod- kA2has ﬁnite length,
+the Serre subcategory of mod- k[A2] generated by the image of Fis all of the
+category.
+We do not have a characterisation of epimorphisms in ABEX, but note the
+following.
+Proposition 2.11. (1) IfA ∈ABEXandS ∈Ser(A)then the canonical
+localisation functor π:A→A/Sis an epimorphism in ABEX.
+(2) IfF:A→Bis an epimorphism in ABEXthen the Serre subcategory, /a\}bracketle{tFA/a\}bracketri}ht,
+generated by FAisB.
+Proof. (1) IfG,H:A/S →Bare such that there is a natural equivalence
+τ:Gπ→Hπthen forA∈Awe have an isomorphism τA:GπA→HπA. Since
+we may regardA/Sas having objects those of A(but diﬀerent morphisms)
+we can deﬁne η:G→Hto have component ηπA=τAatπA. It must be
+checked that this is well-deﬁned and that these components coher e to form a
+natural transformation. Both come down to showing that if f:πA→πA′
+thenHf.τA=τA′.Gf. Butf≃πgfor someg:A1→A′
+1where there is a
+monomorphism A1→Awith cokernel inSand an epimorphism A′→A′
+1with
+kernel inS, in the sense that fis the composition shown (using the indicated
+inverses of those morphisms, both of which become invertible in A/S).
+A1/d47/d47
+g
+/d15/d15A
+A′
+1A′ /d111/d111πA1
+≃/d52/d52
+πg
+/d15/d15πA/d115/d115
+f
+/d15/d15
+πA′
+1
+≃/d51/d51πA′/d115/d115
+We then apply GandHto obtain the diagram shown next
+GπAGf/d47/d47
+τA
+/d15/d15GπA′
+τA′
+/d15/d15/d58/d58
+/d122/d122✉✉✉✉✉✉✉✉✉
+GπA1Gπg/d47/d47/d36/d36/d100/d100❍❍❍❍❍❍❍❍❍❍
+τA1
+/d15/d15GπA′
+1
+τA′
+1
+/d15/d15
+HπA1Hπg/d47/d47/d58/d58
+/d122/d122✈✈✈✈✈✈✈✈✈HπA′
+1
+HπAHf/d47/d47HπA′/d36/d36/d100/d100■■■■■■■■■
+The smaller quadrilaterals commute and so, therefore, does the ou ter one,
+as required.
+(2) ConsiderAF/d47/d47Bπ/d46/d46
+0/d48/d48B//a\}bracketle{tFA/a\}bracketri}ht. SinceπF= 0 = 0.Fwe must have
+π≃0 hence/a\}bracketle{tFA/a\}bracketri}ht=B./square
+8
+
+--- Page 9 ---
+
+2.2 Pullbacks in ABEX
+We showthat ABEXhas pullbacks, hence a notion of“basechange”(see Section
+2.4.2).
+Given a diagram
+A
+F
+/d15/d15
+BG/d47/d47C
+inABEX, we construct the following category P. The objects of Pare triples
+(A,B,γ) whereAis an object ofA,Ban object ofBandγ:FA→GB
+is an isomorphism in C. A morphism from ( A,B,γ) to (A′,B′,γ′) is a pair
+(f:A→A′,g:B→B′) such that γ′.Ff=Gg.γ.
+FA
+Ff
+/d15/d15γ/d47/d47GB
+Gg
+/d15/d15
+FA′
+γ′/d47/d47GB′.
+Clearly this gives a category and we have the obvious functors F′:P→B
+andG′:P→Awith, for instance, G′taking (A,B,γ) toAand taking ( f,g)
+tof. We also have the natural isomorphism FG′⇒GF′with component γat
+(A,B,γ), which is a 2-arrow of ABEX. We show thatPis abelian, that F′and
+G′are exact and that we have constructed a pullback for the diagram inABEX.
+Lemma 2.12.Pis an abelian category and F′,G′are exact.
+Proof. We deﬁne addition of morphisms as follows: given ( f,g),(f′,g′) :
+(A,B,γ)→(A′B′,γ′) we have the commutative diagrams
+FA
+Ff
+/d15/d15γ/d47/d47GB
+Gg
+/d15/d15
+FA′
+γ′/d47/d47GB′andFA
+Ff′
+/d15/d15γ/d47/d47GB
+Gg′
+/d15/d15
+FA′
+γ′/d47/d47GB′
+and henceγ′(Ff+Ff′) =Gg.γ+Gg′.γ= (Gg+Gg′)γ, so deﬁne ( f,g)+(f′g′)
+to be (f+f′,g+g′). In this way we have a preadditive category.
+It is easy to check that ( A⊕A′,B⊕B′,γ⊕γ′) is the (co)product of ( A,B,γ)
+and (A′,B′,γ′) inP.
+Given (f,g) : (A,B,γ)→(A′,B′γ′) we have the exact sequences 0 →
+ker(f)→Af− →A′→coker(f)→0 and 0→ker(g)→Bg− →B′→coker(g)→0.
+SinceFandGare exact these give exact sequences 0 →Fker(f) = ker(Ff)→
+FA→FA′and similarly for Gand for the cokernel sequences. Then it is easily
+checked that (ker( f),ker(g),γ0) whereγ0is the restriction/corestriction of γ,
+is the kernel of ( f,g) and the description of the cokernel is dual. In particu-
+lar, (f,g) is a monomorphism, respectively epimorphism, iﬀ both fandgare.
+Showing that every monomorphism is a kernel and every epimorphism a cok-
+ernel is similar. This also gives the description of exact sequences in P, from
+which it is obvious that F′andG′are exact. /square
+Theorem 2.13. ABEXhas pullbacks.
+9
+
+--- Page 10 ---
+
+Proof.We show thatPconstructed above is the pullback of the diagram we
+started with. So suppose that we have a diagram
+D
+K
+/d28/d28H
+/d34/d34
+PG′/d47/d47
+F′
+/d15/d15A
+F
+/d15/d15
+BG /d47/d47C
+and a natural isomorphism τ:FH→GK. Then we deﬁne L:D→P by
+taking an object Dto (HD,KD,τ D) and taking a morphism f:D→D′to
+(Hf,Kf), noting that the diagram
+FHDτD/d47/d47
+FHf
+/d15/d15GKD
+GKf
+/d15/d15
+FHD′
+τD′/d47/d47GKD′
+commutes. It is quickly checked that this functor ﬁlls in the diagram ( with
+even strictly commuting triangles) and its uniqueness (to natural is omorphism)
+follows using the deﬁnitions of F′andG′. More precisely, if we also have
+L′:D→P and natural isomorphisms η:H⇒G′L′,η′:K⇒F′L′then
+forD∈D,L′Dhas the form ( G′L′D,F′L′D,δD) whereδD=Gη′
+DτD(FηD)−1
+(let us ﬁx, because we actually have a cone over the whole diagram, t he arrow
+fromDtoCto beGK). So we have a natural isomorphism from LtoL′with
+component at DtakingLD= (HD,KD,τ D) toL′D= (G′L′D,F′L′D,δD) by
+the pair (ηD,η′
+D).
+In the 2-categoricalcontext, the notion ofpullback (and more ge neral limits)
+usually requires more, namely we must show that if we have two such c ones at
+Dover the initial diagram, say
+DH/d47/d47
+K
+/d15/d15A
+F
+/d15/d15
+BG/d47/d47Cwith natural isomorphism τ:FH⇒GK
+andDH′/d47/d47
+K′
+/d15/d15A
+F
+/d15/d15
+BG/d47/d47Cwith natural isomorphism τ′:FH′⇒GK′,
+which are pullbacks in this sense, hence with natural isomorphisms η:H⇒
+G′L,η′:K⇒F′Landζ:H′⇒G′L′,ζ′:K′⇒F′L′, and if we have a
+modiﬁcation m(see,e.g.[27, B1.1.2])fromtheﬁrsttothesecond,thatis,natura l
+transformations mA:H⇒H′andmB:K⇒K′such thatτ′·FmA=mBG·τ
+(∗),
+10
+
+--- Page 11 ---
+
+DH/d47/d47A
+FmA
+/d11/d19F/d47/d47C
+DH′/d47/d47A
+τ′
+/d11/d19F/d47/d47C
+DK′/d47/d47BG /d47/d47C=DH/d47/d47A
+τ
+/d11/d19F/d47/d47C
+DK/d47/d47B
+mBG
+/d11/d19G/d47/d47C
+DK′/d47/d47BG /d47/d47C,
+then there is a natural transformation e:L⇒L′:D →P such that the
+following pairs of natural transformations are equal:
+DH /d47/d47
+η
+/d11/d19A
+DL/d47/d47P
+G′e
+/d11/d19G′/d47/d47A
+D′L′/d47/d47PG′/d47/d47A=DH /d47/d47
+mA
+/d11/d19A
+D′H′/d47/d47
+ζ
+/d11/d19A
+D′L′/d47/d47PG′/d47/d47A
+DK/d47/d47
+η′
+/d11/d19B
+DL/d47/d47P
+F′e
+/d11/d19F′/d47/d47B
+D′L′/d47/d47PF′/d47/d47B=DK/d47/d47
+mB
+/d11/d19B
+D′K′/d47/d47
+ζ′
+/d11/d19B
+D′L′/d47/d47PF′/d47/d47B.
+Note thatL:D→Ptakes an object DofDto (ηDHD,η′
+DKD,η′
+DτDη−1
+D)
+andL′D= (ζDH′D,ζ′
+DK′D,ζ′
+Dτ′
+Dζ−1
+D). Also note that the data mAatD
+is (mA)D:HD→H′Dand similarly for mB. We deﬁne eatDto be the
+morphismeD: (ηDHD,η′
+DKD,η′
+DτDη−1
+D)→(ζDH′D,ζ′
+DK′D,ζ′
+Dτ′
+Dζ−1
+D) ofP
+with components/parenleftbig
+ζD(mA)Dη−1
+D,ζ′
+D(mB)D(η′
+D)−1/parenrightbig
+. By (∗) this is indeed an
+arrow ofPand one can verify that it does satisfy the required conditions. /square
+Example 2.14.Letkbe a ﬁeld and consider the two representation embed-
+dingsF1,F2: mod-k[T]→mod-k/tildewideA1fromk[T]-modules to representations of
+the Kronecker quiver •/d40/d40/d54/d54•, whereF1takes ak[T]-module, thought of as a
+k-vectorspace Vwith a linear transformation TV, to the Kroneckerquiver repre-
+sentationVTV/d41/d41
+1V/d53/d53Vand where the image of ( V,TV) underF2isV1V/d41/d41
+TV/d53/d53V.
+The actions of F1andF2on morphisms are the obvious ones. We compute the
+pullback of these two functors.
+Anobjectofthispullbackhasthe form(( V,TV),(W,TW),γ)whereγisgiven
+by a pair of isomorphisms ( γ1,γ2) making the following diagrams commute.
+VTV/d47/d47
+γ1
+/d15/d15V
+γ2
+/d15/d15
+W1W/d47/d47WV1V/d47/d47
+γ1
+/d15/d15V
+γ2
+/d15/d15
+WTW/d47/d47W
+SoTVmust be an isomorphism with TW=γ2T−1
+Vγ−1
+2being its inverse up
+to a change of basis. After describing the morphisms it is easily check ed that
+11
+
+--- Page 12 ---
+
+the pullback category Kis equivalent to the category mod- k[T,T−1], which is
+what one would reasonably expect it to be.
+2.3ABEXis ﬁnitely accessible
+We show that ABEXis, in some 2-category sense, ﬁnitely accessible. That is,
+we show that there is a set of ﬁnitely presented objects such that each object
+ofABEXis a directed colimit of copies of these objects. There is a variety of
+notionsofdirected colimit in the 2-categoricalcontext, depending on the levelat
+which diagrams are required to commute, as opposed to commute up to natural
+isomorphisms and so our statement refers to a particular interpre tation of the
+words “ﬁnitely accessible”.
+Adirected system , see [27, B1.1.6] or [35, §5.4.2], in ABEXis the data/parenleftbig
+(Aλ)λ∈Λ,(fλµ:Aλ→Aµ)λ<µ,(φλµν:fµνfλµ⇒fλν)λ<µ<ν/parenrightbig
+where each
+φλµνis a natural isomorphism and where we assume the coherence condit ion
+φλνρφλµν=φλµρφµνρ.
+Aλfλµ/d47/d47
+fλν/d40/d40◗◗◗◗◗◗◗◗◗◗◗◗◗◗◗
+fλρ
+/d33/d33❇❇❇❇❇❇❇❇❇❇❇❇❇❇❇❇❇❇❇❇Aµfµν
+/d16/d16✂✂✂✂ /d125/d5φλµν
+Aν
+fνρ
+/d124/d124❴❴❴❴ /d107/d115
+φλνρ
+AρAλfλµ/d47/d47
+/d43/d43fλρ☎☎☎☎ /d126/d6φλµρAµ
+fµν
+/d33/d33❇❇❇❇❇❇❇
+fµρ
+/d24/d24✶✶✶✶✶✶✶✶✶✶✶✶✶✶✶
+Aν
+fνρ
+/d124/d124❴❴❴❴ /d107/d115
+φλµρ
+Aρ
+There is a corresponding notion of directed colimit which, cf. the pro of of
+2.13, has a clause involving modiﬁcations. In the next result we use th at but it
+will be seen that, for our main result, we are able to simplify matters b y using
+strictly directed diagrams.
+By acoconeon such a directed system we mean an object A, arrows (fλ∞:
+Aλ→A)λand natural isomorphisms ( θλµ:fµ∞fλµ⇒fλ∞/parenrightbig
+λ<µsuch that
+θλµθµν=θλν. This is a direct limit (ordirected colimit ) of the system if,
+given any cocone/parenleftbig
+B,(gλ:Aλ→B)λ,ζλµ:gµfλµ⇒gλ/parenrightbig
+, there ish:A→B
+and there are natural isomorphisms ηλ:hfλ∞⇒gλwithηλθλµ=ζλµηµfor all
+λ<µ, plus a clause involving modiﬁcations which we will not spell out here.
+Proposition 2.15. The 2-category ABEXhas colimits of weakly directed dia-
+grams.
+Proof.Suppose we are given a weakly directed system/parenleftbig
+(Aλ)λ∈Λ,(fλµ:Aλ→
+Aµ)λ<µ,(φλµν:fµνfλµ⇒fλν)λ<µ<ν/parenrightbig
+as above. We deﬁne the category A
+which will be the colimit, as follows.
+Fortheobjectsof Awetaketheequivalenceclassesofobjectsof/uniontext
+λAλunder
+the equivalence relation ∼generated by setting Aλ∼fλµAλ. So this identiﬁes
+fλνAλandfµνfλµAλwheneverλ < µ < ν . Therefore Aλ∼Aµiﬀ there are
+λ0=λ,λ1,...,λn=µand objects Aλ0=Aλ,Aλi∈Aλi,...,Aλn=Aµwith,
+foreachi, eitherλi<λi+1orλi+1<λiandcorrespondingly Aλi+1=fλiλi+1Aλi
+orAλi=fλi+1λiAλi+1. Note that in this case if ν >λ0,...,λnthen the objects
+fλνAλandfµνAµare objects inAνwhich are isomorphic by a sequence of
+componentsofsomeofthe φijkand theirinverses(depending onachoiceof“zig-
+zag” between AλandAµ). We continue to use the obvious subscript notation
+to indicate which category an object lies in.
+12
+
+--- Page 13 ---
+
+Similarly we deﬁne an equivalence relation ∼on arrows to be that generated
+by settingg:Aλ→Bλto be equivalent to fλµgfor allµ > λand by setting
+1Aλto be equivalent to the component of φλµνatAλfor allAλandλ<µ<ν .
+The arrows from Aλ/∼toBν/∼are the equivalence classes of arrows from
+someAµ∈Aλ/∼to someBµ∈Bν/∼.
+To deﬁne composition of such arrows it is suﬃcient to consider the ca se of
+arrowsg:Aλ→Bλandh:Bµ→CµwhenBλ∼Bµ. Using notation as
+above for a zig-zag between BλandBµ, chooseν > λ 0,...,λnand note that
+the objects fλνBλandfµνBµare connected by a sequence, ksay, of forward
+images of components of the φρστand their inverses - arrows in the equivalence
+class of the identity map of the object Bλ/∼. We deﬁne the composition to be
+fµνh.k.fλνg.
+Ithastobecheckedthattheresultisabelian,thattheobvious fλ∞:Aλ→A
+are exact (that is clear), and that Ahas the universal property including the
+modiﬁcations clause. Checking that Ais abelian may be done by using that,
+given any ﬁnite diagramin A, one may chooserepresentativesofthe objects and
+arrows in it and then ﬁnd a single Aνin which there is an actual diagram of
+the same sort which represents the original one. The directed colim it property
+may be shown by arguing rather as in the proof of 2.16 below. /square
+Although we use a weak notion of directed system and directed colimit in
+ABEXwe will now see that if we have a directed colimit in the category Rng
+of rings then this induces a diagram of associated free abelian categ ories which
+even has strictly commuting compositions, that is, with fµνfλν=fλν, hence
+with eachφµνλbeing the identity. We do this by choosing speciﬁc copies of
+free abelian categories, as follows (this will refer to the connection s with model
+theory, for which see, e.g., [42]).
+Suppose that f:R→Sis a morphism of rings. If φis a formula (treated
+as a string of symbols) in the language of R-modules then we deﬁne f∗φto be
+the formula in the language of S-modules which is obtained by replacing each
+occurrence of (the function symbol corresponding to) an elemen t ofRby (the
+function symbol corresponding to) its image in S. It is a result of Burke ([8,
+3.2.5]; see, e.g., [42, 10.2.30]) that the free abelian category can be re garded (up
+to equivalence of categories) as having objects the pairs, φ/ψ, of pp formulas
+and having equivalence classes of certain pp formulas as its morphism s. Clearly
+f∗immediately gives a map from the objects of Ab( R), so deﬁned, to Ab( S); it
+also gives a map on morphisms - given a morphism in Ab( R) fromφ/ψtoφ′/ψ′
+we choose a representative formula ρwhich deﬁnes it and then, one may check,
+f∗ρdeﬁnes a map from f∗φ/f∗ψtof∗φ′/f∗ψ′which, again, one may check (for,
+if formulas are equivalent on R-modules then they are equivalent on S-modules
+regarded as R-modules), is independent of choice of representing formula ρ. In
+this wayf, throughf∗, induces what is clearly a functor, let us denote it Ab( f),
+from Ab(R) to Ab(S). We said this for rings but all of it applies equally for
+small preadditive categories R,Sin place ofRandS.
+The point of this construction is that if we are also given a homomorph ism
+g:S→Tthen Ab(g)Ab(f) = Ab(gf) - equality, not natural isomorphism.
+Therefore, given a (directed) diagram ∆ in Rng, we have a (directed) diagram
+“Ab(∆)” in ABEXwhere any commutativity relations in the original diagram
+∆ are replaced by strict commutativity relations between the corre sponding
+functors; we will use the term strictly directed for such directed diagrams.
+13
+
+--- Page 14 ---
+
+This will allow us, at least for our considerations, to keep things simple , though
+in a way which, no doubt, is not actually necessary.
+Proposition 2.16. Suppose that R= lim−→RλinRng, more generally, suppose
+R= lim−→Rλis a strict colimit of a strictly directed diagram in PREADD . Then
+Ab(R) = lim−→Ab(Rλ)inABEX(and, if appropriate choices of copies of the
+Ab(Rλ)are made, this may be taken to be a strict direct limit).
+Proof.(We prove it for rings, the modiﬁcations for the more general case being
+minor. Also, to keep the notation natural, we write Rfor the single object
+of the ring Rregarded as a 1-point category.) The fλµ:Rλ→Rµinduce
+Ab(fλµ) : Ab(Rλ)→Ab(Rµ) which, as we have seen above, may be taken
+to form a strict directed system in ABEX. Similarly we may take a strictly
+commuting cocone on this diagram formed by the Ab( fλ∞) : Ab(Rλ)→Ab(R),
+wherefλ∞:Rλ→Rare the maps inRngto the direct limit. We claim that
+this is a directed colimit in ABEX.
+So suppose that we have B∈ABEXand for each λan exact functor gλ:
+Ab(Rλ)→Bsuch that for each µ > λthere is a natural isomorphism ρλµ:
+gµAb(fλµ)→gλsuchthatthesecoheretomakeacoconeontheAb( −)diagram;
+in particular ρµνρλµ=ρλν. The canonical embeddings Rλ→Ab(Rλ), when
+composed with the gλ, give objects gλRλofBwhich are linked by the strictly
+directed system of isomorphisms (( ρλµ)(Rλ))−1:gλRλ→gµRµ. We choose
+and ﬁx some λ∈Λ, setS=gλRλand note that the ( ρλµ)Rλ(gµ↾Rµ) form
+a (strictly commuting) cocone in Rngfrom the family ( Rµ)µ≥λtoS, where
+gµ↾Rµdenotes the ring homomorphism from RµtogµRµinduced by gµ. Hence
+there is an induced morphism, h0, fromRtoS. We have to extend this to an
+exact functor h: Ab(R)→Bwhich will form a cone (in the 2-category sense)
+on the directed system (Ab( Rµ))µ.
+We note that the images of the ρλµform a strictly cohering (as µvaries)
+system of objects and arrows of Bwhich, together, form a copy of Ab( S) and
+which, by our previous speciﬁc construction of Ab( R) as a direct limit of the
+Ab(Rµ), induce, viathegµ(then theρλµ) an (exact) functor h, extending h0,
+from Ab(R) to this copy of Ab( S) and thence toB. This functor his, by this
+construction (admittedly, hardly in the spirit of 2-category theor y), such that
+hAb(fµ∞) =gλand so we obtain the statement of the theorem. /square
+Corollary 2.17. Given a skeletally small preadditive category Rlet{Rλ}λbe
+the directed system of its full subcategories with ﬁnitely m any objects. Then
+Ab(R) = lim−→Ab(Rλ). IfS ∈Ser(Ab(R))thenAb(R)/S= lim−→Ab(Rλ)/Sλ
+whereSλ=S∩Ab(Rλ).
+Proof.First replaceRby a small category to which it is equivalent, so that
+we have a directed system over a set. Then note that this directed system
+inPREADD is strictly directed (by inclusions) and has Ras its strict direct
+limit so, by 2.16, we have the ﬁrst assertion. Similarly, and making use o f the
+observations before 2.16, we obtain the second statement. /square
+Lemma 2.18. EachA ∈ABEXis equivalent to Ab(R)/Sfor some small
+preadditiveRand some Serre subcategory SofAb(R).
+14
+
+--- Page 15 ---
+
+Proof. To see this we may, for example, set D= Ex(A,Ab) - a deﬁnable
+category, hence a deﬁnable subcategory of some Mod- R. ThenAis a quotient
+of fun(Mod-R) = Ab(R)opby some Serre subcategory. /square
+Corollary 2.19. IfA∈ABEXthenA≃lim−→Aλwhere each category Aλis
+equivalent to one the form Ab(Rλ)/SλwithRλa ring andSλ∈Ser(Ab(Rλ)).
+Proof. By 2.18,Ais equivalent to some Ab( R)/Sand, by 2.17, Ab( R) =
+lim−→Ab(Rλ)whereeachRλhasjust ﬁnitelymanyobjectsandhenceisequivalent
+to a ringRλ(with Ab(Rλ)≃Ab(Rλ))./square
+When using this result we will typically write A= lim−→Aλin line with our
+use of “=” between categories to mean naturally equivalent.
+We will say that a category A∈ABEXisﬁnitely presented if whenever
+we have a directed system/parenleftbig
+(Bλ)λ∈Λ,(gλµ:Bλ→Bµ)λ<µ,(φλµν:gµνgλµ⇒
+gλν)λ<µ<ν/parenrightbig
+with direct limit/parenleftbig
+B,(gλ∞:Bλ→ B)λ,θλµ:gµ∞gλµ⇒gλ∞/parenrightbig
+and an exact functor h:A→Bthere is a factorisation through the directed
+system in the sense that there is λ,hλ:A→Bλand a natural isomorphism
+η:h⇒gλ∞hλfor some some λ. Note that this then induces a family of arrows
+hµ=gλµhλ:A→Bµand a coherent(using the φλµν) familyθ−1
+λµη:h⇒gµ∞hµ
+of natural equivalences. Write ABEXfpfor the full sub-2-categoryon the ﬁnitely
+presented objects.
+Theorem 2.20. (1) IfRis a ring then Ris ﬁnitely presented iﬀ Ab(R)∈
+ABEXfp.
+(2)A∈ABEXfpiﬀA≃Ab(R)/Sfor some ﬁnitely presented ring Rand ﬁnitely
+generated Serre subcategory of Ab(R), where by that we mean that S=/a\}bracketle{tS/a\}bracketri}htfor
+someS∈Ab(R).
+Proof.(1)(⇐) SetR= lim−→RλwithRλﬁnitely presented so, by 2.16, Ab( R) =
+lim−→Ab(Rλ) and hence id Ab(R)factors, up to natural equivalence, through some
+Ab(Rλ). Thedistinguishedobjects RofAb(R)andRλofAb(Rλ)are,therefore,
+isomorphic.
+(⇒) Suppose that/parenleftbig
+B,(gλ∞:Bλ→B)λ,θλµ:gµ∞gλµ⇒gλ∞/parenrightbig
+, withθλµθµν=
+θλν,isadirectedcolimitin ABEXofasystem/parenleftbig
+(Bλ)λ∈Λ,(gλµ:Bλ→Bµ)λ<µ,(φλµν:
+gµνgλµ→gλν)λ<µ<ν/parenrightbig
+as above and suppose that we have h: Ab(R)→B,
+hence, writing Rin place of∗R,R→Ab(R)→ Bwith image R′, say, in
+B. We may (e.g. see the proof of 2.15) replace Bwith an equivalent subcat-
+egory where every object and arrow is in the image of some gλ∞so we may
+assume that R′is the image, gλ∞B0for some object B0of some chosen and
+then ﬁxedBλ. Deﬁne the directed system in Rng(the objects being regarded
+as one-point preadditive categories) with index set {µ:µ≥λ}and which, at
+µ > λhas the object fλµB0and, forµ < νhas the functor/ring homomor-
+phism (φλµν)B0gµν:gλµB0→gλνB0. That this is a directed system in Rng
+follows from the coherence condition on the φin the deﬁnition of directed sys-
+tem. SinceB= lim−→Bλ, the direct limit of this system is (isomorphic to) R′.
+SinceRis ﬁnitely presented this functor R→Btherefore factors through the
+system at some fλµB0and then that map induces hλ: Ab(R)→Bλwhich lifts
+h: Ab(R)→Bthrough the system in the sense described in the deﬁnition of
+ﬁnitely presented, as required.
+15
+
+--- Page 16 ---
+
+(2)(⇒) The categoryAis, by 2.18, up to equivalence, Ab( R)/Sfor some
+RandS∈Ser(Ab(R)). We haveS= lim−→S∈S/a\}bracketle{tS/a\}bracketri}htand, correspondingly, A=
+Ab(R)/S= lim−→Ab(R)//a\}bracketle{tS/a\}bracketri}htso,ifAisﬁnitelypresented,already A= Ab(R)//a\}bracketle{tS/a\}bracketri}ht
+for someS∈S. Also (2.19),A= lim−→Ab(R)/Ab(R)∩/a\}bracketle{tS/a\}bracketri}htwhere the limit is
+taken over (rings equivalent to) the ﬁnite sets of objects of R, and so, ifAis
+ﬁnitely presented then it has the form claimed.
+(⇐) Suppose we have Aas in the statement and, using brief notation, A→
+B= lim−→Bλa directed colimit in ABEX. The composition R→Ab(R)→A=
+Ab(R)/S→Blifts through some k: Ab(R)→Bλas indicated, using the data
+of the directed system to construct a directed system of rings as in the ﬁrst part
+of the proof and then using that Ris ﬁnitely presented.
+R /d47/d47
+/d34/d34Ab(R) /d47/d47
+k
+/d15/d15A
+/d31/d31❄❄❄❄❄❄❄❄
+/d15/d15
+Bλ/d47/d47 /d51/d51Bµ/d47/d47B
+The composition of R→BλwithBλ→Binduces an exact functor Ab( R)→B
+which must be equivalent to the given functor from Ab( R) toB.
+SinceS=/a\}bracketle{tS/a\}bracketri}htand Ab(R)→A→B sendsSto 0, there is µ≥λsuch that
+the compositeS→Ab(R)→Bλ→Bµis 0 and so there is A→Bµas shown
+making the square commute.
+The composites R→Ab(R)→A→B andR→Ab(R)→Bλ→Bµ→B
+agree up to isomorphism on Rand so Ab( R)→A→B and Ab(R)→Bµ→
+Bare, by 2.1, naturally equivalent; both have kernel S, so they induce an
+equivalence between A→BandA→Bµ→B, as required. /square
+ThusABEXhas a set of objects which are ﬁnitely presented and such that
+everyobjectof ABEXisequivalenttothedirectedcolimitofadiagramcomposed
+of copies of these.
+2.4 Abelian categories as schemes
+The replacement of a ring by its free abelian category and the role th at small
+abelian categories play, as categories of imaginaries, in the model th eory of
+additive structures ([42], [43], [44]), strongly suggest the heuristic that small
+abelian categories are a generalisation of (some aspects of) rings. This, espe-
+cially in view of the connection with Ziegler and rep-Zariski spectra (e .g., [42],
+[45]), in turn suggests developing some additive version of the theor y of schemes
+withABEXplaying the role of the category of commutative rings and the cat-
+egoryAbreplacing the category of sets in the functor-of-points approac h (and
+with the associated presheaves of abelian categories - see, e.g. [45 ] - being the
+analogues of varieties and schemes).
+In fact, there seem to be two natural ways of embedding the cate gory of (all
+unital) rings into this context. One is viathe free abelian category construction
+(see 2.1) but the resulting “geometry” is really that of the represe ntation theory
+ofthering, ratherthan thatoftheringitself. An embeddingthatp erhapsbetter
+reﬂects classical algebraic geometry is obtained by taking a ring RtoA(R) - the
+smallest abelian subcategory of Mod- Rwhich contains the category of ﬁnitely
+presented modules; in this case, however, it seems that we should r estrict ring
+morphisms to be the ﬂat ones, and we do lose information, see below.
+16
+
+--- Page 17 ---
+
+We now make the obvious deﬁnitions but must point out that the notio n
+of “aﬃne” scheme in this context is unclear, for instance since many non-aﬃne
+schemes, such as the projective line can already be found as the as sociated
+geometry of a category in ABEX.
+2.4.1 The functor of points view
+Recall that if Z= Spec(R) is an aﬃne scheme then by a scheme over Zone
+means a morphism X→Zof schemes. If Xis aﬃne, say X= Spec(S), then
+this is equivalent to a morphism R→Sin the category of (commutative) rings.
+If we are thinking of ABEXas a generalisation of the category of commutative
+rings and if we assume that any reasonable embedding of the latter c ategory in
+the former is covariant, then it seems reasonable to say that a scheme over
+A∈ABEXis a morphism f:A→BinABEX. By the anti-equivalencebetween
+ABEXandDEFwecan extend the terminology, by sayingthat an scheme over
+C= Ex(A,Ab) is a morphismD= Ex(B,Ab)→C. In model-theoretic terms
+this is a coherent way of interpreting in each D∈DsomeC-structure.
+Forexample,amorphism f:R→SofringsinducesanexactfunctorAb( f) :
+Ab(R)→Ab(S) and the corresponding morphism of deﬁnable categories is just
+the induced restriction-of-scalars functor Mod- S→Mod-Rwhich clearly ﬁts
+the description of being a coherent way of interpreting an R-module in each
+S-module.
+An alternative view of a morphism X→Zof schemes is that it is an X-
+point ofZ, so we may extend that terminology also, saying that a morphism
+A→BinABEXis, as well as a scheme over A, aB-pointofA. The collection
+ofB-points ofA, being just Ex(B,A), has a natural structure of an additive
+category.
+A particularly important case is where A= Ab(Z) is the free abelian
+category of Z. A scheme over Ab( Z) is an exact functor Ab( Z)→ Bto a
+small abelian category. By 2.1 and since Zhas just the one object, and since
+there is no choice about where to send the endomorphisms of that o bject, a
+B-point of Ab( Z) is simply an object of B. The corresponding morphisms
+of deﬁnable categories are just the functors in DEFfromD= Ex(B,Ab) to
+Ex(Ab(Z),Ab) =Aband we know that the category of these is fun( D) =B.
+That is, a scheme over Ab( Z) is just a pp-pair (in the theory of some deﬁnable
+additive category) and the collection of B-points of Ab( Z) is the category B
+itself (in this case an abelian category though we have already noted , 2.3, that
+Ex(A,B) is not in general abelian).
+This also suggests the view that ﬁxing Ais ﬁxing an abelian language and
+then a functor from a deﬁnable category to Ex( A,Ab) is a generalised pp for-
+mula, picking out not just a single abelian group (and by implication its as soci-
+atedimaginarysorts)butaﬁxedcollectionofsortsandmapsbetwe enthem(and
+their associated sorts). Then a morphism D= Ex(B,Ab)→C= Ex(A,Ab) in
+DEFis an interpretation of an (exact) A-structure in each (exact) B-structure.
+2.4.2 Rings to Abelian Categories
+We describe two ways of embedding the category Rngof rings, more generally
+the 2-category PREADD of skeletally small preadditive categories, into ABEX.
+For simplicity, we will deal just with rings (usually we think of Rngas an
+17
+
+--- Page 18 ---
+
+ordinary category but if f,g:R→Sare homomorphisms of rings then a
+natural transformation/2-arrow from ftogis just a homomorphism from S
+regarded as an R-module viaftoSregarded as an R-module viag.)
+Theﬁrstisthefree-abelianweak2-functorAb( −),whichtakesR∈PREADD ,
+to its free abelian category Ab( R) (composing with duality also gives the con-
+travariantversion, taking Rto Ab(R)op). The correspondingdeﬁnable category
+is Ex(Ab(R)(op),Ab)≃R(op)-Mod whose (rep-Zariski) spectrum is in general
+much larger than any notion of Spec( R). So, while that embedding is a natural
+one, it seems not to be the geometrically natural one (unless we res trict to, say,
+the subcategory of injectives). Nevertheless, it is there and pro bably should be
+seen as describing an embedding of the representation theory of a ring rather
+than the geometry of a ring.
+evalatM
+Lemma 2.21. IfM∈R-Modthen the exact functor it induces from Ab(R)to
+Abby virtue of commutativity of the diagram shown
+R /d47/d47
+/d32/d32❆❆❆❆❆❆❆❆Ab(R)
+evM/d123/d123
+Ab
+isF∈(R-mod,Ab)fp/mapsto→FMwhere the latter is the extension of Fto a functor
+onR-Modwhich commutes with direct limits. We denote this by evM.
+abfrng
+Corollary 2.22. Any morphism f:R→Sof rings induces a unique-to-
+natural-equivalence (or even unique, see Section 2.3) exac t functor Ab(f) :
+Ab(R)→Ab(S)as shown.
+R /d47/d47
+f
+/d15/d15Ab(R)
+Ab(f)
+/d15/d15
+S /d47/d47Ab(S)
+IfF∈Ab(R) = (R-mod,Ab)fpthenAb(f)Fis deﬁned as a functor from
+S-modtoAbbyAb(f)F.(SM) =F(RM).
+Theinduced eﬀectonmodules, that is, the restriction-of-scalars functorfrom
+Mod-Sto Mod-R, can be seen from the commutative diagram below,
+R /d47/d47
+f
+/d15/d15Ab(R)
+Ab(f)
+/d15/d15
+S /d47/d47
+M/d34/d34❊❊❊❊❊❊❊❊❊Ab(S)
+evM
+/d15/d15
+Ab
+noting that the composition MfisRM:R→Aband that, by the above
+lemma, the, exact, composition evSMAb(f) must be equivalent to evRM.
+IfRf− →Sg− →TinRngthen Ab(gf) is naturally equivalent to (can even, as
+in Section 2.3, be taken to equal) Ab( g)Ab(f); so Ab(−) is a type of 2-functor.
+A possibly better embedding of algebraic geometry per seis the replacement
+ofRbyA(R) (which, in the case that Ris right coherent, is just the category
+mod-R). In the casethat Ris commutative noetherianthis is equivalent, viathe
+the categoryofinjective R-modules(on accountofthe natural bijection between
+18
+
+--- Page 19 ---
+
+primes and indecomposable injectives), to considering Spec( R). It turns out,
+however, that R/mapsto→A(R) is functorial only if we restrict to ﬂat morphisms
+between rings. There is also the issue that this process seems not t o capture
+closed subschemes - just the reduced variety (though this is not s urprising since
+we are capturing only Spec( R)).
+Using that Ex(Ab( R),Ab)≃R-Flat (1.3) we have the following. Recall
+from [45,§6] thatA(R) = (R-mod,Ab)/{F:F(RR) = 0}.
+Proposition 2.23. Iff:R→Sis a homomorphism of rings then this induces,
+viaAb(f)in the representation of A(R)as a quotient category of Ab(R), an
+exact functorA(f) :A(R)→A(S)iﬀS∈/a\}bracketle{tRR/a\}bracketri}htthat is, iﬀ RSis fp-ﬂat in the
+terminology of [20]. In particular if RSis ﬂat thenA(f)is an exact functor
+and, ifRis right coherent, then this condition is also necessary.
+Proof.ForF∈Ab(R), Ab(f)F(SS) =F(RS) which will be 0 for all such Fiﬀ
+RS∈/a\}bracketle{tRR/a\}bracketri}ht. ThusRS∈/a\}bracketle{tRR/a\}bracketri}htiﬀ Ab(f)ZR⊆ZS(whereZRdenotes the Serre
+subcategory of functors which annihilate the module R)./square
+IfRis right coherent, so A(R) = mod-R, then the functor A(f) is just
+MR/mapsto→M⊗RSS. For, since RSis fp-ﬂat and every R-module inA(R) is ﬁnitely
+presented, that functor is exact; also the two functors agree o nRR, taking it
+toSS; therefore, by exactness, these functors agree on (project ive presentations
+of) ﬁnitely presented modules. Indeed, by [19, 3.1] (and 2.22) this d escription
+ofA(f) is valid for any ring R.
+In fact, and somewhat explaining this (in view of 1.2) we have the follow ing.
+Proposition 2.24. Iff:R→Sis a homomorphism of rings then the re-
+striction of scalars functor Mod-S→Mod-RtakesInj-StoInj-RiﬀRSis
+ﬂat.
+Proof.Iffis ﬂat then for NRandMS, Ext1
+R(NR,MR)≃Ext1
+S(N⊗RS,MS)
+so, ifMSis injective then so is MR.
+For the converse we use that a module MRis ﬂat iﬀ Hom Z(M,Q/Z) is an
+injectiveR-module (e.g. [49, I.10.5]). In particular SRis ﬂat iﬀ Hom Z(S,Q/Z)R
+is injective, so, if restriction of scalars preserves injectives then SRis ﬂat. /square
+That is, attempting to use A(R) in place of Ab( R) is no more than using
+Ab(R) then trying to restrict to Inj- R.nonredsch
+Example 2.25.LetR=k[ǫ] =k[X]//a\}bracketle{tX/a\}bracketri}ht2The deﬁnable category R-Proj cor-
+responding toA(R) = mod-Rhas no proper deﬁnable subcategories. Yet Ris
+the coordinate ring of a non-reduced scheme which has the proper subscheme
+corresponding to R→R//a\}bracketle{tǫ/a\}bracketri}ht- a non-ﬂat morphism.
+This shows that the second embedding does not capture all the geo metry we
+would wish; the ﬁrst embedding does preserve all the structure bu t in general
+represents much more than the geometry of which Ris the coordinate ring.
+3 The2-category of deﬁnableadditive categories
+A category is deﬁnable if it is equivalent to a deﬁnable subcategory of
+a module category Mod- R, meaning a full subcategory which is closed under
+direct products, direct limits and pure subobjects.
+19
+
+--- Page 20 ---
+
+Examples include, as well as module categories, the ﬁnitely accessible addi-
+tive categories with products; in particular locally ﬁnitely presentab le (in the
+terminology of [1], [18]) additive categories are deﬁnable. So both the category
+of torsionfree and the category of torsion ( sic) abelian groups are deﬁnable.
+Any deﬁnable subcategory of a deﬁnable category is deﬁnable. The category
+of injective abelian groups is deﬁnable but has no non-zero ﬁnitely pr esented
+object. The book [42] is, in part, a compendium of examples of these .
+Those are the objects of DEF; the morphisms are those functors which com-
+mute with direct products and direct limits (equivalently, see [43, §25], the
+model-theoretic interpretation functors). These categories we re originally stud-
+ied in the context of the model theory of modules (see [50], [40]), as t hose
+subclasses of module categories which are axiomatised by implications between
+ppformulas; theywerefocussedonandnamedbyCrawley-Boevey ([13]). Infact
+they arise in a variety of contexts and, as seen in 1.1, they may be (r e)presented
+in diverse ways.
+Recall that fun(D) denotes the skeletally small abelian category ( D,Ab)→/producttext
+and that in case D= Mod-Rthis category, which we also write as fun- R, is
+equivalent to (mod- R,Ab)fp. In [42,§12.3], fun(D) was deﬁned vialocalisation
+from the caseD= Mod-Rand here we are using the main theorem, 12.10, of
+[43] to deﬁne it as above directly from D. There is a natural correspondence,
+viaannihilation, between deﬁnable subcategories of Dand Serre subcategories
+of fun(D).
+Theorem 3.1. ([23],[29]; see, e.g., [42, 12.3.20]) If D′is a deﬁnable subcate-
+gory of the deﬁnable category DandSD′={F∈fun(D) :FD= 0for allD∈
+D′}denotes its annihilator in fun(D)thenSD′is a Serre subcategory of fun(D)
+and the quotient category fun(D)/SDis, in a natural way, naturally equivalent
+tofun(D′). Every Serre subcategory of fun(D)arises in this way.
+We restate part of 1.1 for convenience of reference.
+Theorem 3.2. Suppose thatDis adeﬁnable category; then D≃Ex(fun(D),Ab).
+Suppose thatAis askeletally small abelian category, then A≃fun/parenleftbig
+Ex(A,Ab)/parenrightbig
+.
+In one direction, the ﬁrst equivalence takes an object DofDto evD, the
+evaluation of F∈(D,Ab)→/producttext
+atD. Thedescription of the other direction of
+that equivalence is less canonical because there are many ways in wh ich the
+objects ofDmay be regarded; for instance, R-modules may be presented in the
+usual 1-sorted way but may alternatively be regarded as left exac t functors on
+(mod-R)op(viathe restricted Yoneda embedding Mod- R→((mod-R)op,Ab)
+given byM/mapsto→(−,M)↾mod-R) or as exact functors on fun- R(in model-
+theoretic terms this is making various choices of language for the st ructures in
+D). In any case, we may represent Das a deﬁnable subcategory of Mod- Rfor
+some preadditive R(whereR= fun(D) would be the canonical choice) and
+then fun(D) is a localisation of fun- R= Ab(Rop) so then, given F, an exact
+functor on fun(D), we deﬁne the corresponding object D, as a functor from Rop
+toAb, as taking an object PinRtoF((−,(−,P))D) where (−,(−,P))Dis
+the localisation of the representable functor ( −,(−,P))∈Ab(Rop) at the Serre
+subcategory,SD. (The second equivalence is, in each direction, just evaluation.)
+IfD= Ex(A,Ab) then the ( elementary )dualcategory ofDisDd=
+Ex(Aop,Ab) and we have fun( Dd) = (fun(D))opwhich we denote by fund(D).
+20
+
+--- Page 21 ---
+
+ForinstancetheelementarydualofamodulecategoryMod- RisjustR-Modand
+thedualitybetweentheirfunctorcategories,( R-mod,Ab)fp≃/parenleftbig
+(mod-R,Ab)fp/parenrightbigop,
+is in [21] and [5] (at least for Ra ring). The classical (retrospective) example,
+apart from the right and left module categories, is the duality, see e .g. [42,
+3.4.24], for Ra right coherent ring, between Abs- R(the absolutely pure right
+modules) and R-Flat (the ﬂat left modules).
+Proposition 3.3. (e.g. [42, 12.4.1]) If Dis a deﬁnable category and Ddits ele-
+mentary dual then the duality fun(D)≃/parenleftbig
+fun(Dd/parenrightbigopinduces order-preserving bi-
+jectionsSer(fun(D))≃Ser(fun(Dd))andSub(D)≃Sub(Dd)between the Serre
+subcategories of fun(D)andfun(Dd)and between the deﬁnable subcategories of
+DandDd.
+LetDbe a deﬁnable category. A monomorphism in Dispureif some ul-
+trapower of it is split. The pure monomorphisms thus intrinsically deﬁn ed are
+the restrictions to Dof the pure monomorphisms in Mod- R(these can be char-
+acterised in many ways) whenever Dis embedded as a deﬁnable subcategory.
+An objectD∈Dispure-injective if it is injective over the pure monomor-
+phisms inD. Denote by Pinj( D) the full subcategory of pure-injective objects
+ofD; it is coﬁnal inDin the sense that every object D∈Dpurely embeds in
+a pure-injective object, indeed Dhas a unique-to-isomorphism-over- Dminimal
+such extension, termed its pure-injective hull and denoted H(D).
+Letpinj(D) denotethesetofisomorphismclassesofindecomposable(thisex-
+cludes 0) pure-injective objects of D(it is indeed a set). The Ziegler topology
+on pinj(D) has, for a basis of open sets, the sets ( F) ={N∈pinj(D) :FN/\e}atio\slash= 0}
+asFranges over fun(D). Therep-Zariski topology on pinj(D) has for a
+basis of open sets the [ F] = (F)c={N∈pinj(D) :FN= 0}. These spaces
+are denoted Zg(D) and Zar(D) respectively. In the case that D= Mod-R, re-
+spectivelyD=R-Mod, we write ZgR, respectively RZg, and similarly for Zar.
+There are many equivalent ways to deﬁne these topologies and much is known
+about them, for which I refer to [42]. And, of course, use of the na me “Zariski”
+indicates a generalisation of that spectrum (see [41, p. 200ﬀ.] or [42 ,§§14.1,
+14.4]). Here is the basic connection with deﬁnable subcategories.
+Theorem 3.4. (see e.g. [42, 5.1.4, 12.4.1]) Let Dbe a deﬁnable category. The
+deﬁnable subcategories of Dare in natural bijection with the closed subsets of its
+Ziegler spectrum Zg(D), indeed each deﬁnable subcategory is generated as such
+by the indecomposable pure-injectives in it.
+The bijection takes D′∈Sub(D) to its intersection with pinj( D) - itssup-
+port- and, in the other direction, takes a subset of Zg( D) to the deﬁnable
+subcategory that it generates.
+Also associated to Dis the locally coherent Grothendieck category which
+can be obtained as follows: if Dis a deﬁnable subcategory of Mod- Rthen we
+know that fun(D) = (mod-R,Ab)fp/SD. The Serre subcategory SDgenerates a
+hereditarytorsiontheory ofﬁnite type onthe locallycoherentGro thendieckcat-
+egory (mod-R,Ab) (see, e.g., [42,§11.4]) and the localisation, (mod- R,Ab)D,
+of (mod-R,Ab) at this torsion theory is a locally coherent Grothendieck cate-
+gory-wedenoteitFun( D) -andwehave(Fun( D))fp= fun(D). Thesecategories
+are considered in Section 4.1.
+Remark 3.5.The category Fun( D) can also be obtained directly as ( D,Ab)→.
+To see this we consider ﬁrst the case that D= Mod-Rand hence that Fun( D) =
+21
+
+--- Page 22 ---
+
+(mod-R,Ab); then the equivalence of this category with those functors from
+Mod-RtoAbwhich commute with direct limits, and hence which are deter-
+mined by their actions on mod- R, is easily seen (and essentially in [4]). In the
+general case,Dis a deﬁnable subcategory of some module category Mod- Rand
+Fun(D) is the localisation of Fun- Rdescribed above. But the action of the lo-
+calisation of F∈Fun-Ris just restriction of its action from Mod- RtoD. Since
+direct limits inDagree with those in Mod- R, it follows that any F∈Fun(D)
+does commute with direct limits. For the converse, if F∈(D,Ab)→then it
+will be enough to show that Fhas an extension to a functor on Mod- Rwhich
+commutes with direct limits (since then Fwill be the localisation of this exten-
+sion and hence in Fun( D)). But by, e.g. [14, 2.4], any deﬁnable subcategory of
+Mod-Ris contravariantly ﬁnite=precovering in Mod- R(as well as covariantly
+ﬁnite - see, e.g. [42, 3.4.42]) and so its left Kan extension exists and will, being
+left adjoint to restriction, commute with direct limits, as required.
+3.1 An intrinsic deﬁnition of deﬁnable category?
+We have two, equivalent, deﬁnitions of the notion of deﬁnable categ ory: as a
+deﬁnable subcategory of a categoryof R-modules; as the categoryof exact func-
+tors on a small abelian category A. Both are, however, deﬁnitions in terms of
+somerepresentation,andalthoughwecangivesomesortof“intrin sic”deﬁnition
+of “deﬁnable category”(see below) it would be desirableto havea list of (prefer-
+ably easily-checkable) category-theoretic properties which cuts out exactly the
+deﬁnable categories.
+Apart from being additive, we would require having direct products a nd
+direct limits. Since ultraproducts are certain direct limits of direct pr oducts
+these conditions are enough to give a category an internal theory of purity since
+we can deﬁne a pure monomorphism to be one, some ultraproduct of which is
+split, and similarly we may deﬁne pure epimorphisms. So we might also add
+the conditions that these have, respectively, cokernels and kern els. We should
+also add some “smallness” condition since the properties mentioned s o far are
+shared by all Grothendieck, indeed AB5, abelian categories and not every such
+category is deﬁnable.
+Theorem 3.6. A Grothendieck abelian category is deﬁnable iﬀ it is locally
+ﬁnitely presented.
+Proof.IfGis Grothendieck abelian and deﬁnable set A= fun(G). ThenGis
+the deﬁnable subcategory,Ex( A,Ab) ofA-Mod consistingofthe exact functors.
+We claim that the inclusion, i, ofGinA-Mod has a left adjoint, that is, that G
+is a localisation of A-Mod.
+First note that ipreserves kernels since if 0 →K→F→Gis exact with
+F,G∈ Gthen, since those are exact, so is K. SinceGis deﬁnable, direct
+products inGcoincide with those in A-Mod. Thus ipreserves limits. We also
+have the solution set condition of the Adjoint Functor Theorem bec ause every
+deﬁnable subcategory is covariantly ﬁnite and hence, given any M∈A-Mod
+there is an arrow M→G∈Gthrough which every morphism from Mto an
+object ofGfactors.
+Thereforeihas a left adjoint Qwhich is left exact and hence Qis a lo-
+calisation at a hereditary torsion theory. Since Gis deﬁnable the inclusion i
+22
+
+--- Page 23 ---
+
+commutes with directed colimits so (see [42, 11.1.23]) this torsion theo ry is of ﬁ-
+nite type and hence, see [42, 11.1.27], the localised category, G, is locally ﬁnitely
+presented, as required. /square
+Certainly any deﬁnable category Dis accessible: if we set κto be|R|+ℵ0,
+ifDis a deﬁnable subcategory of Mod- R, or the number of morphisms in a
+skeleton of fun(D) then every object of Dis a structure for a functional lan-
+guageofcardinality κandso(forinstancebythedownwardsLowenheim-Skolem
+Theorem) is the direct limit of its subobjects (or pure, or even eleme ntary, sub-
+objects) of cardinality ≤κ(orκ+ifκis not regular). Furthermore, each object
+ofcardinality≤κisκ+-presentable,and there is just a setofthese up to isomor-
+phism. ThusDisκ+-accessible (though, as already mentioned, not necessarily
+ﬁnitely accessible). If we were content to work with inﬁnitary langua ges then
+this would be enough (see [1, 5.35], [24, 9.1.7], also [25]).
+For an intrinsic deﬁnition we suppose just that Dis additive with products
+and direct limits. The proof of 3.12 below shows that ( D,Ab)→/producttext
+is an abelian
+category. If we also suppose that Dhas a lim−→-generating set of objects then
+(D,Ab)→/producttext
+is also skeletally small. Of course Dthen embeds naturally, via
+D/mapsto→evD, intoEx/parenleftbig
+(D,Ab)→/producttext
+,Ab/parenrightbig
+andweknow, using3.2, that thiswillbe an
+equivalence iﬀDis deﬁnable. In some sense that is an intrinsic characterisation
+but it is considerably less satisfactory than would be a list of condition s which
+could be checked directly, because it is not clear how one might in gene ral check
+that the embedding is an equivalence.
+3.2 Extending from Pinj(D)toD
+.
+IfDis a deﬁnable category then any morphism F:D→CinDEFrestricts
+to a functor on the full subcategory, Pinj( D), of pure-injective objects of Dto
+C(indeed, see 3.7, to Pinj( C)). That restricted functor commutes with direct
+products and with those direct limits of pure-injectives where the d irect limit
+objecthappenstobeinPinj( D)(forshortwemaydescribethatsecondcondition
+as “commuting with those direct limits in Pinj( D)”). In this section we consider
+the converse. That is: suppose Pinj( D)→Ccommutes with direct products
+and with those direct limits diagrams of objects in Pinj( D) whose direct limit
+also is in Pinj(D); then does this extend to a morphism in DEFfromDto
+C? We show that this is so. We also consider the question of whether na tural
+transformationsbetween morphisms in DEFaredetermined by their restrictions
+to the pure-injective objects. Again the answer is positive.
+These issues already arise in the proof ([43, 12.10]) of the fact that , for
+D∈DEF, the category fun( D) is equivalent to ( D,Ab)→/producttext
+. Let us outline the
+shape of that proof since we will be reconsidering parts of it here. T he ﬁrst part
+consists of showing that (Pinj( D),Ab)/producttext
+≃(Pinj(D),Ab)fpand then applying
+the fact from[31] (see[43, 12.2])that (Pinj( D),Ab)fp≃(Fund(D))opin orderto
+identify (Pinj(D),Ab)/producttext
+with the opposite of the dual “large” functor category
+Fund(D). Each of these latter two categories has a natural action on Pinj (D)
+and, in the proof of [43, 12.10], it is shown that the identiﬁcation resp ects this.
+Then we take a functor G∈(D,Ab)→/producttext
+. The action of that functor on Pinj( D)
+is then shown to coincide with the action on Pinj( D) of a functor of the form
+Fφ/ψfor some pp-pair φ/ψ. The proof goes on to show that since these functors
+23
+
+--- Page 24 ---
+
+agree on Pinj(D) they agree on D. We will generalise that last part here,
+replacing the codomain Abby an arbitrary deﬁnable category and replacing
+the natural isomorphism between the two functors (the restrict ions ofGandF
+to Pinj(D)) by any natural transformation. And the ﬁrst part of that pro of,
+which we will re-do rather more cleanly than in [43] (where category- theoretic
+and element-based argumentation sit uncomfortably together), will allow us to
+answer the ﬁrst question.
+We will make use of the fact that every deﬁnable category Dhas anele-
+mentary cogenerator , that isN∈Pinj(D) which is such that every object of
+Dis a pure subobject of a direct product of copies of N(see [40, 9.36] or [42,
+5.3.52]). We write /a\}bracketle{t−/a\}bracketri}htfor the deﬁnable subcategory generated by ( −). First we
+recall the following.
+Proposition 3.7. (see, e.g., [43, 13.1]) Suppose that I:C→Dis a morphism
+inDEF. ThenIpreserves pure embeddings and pure-injectivity. If D′⊆Dis
+a deﬁnable subcategory of DthenI−1D′={C∈C:IC∈D′}is a deﬁnable
+subcategory ofC.
+Proposition 3.8. IfI:D→Cis a morphism in DEFthen every object of
+/a\}bracketle{tID/a\}bracketri}htis a pure subobject of an object of the form ID. IfNis an elementary
+cogenerator forDthenINis an elementary cogenerator for /a\}bracketle{tID/a\}bracketri}ht.
+Proof. The ﬁrst statement will follow from the second by 3.7 and since I
+commutes with direct products. Since Nis an elementary cogenerator it is
+clear that/a\}bracketle{tIN/a\}bracketri}ht=/a\}bracketle{tID/a\}bracketri}htand hence the support of INin the Ziegler spectrum
+ofCis Zg(/a\}bracketle{tID/a\}bracketri}ht). Therefore every N1∈Zg(/a\}bracketle{tID/a\}bracketri}ht) is a direct summand of an
+ultrapower of (a power of) IN. Since every ultrapower of Nis pure in a direct
+power ofN, so the same is true of IN,N1is, therefore, a direct summand of a
+power ofIN. Then the fact that every point of Zg( /a\}bracketle{tID/a\}bracketri}ht) is a direct summand
+of a power of INis enough (see [42, 5.3.50]) to imply that INis an elementary
+cogenerator of/a\}bracketle{tID/a\}bracketri}ht./square
+Theorem 3.9. Suppose that F,G:D⇒Care functors in DEFand thatτ′:F↾
+Pinj(D)→G↾Pinj(D)is a natural transformation between their restrictions
+to the pure-injectives of D. Then there is a, unique, natural transformation
+τ:F→Gwhich restricts to τ′. Ifτ′is a natural isomorphism then so is τ.
+Proof. We use an argument from the proof of [43, 12.10]. Let M∈Dand
+choose a pure embedding Mi− →N∈Pinj(D) into a pure-injective. Choose a set
+Iand an ultraﬁlter FonIsuch that both MI/FandNI/F(and hence also
+their images under FandG) are pure-injective (see, e.g., [42, [4.2.19] or [43,
+21.3]). Consider the diagram shown, where ∆ (−)is the diagonal map into the
+ultraproduct.
+24
+
+--- Page 25 ---
+
+FNI/Fτ′
+(NI/F)/d47/d47GNI/F
+FN∆FN/d58/d58✉✉✉✉✉✉✉✉✉τ′
+N/d47/d47GN∆GN/d100/d100■■■■■■■■■
+FMI/FFiI/F/d79/d79
+τ′
+(MI/F)/d47/d47GMI/FGiI/F/d79/d79
+FMFi/d79/d79
+∆FM/d58/d58✉✉✉✉✉✉✉✉✉
+GMGi/d79/d79
+∆GM/d100/d100■■■■■■■■■
+We note that F(NI/F) = (FN)I/F,F∆N= ∆FN,F(iI/F) = (Fi)I/Fetc.
+Also, 3.7, pure embeddings are taken to (pure) embeddings by FandG. The
+top square commutes since τis a natural transformation, the back for the same
+reason and, using that MI/Fis pure-injective and what has just been noted,
+we see that the sides commute since FandGare functors.
+From the construction we have that im(∆ GN)∩/parenleftbig
+(GM)I/G/parenrightbig
+= im(∆GM)≃
+GM; that is, the right-hand side is a pullback. So, working round the com mu-
+tative squares, we obtain a unique map, which we denote τM, fromFMtoGM
+making the whole diagram commute. (Note that this is independent of choice
+ofNsince, given another choice of initial embedding i′:M→N′, we can use
+(i,i′) :M→N⊕N′, to deﬁne “ τM” which, one may check, restricts to the
+otherwise-constructed τMs.
+Arguing similarly one checks that the τMcohere to form a natural transfor-
+mation from FtoG. The last statement follows easily. /square
+It is clear from the proof that it is suﬃcient that the natural trans formation
+τbe deﬁned on some coﬁnal class of pure-injectives, indeed being de ﬁned on an
+elementary cogenerator would be enough.
+Proposition 3.10. Suppose thatC,Dare additive categories with products and
+coproducts and suppose that Cis abelian. Let (D,C)/producttext
+denote the category of
+those functors from DtoCwhich commute with direct products. Suppose that
+G∈(D,C)is generated. Then G∈(D,C)/producttext
+iﬀG∈(D,C)fp, the category of
+ﬁnitely presented functors from DtoC.
+Proof.We recall that a functor GfromDtoCisﬁnitely generated if it is
+a quotient of a (ﬁnite direct sum of) representable functor(s) an dGisﬁnitely
+presented ifthekernelofsuchapresentationisitselfﬁnitelygenerated. Bew are
+that, becauseDhas a proper class of objects, not every functor on it will be
+generated , that is, determined by its action on a set of objects; that is, not
+every functor has a presentation (let alone a ﬁnite one).
+For one direction, suppose that G∈(D,C)fp, so there is a morphism f:
+N→N′inDsuch that ( N′,−)(f,−)−−−→(N,−)→G→0 is exact. Since both
+(N′,−) and (N,−) commute with products (by deﬁnition of direct product)
+and since, as an additive functor category, direct products in D,C) are exact,
+it follows that Gcommutes with products. Thus ( D,C)fpis a subcategory of
+(D,C)/producttext
+.
+For the converse, suppose that G∈(D,C) commutes with direct products,
+meaning that for any indexed set ( Ni)i∈Iof objects ofDthe canonical map
+25
+
+--- Page 26 ---
+
+/producttextGπi:G/producttext
+iNi→/producttext
+iGNi, whereπj:/producttextNi→Njare the canonical projec-
+tions, is an isomorphism. Then, in the commutative diagram shown
+(/circleplustext
+j(Nj,−),G)/d79/d79
+≃
+/d15/d15((/producttext
+iNi,−),G)≃G/producttextNi(/circleplustext
+j(πj,−),G)/d111/d111
+/producttextGπi≃
+/d115/d115/producttext
+iGNi≃/producttext
+i((Ni,−),G)
+it follows that (/circleplustext
+j(πj,−),G) is an isomorphism.
+Since(/circleplustext
+i(πi,−),G)isrestrictionofmorphismsalong/circleplustext
+i(πi,−) :/circleplustext
+j(Nj,−)→
+(/producttext
+iNi,−)it followsthat eachmorphism p:/circleplustext
+i(Ni,−)→Ghasan extensionto
+a morphism p′: (/producttext
+iNi,−)→G. So, ifthere is an epimorphism from/circleplustext
+i(Ni,−)
+toGthen there is one from (/producttext
+iNi,−). That is, if Gis generated then Gis
+ﬁnitely generated. /square
+Corollary 3.11. Suppose thatC,Dare deﬁnable categories with Cabelian.
+Then(Pinj(D),C)/producttext
+= (Pinj(D),C)fp.
+Proof.By 3.10 it must be shown that every functor Gwhich commutes with
+products is generated. First we note, as a general point, that giv enA,Bin an
+additive category with coproducts, every morphism from a coprod uctA(I)of
+copies ofAtoBfactors through the canonical morphism c:A(A,B)→Bwhere
+c= (h)h∈(A,B). For, iff:A(I)→Bisf= (fi)iwithfi:A(i)→Bthen, for
+eachi∈I, choose an isomorphism A(i)→A(the copy appearing in “ A(A,B)”,
+which we assume to be replicated in a speciﬁed way at each h∈(A,B)) and
+deﬁneh(i) to be the composition shown.
+A(i)
+fi
+/d33/d33❇❇❇❇❇❇❇
+/d15/d15
+A
+h(i)/d47/d47B
+Deﬁnegito be the composition A(i)→Aih(i)−−−→A(A,B), yieldingg= (gi)i:
+A(I)→A(A,B). Thencg=f: it is suﬃcient to check at each i∈I, where it
+holds by deﬁnition of h(i), as required.
+Now letNbe an elementary cogenerator for Dand letG∈(Pinj(D),C)/producttext
+.
+So, ifN′∈Pinj(D) then there is a split exact sequence of the form 0 →N′→
+NI→N′′→0 and hence a split exact sequence 0 →(N′′,−)→(NI,−)→
+(N′,−)→0 in (Pinj(D),C). In particular any morphism d′: (N′,−)→Glifts
+to somed: (NI,−)→G. Under the identiﬁcation (( NI,−),G)≃G(NI)≃
+(GN)I,dcorresponds to some d= (di)i∈Iwithdi∈GN≃((N,−),G). Thus
+we have an induced map i/mapsto→di:I→GNand hence an induced χd:NGN→
+NI. That, in turn, induces ( χd,−) : (NI,−)→(NGN,−) and so (χd,G) :
+((NGN,−),G)→((NI,−),G) which takes c1∈((NGN,−),G) todwherec1
+corresponds to c∈((N,−)(GN),G) (notation as above) viathe isomorphism
+((N,−)(GN),G)≃((N,−),G)GN≃((NGN,−),G) (the latter being that G
+commutes with products). In particular d, and hence d′, factors through c1and
+we deduce that c1: (NGN,−)→Gis an epimorphism. /square
+Note that an abelian deﬁnable category is Grothendieck (hence, 3.6 , locally
+ﬁnitely presented): it is complete and well-powered, so it is suﬃcient t o check
+26
+
+--- Page 27 ---
+
+that it has exact direct limits but, being a subcategory of a Grothen dieck (func-
+tor) category and being closed in that category under direct limits, this follows.
+Lemma 3.12. Suppose thatDis a deﬁnable category and that Cis an abelian
+deﬁnable category. Then (D,C)→/producttext
+, that is, DEF(D,C)is a skeletally small
+abelian category.
+Proof.Itis easilycheckedthat thiscategory(orthe equivalent, by1.1, ca tegory
+Ex(fun(C),fun(D)) is skeletally small (see the proof of 3.13 below) and additive.
+Ifτ:F→Gis an arrow in (D,C)→/producttext
+then we can deﬁne ker( τ) to be the
+functor taking D∈Dto ker(τD) (which exists since Cis abelian) and having
+action on arrows given in the obvious way (see the diagram).
+D
+f
+/d15/d150 /d47/d47ker(τ)D /d47/d47
+/d15/d15FD
+Ff
+/d15/d15τD/d47/d47GD
+Gf
+/d15/d15
+D′0 /d47/d47ker(τ)D′ /d47/d47FD′
+τD′/d47/d47GD′
+Since inCboth direct limits and direct products are exact, this functor ker( τ)
+also commutes with these (as in the proof below) and the inclusion of it into
+Fis, indeed, the kernel of τ. Dually we obtain coker( τ) also in (D,C)→/producttext
+. In
+a similar way we can see that every monomorphism in ( D,C)→/producttext
+has all its
+components monomorphisms and is a cokernel, and dually for epimorp hisms.
+/square
+Lemma 3.13. Suppose thatDis a deﬁnable category and that Cis an abelian
+deﬁnable category. Then (Pinj(D),C)→/producttext
+is a skeletally small abelian category.
+Proof.To see that this functor category is abelian we use that (Pinj( D),C)→/producttext
+is a full subcategory of the (large) functor category (Pinj( D),C) in which both/producttextand lim−→are exact, from which it follows easily (see the proof above) that
+(Pinj(D),C)→/producttext
+is abelian. For example, if τ:F→Gis a morphism in
+(Pinj(D),C)→/producttext
+then we have, in (Pinj( D),C), the exact sequence σ: 0→
+ker(τ)→Fτ− →G→coker(τ)→0. So then, if D= lim−→λDλis a direct limit
+in Pinj(D), then we have the exact sequences σ(Dλ) forming a directed system
+of exact sequences in Cwith exact direct limit. But also σ(D) is exact and so,
+comparing these sequences, we deduce that lim−→λ(ker(τ)·(Dλ)) = ker(τ)·D.
+To show that the category is skeletally small we use that the proof f or the
+caseC=Abis done within the proof of [43, 12.10]. That proof works in the
+more general case but carryingthat through would require settin g up quite a bit
+of the background material (in particular that relating to the cate gory Fund(D)
+which makes an appearance). An easier alternative is to note that t he case
+C=Abis enough since we may regard objects of Cas modules over some small
+preadditive category R, hence as multi-sorted structures with a sort for each
+objectPofR. Then the composition of a functor preserving products and
+directed colimits to Cwith evalution ( C/mapsto→((P,−),C)) at a particular sort is a
+functor (preserving products and directed colimits). There is jus t a set of sorts
+and a set of morphisms between them so, putting together the dat a from the
+separate sorts, and since we know that (Pinj( D),Ab)→/producttext
+is a set, we deduce
+that (Pinj(D),C)→/producttext
+is a set. /square
+27
+
+--- Page 28 ---
+
+We will now specialise to the case C=Ab; we could continue with the
+general case but we wish to quote, in the proof of 3.17, a result whic h is proved
+in the caseC=Ab). In this case also, the proof of the quoted result would
+generalise easily enough but, rather than do that, we will say how to obtain the
+general case from what we do.
+Let us setB= (Pinj(D),Ab)→/producttext
+and also suppose that Ais a small abelian
+category such that D= Ex(A,Ab). Certainly the action of each object of A
+on Pinj(D) commutes with direct products and those direct limits in Pinj( D),
+so we have a functor from AtoB.
+Lemma 3.14. With notation as above, the functor from AtoBis a faithful,
+full and exact embedding.
+Proof.IftwoobjectsofAagreeonPinj(D) then, since everyobjectof Dis pure
+in a pure-injective object, they agree on all of D; ditto, by 3.9, for morphisms
+between such. A sequence of morphisms in Ais exact iﬀ it is exact at each
+object ofDiﬀ it is exact on each object of Pinj( D), in other words, iﬀ its image
+inBis exact; the fact that a sequence of functors/objects of Awhich is is exact
+on Pinj(D) is exact onDfollows again because every object of Dis pure in an
+object of Pinj(D).
+By 3.9 the embedding of AintoBis full.
+Note, for later use, that this proof works with any deﬁnable abelian category
+Cin place of Ab./square
+We are going to prove that the embedding of AintoBis an equivalence. In
+model-theoreticterms,regardingobjectsofPinj( D)asfunctorsonAisregarding
+them asA-structures(structuresforthe languageof A-modules) but, aswe have
+just seen, and this is said in more detail below, they are also B-structures. So
+our question about extending functors from Pinj( D) toDis equivalent to asking
+whether everyA-structure in the deﬁnable category Dis also aB-structure.
+embpinj
+Lemma3.15. Suppose thatDis a deﬁnable category. Let B= (Pinj(D),Ab)→/producttext
+- a skeletally small abelian category. Then there is a natura l full embedding of
+Pinj(D)into the deﬁnable category D= Ex(B,Ab). Each object N∈Pinj(D)
+is pure-injective as a B-structure.
+Proof.The embedding is that which takes N∈Pinj(D) to the functor, ev N,
+evaluation-at- N. That it is full can be argued as follows. As above, we suppose
+thatD= Ex(A,Ab) for some small abelian category Aand we have the restric-
+tion of actions of objects of AfromDto Pinj(A), giving the embedding from
+3.14 ofAintoB. Then any natural transformation, τ: evN→evN′, between
+evaluation-on-Bfunctors (i.e. objects of Pinj( D) regarded asB-structures) re-
+stricts to one between evaluation-on- Afunctors (i.e.A-structures) and that is
+just a morphism from NtoN′as objects ofD.
+Now we show pure-injectivity as B-structures. Let us write NBinstead of
+evNto emphasise the view of these as structures. Then, given N∈Pinj(D),
+there is some index set Iand ultraﬁlterFonIsuch that the ultrapower NI
+B/F
+is pure-injective as a B-structure. It is, in particular, pure-injective as an A-
+structure. Consider the diagonal map but regarded as a (pure) e mbedding of
+A-structures: ( NB)A→(NI
+B/F)A. Theﬁrstobjectcanbeidentiﬁedwith Nand
+hencethismapissplit. Thereforethe imageofthismapregardedinth ecategory
+ofB-structures is split. But, since the action of the objects of Bcommute with
+28
+
+--- Page 29 ---
+
+ultraproducts of objects of Pinj( D) (since ultraproducts are certain direct limits
+of products), we have NI
+B/F= (NI/F)Band so the diagonal embedding of NB
+intoNI
+B/Fis split. Thus NBis pure-injective. /square
+Note thatDis naturally a subcategory of DviaA→B.
+Dbar
+Corollary 3.16. With notation as above, Pinj(D) = Pinj(D)and soDis the
+deﬁnable subcategory of Mod-Bgenerated by Pinj(D).
+Proof.IfNBis pure-injective as a B-structure then certainly it is pure-injective
+as anA-structure, and we have just shown the converse. /square
+Corollary 3.17. For any deﬁnable category we have D=D.
+Proof.By [31, p. 462] (see [43, 12.2]), the category A= fun(D) is determined
+by Pinj(D) (speciﬁcally fun( D) = ((((Pinj(D),Ab)fp)op)fp)op) and so, retaining
+the notation from above, A=Band henceD=D./square
+Theorem 3.18. LetAbe a skeletally small abelian category and let D=
+Ex(A,Ab)be the corresponding deﬁnable category. Then A= (Pinj(D),Ab)→/producttext
+.
+In particular every functor on Pinj(D)which commutes with direct products and
+those direct limits which are in Pinj(D)extends to a unique functor in DEFfrom
+DtoAb.
+We remark that we do mean “unique” (as opposed to unique to natur al
+equivalence), the point being that every object of Dis a (pure) subobject of a
+pure-injective object.
+In order to return to the general case, we set A′= (D,C)→/producttext
+andB′=
+(Pinj(D),C)→/producttext
+. As remarked in the proof of 3.14, we have a full, faithful and
+exact embedding A′→B′. If this were not an equivalence then the correspond-
+ing deﬁnable categories would not be equivalent - that is, there would be an
+exact functor D′fromA′toAbwhich does not extend to an exact functor from
+B′toAb. That would be a C-valued model which distinguishes between A′and
+B′. But, by the analogue, 4.8 below, of Deligne’s theorem, there would t hen
+be anAb-valued model which distinguishes AandB(in the above notation) -
+contradicting 3.18.
+Example 3.19.This example compares two very closely related deﬁnable cat-
+egories from the point of view of this section. Take Dto be the category of
+modules over the localisation Z(p)ofZ. Then every pure-injective Z(p)-module
+is also a pure-injective Z(p)-module and the converse is almost true, the diﬀer-
+ence being that although Qis a pure-injective Z(p)-module the corresponding
+(indecomposable, torsionfree injective) Z(p)-module is the direct sum of con-
+tinuum many copies of Q. We have the inclusion of Mod- Z(p)into Mod- Z(p)
+but not as a deﬁnable subcategory since the former is not closed un der pure
+submodules. If r∈Z(p)\Z(p)and we let Gbe the functor from Mod- Z(p)to
+Ab, and hence from Pinj(Mod- Z(p)toAb, which is multiplication by rthen
+this does not extend to a functor on Mod- Z(p).
+29
+
+--- Page 30 ---
+
+3.3Ex(A,D)is deﬁnable when Dis Grothendieck
+We know that if A ∈ABEXthen Ex(A,Ab) is a deﬁnable category. We
+show that, more generally, if Dis a deﬁnable category and is abelian, hence
+Grothendieck, hence locally ﬁnitely presented, then Ex( A,D) is again deﬁnable.
+First we consider the case that Ais Ab(R) and thatDis Mod-Sfor some
+skeletally small preadditive categories RandS.
+Lemma 3.20. IfR,S∈PREADD then(R,Mod-S)≃R-Mod-Sthe category
+of(R,S)-bimodules.
+Proof.An additive functor R→Mod-Sis anS-moduleMStogether with a
+leftR-module action in which each multiplication by r∈R(meaningris a
+morphism ofR) is a homomorphism in Mod- S, that is, such that the R- and
+S-actions commute. A natural transformation from one such to th e other is
+given by anS-module homomorphism MS→NSwhich commutes with each
+r-action, that is, a homomorphism of bimodules. /square
+exchains
+Example 3.21.TakeSto be the preadditive S-category freely generated by the
+quiver···→•n−1→•n→•n+1→...whereSis a ring, so Mod- Sis the
+category of chains of S-modules (with the arrows going right to left) (of which,
+note both the category of chain complexes and the category of ex act chain
+complexes are deﬁnable subcategories). Let Rbe the preadditive S-category
+generated by∗→∗′. Then an (R,S)-bimodule, a functor from Rto Mod-S, is
+given by two chains of S-modules and a morphism between them (meaning that
+all the squares commute). So R-Mod-Sis the category of morphisms between
+chains ofS-modules, alternatively of representations of the quiver A2=•→•
+in the category of complexes of S-modules.
+Since an additive functor R →Mod-Sis equivalent to an exact functor
+Ab(R)→Mod-S(2.1) we obtain the next corollary.
+Corollary 3.22. IfR,S∈PREADD thenEx(Ab(R),Mod-S)≃R-Mod-S=
+(R⊗Sop)-Mod≃Ex(Ab(R⊗Sop),Ab).
+From this special case we will extend to the general one. We will take the
+view of (R,S)-bimodules from the proof of the lemma above: that they are
+Obj(R)-indexed collections of objects of Mod- Slinked by the arrows of R. So,
+in general, an (R,S)-bimodule is, if we forgetthe R-module structure, not an S-
+module but a collection of S-modules. We will refer to these as the component
+S-modulesofthebimoduleand,ofcourse,wemaymakerestrictionso ntheseand
+hence restrictionson the bimodule. In particular, if Dis a deﬁnable subcategory
+of Mod-S, deﬁned by certain axioms (which specify that certain pp-pairs sho uld
+be closed) then it makes sense to require that each component of a n (R,S)-
+bimodule lie inD. Clearly this is a set of conditions in the language of ( R,S)-
+bimodules specifying closure of certain pp-pairs and hence gives a de ﬁnable
+subcategoryof (R,S)-Mod. We present an example before stating this formally.
+Example 3.23.In the example above, the category of chain complexes of S-
+modules is deﬁnable; let us be more explicit about this. The language fo rS-
+modules has a sort, snsay, for each integer nand, for each n, a constant symbol
+0nfor the 0 in sort n, a 2-ary function symbol + nfor addition in that sort and,
+for eachs∈Sa 1-ary function symbol, let us write it as fs,nfor multiplication
+30
+
+--- Page 31 ---
+
+bysin that sort (though, in practice we would just write it as “ s” in formulas).
+We also have in the language a function symbol, fdnsay, for the given arrow, dn
+say, from•nto•n+1; because we chose to look at right S-modules, that is Sop-
+modules, the symbol dnwill be for a function going from sort sn+1to sortsn.
+The condition on a right S-module that the composition d2be zero is equivalent
+to closure of the pp-pair ( ∃yn+1(xn−1=fdnfdn−1yn+1))/(xn−1= 0) or, writing
+it aswewouldwriteformulasformodules, ( ∃yn+1(xn=yn+1dndn−1))/(xn−1=
+0) (the subscripts to the variables indicate their sort, though in th ese formulas
+they are redundant since they are determined by the sorting of th e function
+symbols). Similarly, exactness of chain complexes can be axiomatised by adding
+to these pairs the collection of pp-pairs of the form ( xndn−1= 0)/(∃xn+1(xn=
+xn+1dn)).
+The language for ( R,S)-bimodules will have its sorts indexed by Obj( R)×
+Obj(S); denote these as s∗n,s∗′n(n∈Z). So if we take our set of pp-pairs to
+havea “∗-copy”and a “∗′-copy”ofeach ofthe abovepp-pairsthen these will cut
+out the subcategories of A2-representations in chain complexes (respectively, in
+exact complexes) of S-modules.
+(Ofcourseoneneed notuse thesameset of S-module axiomsoneachcompo-
+nentS-module so one can see further ways of specifying deﬁnable subcat egories
+of (R,S)-Mod.)
+Proposition 3.24. SupposeR∈PREADD andDis an abelian deﬁnable cate-
+gory. Then Ex(Ab(R),D)≃Ex(B,Ab)for someB∈ABEX.
+Proof.Suppose thatDis a deﬁnable subcategory of Mod- S. Then, as argued
+above,anadditivefunctorfrom RtoDisjust an(R,S)-bimodule whichbelongs
+to a certain deﬁnable subcategory of the functor category ( R⊗Sop)-Mod. That
+is, (R,D) isadeﬁnable subcategoryof( R,S)-Mod, henceis adeﬁnablecategory
+and so Ex(Ab(R),D)≃(R,D)≃Ex(B,Ab) for someB∈ABEX./square
+The ﬁnal step is to replace Ab( R) by a generalA∈ABEXbut that, asnoted
+in 2.18, has the form Ab( R)/Tfor someR∈PREADD andT ∈Ser(Ab(R)).
+Then the quotient functor Ab( R)→Ab(R)/T=Ainduces an embedding of
+Ex(A,D) as a subcategory of Ex(Ab( R),D), namely as the full subcategory on
+thosefunctorswhichannihilatethe Serresubcategory T. We havejust seenthan
+Ex(Ab(R),D) is deﬁnable and it is easy to see that the condition of annihilating
+Tis a deﬁnable one: for each object of (a generating set of) Tchoose a pp-pair
+which deﬁnes it (we are using, as we did near the beginning of Section 2 .3, the
+description of these exact functors as pp-pairs). Thus we have a n embedding of
+Ex(A,D) as a deﬁnable subcategory of Ex(Ab( R),D) and so Ex(A,D) is indeed
+deﬁnable.
+Theorem 3.25. Suppose thatAis a skeletally small abelian category and that D
+is a deﬁnable category which is abelian. Then Ex(A,D)is a deﬁnable category,
+in particular is equivalent to Ex(B,Ab)for some small abelian category B.
+In the topos-analogy view of the next section, one would say that if E=
+Ex(A,Ab)isadeﬁnablecategoryand Disanabelian=locallyﬁnitelypresented
+Grothendieck deﬁnable category then Ex( A,D) is the category of D-models of
+the regular theory with (the additive version of) classifying pretop osA, as
+opposed to the category EofAb-models.
+31
+
+--- Page 32 ---
+
+4 Locally coherent additive categories
+Recall that an object Aof an additive category Aisﬁnitely presented if the
+representable functor ( A,−) :A→Abcommutes with direct limits. Set Afp
+to be the full subcategory of ﬁnitely presented objects of A. We say that Ais
+coherent ifit isﬁnitelypresentedandeachofitsﬁnitely generatedsubobject sis
+ﬁnitely presented. An abelian category Gwith direct limits is locally coherent
+iﬀ it has a generating set consisting of coherent objects. Such a ca tegory is, in
+particular, ﬁnitely accessible, hence ([12, 2.4]) Grothendieck. It is e asy to check
+that in such a category ﬁnitely presented = coherent. The catego ry Mod-Ris
+locally coherent iﬀ Risright coherent .
+The connection between ABEXandCOHgoes back to Gabriel [17, 11.4
+Thm. 1] (for locally noetherian categories) and Roos [48, 2.2] (in gen eral), also
+see [37].
+Theorem 4.1. IfAis a skeletally small abelian category then Lex(Aop,Ab)≃
+Flat-A≃Ind(A)is a locally coherent Grothendieck category GwithGfp≃A.
+IfGis a locally coherent Grothendieck category then Gfpis abelian andG≃
+Lex((Gfp)op,Ab).
+The Ind-completion, Ind( A), ofAis the free extension of Ato a category
+withdirectlimits(theobjectscanbedeﬁnedtobeequivalenceclasse sofdirected
+diagrams inA, see, e.g., [3, Exp. 1, §8], [26,§VI.1], [28, Chpt. 6]). To see why
+Flat-A≃Ind(A) recall that the ﬂat right A-modules are the direct limits of
+(ﬁnitely presented) projective A-modules and those are the images of objects of
+Aunder the Yoneda embedding.
+The morphisms of COHare adjoint pairs of functors where the left adjoint
+is exact and preserves coherence of objects. Precisely, a morph ismf:G→H
+is given by a morphism f∗:H→Gand a morphism f∗:G→Hsuch that
+(f∗,f∗) is an adjoint pair with the left adjoint f∗being (left) exact and with
+f∗Hfp⊆Gfp. We referto these as coherent morphisms anda typicalnotation
+isf:G→H, which expands to G
+f∗/d53/d53Hf∗
+/d118/d118. This is an additive analogue of the
+deﬁnition of a geometric morphism, e.g. [27, A4.1.1], with the added ﬁnit eness
+condition that f∗preserve coherent objects. Such pairs of functors have alread y
+been considered by Krause, see [30, SS9-11]; in particular, [30, 6.7], the functor
+f∗also preserves direct limits (as well as absolutely pure and injective o bjects -
+that is, the corresponding deﬁnable categories and their pure-inj ective objects,
+the absolutely pure objects being the exact functors, see, e.g., [4 3,§11]).
+The 2-arrows of COHare the natural transformations. More precisely, if
+f,g:G→Hare morphisms, then a 2-arrow from f= (f∗,f∗) tog= (g∗,g∗)
+is a natural transformation τ∗:f∗→g∗equivalently, see below, a natural
+transformation τ∗:g∗→f∗.
+adjnattrans
+Lemma 4.2. Suppose that f= (f∗,f∗)andg= (g∗,g∗)are two adjoint pairs
+of functors from GtoH. Then there is a natural bijection between natural
+transformations τ∗:f∗→g∗and natural transformations τ∗:g∗→f∗. This
+bijection commutes with composition of natural transforma tions as well as with
+horizontal and vertical composition of natural transforma tion with functors.
+32
+
+--- Page 33 ---
+
+Proof.Here is how to get from τ∗to its correspondent τ∗. More details are at
+[36, V.2.1].
+We have, for H∈H, the component f∗Hτ∗
+H−−→g∗H. We apply this with
+H=g∗Gandproceedasfollows,where ǫgdenotesthecounitof gandηfdenotes
+the unit of f:
+f∗g∗Gτ∗
+g∗G−−−→g∗g∗Gandg∗g∗G(ǫg)G−−−→G
+hence
+f∗g∗G(ǫg)Gτ∗
+g∗G−−−−−−→G
+hence
+f∗f∗g∗Gf∗(ǫg)Gf∗τ∗
+g∗G−−−−−−−−−→ f∗Gtogether with g∗G(ηf)g∗G−−−−−→f∗f∗g∗G
+giving
+g∗Gf∗(ǫg)Gf∗τ∗
+g∗G(ηf)g∗G−−−−−−−−−−−−−−→ f∗G
+We setτ∗=f∗(ǫg)G.f∗τ∗
+g∗G.(ηf)g∗G./square
+The correspondence between ABEXandCOHappears in [45] but without
+details (there the focus is on the anti-equivalence between ABEXandDEF; the
+suggestion of considering the associated locally coherent categor ies came from
+the referee of that paper). Here we give the some details (since I a m not aware
+of any reference for them).
+Theorem 4.3. There is a natural anti-equivalence of 2-categories betwee nCOH
+andABEX, as described above.
+We have already seen, in 4.1, the correspondence on objects. On m orphisms,
+the anti-equivalence between ABEXandCOHis as follows.
+Proposition 4.4. ([30, 10.1]) To each arrow f0∈Ex(A,B)there corresponds
+the coherent morphism f= (f∗,f∗) :H= Ind(B)→Ind(A) =Gwhich has
+f∗:H= Lex(Bop,Ab)→Lex(Aop,Ab) =Gjust precomposition with fop
+0
+and hasf∗= Ind(f0)(the Ind-construction is deﬁned in an obvious way on
+functors).
+In the other direction we take an arrow (f∗,f∗) :H→Gtof∗↾Gfp.
+Proof. The second statement is immediate since if f∗is exact then so is its
+restriction. For the ﬁrst statement, the only part that takes so me checking is
+thatfis a coherent morphism.
+First, we show that Ind( f0) is exact. Given an exact sequence 0 →G′→
+G→G′′→0 inGwriteGas a direct limit of ﬁnitely presented objects,
+G= lim−→Gλ, letG′
+λbe the pullback of Gλ→GandG′→G, writeG′
+λas a
+direct limit of ﬁnitely generated (hence ﬁnitely presented) subobje ctsG′
+λµand
+setG′′
+λµ= coker(G′
+λ,µ→Gλ) and note the induced canonical map G′′
+λµ→G′′
+λ.
+All these exact sequences ﬁt together into a directed system in Gfp, the colimit
+of which is the original exact sequence. Since f0is exact, the component exact
+sequences 0→G′
+λµ→Gλ→G′′
+λµ→0 are taken by it to exact sequences in
+H. These exact sequences form a directed system in Hand so the direct limit
+is exact and, by deﬁnition of f∗as Ind(f0), that direct limit is 0 →f∗G′→
+f∗G→f∗G′′→0, sof∗is exact. Of course, by deﬁnition f∗takesGfptoGfp.
+We must show that Ind( f0) is left adjoint to f∗, so takeH∈HandG∈G.
+WriteGas a direct limit, G= lim−→λGλ, of ﬁnitely presented objects in Gwhere
+we haveGλ= (−,Aλ) for some directed system {Aλ}λof objects ofA. Then:
+33
+
+--- Page 34 ---
+
+/parenleftbig
+Ind(f0)G,H/parenrightbig
+=/parenleftbig
+Ind(f0)(lim−→λGλ),H/parenrightbig
+=/parenleftbig
+Ind(f0)(lim−→λ(−,Aλ)),H/parenrightbig
+=/parenleftbig
+lim−→λInd(f0)(−,Aλ),H/parenrightbig
+by deﬁnition of Ind( f0)
+=/parenleftbig
+lim−→λf0(−,Aλ),H/parenrightbig
+=/parenleftbig
+lim−→λ(−,f0Aλ),H/parenrightbig
+= lim←−λ/parenleftbig
+(−,f0Aλ),H/parenrightbig
+= lim−→λH(f0Aλ) (recall that His a functor onBop)
+= lim←−λf∗HAλ(f∗His a functor onAopbut now we convert the action via
+Yoneda to an action on A, expressed within G)
+= lim←−λ/parenleftbig
+(−,Aλ),f∗H/parenrightbig
+(by Yoneda)
+=/parenleftbig
+lim−→λ(−,Aλ),f∗H/parenrightbig
+= (G,f∗H)./square
+One may also check, for 4.3, the correspondence between 2-arro ws.
+Example 4.5.Leti0betheinclusionofthecategory,reg- k/tildewiderA1, ofﬁnite-dimensional
+regular modules over the Kronecker algebra k/tildewiderA1(or over any tame heredi-
+tary ﬁnite-dimensional algebra)into the categorymod- k/tildewiderA1of ﬁnite-dimensional
+modules. This is exact, so induces a coherent morphism as above, wit h the left
+adjoint being the inclusion of all regular modules (i.e. direct limits of ﬁnit e-
+dimensional regular modules) and the right adjoint taking an arbitra ryk/tildewiderA1-
+moduleMto the module which, in the notation and terminology of [47, p. 326]
+(also see [46]) isT(M)/I(M) whereT(M), the torsion submodule of M, is the
+sum of all regular and preinjective submodules of M, modulo the sum, I(M) of
+all preinjective submodules of Mwhich, since the ring is tame hereditary, will
+be a direct summand ([47, 3.7]).
+We explore this example a bit further. The category reg- k/tildewiderA1is a direct
+sum of uniserial abelian categories indexed by P1(k), that indexed by an irre-
+ducible monic polynomial f∈k[T] being equivalent to the category of ﬁnitely
+generated torsion modules over k[T](f). The Ind-completion of this category
+is, by [32, 2.1(iii)], the full subcategory, Reg- k/tildewiderA1, on thosek/tildewiderA1-modules every
+ﬁnite-dimensional submodule of which is regular, and is equivalent to t he direct
+product of the categories of torsion modules over the various loca lisations of
+k[T].
+The functor ( i0)∗:M/mapsto→T(M)/I(M) takes the generic module G, since it
+is a direct limit of preprojective modules and since, by [30, 6.7], ( i0)∗commutes
+with direct limits, to 0. Also, given any preinjective module Ithere is, by [46,
+§§6,7], an exact sequence 0 →V′→V→I→0 withV′a direct sum of copies
+ofGandVa direct sum of copies of Gand Pr¨ ufer modules. The image under
+(i0)∗of this exact sequence has, therefore, just the one possibly non -zero term
+(i0)∗V; but this is 0 only if the sequence is split - which need not be the case -
+and so (i0)∗is not exact.
+Thedeﬁnable categorycorrespondingto k/tildewiderA1-mod is, by1.3, Proj- k/tildewiderA1. That
+corresponding to reg- k/tildewiderA1is Ex(reg-k/tildewiderA1,Ab) which, by the decomposition of
+reg-k/tildewiderA1, is equivalent to the P1(k)-indexed product of categories of the form
+Ex(tors-k[T](f),Ab) which (cf. a similar computation in [44]) may be computed
+to be equivalent to the category of reduced ﬂat k[T](f)-modules. Putting these
+together, we deduce that Ex(reg- k/tildewiderA1,Ab) may be taken to be the category
+of “reduced torsionfree” k/tildewiderA1-modules. The elementary dual of this category
+consistsofthe direct sums ofPr¨ ufer(“torsionmodulo divisible”, s ee[47, p. 326])
+k/tildewiderA1-modules.
+Here is the action of duality on COH: ifG= Lex((Gfp)op,Ab) is a locally
+34
+
+--- Page 35 ---
+
+coherent Grothendieck category then the duality induced on COHwill take it
+to Lex(Gfp,Ab) which is the conjugate category in the sense of Roos ([48,
+p. 204]) and which is denoted /tildewideG. The action on morphisms is as follows: if
+(f∗,f∗) :H→Gis the coherent morphism induced by f0∈Ex(A,B) then its
+“conjugate” is the coherent morphism induced by fop
+0∈Ex(Aop,Bop), namely
+(/tildewidef∗,/tildewidef∗) :/tildewideH→/tildewideGwith/tildewidef∗being precomposition with f0and/tildewidef∗= Ind(fop
+0).
+This follows directly from the deﬁnition of the involution on ABEXand the
+description of the equivalence in 4.3.
+One might note any locally coherent Grothendieck category Galso is an
+object of DEF, however, its elementary dual Gd(Section 3) need not (though in
+some cases will) coincide with its conjugate: for example, if Ris right coherent
+but not left coherent then the conjugate category of Mod- R(which is described
+in [48]) cannot be its elementary dual R-Mod since the latter is not locally
+coherent.
+IfGis a locally coherent Grothendieck category then a full subcategor yG′
+is aGiraud subcategory if it isreﬂective , that is, the inclusion i:G′→G
+has a left adjoint and that left adjoint is (left) exact. These are ex actly the
+subcategories of Gof the formGτ, obtained by localising Gat a hereditary
+torsion theory τand then composing the localisation functor Qτ:G→Gτwith
+its right adjoint (which embeds the localised category back into G). This is the
+additive analogue of sheaﬁﬁcation in the topos/categories of shea ves context.
+Proposition 4.6. Letτbe a hereditary torsion theory on the locally coherent
+Grothendieck category G. Then the following conditions are equivalent.
+(i)Gτ
+i/d54/d54GQτ/d116/d116is a coherent morphism from GτtoG;
+(ii) the localisation functor Qτtakes ﬁnitely presented objects of Gto ﬁnitely
+presented objects of Gτ;
+(iii)τis of ﬁnite type (equivalently, since Gis locally coherent, an elementary
+torsion theory in the sense of [38], see [42, §11.1.3])
+Proof.The equivalence of (i) and (ii) is just the deﬁnitions. That (iii) implies
+these is part of [42, 11.1.26]. We could ﬁnish by appealing to [30, 6.7] and ,
+e.g., [42, 11.1.12] but a direct proof is straightforward, as follows. S uppose that
+τis not of ﬁnite type. Then there is G∈GfpandG′≤Gwhich isτ-dense
+(i.e.G/G′is torsion) but which has no ﬁnitely generated τ-dense subobject (we
+do assume some acquaintance with torsion theory here - see [49], th ough what
+is in [42, Chpt. 11] should suﬃce). So G′=/summationtext
+λclG′
+τGλ- the directed sum of
+theτ-closures in G′of its ﬁnitely generated subobjects - and for each λwe have
+clG′
+τGλ<G′.
+SinceGis locally coherent each Gλis ﬁnitely presented so, by hypothesis,
+QτGλis a ﬁnitely presented object of Gτ. SinceQτis a left adjoint it com-
+mutes with directed colimits so we have QτG=QτG′=Qτlim−→λclG′
+τ(Gλ) =
+lim−→λQτclG′
+τ(Gλ) = lim−→λQτclG
+τ(Gλ) (sinceG′isτ-dense inG) = lim−→λQτGλ. If
+QτGwere ﬁnitely presented then there would be λsuch thatQτGλ=QτGand
+hence such that Gλisτ-dense inGso, in particular, Gλwould beτ-dense in
+G′- a contradiction. /square
+35
+
+--- Page 36 ---
+
+Example 4.7.TakeAto be the categoryof ﬁnite abelian groups and Bto be the
+category of ﬁnitely generated abelian groups, so Ind( i), whereiis the inclusion
+ofAinB, is the inclusion of the category, Tors- Z, of torsion abelian groups in
+Mod-Z, with right adjoint the torsion functor τ. This give a coherent morphism
+from Mod- Zto Tors-Z: Mod-Z
+τ/d50/d50Tors-ZInd(i)/d114/d114. Note that in this example it
+is the case that τpreserves ﬁnitely presented objects; this is far from being
+the case for a general coherent morphism (consider, for instanc e the example
+Mod-Q
+i/d50/d50Mod-ZQτ=−⊗Q/d113/d113of 4.6).
+4.1 The additive version of the classifying topos
+In this section we draw out explicitly the analogies between what we ha ve here
+and the situation seen in topos theory. Recall ([3], [27], [33]) that if Cis a
+(skeletally) small category then a contravariant functor from Cto the category,
+Set, of sets is referred to as a presheaf onC. In the classical case - that
+of a presheaf on a topological space - the category Cis the collection of open
+subsets of the space, ordered by inclusion and thereby conceived of as a poset-
+type category (indeed a locale). The category, ( Cop,Set), of such functors is
+the non-additive correspondent to the category, Mod- R= (Rop,Ab), of right
+modules over a (skeletally) small preadditive category R.
+A Grothendieck topology on Cis a notion of “covering” (generalising the
+notion of open cover in topology); Ctogether with a Grothendieck topology is
+termed a site. The additive analogue is a hereditary torsion theory o n Mod-R
+(presented as a system of dense subobjects of the generating p rojectives (−,P)
+forP∈R). A sheaf for a site is a presheaf which satisﬁes the sheaf condition s
+(existence and uniqueness of patchings) for that site. There is a s heaﬁﬁcation
+functor on the category of presheaves and the resulting catego ry of sheaves has
+an embedding, right adjoint to sheaﬁﬁcation, as a full subcategor y of the cate-
+gory of presheaves. The additive analogue of a sheaf is a module whic h is tor-
+sionfree and divisible with respect to the torsion theory. There is a lo calisation
+(=sheaﬁﬁcation) functor on the category of modules and the res ulting quotient
+category has an embedding, right adjoint to localisation, as a full su bcategory
+of the category of modules.
+The analogy is wide, extends right down to technical details, and has been
+known for a long time. An algebraist need only skim through the releva nt
+sections of [6] and a category-theorist through [49] to see the pa rallels. This
+paper, motivated by the model theory of additive structures, is, in part, drawing
+out the analogy further and I hope that it is a useful thing to do and that it will
+give further insight and results. So far as I am aware there is no way of directly
+deducing the additive version of results from the Set-version. Of c ourse, one
+can say that the former is an enriched version of the latter but it is n ot clear
+to me that allows one to avoid having to write down the details to obtain the
+additive version.
+A Grothendieck topos is the category of sheaves on a site; the add itive
+analogue is the notion of a Grothendieck abelian category. There is a notion
+of coherent topos - this can be deﬁned as a topos which can be obta ined from
+36
+
+--- Page 37 ---
+
+a presheaf category by sheaﬁﬁcation at a ﬁnite-type site (see [33 ,§IX.11]). A
+ﬁnite-type site is one where the underlying category Chas ﬁnite limits and the
+topology has a basis of ﬁnite covering families. Analogously a locally coh erent
+Grothendieck categoryis one which can be obtained by a ﬁnite-type localisation
+of a locally coherent module category, and a module category is locally coherent
+iﬀ it is (Morita) equivalent to one of the form Mod- RwhereRhas ﬁnite weak
+limits. The last statement is almost in [12] and the former statement a lmost in
+[42,§§11.1.3,11.1.4]. Thus COHis the additive analogue of the 2-category of
+coherent toposes.
+As forABEX, there is a general notion of coherent object: it is an object
+Csuch that whenever one has a pullback
+P /d47/d47
+/d15/d15B
+/d15/d15
+B′ /d47/d47C
+whereB,B′are ﬁnitely generated ( Bisﬁnitely generated if the representable
+functor (B,−) commutes with directed colimits of monomorphisms) then Palso
+is ﬁnitely generated. If Eis a locally coherent topos then the full subcategory of
+coherent objects forms what is termed a pretopos [27, §A1.4]; such a skeletally
+small, generating, subcategory is the analogue of GfpwhenG∈COH. Thus the
+pretoposeswhichsoarisearethe analoguesofskeletallysmallabelia ncategories.
+Theanalogueof DEFarisesthroughthelinkbetweentoposesandmathemat-
+ical logic. There is a very general notion of “geometric theory” (se e [27], [33]);
+if one stays with ﬁnitary logic (as is usual in model theory) then one is dealing
+with “coherent” theories. In fact, the strict analogue of the mod el theory of the
+additive situation, at least if we want our categories of models to hav e ﬁnite
+products, is regular logic in the sense of [27, §D1.1], see [7,§2.5]. IfTis a geo-
+metric theory then there is a corresponding “classifying topos”, B[T] which can
+be deﬁned by the universal property that if Eis any Grothendieck topos then
+Geom(E,B[T])≃ModET, where Geom(E,F) denotes the set, indeed category,
+of geometric morphisms from EtoF(these are the analogue of the morphisms
+inCOH) and Mod E(T) is the category of models of the theory of TinE(the
+classical notion of a Set-model of a theory can be extended for geometric theo-
+ries to that of a model in any Grothendieck topos). The category, ModSet(T),
+ofSet-models parallels the category DEFof deﬁnable categories - which are,
+indeed, categories of Ab-models of (regular) additive theories. The analogous
+equivalence in our context would read COH(G,Fun(D))≃ModG(Th(D)) where
+Dis any deﬁnable category, Th( D) is its theory, and where the right-hand side
+can be deﬁned through this equivalence or, more naturally in view of 3 .2, by
+deﬁning Mod G(Th(D)) to be Ex(fun(D),G) (see Section 3.3) - the category of
+G-models of the theory of D. Thus Fun(D) plays the role of the classifying topos
+for (the theory of) D. We prefer to say things in terms of deﬁnable categories D
+rather than theories especially since the former are (“Morita”-)in variantobjects
+whereas there are many literally diﬀerent, though equivalent, theo ries withDas
+the category of models. It should be noted, though, that the cat egory Fun(D)
+can be constructed from any theory Twhose category of models is D, essen-
+tially in the same way that the classifying topos is constructed synta ctically
+(see, e.g. [33,§10.5]).
+For more on the parallels see the references already mentioned and also the
+37
+
+--- Page 38 ---
+
+work (e.g. [9, 10, 11]) of Caramello which heavily exploits the topos ana logue of
+Morita equivalence and the usefulness of a topos having more than o ne presen-
+tation as a category of sheaves on a site.
+4.2 Points of locally coherent categories
+By a point of a topos Eis meant a geometric morphism f:Set→E, that is, an
+adjointpairoffunctors Set
+f∗/d54/d54Ef∗
+/d115/d115with the left adjoint f∗left exact, meaning
+that it preserves ﬁnite limits. In our situation Abreplaces Setand we imposed
+the additional ﬁniteness requirement that f∗should preserve coherent objects,
+though we relax that here so as to make a better comparison, and w ill refer
+tocoherent points (those that preserve coherent objects) and ( geometric )
+points(without that condition) Ab
+f∗/d54/d54Gf∗
+/d116/d116. By 4.3/4.4, to give a coherent
+point of a locally coherent Grothendieck category Git is equivalent to give an
+exact functorGfp→mod-Z.
+If we setD= Ex(Gfp,Ab) (soG= Fun(D)) then each object D∈Dgives
+the exact functor ev D:Gfp→Mod-Zand the requirement that the image
+of this functor (playing the role of “ f0” in 4.4) be contained in mod- Zis the
+requirement that each pp-sort ( φ/ψ)(D) be a ﬁnitely generated abelian group.
+Of course, there might be few or even no such objects; a simple exa mple is given
+by takingD(orG) to be Mod- Q.
+If, in order to obtain more points, we remove the ﬁniteness conditio n; then
+we have an analogue of Deligne’s Theorem (see [33, §IX.11]) which says that a
+coherent topos has enough points.
+Proposition 4.8. Every locally coherent Grothendieck category Ghas enough
+points in the sense that if α,β:G⇒H,α/\e}atio\slash=β, are distinct parallel morphisms
+ofGthen there is a geometric morphism f:Ab→Gwhich distinguishes them
+in the sense that f∗α/\e}atio\slash=f∗β.
+Proof.Since each of α,βis a direct limit of morphisms in Gfpit is suﬃcient
+to assume that α,βare morphisms in Gfpand hence can be regarded as pp-
+deﬁnable maps in fun( D) whereD= Ex(G,Ab). Since they are diﬀerent, there
+is a modelD∈Don which they are diﬀerent, so ev D:Gfp→Abis such that
+evD(α)/\e}atio\slash= evD(β). SinceGis the Ind-completion of Gfp, this induces a lim−→-
+preserving functor f∗:G→Abwhich, note, is also exact (every exact sequence
+inGis a directed colimit of exact sequences in Gfp).
+We have to show that f∗has a right adjoint and we have just noted that it
+preserves colimits so it remains to check the solution set condition of the adjoint
+functor theorem. But that follows by El Bashir’s theorem [15, 3.2]. /square
+Along the same lines, we can weaken the ﬁniteness condition on f∗by deﬁn-
+ing anα-coherent morphism f:G→Hbetween Grothendieck categories to be
+an adjoint pairG
+f∗/d53/d53Hf∗
+/d118/d118withf∗exact such that f∗:H<α→G<α, where
+G<αdenotes the full subcategory of <α-presented objects of G.
+38
+
+--- Page 39 ---
+
+grothalpha
+Lemma 4.9. IfG
+f∗/d53/d53Hf∗
+/d118/d118is an adjoint pair of functors between Grothendieck
+categories with f∗left exact then there is αsuch thatf∗H<α⊆G<αand so such
+that this morphism is α-coherent.
+Proof. (sketch) There is βsuch thatH<βis generating and this category is
+skeletally small, so its image under f∗is contained inG<α′for someα′. Then
+ifαis the least regular cardinal greater than both βandα′it will be the case
+thatf∗H<α⊆G<α./square
+In the example mentioned earlierthere wereno non-zerocoherent points and
+a perhaps morenaturalremedy is to note that there areenough Q-points, mean-
+ing coherent morphisms from Mod- Q. This ﬁts with the (additive) “functor-
+of-points” view of Section 2.4.1, in the terminology of which a geometr ic point
+ofGis anAb-point ofGfp. If it is a coherent point then one may see that
+it will induce a morphism of “abelian spaces” OZ→ODwhereOZis Spec(Z)
+equipped with its usual structure sheaf and where ODis the natural presheaf of
+localisations of fun( D) over Zar(D) (as in [45,§3], but not sheaﬁﬁed). Thus we
+come to the view that a coherent ( Ab-)point of a locally coherent category Gis
+a morphism of ringed spaces from OZto a space which has the indecomposable
+injectives ofGas points and which carries the Zariski topology (as deﬁned by
+Gabriel [17,§V.4, Chpt. VI], that is, in terms of injective modules rather than
+prime ideals). As already remarked, if Gis ak-category, where kis a ﬁeld, or
+just any commutative ring (for instance) then it would be more appr opriate to
+usek-points ofGand so to associate morphisms of ringed spaces from Okto
+the abelian space, OG, associated toG.
+References
+[1] J. Ad´ amek and J. Rosick´ y, Locally Presentable and Accessible C ate-
+gories, London Math. Soc., Lecture Note Ser., Vol. 189, Cambridge Uni-
+versity Press, 1994.
+[2] M. Adelman, Abelian categories over additive ones, J. Pure Appl. A lge-
+bra, 3(2) (1973), 103-117.
+[3] M. Artin, A. Grothendieck and J.L. Verdier, Th´ eorie des Topos e t Coho-
+mologie Etale des Sch´ emas (SGA4), Lecture Notes in Mathematics, Vol.
+269, Springer-Verlag, 1972.
+[4] M. Auslander, Large modules over Artin algebras, pp. 1-17 inA. Heller
+and M. Tierney (Eds.), Algebra, Topology and Category Theory, Ac a-
+demic Press, 1976.
+[5] M. Auslander, Isolated singularities and existence of almost split s e-
+quences, (Notes by Louise Unger pp. 194-242 inRepresentation Theory
+II, Groupsand Orders, Ottawa1984, Lecture Notes in Mathemat ics, Vol.
+1178, Springer-Verlag, 1986.
+39
+
+--- Page 40 ---
+
+[6] F. Borceux, Handbook of Categorical Algebra, Vol. 3, Cambridg e Uni-
+versity Press, 1994.
+[7] P. Bridge, Essentially Algebraic Theories and Localizations in Topos es
+andAbelianCategories,DoctoralThesis, UniversityofMancheste r,2012.
+[8] K. Burke, Some Model-Theoretic Properties of Functor Catego ries for
+Modules, Doctoral Thesis, University of Manchester, 1994.
+[9] O. Caramello, Lattices of theories, preprint, 2008, arXiv:0905.0 299.
+[10] O. Caramello, One topos, many sites, preprint, 2009, arXiv:090 7.2361.
+[11] O. Caramello, The uniﬁcation of mathematics via Topos Theory, 2 010,
+arXiv:1006.3930.
+[12] W. Crawley-Boevey, Locally ﬁnitely presented additive categor ies,
+Comm. Algebra, 22 (1994), 1641-1674.
+[13] W. Crawley-Boevey, Inﬁnite-dimensional modules in the repres entation
+theory of ﬁnite-dimensional algebras, pp. 29-54 inI. Reiten, S. Smaløand
+Ø. Solberg (Eds.), Algebras and Modules I, Canadian Math. Soc. Con f.
+Proc., Vol. 23, Amer. Math. Soc, 1998.
+[14] S. Crivei, M. Prest and B. Torrecillas, Covers in ﬁnitely accessible cate-
+gories, Proc. Amer. Math. Soc., 138 (2010), 1213-1221.
+[15] R. El Bashir, Covers and directed colimits, Algebras and Repres entation
+Theory, 9 (2006), 423-430.
+[16] P. Freyd, Representations in abelian categories, pp. 95-120it in Proceed-
+ings Conf. Categorical Algebra, La Jolla, 1965, Springer-Verlag, 1 966.
+[17] P. Gabriel, Des cat´ egoriesab´ eliennes, Bull. Soc. Math. Franc e, 90 (1962),
+323-448.
+[18] P. Gabriel and F. Ulmer, Lokal pr¨ asentierbareKategorien, L ecture Notes
+in Mathematics, Vol. 221, Springer-Verlag, 1971.
+[19] G. Garkusha, Relative homological algebra for the proper class ωf,
+Comm. Algebra, 32(10) (2004), 4043-4072.
+[20] G. A. Garkusha and A. I. Generalov, Duality for categories of ﬁ nitely
+presented modules ( in Russian ), Algebra Analiz., 11(6) (1999), 139-152,
+English transl. in St. Petersburg Math. J., 11(6) (2000), 1-11.
+[21] L. Gruson and C. U. Jensen, Dimensions cohomologiques reli´ ee s aux
+foncteurs lim←−(i), pp. 243-294 inLecture Notes in Mathematics, Vol. 867,
+Springer-Verlag, 1981.
+[22] I. Herzog, Elementary duality of modules, Trans. Amer. Math. Soc., 340
+(1993), 37-69.
+[23] I. Herzog, The Ziegler spectrum of a locally coherent Grothend ieck cat-
+egory, Proc. London Math. Soc., 74(3) (1997), 503-558.
+40
+
+--- Page 41 ---
+
+[24] W. Hodges, Model Theory, Encyclopedia of Mathematics, Vol. 4 2, Cam-
+bridge University Press, 1993.
+[25] H. Hu, Dualities for accessible categories, pp. 211-242 inCanad. Math.
+Soc. Conf. Proc., Vol. 13, 1992.
+[26] P. T. Johnstone, Stone Spaces, Cambridge University Press, 1982.
+[27] P.T. Johnstone,SketchesofanElephant; AToposTheoryCo mpendium,
+Oxford University Press, 2002.
+[28] M. Kashiwara and P. Schapira, Categories and Sheaves, Grund . math.
+Wiss., Vol. 332, Springer, 2006.
+[29] H. Krause, The Spectrum of a Module Category, Habilitationssc hrift,
+Universit¨ at Bielefeld, 1997, published as Mem. Amer. Math. Soc., No.
+707, 2001.
+[30] H. Krause, Functorson locallyﬁnitely presentedadditive categ ories,Col-
+loq. Math., 75 (1998), 105-132.
+[31] H. Krause, Exactly deﬁnable categories, J. Algebra, 201 (199 8), 456-492.
+[32] H. Lenzing, Homological transfer from ﬁnitely presented to inﬁ nite mod-
+ules, pp. 734-761 inAbelian Group Theory, Lecture Notes in Math., Vol.
+1006, Springer-Verlag, 1983.
+[33] S. MacLane and I. Moerdijk, Sheaves in Geometry and Logic: A F irst
+Introduction to Topos Theory, Springer-Verlag, 1992.
+[34] M. Makkai, A theorem on Barr-exact categories with an inﬁnitar y gen-
+eralization, Ann. Pure Appl. Logic, 47 (1990), 225-268.
+[35] M. Makkai and R. Par´ e, Accessible Categories: The Foundatio ns of Cat-
+egorical Model Theory, Contemp. Math., Vol. 104, Amer. Math. So c.,
+1989.
+[36] B. Mitchell, Theory of Categories, Academic Press, 1965.
+[37] U. Oberst and H. Rohrl, Flat and coherent functors, J. Algebr a, 14(1)
+(1970), 91-105.
+[38] M. Prest, Elementary torsion theories and locally ﬁnitely presen ted
+Abelian categories, J. Pure Applied Algebra, 18 (1980), 205-212.
+[39] M. Prest, Duality and pure-semisimple rings, J. London Math. So c. (2),
+38 (1988), 403-409.
+[40] M. Prest, Model Theory and Modules, London Math. Soc. Lect ure Notes
+Ser. Vol. 130, Cambridge University Press, 1988.
+[41] M. Prest, Remarks on elementary duality, Ann. Pure Applied Log ic, 62
+(1993), 183-205.
+[42] M.Prest,Purity, SpectraandLocalisation,EncyclopediaofMa thematics
+and its Applications, Vol. 121, Cambridge University Press, 2009.
+41
+
+--- Page 42 ---
+
+[43] M. Prest, Deﬁnable additive categories: purity and model theo ry, Mem.
+Amer. Math. Soc., Vol. 210/No. 987, 2011.
+[44] M. Prest, Categories of imaginaries for deﬁnable additive categ ories,
+preprint, University of Manchester, 2012.
+[45] M. Prest and R. Rajani, Structure sheaves of deﬁnable additiv e cate-
+gories, J. Pure Applied Algebra, 214 (2010), 1370-1383.
+[46] I.Reiten andC. M.Ringel, Inﬁnite dimensionalrepresentations ofcanon-
+ical algebras, Canad. J. Math., 58(1) (2006), 180-224.
+[47] C. M. Ringel, Inﬁnite-dimensional representations of ﬁnite-dim ensional
+hereditary algebras, Symp. Math. inst. Naz. Alta. Mat., 23 (1979) , 321-
+412.
+[48] J.-E.Roos,LocallyNoetheriancategoriesandgeneralisedstric tlylinearly
+compact rings: Applications, pp. 197-277 inCategoryTheory, Homology
+Theory and their Applications, Lecture Notes in Mathematics, Vol. 9 2,
+Springer-Verlag, 1969.
+[49] B. Stenstr¨ om, Rings of Quotients, Springer-Verlag, 1975.
+[50] M. Ziegler, Model theory of modules, Ann. Pure Appl. Logic, 26( 2)
+(1984), 149-213.
+42

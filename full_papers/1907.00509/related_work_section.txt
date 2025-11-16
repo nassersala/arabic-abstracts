@@ -1,0 +1,155 @@
+4 Related Work
+Rank polymorphism originally appeared in APL (Iverson, 196 2), which Iverson designed
+as a form of mathematical notation, with the APL interpreter serving to eliminate the se-
+mantic ambiguity found in conventional notation (Iverson, 1980). At ﬁrst, APL only lifted
+scalar functions to operate on aggregate data via pointwise applic ation, either on a scalar
+argument and an aggregate argument or on two aggregates of id entical shape. Subsequent
+development introduced the notion of function rank, the num ber of dimensions a function
+expects its argument to have. This generalized the scalar fu nction lifting, e.g., allowing a
+vector-mean function to produce a vector of results when giv en a matrix argument, and
+it introduced the “frame of cells” view of aggregate argumen ts where pointwise lifting
+generalizes to cellwise lifting. The next generalization s tep was to loosen the rule on frame
+shape compatibility. In J (Jsoftware, Inc., n.d.), which Iv erson created as a successor to
+APL, a function can be applied to two arguments of differing f rames as long as one frame—
+viewed as a sequence of dimensions—is a preﬁx of the other. Th is was a conscious design
+--- Page 32 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+32 Justin Slepak, Olin Shivers and Panagiotis Manolios
+decision on Iverson’s part: preﬁx agreement was chosen over sufﬁx agreement because it
+ﬁt better with APL’s emphasis on operating along arrays’ maj or axes (Hui, 1995).
+FISh also made implicit aggregate lifting part of the semant ics of function application,
+and its static semantics resolves the shapes of all arrays (J ay, 1998). A conventional type
+judgment describes the elements of arrays computed by a FISh program, and a second
+judgment ascribes a shape to each array. In FISh’s metatheor y, the shape of a function is
+a function on shapes. Thus a function application’s shape ca n be calculated statically by
+applying the shape function to the arguments’ shapes.
+As elegant as this model is in a ﬁrst-order language, it is inc ompatible with ﬁrst-class
+functions. When functions appear in arrays which are themse lves applied to arguments,
+the shape must describe the layout of of that collection of fu nctions, not just the functions’
+own behavior. In Remora, a function which checks whether a po int inR3is near the
+origin might have the type (-> ((Arr Float (Shp 3))) (Arr Bool (Shp))) . FISh
+considers this function’s shape to be the function on a singl eton domain (containing only
+[3]) which returns the empty vector. However, Remora expressio ns produce array data,
+even in function position. A function array near-origin? containing only that function
+has its own “ﬁrst-order” shape (Shp) , independent of any function on shapes summarizing
+its behavior.
+In resolving all shapes statically, FISh is also too restric tive to permit shapes determined
+from run-time data. Functions like iota andfilter cannot exist, nor can the ragged
+data which would result from lifting them. By characterizin g functions with restricted
+dependent types, Remora escapes both of these limitations.
+ZPL is a data-parallel language which was designed to live wi thin a larger language with
+a more general parallelism mode (Lin & Snyder, 1994). Its pro gramming model is based on
+an explicit map operation over programmer-speciﬁed index s pace within an array. Several
+built-in operators modify an index space, such as shifting a section along some dimension,
+adding a new dimension by broadcasting, or slicing out a part icular sub-array. The set
+of built in operators is constructed to make communication c ost implications clear to the
+programmer (Chamberlain et al. , 1998).
+NESL uses a nested-vector data model, rather than the rank-p olymorphic regular-array
+model (Blelloch, 1995). Programs map operations over vecto rs using a comprehension
+notation. Since a vector’s elements may themselves be vecto rs with widely varying lengths,
+NESL’s main performance trick is turning irregular nested v ectors into a ﬂat internal rep-
+resentation. After ﬂattening, NESL can evenly distribute t he computation workload by
+splitting at places that user code doe not consider not sub-v ector boundaries.
+The goal of isolating the cell-level portion of a program has also led to some domain-
+speciﬁc languages, targeting speciﬁc varieties of regular aggregate data. Halide is a lan-
+guage designed for writing image processing pipelines (Rag an-Kelley et al. , 2012). The
+iteration space is the set of pixels in an image. A Halide prog rammer writes code describing
+how an individual pixel should be handled (or a cluster of pix els for stencil computation),
+and then in a separate portion of the program, the programmer describes how the iteration
+space ought to be traversed. Since the program does not inter mingle loop-nest control code
+with loop-body computation code, it is easier for a maintain er to tune for performance by
+adjusting the iteration schedule.
+--- Page 33 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+The Semantic Foundations of Rank Polymorphism 33
+Diderot is a programming language speciﬁcally aimed at proc essing medical images
+(Chiw et al. , 2012). The universe of data consists of tensor ﬁelds, inten ded as functions
+on the continuous domain Rn, rather than any particular discrete index space. Diderot
+offers pointwise arithmetic on tensors and a collection of c ommon operations such as outer
+product and transposition. Aggregate lifting appears agai n, albeit in a smaller form, with
+some operations on tensor ﬁelds.
+HorseIR uses implicit lifting over arrays as an intermediat e representation for SQL
+queries (Chen et al. , 2018). HorseIR is lower-level than APL itself, serving as a three-
+address IR with vector instructions, and the IR itself is des igned to ease loop fusion. In
+contrast with APL, all HorseIR arrays are vectors—there are no higher-rank arrays, and
+scalars are represented as unit-length vectors. There is al so a list datatype for handling
+heterogeneous aggregate data, such as one row of a database t able.
+Our type system’s use of restricted dependent types is inspi red by Dependent ML (Xi, 1998).
+While Dependent ML is designed with the expectation that the index language has a fully
+decidable theory, Remora’s index language does not (Durnev , 1995). In subsequent work,
+Dependent ML also focused on ensuring safety of array index a ccesses, using single-
+ton and range types to ensure that numbers used for indexing f ell within arrays’ bounds
+(Xi & Pfenning, 1998).
+Others have applied established type system machinery to an APL-like computation
+model. Thatte’s coercion semantics (Thatte, 1991) uses a fo rm subtyping in which scalar
+types are subtypes of aggregates, and aggregate types in cer tain situations are subtypes of
+higher-dimensional aggregates. The subtyping rules emit c oercions which invoke functions
+such asmap andreplicate , automatically adapting scalar functions to aggregate dat a.
+However, the restrictions on treating aggregate types as su btypes of larger aggregates
+prohibit lifting for functions which expect non-scalar inp ut (i.e., those whose expected
+rank is greater than zero) and lifting to unequal frame shape s (e.g., vector-matrix addition).
+Gibbons’s embedding of in an extended Haskell (Gibbons, 201 6) extensively uses type-
+level programming and deﬁnes much of the rank-polymorphic l ifting machinery in terms
+of transposition.
+Single Assignment C (SAC) is a variant of C without mutation ( Scholz, 2003). The
+primary iteration mechanism in SAC is the with loop, in which the programmer de-
+scribes a traversal of the index space and builds an output ar ray an element at a time.
+The lack of mutation pushes the programmer to avoid writing l oop-carried dependence,
+much like in the rank-polymorphic model. Translation of wel l-behaved APL programs
+to SAC tends to be straightforward (Grelck & Scholz, 1998), t hough the resulting loop
+structure is somewhat speciﬁc to the function being lifted. A SAC variant called Qube
+introduces a Dependent ML-style type system to ensure the sa fety of indexed array element
+accesses (Trojahner & Grelck, 2009). Qube retains SAC’s with loop-based programming
+model—relying on range types in contrast to APL’s and Remora ’s implicitly lifted function
+application semantics—and due to its C roots, it does not sup port ﬁrst-class functions to
+the extent of permitting arrays to appear in function positi on.
+Since the syntactic structure of a line of APL code, in partic ular the meaning of the
+juxtaposition of two terms, depends on the meanings of names which appear in the code,
+standard APL does not admit a fully static parsing algorithm . Due to this and other idiosyn-
+--- Page 34 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+34 Justin Slepak, Olin Shivers and Panagiotis Manolios
+cratic warts, past efforts to compile APL have typically tar getted large but well-behaved
+subsets of the language.
+A prominent exception is the APL\3000 compiler, which could produce machine code
+for individual statements and used interpretation to manag e inter-statement control ﬂow
+(Johnston, 1979). This allowed some intraprocedural optim ization, such as fold-unfold
+and map-map fusion3(Abrams, 1970), analogous to deforestation which arose in m ain-
+stream functional languages (Burstall & Darlington, 1977; Wadler, 1984). It also ensured
+that names’ dynamic meanings would be available by the time e xecution reached any
+statement which used them.
+Weiss and Saal instead applied interprocedural data-ﬂow an alysis to resolve the syntactic
+classes of variable names in APL code (Weiss & Saal, 1981). Th is analysis is not complete
+for APL itself due to the possibility that reassignment of a v ariable name will change how
+some line of code parses. However, the authors found that rea l-world code did not make use
+of the full freedom to manipulate the syntactic structure of an APL program by dynamically
+reassigning variables, suggesting that this is a misfeatur e which can be discarded for little
+cost. However, the common line-at-a-time compilation styl e used in other work also served
+to ensure that by the time execution reaches a line of code, it s variable names, and thus their
+syntactic classes, could be resolved.
+Budd describes a compiler for an APL variant in which the ambi guity in parsing is
+avoided by declaring identiﬁers before use and name resolut ion is simpliﬁed by adopting
+lexical scope. (Budd, 1988).
+APEX parallelizes an APL dialect with restrictions on many A PL features deemed
+incompatible with compilation (such as producing a string r epresentation of an arbitrary
+function) or not strictly necessary for practical use (such asGOTO ) (Bernecky, 1999). APEX’s
+shape compatibility rules for implicit aggregate lifting a re less permissive than APL, e.g.,
+prohibiting most cases of vector-matrix addition. Instead , both arguments must have the
+same rank or at least one argument passed to a scalar-consumi ng function be a scalar or
+singleton vector.
+A more recent line of work has focused on intermediate repres entations of array pro-
+grams, such as the Typed Array Intermediate Language, which makes aggregate opera-
+tions explicit using an each primitive operator (Elsman & Dybdal, 2014). The type system
+tracks arrays’ ranks, which provides enough information to recognize when an each call
+is needed, but it is not meant to ensure that lifting a functio n application has a well-
+deﬁned result ( i.e., shape incompatibility is still possible). L0plots out a loop fusion
+strategy inspired by control ﬂow graph reduction (Henrikse n & Oancea, 2013). The L0
+compiler splits array programs into kernels of fused aggreg ate operations based on the
+applicability of T2graph reductions (merging nodes XandYifXisY’s sole predecessor)
+to the program’s data ﬂow graph.
+3In the APL community, these transformations are respective ly referred to as “beating” (imagine a
+metronome producing a stream of beats) and “dragging along” (amassing a chain of delayed scalar
+operations to apply in a single loop body).
+--- Page 35 ---
+ZU064-05-FPR paper 2 July 2019 1:24
+The Semantic Foundations of Rank Polymorphism 35
