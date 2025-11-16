@@ -1,0 +1,232 @@
+\begin{thebibliography}{10}
+\providecommand{\bibitemdeclare}[2]{}
+\providecommand{\urlprefix}{Available at }
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{\texttt{#2}}
+\providecommand{\urlalt}[2]{\href{#1}{#2}}
+\providecommand{\doi}[1]{doi:\urlalt{http://dx.doi.org/#1}{#1}}
+\providecommand{\bibinfo}[2]{#2}
+
+\bibitemdeclare{article}{formalism-callbyneed-calculus}
+\bibitem{formalism-callbyneed-calculus}
+\bibinfo{author}{Zena~M. Ariola} \& \bibinfo{author}{Matthias Felleisen}
+  (\bibinfo{year}{1997}): \emph{\bibinfo{title}{The {C}all-{B}y-{N}eed {L}ambda
+  {C}alculus}}.
+\newblock {\sl \bibinfo{journal}{Journal of Functional Programming}}
+  \bibinfo{volume}{7}, pp. \bibinfo{pages}{265--301},
+  \doi{10.1017/S0956796897002724}.
+
+\bibitemdeclare{inproceedings}{parallel-cbn-semantics}
+\bibitem{parallel-cbn-semantics}
+\bibinfo{author}{Clem Baker-Finch}, \bibinfo{author}{David~J. King} \&
+  \bibinfo{author}{Phil Trinder} (\bibinfo{year}{2000}):
+  \emph{\bibinfo{title}{An {O}perational {S}emantics for {P}arallel {L}azy
+  {E}valuation}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of ICFP 2000}},
+  \doi{10.1145/351240.351256}.
+
+\bibitemdeclare{unpublished}{types-constraints-kinds}
+\bibitem{types-constraints-kinds}
+\bibinfo{author}{Max Bolingbroke} (\bibinfo{year}{2011}):
+  \emph{\bibinfo{title}{Constraint Kinds for GHC (Unpublished manuscript)}}.
+\newblock \urlprefix\url{http://blog.omega-prime.co.uk/?p=127}.
+
+\bibitemdeclare{inproceedings}{monad-pure-nondeterministic-translating}
+\bibitem{monad-pure-nondeterministic-translating}
+\bibinfo{author}{B.~Bra{\ss}el}, \bibinfo{author}{S.~Fischer},
+  \bibinfo{author}{M.~Hanus} \& \bibinfo{author}{F.~Reck}
+  (\bibinfo{year}{2011}): \emph{\bibinfo{title}{Transforming Functional Logic
+  Programs into Monadic Functional Programs}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of WFLP 2010}},
+  \bibinfo{publisher}{LNCS 6559}, pp. \bibinfo{pages}{30--47},
+  \doi{10.1.1.157.4578}.
+
+\bibitemdeclare{inproceedings}{comonads-computational}
+\bibitem{comonads-computational}
+\bibinfo{author}{Stephen Brookes} \& \bibinfo{author}{Shai Geva}
+  (\bibinfo{year}{1992}): \emph{\bibinfo{title}{{Computational Comonads and
+  Intensional Semantics}}}.
+\newblock In: {\sl \bibinfo{booktitle}{Applications of Categories in Computer
+  Science: Proceedings of the LMS Symposium}}, \bibinfo{volume}{177}, pp.
+  \bibinfo{pages}{1--44}, \doi{10.1.1.45.4952}.
+
+\bibitemdeclare{article}{monad-pure-nondeterministic}
+\bibitem{monad-pure-nondeterministic}
+\bibinfo{author}{Sebastian Fischer}, \bibinfo{author}{Oleg Kiselyov} \&
+  \bibinfo{author}{Chung-chieh Shan} (\bibinfo{year}{2011}):
+  \emph{\bibinfo{title}{{Purely Functional Lazy Non-Deterministic
+  Programming}}}.
+\newblock {\sl \bibinfo{journal}{Journal of Functional Programming}}
+  \bibinfo{volume}{21}(\bibinfo{number}{4--5}), pp. \bibinfo{pages}{413--465},
+  \doi{10.1145/1631687.1596556}.
+
+\bibitemdeclare{article}{arrows-generalising-monads}
+\bibitem{arrows-generalising-monads}
+\bibinfo{author}{John Hughes} (\bibinfo{year}{1998}):
+  \emph{\bibinfo{title}{Generalising Monads to Arrows}}.
+\newblock {\sl \bibinfo{journal}{Science of Computer Programming}}
+  \bibinfo{volume}{37}, pp. \bibinfo{pages}{67--111},
+  \doi{10.1016/S0167-6423(99)00023-4}.
+
+\bibitemdeclare{unpublished}{comonads-codata-haskell}
+\bibitem{comonads-codata-haskell}
+\bibinfo{author}{Richard~B. Kieburtz} (\bibinfo{year}{1999}):
+  \emph{\bibinfo{title}{Codata and Comonads in Haskell (Unpublished
+  manuscript)}}.
+
+\bibitemdeclare{inproceedings}{formalism-lazy-semantics}
+\bibitem{formalism-lazy-semantics}
+\bibinfo{author}{John Launchbury} (\bibinfo{year}{1993}):
+  \emph{\bibinfo{title}{{A Natural Semantics for Lazy Evaluation}}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of POPL 1993}}, pp.
+  \bibinfo{pages}{144--154}, \doi{10.1145/158511.158618}.
+
+\bibitemdeclare{inproceedings}{monad-orc}
+\bibitem{monad-orc}
+\bibinfo{author}{John Launchbury} \& \bibinfo{author}{Trevor Elliott}
+  (\bibinfo{year}{2010}): \emph{\bibinfo{title}{Concurrent orchestration in
+  Haskell}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of Haskell Symposium}},
+  \bibinfo{series}{Haskell 2010}, pp. \bibinfo{pages}{79--90},
+  \doi{10.1145/1863523.1863534}.
+
+\bibitemdeclare{inproceedings}{monad-state-haskell}
+\bibitem{monad-state-haskell}
+\bibinfo{author}{John Launchbury} \& \bibinfo{author}{Simon~Peyton Jones}
+  (\bibinfo{year}{1995}): \emph{\bibinfo{title}{State in Haskell}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of the LISP and Symbolic
+  Computation Conference}}, \bibinfo{series}{LISP 1995},
+  \doi{10.1007/BF01018827}.
+
+\bibitemdeclare{book}{formalism-cbpv}
+\bibitem{formalism-cbpv}
+\bibinfo{author}{Paul~Blain Levy} (\bibinfo{year}{2004}):
+  \emph{\bibinfo{title}{Call-By-Push-Value}}.
+\newblock \bibinfo{publisher}{Springer}.
+\newblock \bibinfo{note}{ISBN: 978-1-4020-1730-8}.
+
+\bibitemdeclare{inproceedings}{monad-transformer-interpreters}
+\bibitem{monad-transformer-interpreters}
+\bibinfo{author}{Sheng Liang}, \bibinfo{author}{Paul Hudak} \&
+  \bibinfo{author}{Mark Jones} (\bibinfo{year}{1995}):
+  \emph{\bibinfo{title}{{Monad Transformers and Modular Interpreters}}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of POPL 1995}},
+  \doi{10.1145/199448.199528}.
+
+\bibitemdeclare{inproceedings}{monad-parallel-det}
+\bibitem{monad-parallel-det}
+\bibinfo{author}{Simon Marlow}, \bibinfo{author}{Ryan Newton} \&
+  \bibinfo{author}{Simon Peyton~Jones} (\bibinfo{year}{2011}):
+  \emph{\bibinfo{title}{{A Monad for Deterministic Parallelism}}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of the 4th Symposium on
+  Haskell}}, \bibinfo{series}{Haskell 2011}, \doi{10.1145/2034675.2034685}.
+
+\bibitemdeclare{article}{applicative-programming}
+\bibitem{applicative-programming}
+\bibinfo{author}{Conor Mc{B}ride} \& \bibinfo{author}{Ross Paterson}
+  (\bibinfo{year}{2008}): \emph{\bibinfo{title}{{Applicative Programming with
+  Effects}}}.
+\newblock {\sl \bibinfo{journal}{Journal of Functional Programming}}
+  \bibinfo{volume}{18}, pp. \bibinfo{pages}{1--13},
+  \doi{10.1017/S0956796807006326}.
+
+\bibitemdeclare{article}{monads-moggi}
+\bibitem{monads-moggi}
+\bibinfo{author}{Eugenio Moggi} (\bibinfo{year}{1991}):
+  \emph{\bibinfo{title}{{Notions of Computation and Monads}}}.
+\newblock {\sl \bibinfo{journal}{Inf. Comput.}} \bibinfo{volume}{93}, pp.
+  \bibinfo{pages}{55--92}, \doi{10.1016/0890-5401(91)90052-4}.
+
+\bibitemdeclare{inproceedings}{comonads-ypnos}
+\bibitem{comonads-ypnos}
+\bibinfo{author}{Dominic Orchard}, \bibinfo{author}{Max Bolingbroke} \&
+  \bibinfo{author}{Alan Mycroft} (\bibinfo{year}{2010}):
+  \emph{\bibinfo{title}{Ypnos: {D}eclarative, {P}arallel {S}tructured {G}rid
+  {P}rogramming}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of DAMP 2010}}, pp.
+  \bibinfo{pages}{15--24}, \doi{10.1145/1708046.1708053}.
+
+\bibitemdeclare{inproceedings}{types-constraints-unleashed}
+\bibitem{types-constraints-unleashed}
+\bibinfo{author}{Dominic~A. Orchard} \& \bibinfo{author}{Tom Schrijvers}
+  (\bibinfo{year}{2010}): \emph{\bibinfo{title}{Haskell Type Constraints
+  Unleashed}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of FLOPS 2010}}, pp.
+  \bibinfo{pages}{56--71}, \doi{10.1007/978-3-642-12251-4\_6}.
+
+\bibitemdeclare{inproceedings}{joinads-haskell11}
+\bibitem{joinads-haskell11}
+\bibinfo{author}{Tomas Petricek}, \bibinfo{author}{Alan Mycroft} \&
+  \bibinfo{author}{Don Syme}: \emph{\bibinfo{title}{Extending {M}onads with
+  {P}attern {M}atching}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of Haskell Symposium}},
+  \bibinfo{series}{Haskell 2011}, \doi{10.1145/2096148.2034677}.
+
+\bibitemdeclare{inproceedings}{joinads}
+\bibitem{joinads}
+\bibinfo{author}{Tomas Petricek} \& \bibinfo{author}{Don Syme}
+  (\bibinfo{year}{2011}): \emph{\bibinfo{title}{Joinads: A Retargetable
+  Control-Flow Construct for Reactive, Parallel and Concurrent Programming}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of PADL 2011}},
+  \doi{10.1007/978-3-642-18378-2\_17}.
+
+\bibitemdeclare{inproceedings}{formalism-lazy-sharing-semantics}
+\bibitem{formalism-lazy-sharing-semantics}
+\bibinfo{author}{S.~Purushothaman} \& \bibinfo{author}{Jill Seaman}
+  (\bibinfo{year}{1992}): \emph{\bibinfo{title}{An Adequate Operational
+  Semantics for Sharing in Lazy Evaluation}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of the 4th European
+  Symposium on Programming}}, \doi{10.1007/3-540-55253-7\_26}.
+
+\bibitemdeclare{}{monad-sttrans-package}
+\bibitem{monad-sttrans-package}
+\bibinfo{author}{Josef Svenningsson} (\bibinfo{year}{2011}):
+  \emph{\bibinfo{title}{The STMonadTrans package}}.
+\newblock
+  \urlprefix\url{http://hackage.haskell.org/package/STMonadTrans-0.3.1}.
+
+\bibitemdeclare{article}{comonads-dataflow-essence}
+\bibitem{comonads-dataflow-essence}
+\bibinfo{author}{Tarmo Uustalu} \& \bibinfo{author}{Varmo Vene}
+  (\bibinfo{year}{2006}): \emph{\bibinfo{title}{The {E}ssence of {D}ataflow
+  {P}rogramming}}.
+\newblock {\sl \bibinfo{journal}{Lecture Notes in Computer Science}}
+  \bibinfo{volume}{4164}, pp. \bibinfo{pages}{135--167},
+  \doi{10.1007/11894100\_5}.
+
+\bibitemdeclare{article}{comonads-notions}
+\bibitem{comonads-notions}
+\bibinfo{author}{Tarmo Uustalu} \& \bibinfo{author}{Varmo Vene}
+  (\bibinfo{year}{2008}): \emph{\bibinfo{title}{Comonadic Notions of
+  Computation}}.
+\newblock {\sl \bibinfo{journal}{Electron. Notes Theor. Comput. Sci.}}
+  \bibinfo{volume}{203}, pp. \bibinfo{pages}{263--284},
+  \doi{10.1016/j.entcs.2008.05.029}.
+
+\bibitemdeclare{inproceedings}{types-free-theorems-classes}
+\bibitem{types-free-theorems-classes}
+\bibinfo{author}{Janis Voigtl\"{a}nder} (\bibinfo{year}{2009}):
+  \emph{\bibinfo{title}{{Free Theorems Involving Type Constructor Classes:
+  Functional Pearl}}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of ICFP 2009}},
+  \bibinfo{series}{ICFP 209}, \bibinfo{publisher}{ACM}, \bibinfo{address}{New
+  York, NY, USA}, pp. \bibinfo{pages}{173--184}, \doi{10.1145/1596550.1596577}.
+
+\bibitemdeclare{inproceedings}{monads-wadler}
+\bibitem{monads-wadler}
+\bibinfo{author}{Philip Wadler} (\bibinfo{year}{1990}):
+  \emph{\bibinfo{title}{Comprehending Monads}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of Conference on LISP and
+  Functional Programming}}, \bibinfo{series}{LFP 1990},
+  \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, pp.
+  \bibinfo{pages}{61--78}, \doi{10.1145/91556.91592}.
+
+\bibitemdeclare{inproceedings}{formalism-cbn-dual-cbv}
+\bibitem{formalism-cbn-dual-cbv}
+\bibinfo{author}{Philip Wadler} (\bibinfo{year}{2003}):
+  \emph{\bibinfo{title}{{Call-By-Value Is Dual to Call-By-Name}}}.
+\newblock In: {\sl \bibinfo{booktitle}{Proceedings of ICFP}},
+  \bibinfo{series}{ICFP 2003}, pp. \bibinfo{pages}{189--201},
+  \doi{10.1145/944705.944723}.
+
+\end{thebibliography}
