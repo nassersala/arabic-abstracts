@@ -1,0 +1,189 @@
+\section{QuickCheck in \IIdris}
+
+QuickCheck is a \acrlong{pbt} tool introduced by Claessen and Hughes in
+2000~\cite{claessenQuickCheckLightweightTool2000}.
+Although initially written for Haskell, it has been successfully ported to many
+programming languages including
+Isabelle~\cite{berghoferRandomTestingIsabelle2004},
+Erlang~\cite{claessenFindingRaceConditions2009},
+Coq~\cite{denesQuickChickPropertyBasedTesting2014},
+and
+Java~\cite{padhyeJQFCoverageguidedPropertybased2019}.
+
+We can use our \QC implementation at the type level, since types in Idris2 are
+first class. Thus the test suite can be run at compile-time, acting on the
+implementation itself {\textemdash} rather than a test environment {\textemdash}
+and then being erased for the compiled program.
+
+  %% MARK: Regular QC
+  \subsection{Regular \QC in \IIdris}\label{ssec:reg-qc}
+
+  Most of \QC ports directly to \iidris from the original Haskell
+  implementation, with some minor modifications. We start with the type for
+  specifying \emph{generators} of types:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{  }\PY{n+nf}{MkGen}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{  }\PY{o+ow}{(}\PY{k+kt}{Int}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{PRNGState}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }a\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }a
+  \end{Verbatim}
+
+  \iidris has no \texttt{newtype} so we have to wrap it in a regular datatype;
+  the implementation is otherwise identical. The \texttt{PRNGState} type
+  represents the state type of a \acrfull{prng}, which is essential for
+  allowing QuickCheck to generate example instances.
+  As in Haskell, \texttt{Gen} is an instance of the \texttt{Monad} interface.
+  It requires passing two \emph{independent}
+  \acrshortpl{prng}~\cite{claessenQuickCheckLightweightTool2000},
+  which is easily achieved if the provided \acrshort{prng} is \emph{splittable}
+  {\textemdash} that two seemingly independent \acrshortpl{prng} may be derived
+  from an initial
+  one~\cite{burtonDistributedRandomNumber1992}.
+
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{o+ow}{(\PYZgt{}\PYZgt{}=)}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkGen}\PY{+w}{ }g1\PY{o+ow}{)}\PY{+w}{ }c\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{MkGen}\PY{+w}{ }\PY{o+ow}{(\PYZbs{}}n,\PY{+w}{ }r0\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }\PY{o+ow}{(}r1,\PY{+w}{ }r2\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }split\PY{+w}{ }r0
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkGen}\PY{+w}{ }g2\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }c\PY{+w}{ }\PY{o+ow}{(}g1\PY{+w}{ }n\PY{+w}{ }r1\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{in}\PY{+w}{ }g2\PY{+w}{ }n\PY{+w}{ }r2\PY{o+ow}{)}
+  \end{Verbatim}
+
+  Statistically sound splits are challenging to achieve and have been the source
+  of bugs in the Haskell
+  implementation~\cite{claessenSplittablePseudorandomNumber2013}.
+  Schaatun~\cite{schaathunEvaluationSplittablePseudorandom2015}
+  concluded that amongst many existing allegedly splittable \acrshortpl{prng},
+  only the one presented by Claessen and
+  Pa{\l}ka~\cite{claessenSplittablePseudorandomNumber2013}
+  was sound. As such, we do not make any cryptographic promises about the
+  \acrshort{prng} used in our implementation: we use a \acrlong{lcg} for its
+  ease of implementation, using known good
+  multipliers~\cite{steeleComputationallyEasySpectrally2021}.
+  This is sufficient for demonstrating our approach.
+
+  Another difference between \iidris and Haskell is that \texttt{(->)} is a
+  binder, and defining interface instances over binders is not allowed in
+  \iidris. Therefore, we manually wrap functions in a data type alongside an
+  eliminator:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{Fn}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{  }\PY{n+nf}{MkFn}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}f\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }a\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }b\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Fn}\PY{+w}{ }a\PY{+w}{ }b
+
+\PY{n+nf}{apply}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Fn}\PY{+w}{ }a\PY{+w}{ }b\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }a\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }b
+apply\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkFn}\PY{+w}{ }f\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }f
+  \end{Verbatim}
+
+
+  We can now implement \emph{promoting} functions of type \texttt{a -> Gen b} to
+  a generator of functions from \texttt{a} to \texttt{b}, as well as implement
+  the \texttt{Arbitrary} interface {\textemdash} which indicates that we can
+  generate arbitrary instances of a given type {\textemdash} for functions,
+  provided we know how to (1) modify a generator given some specific instance of
+  the domain's type, and (2) generate arbitrary instances of the codomain's
+  type:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{promote}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}a\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }b\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Fn}\PY{+w}{ }a\PY{+w}{ }b\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }promote\PY{+w}{ }f\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{MkGen}\PY{+w}{ }\PY{o+ow}{(\PYZbs{}}n,\PY{+w}{ }r\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kt}{MkFn}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(\PYZbs{}}x\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkGen}\PY{+w}{ }gb\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }f\PY{+w}{ }x\PY{+w}{ }\PY{k+kr}{in}\PY{+w}{ }gb\PY{+w}{ }n\PY{+w}{ }r\PY{o+ow}{))}
+
+\PY{k+kt}{Arbitrary}\PY{+w}{ }a\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Arbitrary}\PY{+w}{ }b\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Fn}\PY{+w}{ }a\PY{+w}{ }b\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }promote\PY{+w}{ }\PY{o+ow}{(}`coarbitrary`\PY{+w}{ }arbitrary\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }coarbitrary\PY{+w}{ }fn\PY{+w}{ }gen\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{\PYZgt{}\PYZgt{}=}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{((}`coarbitrary`\PY{+w}{ }gen\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{.}\PY{+w}{ }\PY{o+ow}{(}apply\PY{+w}{ }fn\PY{o+ow}{))}
+  \end{Verbatim}
+
+  %% MARK: Dependent QC
+  \subsection{QuickCheck with Dependent Types}\label{ssec:dept-qc}
+
+  Using QuickCheck with dependent types presents new challenges. Consider, for
+  example, the \texttt{Vect} datatype: lists which carry their length in the
+  type. QuickCheck's bread and butter is generators and the \texttt{Arbitrary}
+  interface. Provided we know how to generate the type of the elements, we
+  should be able to generate a vector of them. However, the following definition
+  fails:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kt}{Arbitrary}\PY{+w}{ }t\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Vect}\PY{+w}{ }n\PY{+w}{ }t\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }arbN\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }v\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }genN\PY{+w}{ }arbN\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }v
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{      }\PY{n+nf}{genN}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}n\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }t\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Vect}\PY{+w}{ }n\PY{+w}{ }t\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }genN\PY{+w}{ }\PY{k+kt}{Z}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{[]}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }genN\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }k\PY{o+ow}{)}\PY{+w}{ }g\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }x\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }g
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }xs\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }genN\PY{+w}{ }k\PY{+w}{ }g
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}x\PY{+w}{ }\PY{o+ow}{::}\PY{+w}{ }xs\PY{o+ow}{)}
+  \end{Verbatim}
+
+  The type checker has no way of unifying \texttt{n} with \texttt{arbN} since
+  \texttt{n} is implicitly generalised and bound outwith the context of the
+  interface. We are telling the type checker that \texttt{arbN} should exactly
+  match \emph{some} external \texttt{n} which nobody has thought of yet;
+  understandably, this fails to type check.
+  One solution is to write \texttt{Arbitrary} instances only for the sizes of
+  vectors we are interested in:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kt}{Arbitrary}\PY{+w}{ }t\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Vect}\PY{+w}{ }\PY{l+m+mi}{3}\PY{+w}{ }t\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }v0\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }v1\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }v2\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{[}v0,\PY{+w}{ }v1,\PY{+w}{ }v2\PY{o+ow}{]}
+  \end{Verbatim}
+
+  However, this is not very useful: we need an implementation for every
+  length, and should we want to generate an arbitrary length we would have to
+  reduce our arbitrary length to only the lengths which we have defined
+  generators for, defeating the point of \texttt{Arbitrary} interface.
+  Instead, we can use dependent pairs, where the second element's type depends
+  on the value of the first, written using \texttt{(**)}. This allows us to
+  indicate to the type checker that although we may not know the exact length of
+  the vector at type checking time, \emph{when} we know the length, we also know
+  it is related to a concrete instance of \texttt{Vect}:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{someVect}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}n\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{Vect}\PY{+w}{ }n\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}
+someVect\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{3}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{o+ow}{[}\PY{l+m+mi}{1},\PY{+w}{ }\PY{l+m+mi}{2},\PY{+w}{ }\PY{l+m+mi}{3}\PY{o+ow}{])}
+  \end{Verbatim}
+
+  \iidris has \texttt{failing} blocks which compile if and only if they contain
+  a term raising an error. Passing in a string requires it to be part of the
+  error message, with the compiler rejecting the block if it fails with a
+  different message. We can thus confirm it is an error to provide a mismatching
+  length and \texttt{Vect}:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{failing}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{Mismatch between: 1 and 0.}\PY{l+s}{\PYZdq{}}
+\PY{+w}{  }\PY{n+nf}{sizeMismatch}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}n\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{Vect}\PY{+w}{ }n\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }sizeMismatch\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{0}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{o+ow}{[}\PY{l+m+mi}{3}\PY{o+ow}{])}
+  \end{Verbatim}
+
+  And we can ask \iidris to infer the first element's value:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{inferLength}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}n\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{Vect}\PY{+w}{ }n\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}
+inferLength\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{o+ow}{[}\PY{l+m+mi}{1},\PY{+w}{ }\PY{l+m+mi}{2},\PY{+w}{ }\PY{l+m+mi}{3}\PY{o+ow}{])}
+  \end{Verbatim}
+
+  Dependent pairs allow us to define a general \texttt{Arbitrary} instance for
+  \texttt{Vect}:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kt}{Arbitrary}\PY{+w}{ }t\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}n\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{Vect}\PY{+w}{ }n\PY{+w}{ }t\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }nElems\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }vect\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }genN\PY{+w}{ }nElems
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }vect\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{      }\PY{n+nf}{genN}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Arbitrary}\PY{+w}{ }a\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}m\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Vect}\PY{+w}{ }m\PY{+w}{ }a\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }genN\PY{+w}{ }\PY{k+kt}{Z}\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{[]}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }genN\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }k\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }x\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }xs\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }genN\PY{+w}{ }k
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}x\PY{+w}{ }\PY{o+ow}{::}\PY{+w}{ }xs\PY{o+ow}{)}
+  \end{Verbatim}

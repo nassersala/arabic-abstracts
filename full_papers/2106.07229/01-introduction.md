@@ -1,0 +1,82 @@
+# Section 1: Introduction
+## القسم 1: المقدمة
+
+**Section:** introduction
+**Translation Quality:** 0.88
+**Glossary Terms Used:** privacy-preserving, machine learning, fully homomorphic encryption, PPML, ciphertext, indistinguishability, chosen-plaintext attack, IND-CPA, bootstrapping, packing, word-wise FHE, BFV, CKKS, activation function, ReLU, sigmoid, ResNet, convolutional neural network, CIFAR-10, ImageNet
+
+---
+
+### English Version
+
+The privacy-preserving issue is one of the most practical problems for machine learning recently. Fully homomorphic encryption (FHE) is the most appropriate tool for privacy-preserving machine learning (PPML) to ensure strong security in the cryptographic sense and satisfy the communication's succinctness. FHE is an encryption scheme whose ciphertexts can be processed with any deep Boolean circuits or arithmetic circuits without access to the data. The security of FHE has been usually defined with indistinguishability under chosen-plaintext attack (IND-CPA) security, which is a standard cryptographic security definition. If the client sends the public keys and the encrypted data with an FHE scheme to the PPML server, the server can perform all computation needed in the desired service before sending the encrypted output to the client. Therefore, the application of FHE to PPML has been researched much until now.
+
+The most successful PPML model on the homomorphically encrypted data until now was constructed with the TFHE homomorphic encryption scheme by Lou and Jiang [2], but it used the leveled version of the TFHE scheme without bootstrapping, which is not an FHE scheme. In other words, they chose in advance the parameters that can be used to perform the desired network without bootstrapping. If we want to design a deeper neural network with the leveled homomorphic encryption scheme, much impractically larger parameters have to be used, and it causes heavy run-time or memory overhead. Further, since the packing technique cannot be applied easily in the TFHE scheme, it can cause additional inefficiency with regard to the running time and the memory overhead if we want to process many data at once. Thus, it is desirable to use the FHE with moderate parameters and bootstrapping, which naturally supports the packing technique in the PPML model.
+
+The applicable FHE schemes with this property are word-wise FHE schemes, such as Brakerski-Fan-Vercauteren (BFV) scheme [3] or Cheon-Kim-Kim-Song (CKKS) scheme [4, 5]. Especially, the CKKS scheme has gained lots of interest for a suitable tool of the PPML implementation since it can deal with the encrypted real number naturally. However, these schemes support only homomorphic arithmetic operations such as the homomorphic addition and the homomorphic multiplication. Unfortunately, the popular activation functions are usually non-arithmetic functions, such as ReLU, sigmoid, leaky ReLU, and ELU. Thus, these activation functions cannot be evaluated directly using the word-wise FHE scheme. When the previous machine learning models using FHE replaced the non-arithmetic activation function with the simple polynomials, these models were not proven to show high accuracy for advanced classification tasks beyond the MNIST dataset.
+
+Even though many machine learning models require multiple deep layers for high accuracy, there is no choice but to use a small number of layers in previous FHE-based deep learning models because FHE schemes' fast and accurate bootstrapping techniques are very recently available. The bootstrapping technique transforms a ciphertext that cannot support the homomorphic multiplication further to a fresh ciphertext by extending the levels of the ciphertext [6, 7]. However, the bootstrapping technique has been actively improved in regard to algorithmic time complexity [8, 9, 10], precision [11], and implementation [12], which make bootstrapping more practical. The PPML model with many layers has to be implemented with the precise and efficient bootstrapping technique in FHE.
+
+**1.1 Our contribution**
+
+In this paper, we firstly implement the ResNet-20 model for the CIFAR-10 dataset [13] using the residue number system CKKS (RNS-CKKS) [5] scheme, which is a variant of the CKKS scheme using the SEAL library 3.6.1 version [14], one of the most reliable libraries implementing the RNS-CKKS scheme. ResNet is one of the historic convolutional neural network (CNN) models which enables a very deep neural network with high accuracy for complex datasets such as CIFAR-10 and ImageNet. Many high-performance works for image classification are based on the ResNet model since these models can reach sufficiently high classification accuracy by stacking more layers. We firstly apply the ReLU function based on the composition of minimax approximate polynomials [1] to the encrypted data. Using the results, we firstly show the possibility of applying the FHE with the bootstrapping to the standard deep machine learning model by implementing ResNet-20 over the RNS-CKKS scheme. We use the RNS-CKKS bootstrapping with the SEAL library [14]. The SEAL library is one of the most practical RNS-CKKS libraries, but it does not support the bootstrapping technique. The used bootstrapping can support sufficiently high precision to successfully use the bootstrapping in the ResNet-20 with the RNS-CKKS scheme for the CIFAR-10 dataset.
+
+Boemer et al. [15] pointed out that all existing PPML models based on FHE or MPC are vulnerable to the model extraction attack. One of the reasons for this problem is that the previous PPML methods with the FHE scheme do not evaluate the softmax with the FHE scheme. It just sends the result before the softmax function, and then it is assumed that the client computes the softmax by itself. Thus, the information about the model can be extracted with lots of input-output pairs to the client. It can be desirable for the server to evaluate the softmax function with FHE. We firstly implement the softmax function in the machine learning model using the method in [4], and this is the first implementation of a privacy-preserving machine learning model based on FHE preventing the model extraction attack.
+
+We prepare the pre-trained model parameters by training the original ResNet-20 model with the CIFAR-10 plaintext dataset and perform the privacy-preserving ResNet-20 with these plaintext pre-trained model parameters and encrypted input images. We find that the inference result of the proposed implemented privacy-preserving ResNet-20 is 98.67% identical to that of the original ResNet-20. It achieves 90.67% classification accuracy, which is quite close to the original accuracy of 91.89%. Thus, we verify that the proposed implemented PPML model successfully performs the ResNet-20 on the encrypted data. Further, the proposed implementation result shows the highest accuracy among the CNN implementation with the FHE scheme, while the previous highest result with the word-wise FHE scheme is only 77% classification accuracy.
+
+**1.2 Related works**
+
+**HE-friendly network** Some previous works re-design the machine learning model compatible with the HE scheme by replacing the standard activation functions with the simple non-linear polynomials [16, 17, 18, 19], called the HE-friendly network. However, these machine learning models are usually successful only for the simple MNIST dataset and cannot reach sufficiently high accuracy for the CIFAR-10 dataset. The highest classification accuracy of the HE-friendly CNN with the simple polynomial activation function implemented by word-wise HE is only 77% for the CIFAR-10 dataset [19]. Since the choice of the activation functions is sensitive in the advanced machine learning model, it may not be desirable to replace the standard and famous activation functions with simple arithmetic functions. Moreover, the additional pre-training process has to be followed before the PPML service is given. Since the training process is somewhat expensive in that it is pretty time-consuming and needs quite a lot of data, it is preferable to use the standard model such as ResNet and VGGNet for the plaintext data with its pre-trained model parameters when the data privacy has to be preserved.
+
+**Hybrid model with FHE and MPC** Some previous works evaluate the non-arithmetic activation functions with the multiparty computation technique to implement the standard well-known machine learning model preserving privacy [20, 21, 22, 23, 15]. Although this method can evaluate even the non-arithmetic functions exactly, the privacy for the model information can be disclosed. In other words, the client should know the used activation function in the model, which is not desirable for the PPML servers. Also, since the communication with the clients is not succinct, the clients have to be involved in the computation, which is not desirable for the clients.
+
+---
+
+### النسخة العربية
+
+تُعد قضية الحفاظ على الخصوصية واحدة من أكثر المشكلات العملية لتعلم الآلة مؤخرًا. يُعد التشفير المتماثل الكامل (FHE) الأداة الأنسب لتعلم الآلة الحافظ للخصوصية (PPML) لضمان أمان قوي بالمعنى التشفيري وتحقيق إيجاز الاتصال. التشفير المتماثل الكامل هو مخطط تشفير يمكن معالجة نصوصه المشفرة بأي دوائر منطقية عميقة أو دوائر حسابية دون الوصول إلى البيانات. عادة ما يتم تعريف أمان FHE بأمان عدم التمييز تحت هجوم النص الواضح المختار (IND-CPA)، وهو تعريف أمان تشفيري معياري. إذا أرسل العميل المفاتيح العامة والبيانات المشفرة باستخدام مخطط FHE إلى خادم PPML، يمكن للخادم إجراء جميع العمليات الحسابية اللازمة في الخدمة المطلوبة قبل إرسال الناتج المشفر إلى العميل. لذلك، تم البحث كثيرًا حتى الآن في تطبيق FHE على PPML.
+
+كان أنجح نموذج PPML على البيانات المشفرة متماثليًا حتى الآن هو النموذج المبني باستخدام مخطط التشفير المتماثل TFHE من قبل Lou و Jiang [2]، لكنه استخدم النسخة المتدرجة من مخطط TFHE بدون التمهيد الذاتي، وهو ليس مخطط FHE. بعبارة أخرى، اختاروا مسبقًا المعاملات التي يمكن استخدامها لتنفيذ الشبكة المطلوبة بدون التمهيد الذاتي. إذا أردنا تصميم شبكة عصبية أعمق بمخطط التشفير المتماثل المتدرج، فيجب استخدام معاملات أكبر بكثير بشكل غير عملي، وهذا يسبب عبء زمن تشغيل أو ذاكرة ثقيلًا. علاوة على ذلك، نظرًا لأنه لا يمكن تطبيق تقنية التعبئة بسهولة في مخطط TFHE، فقد يتسبب ذلك في عدم كفاءة إضافية فيما يتعلق بوقت التشغيل وعبء الذاكرة إذا أردنا معالجة العديد من البيانات دفعة واحدة. وبالتالي، من المرغوب فيه استخدام FHE مع معاملات معتدلة والتمهيد الذاتي، الذي يدعم بشكل طبيعي تقنية التعبئة في نموذج PPML.
+
+مخططات FHE القابلة للتطبيق بهذه الخاصية هي مخططات FHE الكلمية، مثل مخطط Brakerski-Fan-Vercauteren (BFV) [3] أو مخطط Cheon-Kim-Kim-Song (CKKS) [4, 5]. على وجه الخصوص، اكتسب مخطط CKKS الكثير من الاهتمام كأداة مناسبة لتطبيق PPML لأنه يمكنه التعامل مع الأعداد الحقيقية المشفرة بشكل طبيعي. ومع ذلك، تدعم هذه المخططات فقط العمليات الحسابية المتماثلة مثل الجمع المتماثل والضرب المتماثل. للأسف، دوال التنشيط الشائعة عادة ما تكون دوال غير حسابية، مثل ReLU وsigmoid وleaky ReLU وELU. وبالتالي، لا يمكن تقييم دوال التنشيط هذه مباشرة باستخدام مخطط FHE الكلمي. عندما استبدلت نماذج تعلم الآلة السابقة باستخدام FHE دالة التنشيط غير الحسابية بمتعددات حدود بسيطة، لم يتم إثبات أن هذه النماذج تُظهر دقة عالية لمهام التصنيف المتقدمة خارج مجموعة بيانات MNIST.
+
+على الرغم من أن العديد من نماذج تعلم الآلة تتطلب طبقات عميقة متعددة للحصول على دقة عالية، لا يوجد خيار سوى استخدام عدد صغير من الطبقات في نماذج التعلم العميق السابقة القائمة على FHE لأن تقنيات التمهيد الذاتي السريعة والدقيقة لمخططات FHE أصبحت متاحة مؤخرًا فقط. تقنية التمهيد الذاتي تحول نصًا مشفرًا لا يمكنه دعم الضرب المتماثل بعد الآن إلى نص مشفر جديد عن طريق تمديد مستويات النص المشفر [6، 7]. ومع ذلك، تم تحسين تقنية التمهيد الذاتي بنشاط فيما يتعلق بالتعقيد الزمني الخوارزمي [8، 9، 10] والدقة [11] والتطبيق [12]، مما يجعل التمهيد الذاتي أكثر عملية. يجب تطبيق نموذج PPML بطبقات عديدة باستخدام تقنية التمهيد الذاتي الدقيقة والفعالة في FHE.
+
+**1.1 مساهمتنا**
+
+في هذا البحث، نقوم للمرة الأولى بتطبيق نموذج ResNet-20 لمجموعة بيانات CIFAR-10 [13] باستخدام مخطط CKKS لنظام الأعداد المتبقية (RNS-CKKS) [5]، وهو متغير من مخطط CKKS باستخدام مكتبة SEAL الإصدار 3.6.1 [14]، إحدى أكثر المكتبات موثوقية لتطبيق مخطط RNS-CKKS. ResNet هو أحد نماذج الشبكات العصبية الالتفافية (CNN) التاريخية التي تمكّن من شبكة عصبية عميقة جدًا بدقة عالية لمجموعات البيانات المعقدة مثل CIFAR-10 وImageNet. العديد من الأعمال عالية الأداء لتصنيف الصور تستند إلى نموذج ResNet لأن هذه النماذج يمكنها الوصول إلى دقة تصنيف عالية كافية عن طريق تكديس المزيد من الطبقات. نطبق للمرة الأولى دالة ReLU استنادًا إلى تركيب متعددات الحدود التقريبية الأصغرية الأعظمية [1] على البيانات المشفرة. باستخدام النتائج، نُظهر للمرة الأولى إمكانية تطبيق FHE مع التمهيد الذاتي على نموذج تعلم الآلة العميق المعياري من خلال تطبيق ResNet-20 على مخطط RNS-CKKS. نستخدم التمهيد الذاتي لـ RNS-CKKS مع مكتبة SEAL [14]. مكتبة SEAL هي إحدى أكثر مكتبات RNS-CKKS عملية، لكنها لا تدعم تقنية التمهيد الذاتي. يمكن للتمهيد الذاتي المستخدم دعم دقة عالية كافية لاستخدام التمهيد الذاتي بنجاح في ResNet-20 مع مخطط RNS-CKKS لمجموعة بيانات CIFAR-10.
+
+أشار Boemer وآخرون [15] إلى أن جميع نماذج PPML الموجودة القائمة على FHE أو MPC معرضة لهجوم استخراج النموذج. أحد أسباب هذه المشكلة هو أن طرق PPML السابقة باستخدام مخطط FHE لا تقيّم softmax باستخدام مخطط FHE. إنها فقط ترسل النتيجة قبل دالة softmax، ثم يُفترض أن العميل يحسب softmax بنفسه. وبالتالي، يمكن استخراج المعلومات حول النموذج بالكثير من أزواج المدخلات والمخرجات للعميل. يمكن أن يكون من المرغوب فيه للخادم تقييم دالة softmax باستخدام FHE. نطبق للمرة الأولى دالة softmax في نموذج تعلم الآلة باستخدام الطريقة في [4]، وهذا هو أول تطبيق لنموذج تعلم الآلة الحافظ للخصوصية القائم على FHE يمنع هجوم استخراج النموذج.
+
+نُعِد معاملات النموذج المدربة مسبقًا عن طريق تدريب نموذج ResNet-20 الأصلي مع مجموعة بيانات CIFAR-10 بالنص الواضح ونُنفذ ResNet-20 الحافظ للخصوصية بهذه المعاملات المدربة مسبقًا بالنص الواضح والصور المدخلة المشفرة. نجد أن نتيجة الاستدلال لـ ResNet-20 الحافظ للخصوصية المطبق المقترح متطابقة بنسبة 98.67% مع تلك الخاصة بـ ResNet-20 الأصلي. يحقق دقة تصنيف تبلغ 90.67%، وهي قريبة جدًا من الدقة الأصلية البالغة 91.89%. وبالتالي، نتحقق من أن نموذج PPML المطبق المقترح ينفذ بنجاح ResNet-20 على البيانات المشفرة. علاوة على ذلك، تُظهر نتيجة التطبيق المقترحة أعلى دقة بين تطبيقات CNN بمخطط FHE، بينما النتيجة الأعلى السابقة مع مخطط FHE الكلمي هي فقط 77% دقة تصنيف.
+
+**1.2 الأعمال ذات الصلة**
+
+**الشبكة الصديقة للتشفير المتماثل** بعض الأعمال السابقة تُعيد تصميم نموذج تعلم الآلة ليكون متوافقًا مع مخطط التشفير المتماثل عن طريق استبدال دوال التنشيط المعيارية بمتعددات حدود غير خطية بسيطة [16، 17، 18، 19]، تُسمى الشبكة الصديقة للتشفير المتماثل. ومع ذلك، نماذج تعلم الآلة هذه عادة ما تنجح فقط مع مجموعة بيانات MNIST البسيطة ولا يمكنها الوصول إلى دقة عالية كافية لمجموعة بيانات CIFAR-10. أعلى دقة تصنيف لشبكة CNN الصديقة للتشفير المتماثل بدالة تنشيط متعددة حدود بسيطة مطبقة بالتشفير المتماثل الكلمي هي فقط 77% لمجموعة بيانات CIFAR-10 [19]. نظرًا لأن اختيار دوال التنشيط حساس في نموذج تعلم الآلة المتقدم، فقد لا يكون من المرغوب فيه استبدال دوال التنشيط المعيارية والمشهورة بدوال حسابية بسيطة. علاوة على ذلك، يجب اتباع عملية التدريب المسبق الإضافية قبل توفير خدمة PPML. نظرًا لأن عملية التدريب مكلفة إلى حد ما من حيث أنها تستغرق وقتًا طويلاً وتحتاج إلى الكثير من البيانات، فمن الأفضل استخدام النموذج المعياري مثل ResNet وVGGNet للبيانات بالنص الواضح مع معاملات نموذجه المدربة مسبقًا عندما يجب الحفاظ على خصوصية البيانات.
+
+**النموذج الهجين مع FHE وMPC** بعض الأعمال السابقة تقيّم دوال التنشيط غير الحسابية بتقنية الحوسبة متعددة الأطراف لتطبيق نموذج تعلم الآلة المعياري المعروف مع الحفاظ على الخصوصية [20، 21، 22، 23، 15]. على الرغم من أن هذه الطريقة يمكنها تقييم حتى الدوال غير الحسابية بدقة، يمكن الكشف عن خصوصية معلومات النموذج. بعبارة أخرى، يجب أن يعرف العميل دالة التنشيط المستخدمة في النموذج، وهو أمر غير مرغوب فيه لخوادم PPML. أيضًا، نظرًا لأن الاتصال مع العملاء ليس موجزًا، يجب أن يشارك العملاء في الحساب، وهو أمر غير مرغوب فيه للعملاء.
+
+---
+
+### Translation Notes
+
+- **Figures referenced:** None in this section
+- **Key terms introduced:**
+  - Privacy-preserving ML (PPML) → تعلم الآلة الحافظ للخصوصية
+  - Fully Homomorphic Encryption (FHE) → التشفير المتماثل الكامل
+  - Bootstrapping → التمهيد الذاتي
+  - Word-wise FHE → التشفير المتماثل الكلمي
+  - HE-friendly network → الشبكة الصديقة للتشفير المتماثل
+  - Model extraction attack → هجوم استخراج النموذج
+- **Equations:** None
+- **Citations:** [1-23]
+- **Special handling:** Technical cryptography and ML terminology maintained consistency
+
+### Quality Metrics
+
+- Semantic equivalence: 0.88
+- Technical accuracy: 0.89
+- Readability: 0.87
+- Glossary consistency: 0.88
+- **Overall section score:** 0.88

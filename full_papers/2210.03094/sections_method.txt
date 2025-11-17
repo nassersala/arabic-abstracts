@@ -1,0 +1,463 @@
+
+
+===== PAGE 3 =====
+
+VIMA: General Robot Manipulation with Multimodal Prompts
+T r a i n i n g L e v e l  1
+O b j e c t  P l a c e m e n tL e v e l  2
+N o v e l  C o m b i n a t i o nL e v e l  3
+N o v e l  O b j e c tL e v e l  4
+N o v e l  T a s k
+P u t  t h e             i n t o  t h e
+ P u t  t h e             i n t o  t h e P u t  t h e            i n t o  t h e P u t  t h e            i n t o  t h eP u t  a l l  o b j e c t s  w i t h  t h e  s a m e  
+
+t e x t u r e  a s                   i n t o  i t
+S t r o n g e r  G e n e r a l i z a t i o n
+Figure 2: Evaluation Protocol in VIMA-B ENCH .We design 4 levels of evaluation settings to systematically measure the
+zero-shot generalization capability of an agent. Each level deviates more from the training distribution, and thus is strictly
+more challenging than the previous level.
+across tasks. Our key insight is that various task specifica-
+tion paradigms (such as goal conditioning, video demon-
+stration, natural language instruction) can all be instantiated
+as multimodal prompts (Fig. 1). Concretely, a multimodal
+prompt Pof length lis defined as an ordered sequence of ar-
+bitrarily interleaved texts and images P:=x1, x2, . . . , x l
+,
+where each element xi∈ {text,image}.
+Task Suite. The flexibility afforded by multimodal
+prompts allows us to specify and build models for a
+variety of task specification formats. Here we consider the
+following six categories.
+1.Simple object manipulation. Simple tasks like “put
+<object> into<container> ”, where each image
+in the prompt corresponds to a single object;
+2.Visual goal reaching. Manipulating objects to reach a
+goal configuration, e.g.,Rearrangement (Batra et al.,
+2020);
+3.Novel concept grounding. The prompt contains un-
+familiar words like “dax” and “blicket”, which are
+explained by in-prompt images and then immediately
+used in an instruction. This tests the agent’s ability to
+rapidly internalize new concepts;
+4.One-shot video imitation. Watching a video demon-
+stration and learning to reproduce the same motion
+trajectory for a particular object;
+5.Visual constraint satisfaction. The robot must ma-
+nipulate the objects carefully and avoid violating the
+(safety) constraints;
+6.Visual reasoning. Tasks that require reason-
+ing skills, such as appearance matching “move
+all objects with same textures as <object>
+into <container> ”, and visual memory “put
+<object> in<container> and then restore to
+their original position”.Note that these six categories are not mutually exclusive.
+For example, a task may introduce a previously unseen
+verb ( Novel Concept ) by showing a video demonstration, or
+combine goal reaching with visual reasoning. More details
+about the task suite are discussed in Appendix, Sec. B.
+3. VIMA-B ENCH : Benchmark for
+Multimodal Robot Learning
+Simulation Environment. Existing benchmarks are
+generally geared towards a particular task specification.
+To our knowledge, there is no benchmark that provides a
+rich suite of multimodal tasks and a comprehensive testbed
+for targeted probing of agent capabilities. To this end, we
+introduce a new benchmark suite for multimodal robot
+learning called VIMA-B ENCH . We build our benchmark
+by extending the Ravens robot simulator (Zeng et al.,
+2020). VIMA-B ENCH supports extensible collections of
+objects and textures to compose multimodal prompts and to
+procedurally generate a large number of tasks. Specifically,
+we provide 17 tasks with multimodal prompt templates,
+which can be instantiated into thousands of task instances.
+Each task belongs to one or more of the 6 task categories
+mentioned above. VIMA-B ENCH can generate large
+quantities of imitation learning data via scripted oracle
+agents. More details are elaborated in Appendix, Sec. A.
+Observation and Actions. The observation space of our
+simulator includes RGB images rendered from both frontal
+view and top-down view. Ground-truth object segmentation
+and bounding boxes are also provided for training object-
+centric models (Sec. 4). We inherit the high-level action
+space from Zeng et al. (2020), which consists of primitive
+motor skills like “pick and place” and “wipe”. These are
+parameterized by poses of the end effector. Our simulator
+also features scripted oracle programs that can generate
+expert demonstrations by using privileged simulator state in-
+formation, such as the precise location of all objects, and the
+ground-truth interpretation of the multimodal instruction.
+3
+
+===== PAGE 4 =====
+
+VIMA: General Robot Manipulation with Multimodal Prompts
+O b j e c t  E n c o d e r
+M u l t i m o d a l  P r o m p tI n t e r a c t i o nC r o s s - A t t e n t i o nS e l f - A t t e n t i o nS e l f - A t t e n t i o n
+T 5
+P r o m p t  T o k e n s
+T e x t  T o k e nO b j e c t  t o k e nA c t i o n  t o k e n
+H i s t o r y  T o k e n sC r o s s - A t t e n t i o n
+O b j e c t  E n c o d e rO b j e c t  E n c o d e r
+S w e e p  a l li n t ow i t h o u t  t o u c h i n g
+Figure 3: VIMA Architecture. We encode the multimodal prompts with a pre-trained T5 model, and condition the
+robot controller on the prompt through cross-attention layers. The controller is a causal transformer decoder consisting of
+alternating self and cross attention layers that predicts motor commands conditioned on prompts and interaction history.
+Training Dataset. We leverage oracles to generate a large
+offline dataset of expert trajectories for imitation learning.
+Our dataset includes 50K trajectories per task, and 650K
+successful trajectories in total. We hold out a subset of
+objects and textures for evaluation and designate 4 out of
+17 tasks as a testbed for zero-shot generalization.
+Evaluating Zero-Shot Generalization. Each task in
+VIMA-B ENCH has a binary success criterion and does not
+provide partial reward. During test time, we execute agent
+policies in the simulator for multiple episodes to compute
+a percentage success rate. The average success rate over
+all evaluated tasks will be the final reported metric.
+We design a four-level evaluation protocol (Fig. 2) to sys-
+tematically probe the generalization capabilities of learned
+agents. Each level deviates more from the training distribu-
+tion, and is thus strictly harder than the previous one.
+1.Placement generalization. All prompts are seen ver-
+batim during training, but only the placement of objects
+on the tabletop is randomized at testing;
+2.Combinatorial generalization. All textures and ob-
+jects are seen during training, but new combinations of
+them appear in testing;3.Novel object generalization. Test prompts and the
+simulated workspace include novel textures and ob-
+jects;
+4.Novel task generalization. New tasks with novel
+prompt templates at test time.
+4. VIMA: Visuomotor Attention Agent
+Our goal is to build a robot agent capable of performing
+any task specified by multimodal prompts. There is no
+prior method that works out of the box with multimodal
+prompts. To learn an effective multi-task robot policy, we
+propose VIMA , a robot agent with a multi-task encoder-
+decoder architecture and object-centric design (Fig. 3).
+Concretely, we learn a robot policy π(at|P,H), where
+H:=o1, a1, o2, a2, . . . , o t
+denotes the past interaction
+history, and ot∈ O, at∈ A are observations and actions
+at each interaction steps. We encode multimodal prompts
+via a frozen pre-trained language model and decode robot
+waypoint commands conditioned on the encoded prompts
+via cross-attention layers. Unlike prior work (Florence et al.,
+2019; Sieb et al., 2019; Zhu et al., 2022), VIMA adopts
+an object-centric representation that computes tokens from
+bounding box coordinates and cropped RGB patches.
+4
+
+===== PAGE 5 =====
+
+VIMA: General Robot Manipulation with Multimodal Prompts
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 1
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 2
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 3
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 4M o d e l  S c a l a b i l i t y
+D a t a  S i z e02 04 06 08 0L 1
+6  x  1 0 ²1 0 ³1 01 0D a t a  S i z e02 04 06 08 0L 2
+6  x  1 0 ²1 0 ³1 01 0D a t a  S i z e02 04 06 08 0L 3
+6  x  1 0 ²1 0 ³1 01 0D a t a  S i z e02 04 06 08 0L 4
+6  x  1 0 ²1 0 ³1 01 0D a t a  S c a l a b i l i t y
+O u r sV I M A - G a t oV I M A - F l a m i n g oV I M A - G P T
+Figure 4: Scaling model and data. Top: We compare performance of different methods with model sizes ranging from 2M
+to 200M parameters. Across all model sizes and generalization levels, VIMA outperforms baseline variants. Bottom : For a
+fixed model size of 92M parameters we compare the effect of imitation learning dataset size with 0.1%,1%,10%, and full
+data. VIMA is extremely sample efficient and can achieve performance comparable to other methods with 10×less data.
+Tokenization. There are 3formats of raw input in the
+prompt — text, image of a single object, and image of a
+full tabletop scene ( e.g., for Rearrangement or imitation
+from video frames). For text inputs , we use pre-trained T5
+tokenizer and word embedding to obtain word tokens. For
+images of full scenes , we first extract individual objects
+using domain fine-tuned Mask R-CNN (He et al., 2017)
+(Appendix, Sec. C.4). Each object is represented as a bound-
+ing box and a cropped image. We then compute object
+tokens by encoding them with a bounding box encoder and
+a ViT (Dosovitskiy et al., 2020), respectively. Since Mask
+R-CNN is imperfect, the bounding boxes can be noisy and
+the cropped images may have irrelevant pixels. For images
+of single objects , we obtain tokens in the same way except
+with a dummy bounding box. Prompt tokenization produces
+a sequence of interleaved textual and visual tokens. We then
+follow the practice in Tsimpoukelli et al. (2021) and encode
+the prompt via a pre-trained T5 encoder (Raffel et al., 2020) .
+Since T5 has been pre-trained on large text corpora, VIMA
+inherits the semantic understanding capability and robust-
+ness properties. To accommodate tokens from new modal-
+ities, we insert MLPs between non-textual tokens and T5.
+Robot Controller. A challenging aspect of designing
+a multi-task policy is to select a suitable conditioning
+mechanism. In our schema (Fig. 3), the robot controller
+(decoder) is conditioned on the prompt sequence Pby a
+series of cross-attention layers between Pand the trajectoryhistory sequence H. We compute key KPand value VP
+sequences from the prompt and query QHfrom the tra-
+jectory history, following the encoder-decoder convention
+in Raffel et al. (2020). Each cross-attention layer then
+generates an output sequence H′=softmax
+QHK⊺
+P√
+d
+VP,
+where dis the embedding dimension. Residual connections
+are added to connect higher layers with the input rollout
+trajectory sequence. The cross-attention design enjoys three
+advantages: 1) strengthened connection to prompt; 2) intact
+and deep flow of the original prompt tokens; and 3) better
+computational efficiency. VIMA decoder consists of L
+alternating cross-attention and self-attention layers. Finally,
+we follow common practice (Baker et al., 2022) to map
+predicted action tokens to discretized poses of the robot
+arm. See Appendix, Sec. C.2 for more details.
+Training. We follow behavioral cloning to train our
+models by minimizing the negative log-likelihood of
+predicted actions. Concretely, for a trajectory with Tsteps,
+we optimize minθPT
+t=1−logπθ(at|P,H). The entire
+training is conducted on an offline dataset with no simulator
+access. To make VIMA robust to detection inaccuracies and
+failures, we apply object augmentation by randomly inject-
+ingfalse-positive detection outputs. After training, we select
+model checkpoints for evaluation based on the aggregated
+accuracy on a held-out validation set. The evaluation in-
+volves interacting with the physics simulator. We follow the
+5
+
+===== PAGE 6 =====
+
+VIMA: General Robot Manipulation with Multimodal Prompts
+best practices to train Transformer models. See Appendix,
+Sec. D for comprehensive training hyperparameters.
+5. Experiments
+In this section, we aim to answer three main questions:
+1.What is the best recipe for building multi-task
+transformer-based robot agents with multimodal
+prompts?
+2.What are the scaling properties of our approach in
+model capacity and data size?
+3.How do different components, such as visual tokeniz-
+ers, prompt conditioning, and prompt encoding, affect
+robot performance?
+5.1. Baselines
+Because there is no prior method that works out of the box
+with our multimodal prompting setup, we make our best
+effort to select a number of representative transformer-based
+agent architectures as baselines, and re-interpret them to be
+compatible with VIMA-B ENCH :
+Gato (Reed et al., 2022) introduces a decoder-only model
+that solves tasks from multiple domains where tasks are
+specified by prompting the model with the observation and
+action subsequence. For a fair comparison, we provide the
+same conditioning as VIMA ,i.e., our multimodal encoded
+prompts. Input images are divided into patches and encoded
+by a ViT model to produce observation tokens. This variant
+is referred to as “ VIMA-Gato ”.
+Flamingo (Alayrac et al., 2022) is a vision-language model
+that learns to generate textual completion in response to
+multimodal prompts. It embeds a variable number of prompt
+images into a fixed number of tokens via Perceiver (Jaegle
+et al., 2021b), and conditions the language decoder on the
+encoded prompt by cross-attention. Flamingo does not work
+with embodied agents out of the box. We adapt it to support
+decision-making by replacing the output layer with robot
+action heads. We denote the method as “ VIMA -Flamingo ”.
+VIMA -GPT is a decoder-only architecture conditioned on
+tokenized multimodal prompts. It autoregressively decodes
+the next actions given instructions and interaction histories.
+Similar to prior work (Chen et al., 2021; Janner et al., 2021),
+it encodes an image into a single state token by a ViT en-
+coder and prepends the rollout trajectory with prompt tokens.
+This baseline does not use cross-attention.
+A more detailed comparison between these variants can be
+found in Appendix, Sec. C.1.
+L 1  →  L 27 06 05 04 03 02 01 00P e r f o r m a n c e  D r o p  ( % )O u r sV I M A - G a t oV I M A - F l a m i n g oV I M A - G P TL 1  →  L 3L 1  →  L 4Figure 5: VIMA incurs much less performance drop than
+baselines as we evaluate on progressively harder settings.
+5.2. Evaluation Results
+We compare VIMA against the baseline variants on four
+levels of generalization provided in our benchmark for dif-
+ferent model and training dataset sizes. Our empirical results
+demonstrate that VIMA ’s choice of object tokens combined
+with cross-attention conditioning is the most effective recipe
+among the model designs we consider.
+Model Scaling. We train all methods for a spectrum of
+model capacities from 2M to 200M parameters, evenly
+spaced on the log scale (Fig. 4). The encoder size is kept
+constant (T5-Base, 111M) for all methods and excluded
+from the parameter count. Across alllevels of zero-shot
+generalization, we find that VIMA strongly outperforms
+other alternatives. Although models like VIMA -Gato
+and VIMA-Flamingo show improved performance with
+bigger model sizes, VIMA consistently achieves superior
+performance over allmodel sizes. We note that this can
+only be achieved with both cross-attention and object token
+sequence representations — altering any component will
+significantly degrade the performance, especially in the low
+model capacity regime (ablations in Sec. 5.3).
+Data Scaling. Next we investigate how different methods
+scale with varying dataset sizes. We compare model perfor-
+mance at 0.1%,1%,10% and full imitation learning dataset
+provided in VIMA-B ENCH (Fig. 4). Note that to ensure
+all methods are fairly pre-trained on the same amount of
+data, we initialize baseline variants that directly learn from
+raw pixels with MVP pre-trained ViT (Xiao et al., 2022;
+Radosavovic et al., 2022). It is further MAE fine-tuned (He
+et al., 2021), using the same in-domain data as for the
+Mask R-CNN object detector. See Appendix, Sec. E.3 for
+detailed setup. VIMA is extremely sample efficient and,
+with just 1%of the data, can achieve performance similar
+to baseline methods trained with 10×more data on L1 and
+L2 levels of generalization. In fact, for L4 we find that with
+6
+
+===== PAGE 7 =====
+
+VIMA: General Robot Manipulation with Multimodal Prompts
+O u r sV i T
+O b j e c t
+P e r c e i v e r P e r c e i v e rI m a g e
+P e r c e i v e rI m a g e
+P a t c h e sV i T P e r c e i v e rS i n g l e
+I m a g eV i TO u r s
+( O r a c l e )V i T
+L 1L 2L 3L 401 02 03 04 05 06 07 08 0S u c c e s s  R a t e  ( % )O u r sO u r s  ( O r a c l e )O b j e c t  P e r c e i v e rI m a g e  P a t c h e sI m a g e  P e r c e i v e r  ( V I M A - F l a m i n g o )S i n g l e  I m a g e
+M a s k  R - C N N
+M a s k  R - C N NV a r i a b l e  # t o k e n s
+F i x e d  # t o k e n s
+Figure 6: Ablation on visual tokenizers. We compare the performance of VIMA -200M model across different visual
+tokenizers. Our proposed object tokens outperform all methods that learn directly from raw pixels, and Object Perceiver that
+downsamples the object sequence to a fixed number of tokens.
+just1%of training data, VIMA already surpasses other
+variants trained with entire dataset. Finally, across all levels
+with just 10% of the data, VIMA can outperform other
+architectures trained with the full dataset by a significant
+margin. We hypothesize that the data efficiency can be
+attributed to the object-centric representation employed
+in the VIMA recipe, which is less prone to overfitting than
+learning directly from pixels in the low-data regime. This
+is consistent with findings from Sax et al. (2018), which
+demonstrates that embodied agents conditioned on mid-
+level visual representations tend to be significantly more
+sample-efficient than end-to-end control from raw pixels.
+Progressive Generalization. Finally, we compare the rel-
+ative performance degradation as we test the models on pro-
+gressively challenging zero-shot evaluation levels without
+further fine-tuning (Fig. 5). Our method exhibits a minimal
+performance regression, especially between L1→L2and
+L1→L3. In contrast, the baselines can degrade as much as
+20%, particularly in more difficult generalization scenarios.
+Although all methods degrade significantly when evaluated
+onL4(Novel Tasks ), the performance drop for VIMA is
+only half as severe as all other baselines. These results sug-
+gest that VIMA has developed a more generalizable policy
+and robust representations than the alternative approaches.5.3. Ablation Studies
+Through extensive experiments, we ablate different design
+choices in VIMA and study their impact on robot decision
+making. We focus on four aspects: visual tokenization,
+prompt conditioning, prompt-encoding language models,
+and policy robustness against distractions and corruptions.
+Visual Tokenization. As explained in Sec. 4, VIMA
+processes the prompt and observation images into a variable
+number of object tokens with a domain fine-tuned Mask
+R-CNN implementation. How important is this particular
+choice of visual tokenizer? We study 5 different variants
+and empirically evaluate their 4 levels of generalization per-
+formance on VIMA-B ENCH . 1)Ours (Oracle) : instead of
+using Mask R-CNN, we directly read out the ground-truth
+bounding box from the simulator. In other words, we use
+a perfect object detector to estimate the upper bound on the
+performance of this study; 2) Object Perceiver : we apply a
+Perceiver module to convert the variable number of objects
+detected in each frame to a fixed number of tokens. Per-
+ceiver is more computationally efficient because it reduces
+the average sequence length; 3) Image Perceiver : the same
+architecture as the Perceiver Resampler inVIMA -Flamingo,
+which converts an image to a small, fixed number of tokens;
+4)Image patches : following VIMA -Gato, we divide an
+RGB frame into square patches, and extract ViT embedding
+7
+
+===== PAGE 8 =====
+
+VIMA: General Robot Manipulation with Multimodal Prompts
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0S u c c e s s  R a t e  ( % )L 1
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 2
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 3
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 4
+Figure 7: Ablation on prompt conditioning. We compare our method ( xattn : cross-attention prompt conditioning) with a
+vanilla transformer decoder ( gpt-decoder ) across different model sizes. Cross-attention is especially helpful in low-parameter
+regime and for harder generalization tasks.
+tokens. The number of patches is greater than the output of
+Image Perceiver; 5) Single image :VIMA -GPT’s tokenizer,
+which encodes one image into a single token.
+Fig. 6 shows the ablation results. We highlight a few find-
+ings. First, we note that our Mask R-CNN detection pipeline
+(Appendix, Sec. C.4) incurs a minimal performance loss
+compared to the oracle bounding boxes, thanks to the object
+augmentation (Sec. 4) that boosts robustness during train-
+ing. Second, tokenizing from raw pixels (Image Perceiver,
+patches, or single embedding) consistently underperforms
+our object-centric format. We hypothesize that these tok-
+enizers have to allocate extra internal capacity to parse the
+objects from low-level pixels, which likely impedes learning.
+Sax et al. (2018) echoes our finding that using mid-level
+vision can greatly improve agent generalization compared to
+an end-to-end pipeline. Third, even though Ours andObject
+Perceiver both use the same object bounding box inputs,
+the latter is significantly worse in decision making. We
+conclude that it is important to directly pass the variable-
+length object sequence to the robot controller rather than
+downsampling to a fixed number of tokens.
+Prompt Conditioning. VIMA conditions the robot con-
+troller (decoder) on the encoded prompt by cross-attention.
+A simple alternative is to concatenate the prompt Pand in-
+teraction history Hinto one big sequence, and then apply a
+decoder-only transformer like GPT (Radford et al., 2018) to
+predict actions. In this ablation, we keep the object tokenizer
+constant and only switch the conditioning mechanism to
+causal sequence modeling. Note that this variant is concep-
+tually “ VIMA -Gato with object tokens”. Fig. 7 shows the
+comparison of VIMA (xattn ) and the gpt-decoder
+variant across 4 generalization levels. While the variant
+achieves comparable performance in larger models,
+cross-attention still dominates in the small-capacity range
+and generalizes better in the most challenging L4 ( Novel
+Task) setting. Our hypothesis is that cross-attention helps
+the controller stay better focused on the prompt instruction
+at each interaction step. This bears a resemblance to theempirical results in Sanh et al. (2021); Wang et al. (2022b),
+which show that well-tuned encoder-decoder architectures
+can outperform GPT-3 in zero-shot generalization.
+Prompt Encoding. We vary the size of the pre-trained
+T5 encoder to study the effect of prompt encoding. We
+experiment with three T5 capacities: small (30M), base
+(111M), and large (368M). We further fix the parameter
+count of the decision-making part to be 200M. For all T5
+variants, we fine-tune the last two layers and freeze all other
+layers. We find no significant difference among the variants
+(Appendix, Sec. E.4), thus we set base as default for all
+our models.
+Policy Robustness. We study the policy robustness
+against increasing number of distractors and corrupted task
+specifications, including incomplete prompts (randomly
+masking out words with <UNK> token) and corrupted
+prompts (randomly swapping words, which could have
+changed the task meaning altogether). See Appendix,
+Sec. E.5 for exact setup and results. VIMA exhibits minimal
+performance degradation with increased distractors and
+minor decrease with corrupted prompts. We attribute this
+robustness to the high-quality pre-trained T5 backbone.
+6. Related Work
+Multi-Task Learning by Sequence Modeling. Trans-
+formers (Vaswani et al., 2017) have enabled task unification
+across many AI domains (Brown et al., 2020; Chen et al.,
+2022a;b; Lu et al., 2022; Wang et al., 2022c). For example,
+inNLP , the Natural Language Decathlon (McCann et al.,
+2018) adopts a consistent question-answering format for
+a suite of 10 NLP tasks. T5 (Raffel et al., 2020) unifies
+all language problems into the same text-to-text format.
+GPT-3 (Brown et al., 2020) and Megatron (Shoeybi et al.,
+2019) demonstrate emergent behaviours of intuitive task
+specifications by zero-shot prompting. In computer vision ,
+Pix2Seq (Chen et al., 2022b) casts many vision problems
+into a unified sequence format. Florence (Yuan et al., 2021),
+8

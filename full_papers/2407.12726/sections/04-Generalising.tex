@@ -1,0 +1,393 @@
+\section{Generalising}\label{sec:generalising}
+
+The \acrshort{atm} example required significant effort to type-check, program,
+and property test. If this were required for every state model, the approach
+would be tedious to adopt.  Instead, it would be convenient to only have to
+specify the model and its transitions, and get the rest ``for free''.
+
+  %% MARK: Generic `Prog`
+  \subsection{Generic operations and programs}\label{ssec:generic-op-prog}
+
+  To generalise the data types from the previous section, we need to extract the
+  common factor and index over it. As briefly discussed in
+  \cref{ssec:atm-op-prog}, the programming part of our approach is largely
+  already generalised. To reuse the code with a different system, we need to
+  define the new states and transitions (or operations): This gives us our
+  indices: the state {\textemdash} \texttt{st : Type} {\textemdash} and the type
+  of the operations {\textemdash} \texttt{op}:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{op}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{forall}\PY{+w}{ }st\PY{+w}{ }\PY{o+ow}{.}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }st\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }st\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}
+  \end{Verbatim}
+
+  In order to make the \texttt{Prog} type generic, we index it over the type of
+  valid operations for the states:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{\PYZcb{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}opT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}from\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}to\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }t\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{    }\PY{n+nf}{Pure}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}x\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }t\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }opT\PY{+w}{ }t\PY{+w}{ }\PY{o+ow}{(}stFn\PY{+w}{ }x\PY{o+ow}{)}\PY{+w}{ }stFn
+\PY{+w}{    }\PY{n+nf}{Op}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{  }\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }opT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{\PYZcb{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }opT\PY{+w}{ }t\PY{+w}{ }st\PY{+w}{ }stFn\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }opT\PY{+w}{ }t\PY{+w}{ }st\PY{+w}{ }stFn
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(\PYZgt{}\PYZgt{}=)}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }opT\PY{+w}{ }resT1\PY{+w}{ }st1\PY{+w}{ }stFn1
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{((}x\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT1\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }opT\PY{+w}{ }resT2\PY{+w}{ }\PY{o+ow}{(}stFn1\PY{+w}{ }x\PY{o+ow}{)}\PY{+w}{ }stFn2\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }opT\PY{+w}{ }resT2\PY{+w}{ }st1\PY{+w}{ }stFn2
+  \end{Verbatim}
+
+  
+  This gives us a generic way to describe a program producing a result of some
+  type, starting in a given state, and ending in a state depending on the
+  result. Note that the program's return type and the operations' return types
+  may differ; each operation can return different things, which may be different
+  from the return type of the whole program. Using this generalised version,
+  anything described in the shape of the \texttt{op}-type automatically gains
+  support for \texttt{do}-notation as well as the type checker verifying that
+  the program only changes states in accordance with the specification.
+
+
+  %% MARK: Generic traces
+  \subsection{Generic traces}\label{ssec:generic-opres-trace}
+
+  Taking the same approach as with programs, we can index the infrastructure
+  required for the trace generation by the type of operations to make it
+  generic. The first part is \texttt{OpRes} -- capturing the type of an
+  operation and the type of result it produced, along with the state it happened
+  in and the function describing how to process the result to change state.
+  We also need a \texttt{Show} instance, to show counterexamples:
+
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{record}\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{\PYZcb{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}opT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{(}currSt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{0}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{constructor}\PY{+w}{ }\PY{k+kt}{MkOpRes}
+\PY{+w}{  }\PY{n+nf}{op}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }opT\PY{+w}{ }resT\PY{+w}{ }currSt\PY{+w}{ }nsFn
+\PY{+w}{  }\PY{n+nf}{res}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{k+kr}{auto}\PY{+w}{ }opShow\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Show}\PY{+w}{ }\PY{o+ow}{(}opT\PY{+w}{ }resT\PY{+w}{ }currSt\PY{+w}{ }nsFn\PY{o+ow}{)\PYZcb{}}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{k+kr}{auto}\PY{+w}{ }rShow\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Show}\PY{+w}{ }resT\PY{o+ow}{\PYZcb{}}
+  \end{Verbatim}
+
+  Both \texttt{TraceStep} and \texttt{Trace} follow the same pattern:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{record}\PY{+w}{ }\PY{k+kt}{TraceStep}\PY{+w}{ }\PY{o+ow}{(}opT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{constructor}\PY{+w}{ }\PY{k+kt}{MkTS}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }stepRT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{\PYZcb{}}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }stepSt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT\PY{o+ow}{\PYZcb{}}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }stepFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stepRT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{\PYZcb{}}
+\PY{+w}{  }\PY{n+nf}{opRes}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }opT\PY{+w}{ }stepRT\PY{+w}{ }stepSt\PY{+w}{ }stepFn
+\PY{+w}{  }\PY{n+nf}{resSt}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{k+kr}{auto}\PY{+w}{ }showStT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Show}\PY{+w}{ }stT\PY{o+ow}{\PYZcb{}}
+
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{Trace}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}opT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{  }\PY{n+nf}{MkTrace}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Show}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}initSt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{\PYZob{}}bound\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{\PYZcb{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}trace\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Vect}\PY{+w}{ }bound\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{TraceStep}\PY{+w}{ }opT\PY{o+ow}{))}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Trace}\PY{+w}{ }opT\PY{+w}{ }initSt\PY{+w}{ }bound
+  \end{Verbatim}
+
+
+  %% MARK: Traceable
+  \subsection{The \texttt{Traceable} interface}\label{ssec:traceable}
+
+  To generate traces, we need to know which
+  operations are valid given a current state. We could define this as an
+  instance of \texttt{Arbitrary}, however the type declaration is repetitive and
+  not idiomatic \iidris. The declaration for the \texttt{ATMOp} and
+  \texttt{OpRes} from \cref{ssec:atm-op-prog,ssec:atm-plumbing}, for example,
+  would be:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{o+ow}{\PYZob{}}st\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}
+\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }resT\PY{+w}{ }st\PY{+w}{ }nsFn\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}st\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{?}arbitrary\PYZus{}rhs
+  \end{Verbatim}
+
+  While we could define this by pattern matching on the implicit `\texttt{st}'
+  argument, requiring an implicit argument to define an interface is uncommon,
+  as is using pattern matching in a function which does not take any explicit
+  arguments. Furthermore, when defining it for a different \acrshort{ism}, we
+  would only change the \texttt{opT} and \texttt{stT}, leaving everything else
+  the same, which suggests there is a pattern to factor out. We introduce the
+  \texttt{Traceable} interface as shorthand for these longer definitions,
+  capturing their similarities. An operation is \emph{traceable} if for some
+  given current state, we can return a generator producing valid transitions
+  away from that state.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{interface}\PY{+w}{ }\PY{k+kt}{Traceable}\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{0}\PY{+w}{ }opT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{  }\PY{n+nf}{options}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{  }\PY{o+ow}{(}st\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }opT\PY{+w}{ }resT\PY{+w}{ }st\PY{+w}{ }nsFn\PY{o+ow}{)}
+  \end{Verbatim}
+
+  When giving an instance of \texttt{Traceable}, the type checker can
+  immediately propagate and infer the values for \texttt{opT} and \texttt{stT}
+  respectively, saving us the trouble of writing out the lengthy declaration.
+  Our framework is still operating inside the \texttt{Gen} monad, so all of
+  \QC's combinators, along with \texttt{do} notation, can be used to construct
+  more complex generators.
+  This shows the strength of our approach: both
+  complicated models and test generators can be implemented in the same file!
+  %%complicated models and test generators can be implemented in the same file;
+  %%indeed, one can use the full power of
+  %%higher-order functions to simplify some things, for example \texttt{map
+  %%(MkPair 1)} works for converting a list of complex generators into
+  %%a \texttt{choice} of generators.
+
+
+  %% MARK: Generic Arbitrary Trace
+  \subsection{\texttt{Arbitrary} for generic \acrshortpl{ism}}\label{ssec:generic-arb}
+
+  With the supporting data structures and records generalised, we can implement
+  a version of \texttt{Arbitrary} which will work for \emph{any} \acrshort{ism}
+  that implements \texttt{Traceable}. The approach is the same as used in
+  \cref{ssec:arb-opres,ssec:arb-atm-trace}, except with everything
+  indexed by the type of the permitted operations. An implementation never has
+  to worry about the implicit state argument to \texttt{arbitrary} as this is
+  required via the more straightforward \texttt{Traceable}.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }opT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{\PYZob{}}st\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}
+\PY{k+kt}{Traceable}\PY{+w}{ }opT\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{**}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }opT\PY{+w}{ }resT\PY{+w}{ }st\PY{+w}{ }nsFn\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}st\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }options\PY{+w}{ }st
+
+\PY{o+ow}{\PYZob{}}\PY{l+m+mi}{0}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{\PYZob{}}iSt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{\PYZob{}}bound\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}
+\PY{o+ow}{\PYZob{}}opT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PYZsq{}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }stT\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}
+\PY{k+kt}{Show}\PY{+w}{ }stT\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{k+kt}{Traceable}\PY{+w}{ }opT\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFnT\PY{+w}{ }\PY{o+ow}{**}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }opT\PY{+w}{ }resT\PY{+w}{ }iSt\PY{+w}{ }nsFnT\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Trace}\PY{+w}{ }opT\PY{+w}{ }iSt\PY{+w}{ }bound\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}bound\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{l+m+mi}{0}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{MkTrace}\PY{+w}{ }iSt\PY{+w}{ }\PY{o+ow}{[]}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}bound\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }k\PY{o+ow}{)\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }opRes\PY{o+ow}{@(}\PY{k+kt}{MkOpRes}\PY{+w}{ }op\PY{+w}{ }res\PY{o+ow}{))}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }the\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}rT\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }fnT\PY{+w}{ }\PY{o+ow}{**}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }opT\PY{+w}{ }rT\PY{+w}{ }iSt\PY{+w}{ }fnT\PY{o+ow}{))}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }fstTraceSt\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }nsFn\PY{+w}{ }res
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }traceHead\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{MkTS}\PY{+w}{ }opRes\PY{+w}{ }fstTraceSt
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }traceTail\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }trace\PY{+w}{ }k\PY{+w}{ }fstTraceSt
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkTrace}\PY{+w}{ }iSt\PY{+w}{ }\PY{o+ow}{(}traceHead\PY{+w}{ }\PY{o+ow}{::}\PY{+w}{ }traceTail\PY{o+ow}{))}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{      }\PY{n+nf}{trace}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{  }\PY{o+ow}{(}steps\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}st\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }stT\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Vect}\PY{+w}{ }steps\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{TraceStep}\PY{+w}{ }opT\PY{o+ow}{))}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }trace\PY{+w}{ }\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{[]}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }trace\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }j\PY{o+ow}{)}\PY{+w}{ }st\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }stFn\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }opR\PY{o+ow}{@(}\PY{k+kt}{MkOpRes}\PY{+w}{ }op\PY{+w}{ }res\PY{o+ow}{))}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }the\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}x\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }y\PY{+w}{ }\PY{o+ow}{**}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }opT\PY{+w}{ }x\PY{+w}{ }st\PY{+w}{ }y\PY{o+ow}{))}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }nextSt\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }stFn\PY{+w}{ }res
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkTS}\PY{+w}{ }opR\PY{+w}{ }nextSt\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{::}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{!(}trace\PY{+w}{ }j\PY{+w}{ }nextSt\PY{o+ow}{)}
+  \end{Verbatim}
+
+  This completes the generalisation, allowing us to model, verify, implement,
+  and test any specification as long as the states, transitions, and options
+  from each state are given.
+
+
+  %% MARK: ARQ
+  \subsection{Evaluation: The \acrshort{arq} Protocol}\label{ssec:arq}
+
+  We evaluate our generalisation by implementing a different system,
+  the \acrfull{arq} protocol. The \acrshort{arq} protocol works by sending a
+  single packet containing some data and a packet number, and then waiting for
+  an acknowledgement of the packet number before advancing to sending the next
+  packet~\cite{linErrorControlCoding1983}.
+  We chose \acrshort{arq} because it is simple enough to be
+  understandable, while also presenting a some interesting
+  challenges: there is an external second party involved, whose behaviour we
+  cannot know; and, due to packet numbering, there are potentially infinite
+  states.
+
+  %% \subsubsection{The simplest \acrshort{arq}}
+
+  %% It turns out that \acrshort{arq} in its purest form is too simple to
+  %% meaningfully implement. We can write down its states {\textemdash}
+  %% \texttt{Ready} and \texttt{Waiting} {\textemdash}, index them by the packet's
+  %% sequence number, and then specify a \texttt{Next} function which either
+  %% increments \texttt{Ready}'s sequence number {\textemdash} on a successful
+  %% \texttt{Ack} {\textemdash} or keeps it the same, requiring a retry, in the
+  %% event of a timeout. However, this leaves very little meaningful to be
+  %% expressed. We can declare the start and end types of our program, but without
+  %% being able to pause or indicate an error, there is no sensible way to
+  %% implement the program. When we reach the desired number of sent packets, our
+  %% \texttt{Next} function would require that we now send and then wait on the
+  %% $n+1$-th packet. As such, we need to make some minor modifications to ARQ to
+  %% make it slightly less simple.
+
+  \subsubsection{The states of \acrshort{arq}}\label{ssec:arq-states}
+
+  Na{\"i}vely, the protocol only has two states: \textbf{Ready} and
+  \textbf{Waiting}. However, the semantics of \acrshort{arq} introduce a third
+  state, \textbf{Acked}. When we receive an acknowledgement {\textemdash} an
+  \texttt{Ack} {\textemdash} for a certain packet, we need to check that it
+  acknowledges the sequence number we sent and retry if the \texttt{Ack} was for
+  another packet (potentially due to data corruption on the return trip).
+  Checking the acknowledged sequence number can then either require us to
+  retransmit the same packet or, if everything is fine, to proceed to sending
+  the next packet in the sequence.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ARQState}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Waiting}\PY{+w}{ }\PY{k+kt}{Nat}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Acked}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{k+kt}{Nat}
+  \end{Verbatim}
+
+  Each state takes the current sequence number of the packet being transmitted,
+  with \textbf{Acked} additionally taking the acknowledged sequence number so
+  that we can verify it.
+
+  We define a simple packet record, along with a data type for capturing the
+  possible outcomes of waiting on an acknowledgement.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{record}\PY{+w}{ }\PY{k+kt}{Pkt}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{constructor}\PY{+w}{ }\PY{k+kt}{MkPkt}
+\PY{+w}{  }\PY{n+nf}{pl}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Bits8}
+\PY{+w}{  }\PY{n+nf}{sn}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}
+
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{WaitRes}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Ack}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Timeout}
+  \end{Verbatim}
+
+  Note that this captures the fact that we cannot know how the other side will
+  reply, if at all. We are not trying to simulate timed automata to model the
+  exact timeouts required. Instead, we model the possible outcomes and test that
+  our protocol is well-behaved under these scenarios.
+
+  \subsubsection{The \texttt{Next} state function,}\label{ssec:arq-nextStFn}
+
+  transitions to \textbf{Acked} if an \texttt{Ack}-reply was received
+  {\textemdash} keeping track of both the packet number and the reply number
+  {\textemdash} or immediately back to \textbf{Ready} if the reply never came,
+  forcing us to retry sending the same packet.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{Next}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}n\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{WaitRes}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ARQState}
+Next\PY{+w}{ }n\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ack}\PY{+w}{ }a\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Acked}\PY{+w}{ }n\PY{+w}{ }a
+Next\PY{+w}{ }n\PY{+w}{ }\PY{k+kt}{Timeout}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }n
+  \end{Verbatim}
+
+  \subsubsection{Moving on to \acrshort{arq} operations,}\label{ssec:arq-ops}
+
+  \textit{Send} takes a packet to send and ensures the state types keeps track
+  of the current packet number, and \textit{Wait} proceeds with a wait result.
+  The more interesting transitions, \textit{Proceed} and \textit{Retry}, take a
+  proof that the acknowledged number and the packet number are equal or that
+  they cannot be equal, respectively. This adds some overhead to programming
+  with the operations, but we chose to include this as it nicely show how
+  dependent types integrate with our new approach:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ARQState}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ARQState}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{  }\PY{n+nf}{Send}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}pkt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Pkt}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ready}\PY{+w}{ }pkt\PY{o+ow}{.}sn\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Waiting}\PY{+w}{ }\PY{o+ow}{(}pkt\PY{o+ow}{.}sn\PY{o+ow}{))}
+\PY{+w}{  }\PY{n+nf}{Wait}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{k+kt}{WaitRes}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Waiting}\PY{+w}{ }n\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{(}Next\PY{+w}{ }n\PY{o+ow}{)}
+\PY{+w}{  }\PY{n+nf}{Proceed}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}ok\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }a\PY{+w}{ }\PY{o+ow}{=}\PY{o+ow}{=}\PY{o+ow}{=}\PY{+w}{ }n\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Acked}\PY{+w}{ }n\PY{+w}{ }a\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }n\PY{o+ow}{))}
+\PY{+w}{  }\PY{n+nf}{Retry}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Not}\PY{+w}{ }\PY{o+ow}{(}a\PY{+w}{ }\PY{o+ow}{=}\PY{o+ow}{=}\PY{o+ow}{=}\PY{+w}{ }n\PY{o+ow}{))}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Acked}\PY{+w}{ }n\PY{+w}{ }a\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }n\PY{o+ow}{)}
+  \end{Verbatim}
+
+  \subsubsection{Finally, we need a \texttt{Traceable} instance}\label{ssec:arq-traceable}
+
+  When in the \textbf{Ready} state, we have access to the sequence number we are
+  meant to be sending, and so we can construct an arbitrary packet and
+  \textit{Send} it (we use a placeholder payload of 255 rather than
+  \texttt{arbitrary} for brevity). Once we have received an \texttt{Ack} and are
+  in the \textbf{Acked} state, we need to check whether the two numbers are
+  equal. If they do, the only thing we can do is to advance to sending the next
+  packet. If they cannot be equal, the only thing we can do is to retry sending
+  the packet. This may sound like we have no control over the frequency of
+  accepted versus rejected acknowledgements, however we \emph{can} control this
+  by simulating an unreliable network from the \textbf{Waiting} state: 20\% of
+  the time we do not get a reply, timing out instead; 5\% of the time we get an
+  \texttt{arbitrary} acknowledgement; and the remaining 75\% of the time we
+  successfully transmit and get a valid acknowledgement back:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kt}{Traceable}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }options\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ready}\PY{+w}{ }k\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }pure
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Send}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkPkt}\PY{+w}{ }\PY{l+m+mi}{255}\PY{+w}{ }k\PY{o+ow}{))}\PY{+w}{ }\PY{o+ow}{())}
+
+\PY{+w}{ }\PY{+w}{ }options\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Waiting}\PY{+w}{ }k\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }frequency
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{[}\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{4},\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{k+kt}{Wait}\PY{+w}{ }\PY{k+kt}{Timeout}\PY{o+ow}{))}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ },\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{1},\PY{+w}{ }\PY{k+kr}{do}\PY{+w}{ }pure
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{k+kt}{Wait}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ack}\PY{+w}{ }\PY{o+ow}{!}arbitrary\PY{o+ow}{)))}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ },\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{15},\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{k+kt}{Wait}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ack}\PY{+w}{ }k\PY{o+ow}{)))}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{]}
+
+\PY{+w}{ }\PY{+w}{ }options\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Acked}\PY{+w}{ }n\PY{+w}{ }a\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{case}\PY{+w}{ }decEq\PY{+w}{ }a\PY{+w}{ }n\PY{+w}{ }\PY{k+kr}{of}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Yes}\PY{+w}{ }prf\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Proceed}\PY{+w}{ }prf\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{())}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{No}\PY{+w}{ }contra\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Retry}\PY{+w}{ }contra\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{())}
+  \end{Verbatim}
+
+  \subsubsection{This is all we need}\label{ssec:arq-all-we-need}
+
+  We have now defined everything the programmer needs to define to use our new
+  approach. Thanks to our generalisation, we can now plug our new stateful model
+  into \texttt{Prog} and immediately get access to \texttt{do}-notation and
+  type-level state transition verification:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{sendN}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}n\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ready}\PY{+w}{ }n\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }n\PY{o+ow}{))}
+sendN\PY{+w}{ }n\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Send}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkPkt}\PY{+w}{ }\PY{l+m+mi}{255}\PY{+w}{ }n\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ack}\PY{+w}{ }a\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{k+kt}{Wait}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Timeout}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }sendN\PY{+w}{ }n
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{case}\PY{+w}{ }decEq\PY{+w}{ }a\PY{+w}{ }n\PY{+w}{ }\PY{k+kr}{of}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Yes}\PY{+w}{ }prf\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Proceed}\PY{+w}{ }prf
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{No}\PY{+w}{ }contra\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Retry}\PY{+w}{ }contra
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }sendN\PY{+w}{ }n
+
+\PY{n+nf}{prog}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ready}\PY{+w}{ }\PY{l+m+mi}{0}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{l+m+mi}{3}\PY{o+ow}{)}
+prog\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}\PY{+w}{ }sendN\PY{+w}{ }\PY{l+m+mi}{0}\PY{+w}{ };\PY{+w}{ }sendN\PY{+w}{ }\PY{l+m+mi}{1}\PY{+w}{ };\PY{+w}{ }sendN\PY{+w}{ }\PY{l+m+mi}{2}
+
+\PY{k+kr}{failing}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{Mismatch between: 1 and 0}\PY{l+s}{\PYZdq{}}
+\PY{+w}{  }\PY{n+nf}{bad}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Prog}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ready}\PY{+w}{ }\PY{l+m+mi}{0}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{l+m+mi}{2}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }bad\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}\PY{+w}{ }sendN\PY{+w}{ }\PY{l+m+mi}{1}
+  \end{Verbatim}
+
+  Additionally, although the program above may run forever, we can increase our
+  confidence that it will not. \texttt{Traceable} allows us to use type-level
+  \QC, meaning we can write a property and check it at compile-time:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kt}{PROP\PYZus{}sendThreeOK}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Fn}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Trace}\PY{+w}{ }\PY{k+kt}{ARQOp}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ready}\PY{+w}{ }\PY{l+m+mi}{0}\PY{o+ow}{)}\PY{+w}{ }\PY{l+m+mi}{20}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Bool}
+PROP\PYZus{}sendThreeOK\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{MkFn}\PY{+w}{ }\PY{o+ow}{(\PYZbs{}}\PY{k+kr}{case}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkTrace}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }trace\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}
+\PY{+w}{ }\PY{+w}{ }elem\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Ready}\PY{+w}{ }\PY{l+m+mi}{3}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{o+ow}{(.}resSt\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZdl{}\PYZgt{}}\PY{+w}{ }trace\PY{o+ow}{)}
+
+\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kt}{QC\PYZus{}sendThreeOK}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{So}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{QuickCheck}\PY{+w}{ }\PY{k+kt}{False}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{PROP\PYZus{}sendThreeOK}\PY{o+ow}{)}
+QC\PYZus{}sendThreeOK\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Oh}
+  \end{Verbatim}
+
+  The trace is to a depth of 20 because it takes at least 3 transitions to
+  reliably send a single packet. Since there are no reported mismatches between
+  \texttt{True} and \texttt{False} on file loading, we know that the property
+  holds. While we have not \emph{proven} that our program is guaranteed to
+  terminate, we have increased our confidence that it does, without
+  having to leave the language or modelling framework we are already using,
+  and with a guarantee that the types, program, and test all use the same
+  model and rules.

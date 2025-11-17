@@ -1,0 +1,1413 @@
+ 
+1 
+ Eighty  Years of the Finite Element Method:  Birth, Evolution, and Future   
+ 
+ 
+Wing Kam Liu, Northwestern University  
+Shaofan Li, UC Berkeley  
+Harold S. Park, Boston University  
+ 
+This year marks the eightieth anniversary of the invention of the finite element method (FEM).  
+FEM has become the computational workhorse for engineering design analysis and scientific 
+modeling of a wide range of physical processes, including material and  structural mechanics, fluid 
+flow and heat conduction, various biological processes for medical diagnosis and surgery planning, 
+electromagnetics and semi -conductor circuit and chip design and analysis, additive manufacturing,  
+i.e. virtually every conceivab le problem that can be  described by partial differential equations 
+(PDEs ). FEM has fundamentally revolutionized the way we do scientific modeling and 
+engineering design, ranging from automobiles, aircraft, marine structures, bridges, highways, and 
+high-rise buildings.  Associated with the development of finite element methods has been the 
+concurrent development of an engineering science discipline called computational mechanics, or 
+computational science and engineering.  
+ 
+In this paper, we present a historic al perspective  
+on the developments of finite element methods 
+mainly focusing on its applications  and related 
+developments  in solid and structural mechanics, 
+with limited discussions to other fields in which 
+it has made significant impact, such as fluid 
+mechanics, heat transfer, and fluid -structure 
+interaction . To have a complete storyline, we 
+divide the  development of the finite element 
+method into four time periods: I. (1941 -1965) 
+Early years of  FEM ; II. (1966 -1991) Golden age 
+of FEM ; III. (1992 -2017) Large scale, industrial 
+applications of FEM and development of material modeling, and IV (2018 -) the state -of-the-art 
+FEM technology for the current and future eras of FEM research.  Note  that this paper may  not 
+strictly follow the chronological order of FEM  developments, because often  time these 
+developments were  interw oven  across different time periods.  
+ 
+I. (1941 -1965) The birth  of the finite element method  
+The origin of the finite element method as a numerical modeling  paradigm may be traced back to 
+in early  1940’s. In 1941, A. Hrennik off, a Russian -Canadian structural engineer at the University 
+of British Columbia, published a paper in ASME Journal of Appli ed Mechanics on his membrane 
+and plate model as a lattice framework . This paper  is now generally regarded as a turning point 
+that led to the birth of FEM .  In Hrennikoff’s 1941  paper , he discretized the solution domain into 
+a mesh of lattice structure, whi ch was the earliest form of a mesh discretizatio n. 
+ 
+On May 3rd, 1941, the same  year that Hrennikoff published his paper , R. Courant of New York 
+University  delivered an invited lecture  at a meeting of the American Mathematical Society held in 
+
+
+ 
+2 
+ Washington D.C. on  his numerical 
+treatment using a variational method to 
+solve a second order PDE , which  arises 
+from Saint -Venant’s torsion problem of a 
+cylinder. In this work, Courant 
+systematically used the Rayleigh  Ritz 
+method with a trial function defined on 
+finite triangle subdomains, which is a 
+primitive form of the finite element 
+method. Courant’s presentation  was later 
+published as a paper in 1943. Similar 
+works of discretization and variational 
+formulations we re also reported in the 
+literature, including McHenry [1943], 
+Prager and Synge [1947], and Synge 
+[1957].  As Ray Clough commented in his 1980 paper, One aspect of the FEM, mathematical 
+modeling of continua by discrete elements, can be related to work done i ndependently in the 19 40s 
+by McHenry and Hrennikoff -formulating bar element assemblages to simulate plane stress systems. 
+Indeed, I spent the summer of 1952 at the Boeing Airplane Company trying to adapt this procedure 
+to the analysis of a delta airplane wing, the problem which eventually led to the FEM . 
+ 
+By the  early 1950s, several engineers and academics had further developed  and extended the se 
+early approach es to solve real engineering problems in aeronautical and civil engineering.  In 
+parallel but with different emphases , J. H. Argyris (1954) at the Imperial College London, and M. 
+J. Turner (1950 -1956) at Boeing Company, who was later joined by R. Clough of U C Berkeley 
+and H.C. Martin of Washington University, developed what we know today as the earl iest form of 
+the finite element method (1954), which was called the Matrix Stiffness Method at the time .  
+However, in 1960  R. Clough coined the phrase Finite Eleme nt Method , and  this unassuming and 
+right -to-the-point phrase was an instan t hit, bring ing out the essence of the method.  
+ 
+Using the language of engineers, 
+Argyris “translated ” Courant’s 
+variational approach into the 
+energy method  of engineering 
+structures , while importantly, 
+Turner, Clough, Martin, and Topp 
+developed  FEM  interpolant s for 
+triang ular element s, which is 
+suitable for structural parts with 
+arbitrary shape.  In some sense, the 
+invention of the triangle element 
+was a “quantum leap ”, and hence  
+for a large spectrum of the 
+engineering community, the inception of the FEM is the publication of the landmark paper   by 
+Turner, Clough, Martin, and Topp in 1956. The following is an excerpt from a 2014 document that 
+celebrates   the 50th anniversar y of the formation of National Academy of Engineering, which is an 
+
+
+ 
+3 
+ official account of that part of FEM history: To 
+ensure  safety and avoid costly modifications 
+after planes entered production, engineers 
+needed a reliable method for determine in 
+advance whether their designs could withstand 
+the stresses of fight. M. Jon Turner, head of 
+Boeing’s Structural Dynamics Unit, address ed 
+that problem in the early 1950s by bringing civil 
+engineering professor Ray Clough of the 
+University of California, Berkeley, and Harold 
+Martin of the University of Washington to 
+Boeing for summer ``faculty internships,’’ 
+Collectively, they created a me thod of structural 
+analysis that Turner applied at Boeing using 
+computers to perform the myriad calculations 
+need to predict real -world performance .  That fruitful collaboration led to Clough’s  development 
+a few years later of what he  named the finite elem ent method (FEM).  Clough formed a research 
+group at UC  Berkeley that used FEM in a host of  analytical and experimental activities,  from 
+designing buildings and structures  to withstand nuclear blasts or  earthquakes to analyzing 
+structural  requirements for spacecraft and  deep-water offshore  drilling, led to Clough’s  
+development a few years later of what he  named the finite element method (FEM).  Clough formed 
+a research group at UC  Berkeley that used FEM in a host of  analytical and experiment al activities,  
+from designing buildings and structures  to withstand nuclear blasts or  earthquakes to analyzing 
+structural  requirements for spacecraft and  deep -water offshore  drilling. By revolutionizing  the 
+application  of computer  technologies in  engineeri ng, FEM continues to help engineers design to 
+this day all  sorts of durable, cost -effective structures.  Meanwhile, Turner’s efforts at Boeing  
+contributed to the success of its renowned line  of commercial jets, beginning in 1958 with the  707 
+and continuing in 1964 with the 727, which  could land on shorter runways and serve more  airports. 
+Equipped with three fuel -efficient turbofan  engines, the 727 became the workhorse  of commercial 
+aviation and helped achieve a  threefold 
+increase in U.S. passenger air traff ic in 
+the ’60s.  
+    
+Independently and separately, in the 
+early 1960s, Kang Feng of  the Chinese 
+Academy of Science  also proposed a 
+discretization numerical method based 
+on variational principle s for solving 
+elliptic  partial differential equations.  As 
+Peter Lax  (1993)  commented, 
+“Independently of parallel developments 
+in the West. he (Feng) created a theory 
+of the fini te element method. He was 
+instrumental in both the implementation 
+of the method and the creation of its 
+
+
+ 
+4 
+ theoretical foundation using estimates in Sobolev spaces ….”, which was one of the first 
+convergence stud ies of finite element methods .       
+                                                                                               
+During this period,  several great engineering minds were focusing on developing finite element 
+methods. In particular, J. Argyris  with his co -workers at the University of Stuttgart; R. Clough and 
+colleagues such as E. L. Wilson and R. L. Taylor at the University of California, Berkele y; O. 
+Zienkiewicz with his colleagues such as E. Hinton and B. Irons at Swansea University; P. Ciarlet 
+at the University of Paris XI; R. Gallager and his group at Cornell University, R. Melosh at Philco 
+Corporation , and B. Fraeijs de Veubeke at the University de Liege  had made some important and 
+significant contributions to developments of finite element methods.  
+ 
+To understand what happened 
+sixty years ago, we quote  an 
+excerpt from a FEM history 
+paper by Clough and Wilson in 
+1999 , in which the y recalled:  
+When Clough presented the first 
+paper using the finite element 
+terminology in 1960 it attracted 
+the attention of his friend, 
+Professor O. C. Zienkiewicz, 
+who was then on the faculty at 
+Northwestern University.  A few 
+weeks after the presentatio n of 
+the paper Zienkiewicz invited Clough to present a seminar on the finite element method to his 
+students.  Zienkiewicz was considered one of the world’s experts on the application of the finite 
+difference method to the solution of continuum mechanics pr oblems in Civil Engineering; 
+therefore, Clough was prepared to debate the relative merits of the two methods.  However, after 
+a few penetrating questions about the finite element method, Zienkiewicz was almost an instant 
+convert to the method.  
+ 
+Zdenek Bazant, then a visiting Associate Research Engineer at UC Berkeley, recalled: …… The 
+founding  of FEM  was Clough’s  1960  paper  in the ASCE  Conf.  on Electronic  Computation  (Clough  
+(1960),  which  was the first to derive,  by virtual  work,  the finite  eleme nt stiffness  matrix  of an 
+element  of a continuum  (a triangular  constant  strain  element).   …….  I recall  Ray Clough  showing  
+to me his 1962  report  to the U.S. Engineer  District,  Little  Rock,  Corps  of Engineers  on his analysis  
+of a crack  observed  in Norfolk  Dam (Clough (1962)),  during  my stay in Berkeley  in 1969.  I was 
+mesmerized  by seeing  that 1962  report.   It presented  a 2D stress  analysis  of large  crack  observed  
+in Norfork  dam.  The dam was subdivided  into about  200 triangular  elements  and provided  stress  
+contours  for a number  of loading  cases.   ……  Clough  was at that time way ahead  of anybody  else.  
+ 
+To collaborate  Z. Bazant’s  recollection,  we cite Ed Wilson’s  recount  of that part of the history:   
+In 1956,  Ray, Shirley,  and three  small  children  spent  a year in Norway  at the Ship Research  
+Institute  in Trondheim.  The engineers  at the institute  were  calcu lating  stresses  due to ship 
+vibrations  in order  to predict  fatigue  failures  at the stress  concentrations.  This is when  Ray 
+realized  his element  research  should  be called  the Finite  Element  Method  which  could  solve  many  
+
+
+ 
+5 
+ different  types  of problems  in contin uum mechanics.  Ray realized  the FEM  was a direct  competitor  
+to the Finite  Difference  Method.  At that time FDM  was being  used to solve  many  problems  in 
+continuum  mechanics.   His previous  work  at Boeing,  the Direct  Stiffness  Method,  was only used 
+to calculat e displacements  not stresses.  
+In the fall semester  of 1957,  Ray returned  from  his sabbatical  leave  in Norway  and immediately  
+posted  a page  on the student  bulletin  board  asking  students  to contact  him if they were  interested  
+in conducting  finite  element  research  for the analysis  of membrane,  plate,  shell,  and solid  
+structures.  Although  Ray did not have  funding  for finite  element  research,  a few graduate  students  
+who had other  sources  of funds  responded.  At that time,  the only digital  computer  in the College  
+of Engineering  was an IBM 701 that was produced  in 1951  and was based  on vacuum  tube 
+technology.  The maximum  number  of linear  equations  that it could  solve  was 40. Consequently,  
+when  Ray presented  his first FEM  paper  in September  1960,  “The  Finite  Element  Method  in Plane  
+Stress  Analysis,”at  the ASCE  2nd Conference  on Electronic  Computation  in Pittsburgh,  
+Pennsylvania,  the coarse-mesh  stress -distribution  obtained  was not very accurate.  Therefore,  most  
+of the attendees  at the conference  were  not impressed.  After  the improvement  of the speed  and 
+capacity  of the computers  on the Berkeley  campus,  Professor  Clough’s  paper  was a very fine mesh  
+analysis  of an existing  concrete  dam.  The paper  was first presented  in September  1962  at a NATO  
+conference  in Lisbon,  Portugal.  Within  a few months,  the paper  was republished  in an 
+international  Bulletin,  which  had a very large  circulation,  as “Stress  Analysis  of a Gravity  Dam  
+by the Finite  Element  Method”,  (with  E. Wilson),  International  Bulletin  RILEM,  No. 10, June 
+1963.   
+The Lisbon  paper  reported  on the finite  element  analysis  of the 250-foot-high Norfork  Dam  
+in Arkansas,  which  had developed  a vertical  crack  during  construction  in 1942.  The FEM  analysis  
+correctly  predicted  the location  and size of the crack  due to the temperature  changes  and produced  
+realistic  displacements  and stresses  within  the dam and foundation  for both gravity  and several  
+hydrostatic  load conditions.  Because  of this publication,  many  international  students  and visiting  
+scholars  came  to Berk eley to work  with Professor  Clough.   Also,  he freely  gave  the FORTRAN  
+listing  of their  finite  element  analysis  computer  program  to be used to evaluated  displacement  and 
+stresses  in other  two-dimensional  plane  structures  with different  geometry,  materials  and loading.  
+Therefore,  professional  engineers  could  easily  use the powerful  new FEM  to solve  for the stress  
+distributions  in their  structural  engineering  problems  in continuum  mechanics.  However,  he did 
+not capitalize  on his success  in the development  of the FEM.  He returned  to the task of building  
+the earthquake  engineering  program  at Berkeley  – the task he given  when  he was first hired  in 
+1949.  
+ 
+For his decisive  contribution  to the developments  of FEM,  Ray William  Clough  was awarded  the 
+National  Medal  of Science  in 1994  by the then vice-president  of the United  States  Al Gore.  Today,  
+the general  consensus  is that Ray Clough  along  with J. Argyris  and O. C. Zienkiewicz  made  the 
+most  significant  contributions  to the developments  of finite  element  method  after an early 
+mathematical pre -working of  Richard Courant .  
+ 
+
+ 
+6 
+ It is worth noting that E. L. Wilson 
+of UC Berkeley was the first person 
+to develop finite element open -
+source software. An excerpt from 
+the Clough and Wilson ’s paper in 
+1999  stated :   In 1958 Wilson, under 
+the direction of Clough, initiated 
+the development of an automated 
+finite element program based on 
+the rectangular plane stress finite 
+element developed at Boeing. After 
+several months of learning to 
+program the IBM 701, Wilson 
+produced a lim ited capacity, 
+semiautomated program which was 
+based on the force method. An MS research report was produced, which has long since been 
+misplaced, with the approximate title of Computer Analysis of Plane Stress Structures.  …… In 
+1959 the IBM 704 computer w as installed on the Berkeley Campus.  It had 32K of 32 bit memory 
+and a floating point arithmetic unit which was approximately 100 times faster than the IBM 701.  
+This made it possible to solve practical structures using fine meshes.   
+ 
+It is also worth me ntioning that in 1963, I.T. Oden, a senior structural engineering in the research 
+and development division of General Dynamics Corporation at Fort Worth  at the time, wrote a 
+163-page comprehensive technical report with G.C. Best, in which they developed a long list of 
+solid and structure finite elements.  including tetrahedr al element, hexahedr al element, thin plate 
+element, thick plate element, plate element with stringers or stiffeners, composite sandwich plate 
+elements, and shallow shell elements (Best and Oden (1963)). In fact, Oden and Best wrote one of 
+the first general purpose finite elemen t computer codes at the time. The Fortran FEM code 
+developed by Oden and Best ha d an element library that includes elements for 3D elasticity, 2D 
+plane elasticity, 3D beam and rod elements, composite layered plate and shell elements, and 
+elements for gener al composite materials. Their work also included hybrid methods and stress 
+based FEMs, which may be even earlier than those of Pian (Pian (1964)). Moreover, Oden and 
+Best’s FEM code is also able to handle FEM eigenvalue modal analysis, and numerical integr ations 
+over triangle and tetrahedra elements, and it had linear system solvers for general FEM static 
+analysis that were among the most effective at that time . This FEM computer code was used for 
+many years in aircraft analysis and design in the aerospace and defense industry . 
+In terms of worldwide research interest, by 1965, finite element research had become a highly 
+active field, with the total number of papers published in the literature exceeding 1000. During this 
+period, there were two seemingly unrel ated events for FEM development, but  significantly 
+affect ed future  FEM developments . These events were the discovery of mixed variational 
+principles in elasticity. In 1950, E. Reissner rediscovered E. Hellinger ’s mixed variational 
+principle  from 1914 , in which both the displacement field and the stress field are the primary 
+unknowns . This variational principle is called the  Hellinger -Reissner variational principle. Shortly  
+after, H. Hu in 1954 and K. Washizu in 19 55 proposed a three -field mixed variational principle in 
+
+
+ 
+7 
+ elasticity, which was called the Hu -Washizu variational principle.  As early as 19 64, Theodore H .H. 
+Pian recognized the potential of using these variational principles to formulate Galerkin weak  
+form -based finite element  formulations and  proposed the assumed stress finite element method. 
+This beg an the use of  mixed variational principles to formulate Ga lerkin finite element methods , 
+which was followed by the  assumed strain finite element method developed by Juan Simo and his 
+co-workers in the later period of finite element developments . 
+ 
+II. (1966 -1991) The Golden Age of the Finite Element Method  
+The mid 1960s saw rapid developments in finite element method research and applications.  As 
+TJR Hughes recalled, “I first heard the words  ‘the Finite Element Method ’ in 1967 – which 
+changed my life.  I started to read everything that was available and convinced my boss to start 
+the Finite Element Method Development Group, which he did.  Dr. Henno Allik was Group Leader, 
+and I was in the Group, then we added programmer s.  In one year, we had a 57,000 -line code, 
+GENSAM ( General Structural  Analysis and  Matrix Program, or something like that).  That was 
+1969, and the code was continually developed thereafter and may still be in development and use 
+at GD/Electric Boat and G eneral Atomics, originally a division of General Dynamics .” 
+ 
+Starting from the end of 19 60s, the rigorous  approximation theory that underpins the  finite  element 
+method started to be developed. This movement was first highlighted by  the proof of optimal and 
+superconve rgence of finite element methods .  This  attracted the interests of some distinguished 
+mathematicians  all over the world, including  G. Birkhof f, M.H. Schultz, R.S. Varaga, J. Bramble, 
+M. Zlamal,  J. Cea,  JP. Aubin, J. Douglas, T. Dupont, LC. Goldstein, LR . Scott, J . Nitsche, AH. 
+Schatz, PG. Cialet , G. Strang, G. Fix, JL. Lions, M.  Crouzeix, PA. Raviart, and I . Babuska , AK. 
+Aziz,  and J.T. Oden . Some  useful results  developed for the proof of FEM convergence  are the Cea 
+lemma and the  Bramble -Hubert lemma . The fundamental work of N itsche [1970] on L∞ estimates 
+for general classes of linear elliptic problems must stand out as one of the most i mportant 
+contributions for mathematical foundation of FEM in  1970s.  It may be noted that unlike other 
+mathematics movement s, the convergence study of finite element method s was an engineering -
+oriented  movement .  The  mathematicians soon found that , in practice, engineers were using either 
+non-conforming FEM interpolant s or numerical quadrature that violate s variational principle s or 
+the standard bilinear form in Hilbert space .  Gilbert Strang  referred  to these numerical techniques  
+as “variational crime s”. To  circumvent  
+complicate d convergence  proof s, the early 
+patch test s were  invented by Bruce Iron 
+and Robert Melosh , which were  prove n to 
+be instrumental for ensuring convergence 
+to the correct solution.  
+ 
+Following  Theod ore Pian’s invention of 
+the assumed stress element, attention  
+shifted to the mixed variational principle 
+based finite element method.  In 1966, L . 
+Hermann proposed a mixed variational 
+principle for incompressible solids. 
+However, most mixed variational 
+principles are not extreme variational 
+
+
+ 
+8 
+ principles, and thus suffer  from  
+numerical in stability. In early 
+1970s, I. Babuska and F . Brezzi 
+discovered t heir groundbreaking  
+result s, known today as the 
+Babuska -Brezzi condition, or the 
+LBB condition, giving tribute to 
+O. Ladyzhenskya --- a Russian 
+female mathematician, who 
+provided the early insight of this 
+problem. The so -called LBB 
+condition, or the inf -sup condition, 
+provides a sufficient condition for 
+a saddle point problem to have a unique solution that depends continuously on the input data;  thus,  
+it provides a guideline to construct shape functions for the mixed variational principle -based finite 
+eleme nt method.   
+ 
+Entering the 1970s, FEM  development began  to focus on using FEM to simulate the dynamic 
+behavior of structures, including crashworthiness in the automotive industry. Various time 
+integration methods had been developed, including the Newmark -beta method, the Wilson -theta 
+method, the Hilbert -Hughes -Taylor algorithm,  the Houbolt integration algorithm, and the explicit 
+time integration algorithms.  
+In the late 1970s, T. Belytschko, K. C. Park, and later TJR Hughes proposed using explicit or 
+implicit -explicit, explicit -multiple explicit time integration, and implicit time integration with 
+damping control to solve nonlinear structur al deformation and structural dynamics problems. It 
+turned out that  the explicit time integration was a game changer for the automotive industry, 
+establishing FEM technology as the main tool of passenger vehicle design and crashworthiness 
+analysis. By the end of 1980s, there  were thousands of workstations running explicit time 
+integration -based FEM codes in the three major automakers in the United States.  
+ 
+One of the main FEM research topics in 
+the 1980s was using finite element 
+techniques  to solve  the Navier -Stokes 
+equation as an alternative to finite 
+difference and finite volume methods.  
+Starting  the early 1970s,  JT Oden and his 
+co-workers had begun  work ing on finite 
+element solutions for fluid dynamics 
+(Oden and Wellford (1972)).  TJR Hughe 
+and his co -workers  Brooks  and Tezduyar 
+developed the streamline upwind/Petrov 
+Galerkin method and later Stabilized 
+Galerkin finite element method to solve 
+Navier -Stokes equations under various initial and boundary conditions.  Furthermore,  Hughes and 
+co-workers later developed space -time finite element method s and variational multiscale finite 
+element methods  (see Hughes and Tezdyuar (1981) Brooks and Hughes (1982) , Mizukami and  
+
+
+ 
+9 
+ Hughes (1985) , and Hughes (1995) ). For this work, from 1986  to 1991 , Hughes and his co -workers 
+such as LP Franca and others wrote a ten -part series on finite element formulation for 
+computational fluid dynamics (Hughes  et al. (1986) and  Shakib et al. (1991) ). 
+ 
+Among the many advances in finite element technologies  in 1980s, the most notable may belong 
+to J. Simo at the University of California, Berkeley and later at Stanford University. Simo and 
+Taylor developed the consistent tangent operator for computational plasticity, which was a 
+milestone after th e original concept of consistent linearization proposed by T JR Hughes and K. 
+Pister. Moreover, after the Hughes -Liu 3D degenerated continuum shell and beam elements and 
+the Belytchko -Tsay single -point element, Simo and his co -workers, such as L. Vu -Quoc an d D.D. 
+Fox, developed geometrically exact beam and shell theories and its finite element formulation. 
+Simo and his co -worker such as MS Rifai and F. A rmero also developed various assumed strain 
+or enhanced strain methods for mixed variational formulations . It should be noted that E. Ramm 
+and his colleagues at the University of Stuttgart  have also made significant contributions on 
+geometrically nonlinear shell element formulation s over a span of more than thirty years  e.g., 
+Bischoff and Ramm (1998) . 
+Another highlight of FEM 
+technology is the development 
+of FEM solvers for fluid -
+structure interaction. From the 
+mid-1970s to early 1990s, there 
+was an urgent need to develop 
+techniques to solve large -scale 
+fluid -structure intera ction 
+problems in the aerospace and 
+civil engineering industries.  A 
+class of finite element fluid -
+structure interaction solvers 
+were developed, and some early 
+contributors include J. Donea, A. Huerta  (see Do nea and Huerta (2003) , Donea et al. (2017) ), and 
+the Hughes -Liu-Zimmermann Arbitrary Lagrangian -Eulerian (ALE) fluid -structure finite element 
+formulation,  which describes  the moving boundary problem. ALE -based finite element 
+simulations were used due to their ability to alleviate many of the drawbacks of traditional 
+Lagrangian -based and Eulerian -based finite element formulations . 
+ 
+When  using the ALE technique in engineering modeling and simulations, the computational mesh 
+inside the domains can move arbitrarily to optimize the shapes of elemen ts, while the mesh on the 
+boundaries and interfaces of the domains can move along with materials to precisely track the 
+boundaries and interfaces of a multi -material system. The invention of ALE finite element method 
+may be credited to Hirt, Amsden, and Co ok (1974). C. Farhat was the first person to use large scale 
+parallel ALE -FEM solver to compute fluid -structure interaction problems . He and his group 
+systematically applied FEM -based computational fluid dynamics (CFD) solver s for aircraft 
+structure design  and analysis .  They developed  the finite element tearing and interconnecting 
+(FETI) method for the scalable solution of large -scale systems of equations on massively parallel 
+processors . 
+ 
+
+
+ 
+10 
+ The finite element fluid -structure interaction research had a major impact on many practical 
+applications, such as providing  the foundation for the patient specific modeling of vascular disease 
+and the FEM -based predictive medicine later devel oped by CA Taylor and TJR Hughes and their 
+co-workers in the mid -1990s.  Holzapfel, Eberlein,  Wriggers, and Weizsäcker  developed large 
+strain f inite element formulation  for soft biological membranes (Holzapfel et al. (1996)).  
+ 
+Another major milestone  in the development of finite element method s was the invention and the 
+development of  nonlinear probabilistic or random field finite element method , which was first 
+developed by W . K. Liu and T . Belyt schko in the late 1980s.  By considering uncertainty in loading 
+conditions, material behavior, geometric configuration, and support  or boundary condition s, the  
+probabilistic finite element method provide d a stochastic approach in computational mechanics  
+to account for all these uncertain aspects, which  could then be applied in structure  reliability 
+analysis . The random field  finite element research has become crucial in civil and aerospace 
+engineering  and the  field of uncertainty quantification .  
+ 
+In the ea rly 1980’s , M.E. Botkin at General Motors research Lab, and  N. Kikuchi and his group 
+at the  University  of Michigan developed  structural  shape optimization finite element method  for 
+the automo tive industr y. Other contributors include M. H. Imam from  Uman Al -Qura University.  
+This preceded the seminal 1988 paper of Bendsoe and Kikuchi, who developed a 
+homogenization approach to finding the optimal shape of a structure under prescribed loading.  
+Later developme nts in topology optimization were driven by O. Sigmund  and his students, such 
+as Ge ngdong Cheng in China .  
+ 
+One of the driving forces in the finite element method development during in the early decades  
+was the safety analysis of big dams, at first, then of concrete nuclear reactor vessels for gas -
+cooled reactors, e.g. , J. Rashid (1967), nuclear containments, a nd hypothetical nuclear reactor 
+accidents (Marchertas et al. (1978), Bazant et al. (1980)) and of tunnels and of foundations for 
+reinforced concrete structures. To simulate concrete failure, the vertical stress drop in finite 
+elements and progressive softe ning technique were introduced already in 1968. However, the 
+spurious mesh sensitivity and the necessity of localization limiter was generally overlooked until 
+demonstrated mathematically in Bazant’s (1976), based on the fact that strain softening states o f 
+small enough test specimens in stiff enough testing frames are stable. Numerically this was 
+demonstrated by crack band finite element calculations in Bazant and Cedolin (1978), where it 
+was also shown that spurious mesh sensitivity of sudden stress drop can be avoided by adjusting 
+the material strength so as to ensure correct energy release rate. Hillerborg et al. (1976) avoided 
+mesh sensitivity by using an interelement cohesive softening called the fictitious crack model. 
+Despite the success of the early  FE calculations, the concept of progressive strain -softening 
+damage was not generally accepted by mechanicians until its validity and limitations were 
+demonstrated by Bazant and Belytschko (1985)).  They showed that the existence of elastic 
+unloading stif fness (previously ignored) makes waves propagation  in a strain -softening state 
+possible. In 1989, Lubliner, Oliver, Oller, and Onate (Lublinear et al. (1989)) developed a 
+plastic -damage theory -based finite element formulation to model concrete materials by 
+introducing internal variable s, which has the capacity of modeling concrete material degradation 
+and cracking . Today,  the multiscale based homogenization and damage analysis method is the 
+state -of-the-art finite element modeling for concrete m aterials (Wriggers and Moftah (2006)).  
+
+ 
+11 
+ In the middle of 1980s, the mesh sensitivity issue in calculating strain softening or strain 
+localization problem in computational plasticity became a challenging topic. It was eventually 
+accepted that the partial dif ferential equations that are associated with the classical plasticity 
+become ill -posed after the material passes the yield point and enters into the softening stage. 
+This especially became a dire situation when civil engineers applied FEM to solve complex 
+structural and geotechnical engineering problems, which involved complex plastic deformations 
+of concrete, rock, soil, clay, and granular material in general. Bazant and others realized that this 
+is because the classical continuum plasticity theory lacks a n internal length scale. To remedy 
+this problem, starting from the middle 1980s. Many efforts were devoted to establishing finite 
+element formulations of nonlocal (Bazant, Belytschko, Chang (1984)), strain -gradient, strain -
+Laplacian media, micropolar or Co sserat continua, because they provided an internal length scale, 
+allowing FEM simulations to capture, in a mesh -independent manner, the strain softening, strain 
+localization or shear band formation. Pijaudier -Cabot and Bazant (1987) developed an effective 
+nonlocal finite element method in 
+which nonlocality is applied only to 
+the damage strain.Other influential 
+and representative works in this topic 
+are from R. De Borst [1991,1992], 
+Peerlings and de Borst (1999), K. 
+Willam, and P. Steinmann, and their 
+co-workers [1993,1998].  
+In 1976, TJR Hughes, RL. Taylor, JL. 
+Sackman, A. Curnier, and W. 
+Kanoknukulchai published a paper 
+entitled “A finite element method for a 
+class of contact -impact problems.” 
+(Hughes et al. (1976) ). This is one of the earliest finite element analysi s in computational  contact 
+mechanics . It is the  very first work on FEM modeling of dynamic contact and impact problems , 
+and it plays an important role in the simulation accuracy for engineering problems involving  
+interaction between different continuum objects .  Examples include  sheet metal forming, target 
+impact and penetration, and interaction between pavement and tires. Developing accurate finite 
+element contact algorithm s has been a focal point since the 1980s. Various FEM contact 
+algorithms have been developed, and some main  contributors are N. Kikuchi, T. Oden,  J. Simo,  
+P, Wriggers, R. Taylor, P. Papadopoulos,  and TA. Laursen.   FEM contact algorithm  research  
+remained an active research topic until late 1990s  (see Kikuchi and Oden (1988),  Simo, Wriggers, 
+and Taylor (1985), Papadopoulos and Taylor(1992) .  
+In this period, one interesting emerging area was the development of finite element exterior 
+calculus by D. Arnold, R. Falk, and R. Winther [2006]. The FEM exterior calculus  uses tools 
+from  differential geometry, algebraic topology, and homological algebra to develop FEM 
+discretization  that are compatible with the underl ying geometric, topological, and algebraic 
+structures of the problems  that are under consideration . 
+ 
+III. (1992 -2017) Broad Indus trial Applications and Material s Modeling  
+The first major event in FEM development this period was the formulation  of the Zienkiewicz -
+Zhu error estimator [1992] , which was a major contribution to the mathematical approximation 
+
+
+ 
+12 
+ theory of finite element methods in the 1990s. The Zienkiewicz -Zhu posteriori error estimators 
+provide  the quality control of a finite element solution with an optimal use of computational 
+resources by refining the mesh adaptively. The idea and spirit of Z ienkiewicz -Zhu was further 
+carried out by Ainsworth and Oden  [1997] [2000] , and today using posteriori error estimation to 
+improve the quality has been elevated to the height of Bayesian inference and Bayesian update.  
+This research topic is now intimately r elated with what is now called validation and verification 
+(V&V) procedure . 
+ 
+Since the late 1970s, Szabo [1978] and Babuska [1981,1982]  started to develop hp version of FEM  
+based on piecewise -polynomial approximations  that employ elements of variable size  (h) and 
+polynomial degree  (p). They  discovered that the finite element method converges  exponentially 
+when the mesh is refined using a suitable combination of h -refinements (dividing elements into 
+smaller ones) and p -refinements  (increasing their polynomia l degree). The exponential 
+convergence makes the method a very attractive choice compared to most other finite element 
+methods , which only converge with an algebraic rate. This work continued until the late 1990s , 
+spearheaded  by M. Ainsworth, L. Demkowicz,  JT. Oden, CAM . Duarte, OC . Zienkiewicz , and CE . 
+Baumann  (see Demkowicz et al. (1989) Oden et al. (1989) ). J. Fish [ 1992] also  proposed a s -
+version FEM by superposing additional mesh (es) of higher -order hierarchical elements  on top of 
+the original mesh of C0 FEM discretization, so that it increases the resolution of the FEM solution.  
+ 
+To solve material and structur al failure problems, research work in  the 1990s focus ed on 
+variational principle based discretized methods to solve fracture mechanics problem s or strain 
+localization problems. In 1994, Xu and Needleman developed a finite element cohesive zone 
+model (CZM) that can simulate crack growth without remeshing, which was later further improved 
+by M . Ortiz and his co -work ers, who used CZM finite element method  to solve fragmentation and 
+material fatigue problems . It should be noted that long before the invention of cohesive zone model, 
+S.T. Pietruszczak and Z. Mroz   (1981) developed the first cohesive finite element for sh ear fracture 
+in soil.  Later, Bazant’s group at Northwestern University developed various interface finite 
+element methods, such as the microplane model, to study size effects of concrete material and 
+other composite materials (Brocca and Bazant (2001); Can er and Bazant (2009)).  Such models 
+became a standard tool for simulating missile impact and explosions at, e.g., ERDA Vicksburg. 
+A microplane FE model for fiber composites has been developed for Chrysler and Ford Co. to 
+compare various designs of automobile crush -cans (Smilauer et al. (2011)). An anisotropic 
+poromechanical microplane model has been formulated and used for FE analysis of hydraulic 
+fracturing (Rahimi et al. (2019)).  
+To alleviate mesh bias issues in modeling material fracture and damage problems, T. Belytschko 
+and WK. Liu  develop ed meshfree particle method s, namely the element -free Galerkin (EFG) 
+method  and the reproducing kernel particle method (RKPM), which are based on  the moving least 
+square method and the wavelet multiresolution analysis,  respectively .  RKPM  provides  
+consisten cy and thus  convergence  enhancements as compared to  the popular smoothed particle 
+hydrodynamics (S PH) method. S. Li [1999] and others have successfully  employed meshfree 
+Galerkin method s to accurately simulate adiabatic shear band formation and propagation with 
+minimum mesh adaptation.  At the same time, CA. Duarte and T. Oden developed the so -called 
+hp-Cloud method ; E. Onate, S. Idelsohn. OC . Zienkiewicz, and RL . Taylor developed a finite point 
+method [1996], and SN . Atluri and T. Zhu [1998] proposed a meshless local Petrov -Galerkin 
+
+ 
+13 
+ (MLP G) method, among many other meshfree methods .  Fleming and Belytschko also showed 
+that singularity functions could be included in the approximation functions to greatly improve 
+simulations involving fracture mechanics  (Fleming et al . (1997) ). 
+One of the most challenging problems in the development of meshfree Galerkin method is how to 
+integrate the weak form, because the meshfree interpolant s are highly irregular and it is difficult 
+to make  them variational consistent. In 2001, J. S. Chen and his co -worke rs proposed a stabilized 
+conforming nodal integration method for meshfree RKPM method, which is not only simple and 
+stable, but also variational consistent  with the Galerkin weak formulation  (Chen et al. (2001)).   
+Shortly after the meshfree  method  developm ents, I. Babuska and his co -workers developed the 
+partition of unity finite element method  (PUFEM ), which w as later coined generalized finite 
+element method ( GFEM ) (see Melenk and Babuska (1996)  and Babuska and Melenk (1997) ). 
+PUFEM is a powerful method because it can be used to construct FE spaces of any given regularity, 
+which is a generalization of the h, p, and hp version s of the finite element method , as well as 
+providing the ability to embed an analytic solution into the F EM discretization instead of relying 
+upon a generic polynomial interpolant.  
+A significant breakthrough  in computational fracture mechanics and finite element  refinement  
+technology came in the late 1990s, when Ted Belytschko and his co -workers , including  T. Black, 
+N. Mo es, and J. Dolbow, developed the eXtended finite element (X -FEM)  (see Belytschko and 
+Black (1999), and  Moës et al.  (1999 )), which uses various enriched discontinuous shape functions 
+to accurately capture  the morphology of a cracked body without remeshing. Because  the adaptive 
+enrichment process is governed by the crack tip energy release rate,  X-FEM provides an accurate 
+solution for linear elastic fracture mechanics (LEFM).  In inventing  X-FEM, Ted Belytschko   
+brilliantly utilized  the concept  PUFEM in solving fracture mechanics prob lems without remeshing . 
+Entering the new millennium, A. Karma and his co -workers (Karma et al. [2000 ]) proposed the 
+phase -field finite element method to solve crack growth and crack propagation problems, as the 
+phase field method can accurately predict material damage for brittle fracture. Some of the leading 
+contributors for this research topic are B. Bourdin, TJR. Hughes, C. Kuhn, R. Muller, C. Miehe, 
+CM. Landis,  among others.  
+ 
+As mentioned before, the main reason for the huge success of finite element methods is their broad 
+applica bility to engineering analysis and design  across scientific disciplines . On the other hand, 
+most  mechanical engineering desig ns are performed by using various computer -aided design 
+(CAD) tools, such as solid mo deling. To directly blend the finite element method into CAD design 
+tools, TJR. Hughes and his co -
+workers  such as JA Cottrell and Y. 
+Bazilevs (Hughes et al. (2005), 
+Cottrell et al. (2009))  developed the 
+isogeometric analysis (IGA) finite 
+element method, which established 
+the Galerkin variational weak 
+formulation in the control mesh and 
+uses the Non-uniform ra tional basis 
+spline (NURBS)  functions as the 
+FEM shape function to solve the 
+problem at design stage .  
+
+
+ 
+14 
+  
+Due to the emergence of nanotechnology , various m ultiscale methods  have been developed to 
+couple atomistic methods such as molecular dynamics and densit y functional theory (DFT) and 
+other ab initio methods with continuum scale finite element methods. The most notable 
+contributions in this area are hand -shake method  (F.F. Abraham, J. Q. Broughton, N. Bernstein, 
+and E. Kaxiras  (1998 )) quasi -continuum finite element method  (E. B. Tadmor, M. Ortiz, R. Phillips 
+(1996 )), and the bridging scale method  developed by G . Wagner and WK. Liu (2003), which is an 
+ingenious use of the Mori -Zwanzig formalism in multiscale coupling technique . In 2007, V. Gavini, 
+K. Bhattacharya, and M. Ortiz developed quasi -continuum orbital -free density -functional theory 
+(DFT) finite element formulation for multi -million atom DFT calculations.  (Gavini et al. ( 2007)). 
+ 
+Relatedly, there has been a rapid development in computational homogenization methods  since 
+the late 1990s, which is an alternate approach to obtaining continuum -scale properties based on 
+smaller scale microstructures . The computational homogenization method or the finite element 
+homogenization methods f or composite materials may be divided into two main categories: (1) 
+Computational asymptotic homogenization method or multiscale computational homogenization, 
+which is aimed for modeling composite materials with periodic microstructure . The pioneer of 
+multiscale homogenization finite element method may be credited to TY Hou and his co -workers 
+(1997),  and other  earlier contributors are N. Kikuchi , S. Ghosh , J. Fish and M. S. Shephard ; and 
+(2) Computational micromechanics method, which is mainly aimed for composite materials with 
+random microstructure, even though it may also be applied to materials with periodic 
+microstructure, where  the main contributors are: P. Suquet and his collea gues at the French 
+National Centre for Scientific Research (CNRS), G. J. Dvorak (1994) and J. Fish at Rensselaer 
+Polytechnic Institute and C. Miehe  (1999)  and his group at the University of Stuttgart.  During 
+the same period, many novel FEM fluid -structure interaction solvers have been developed, for 
+instance, the immersed finite element method developed by L. Zhang and her co -workers  (2004) , 
+which was motivated by the immersed boundary method pioneered by C. Peskin  of Courant 
+Institute of Mathematical Scien ces, New York University.  
+ 
+An important finite element application area emerged with the developments of computational 
+plasticity. The early finite element computational plasticity formulation is based on hypoelastic -
+plastic rate formulation. To satisfy the objectivity requirement, TJR Hughes and J. Winget first 
+proposed  the so -called  incremental objectivity (1980) , which was in the first time the esoteric 
+continuum mechanics theory was applied to finite element formulations and computations,  and it 
+in turn promoted the development of nonlinear continuum mechanics in 1980s and 1990s . Soon 
+afterwards.  Simo and Hughes then extended Hughes -Winget i ncremental objectivity algorithm to 
+finite deformation case in computational plasticity.  The notion of consistency between the tangent 
+stiffness matrix and the integration algorithm employed in the solution of the incremental problem 
+was introduced by Nagt egaal (1982) and Simo and Taylor (1985). Consistent formulations have 
+been subsequently developed for finite deformation plasticity by Sim o and Oritz  (1985,1988)  
+within the framework of multiplicative decomposition of the deformation gradient and 
+hyperelas ticity . Also in 1980s, based on the Gurson’s model, Tverga ard and Needleman (1984) 
+developed the finite element based Gurson -Tvergaard -Needleman model, which is probably the 
+most widely used  finite element computational plasticity constitutive model used in material 
+modeling, though recently attention has turned to develo ping machine -learning based or data -
+driven computational plasticity models e.g., E. Chinesta, et al (2017 ), and the unsuper vised 
+
+ 
+15 
+ machine learning data -driven finite element methods, call Self -consistent Clustering Analysis 
+(SCA), by Z. Liu et al . (2016 , 2018 ).  
+ 
+An important advance of finite element method is the development of crystal plasticity finite 
+element method (CPFEM), which was first introduced in a landmark paper by D. Piece, RJ Asaro, 
+and A. Needleman in 1982. In the past almost four decades, there are a numbers of people who 
+have significant contributions to the subject, for example, A. Arsenlis and DM. Park s from MIT 
+and Lawrence Livermore National Laboratory (1999,2002,2004); PR. Dawson and his colleagues 
+at Cornell University (1989,2011), and D. Raabe and his colleagues at Max -Planck -Institute fur 
+Eisenforschung (2003,2004,2006), among others . Based on cry stal slip, CPFEM can calculate 
+dislocation, crystal orientation and other texture information to consider crystal anisotropy during 
+computations, and it has been applied to simulate crystal plasticity deformation, surface roughness, 
+fractures and so on. Re cently, S. Li and his co -workers developed a finite element based multiscale 
+dislocation pattern dynamics to model crystal plasticity in single crystal (2019).  Yu et al., (2019) 
+reformulated the self -consistent clustering analysis (SCA) for general elasto -viscoplastic materials 
+under finite deformation. The accuracy and efficiency for predicting overall mechanical response 
+of polycrystalline materials is demonstrated with a comparison to traditional full -field finite 
+element methods.  
+ 
+In 2013, a group of It alian scientists and engineers led by L. Beirão da Veiga and F.  Brezzi 
+proposed a so -called virtual element method (VEM). The virtual element method is an extension 
+of the conventional finite element method for arbitrary element geometries. It allows polytopal 
+discretizations (polygons in 2 -D or polyhedra in 3 -D), which may be even  highly irregular and 
+non-convex element domains. The name  virtual  derives from the fact that knowledge of the local 
+shape function basis is not required, and it is in fact never  explicitly calculated.  VEM possesses 
+features that make it superior to the conventional FEM for some special problems such as the 
+problems with complex geometries for which a good quality mesh is difficult to obtain, solutions 
+that require very local refi nements, and among others. In these special cases, VEM demonstrates 
+robustness and accuracy in numerical calculations, when the mesh is distorted.  
+ 
+As early as 1957, R. Clough introduce d the first graduate finite element course in UC -Berkeley, 
+and since then finite element courses at both graduate and undergraduate levels have been added 
+into engineering higher education curriculums in all the major engineering schools and 
+Universities al l over the world.  As JT Oden recalled in his 1963 paper, `` I went on to return to 
+academia in 1964 and among my first chores was to develop a graduate course on finite element 
+methods. At the same time, I taught mathematics and continuum mechanics, and it became clear 
+to me that finite elements and digital computing offered hope of transforming nonlinear continuum 
+mechanics from a qualitative and academic subject into something useful in modern scientific 
+computing and engineering .’’ 
+By the end of 2015, the re have  been more than several hundred of finite element methods 
+monographs and textbooks published in dozen s of languages worldwide. An exposition of finite  
+element mathematical theory by Strang and Fix [1972] was among the earliest of those FEM books. 
+JT Oden and his collaborators such as JN Reddy and GF Carey wrote a five-volume  finite element 
+monographs in  late 1970s and early 1980s. Other FEM books such as those  by Zienkiewicz and 
+Cheung, or later Zienkiewicz and Taylor;  Cook, Malkus, Plesha, and Witt ; TJR. Hughes ; KJ. Bathe, 
+and the Nonlinear FEM monographs  by Belytschko, Liu, and Moran (1999 ) and by De Borst, 
+
+ 
+16 
+ Crisfield, Remmers, and Verhoosel (2012 ), among others, all have  made  major impacts on FEM 
+educations and applications. Among all these FEM monographs and textbooks, the book by  
+Zienkiewicz and Taylor or Zienkiewicz, Taylor, and Zhu probably has had most impacts on FEM 
+technology popularization, which  may be because  R. L. Taylor wrote a FEM research computer 
+program code named  FEAP , which was placed in  the appendix of that  book, providing an 
+immediate guidance on hands -on experience  of implementing FEM  for the readers.  
+ 
+The development of finite element software technology started in the 1960s.  In 1963 , E.L. Wilson 
+and R. Clough developed a structural mechanics FEM code called Symbolic Matrix Interpretive 
+System, SMIS, and then  Wilson  initiated and develop ed a general -purpose static and dynamic 
+Structural Analysis Program , SAP.  In late 1960s and the early 1970s,  KJ. Bathe developed 
+nonlinear FEM code ADINA based on SAP IV and NONSAP.  Today, the brand name SAP2000 
+has become synonymous with the state -of-the-art finite element structural analysis and design 
+methods since its introduction over 5 5 years ago.  At the same period, NASA developed its own 
+FEM code called NASTRAN . About the sam e time in late 1960s,  J. Swanson  asked his employer 
+Westinghouse to develop FEM computer code, and his suggestion was rejected, and then he left 
+the company and  developed the initial ANSYS FEM code. Several years later, J .O. Hallquist at 
+Lawrence Live rmore  National Laboratory also developed a 3D nonlinear FEM code called 
+DYNA3D, which later evolved  to LS -DYNA.   By th e end of 1990s and early 2000s , and FEM 
+software industry  has become a multi -billion -dollar  business . There were several household finite 
+element  software  company names such as ANSYS, AB AQUS, ADINA, LS-DYNA, NASTRAN, 
+COMSOL Multiphysics, CSI, a mong  others. Today, there are also a plethora of  open -source FEM 
+software available online, such as FreeFEM, OpenSees, Elmer, FEBio, FEniCS Project, D UNE, 
+among some others.  
+ 
+IV. (2018 - present) Coming of A New Era 
+The modern form of the finite element method can routinely solve many industrial problems. They 
+enable fundamental understanding and allow predictive analysis for product design. For new 
+scientif ic discovery and engineering innovation, the development of new scientific principles often 
+trails the pace of new inventions with the sheer volume of data that are generated across multiple 
+spatial, temporal, and design parameters (spatial -temporal -parame ter) spaces.  For this reason, FE 
+researchers are studying various forms of machine and deep learning methods, of which this class 
+of methods cover the largest class of interpolations. According to the universal approximation 
+theorem, a neural network (NN) can be designed and trained to approximate any given continuous 
+function to desired accuracy [Selmic and Lewis (2002) , Hashash  et al. (2004) ] which is believed 
+to drive new discoveries and enable future computational discretization technologie s. In this 
+context, Mechanistic Data Science (MDS) finite element methods, which combine known 
+scientific principles with newly collected data, will provide the critically needed research that can 
+be a boon for new inventions.  
+ 
+Scientific and engineering problems typically fall under three categories: (1) problems with 
+abundant data but undeveloped or unavailable scientific principles, (2) problems that have limited 
+data and limited scientific knowledge, and (3) problems that have known scientific principl es with 
+uncertain parameters, with possible high computational load (Saha et al., 2021 ). In essence, 
+mechanistic data science (MDS) mimics the way human  civilization has discovered solutions to 
+difficult and unsolvable problems from the beginning of time. Instead of heuristics, MDS uses 
+
+ 
+17 
+ machine learning methods like active deep learning and hierarchical neural network(s) to process 
+input data, extract mechanistic features, reduce dimensions, learn hidden relationships through 
+regression and classification, and provide a knowledge database. The resulting reduced order form 
+can be utilized for design and optimization of new scientific and engineering systems  (Liu et. al., 
+2021) .  Thus, the new focus of the finite element research has shifted towards the develo pment 
+of machine learning based finite element methods and reduced order models.  
+ 
+With the recent development of machine 
+learning and deep learning methods, 
+solving FEM by constructing a deep 
+neural network has become a state -of-the-
+art technology. Earlier research focused 
+on building up a shallow neural network 
+following the FEM structure to solve 
+boundary problems. J. Takeuchi and Y. 
+Kosugi in 1993 proposed a neural 
+network representation of the finite 
+element method to solve Poisson eq uation problems. G. Yagawa and O. Aoki (1995) replaced 
+the FEM functional with the network energy of interconnected neural networks (NNs) to solve 
+a heat conduction problem. Due to the limitation of computational power and slow convergency 
+rate in shallow neural networks, earlier applications could only solve simple PDE problems. 
+After the 2010s, neural networks for solving computational mechanics problems has become 
+increasingly popular  the rapid growth of deep learning techniques and the development of mo re 
+sophisticated neural network structures, such as convolutional neural networks (CNN), 
+Generative Adversarial Networks (GAN), residual neural networks (ResNet).  For its high 
+dimensional regression ability, some researchers, for example, F. Ghavamiana an d A. Simone 
+(2019), use deep neural network as a regression model to learn the material behavior or 
+microstructure response. Other works focus on solving PDEs using deep learning neural 
+networks. G. Karniadakis and his coworkers (2017, 2019, 2021) proposed  a Physics -Informed 
+Neural Networks (PINNs) to solve high dimensional PDEs in strong form that with constraints 
+to accommodate both natural and essential boundary conditions. The idea of constructing deep 
+neural network following the FEM structure is inves tigated again with advanced neural network 
+methodology. Weinan E and B. Yu (2017) proposed a Deep Ritz Method for solving variational 
+problems. J. Sirignano and K. Spiliopoulos (2018) proposed the so -called Deep Galerkin Method 
+(DGM) to solve high -dimensio nal PDEs. Zabaras and his coworkers (2019) proposed a CNN -
+based physics -constrained deep learning framework for high -dimensional surrogate modeling 
+and uncertainty quantification. T. Rabczuk and his coworkers (2020) systematically explore the 
+potential to use NNs for computational mechanics by solving energetic format of the PDE. N. 
+Trask and his coworkers (2021) proposed a partition of unity network for deep hp approximation 
+of PDEs and extensively the training and initialization strategy to accelerate the  convergence of 
+the solution process. The constructing of element shape function by activation functions has been 
+studied by J. Opschoor and his coworkers (2017) and J. He and his coworkers (2020).  
+ 
+Inspired by the universal approximation of deep neural n etworks (DNN), Zhang et al. (2020) 
+published the first paper on the construction of the conventional finite element shape functions 
+based in the hierarchical nature of the DNN , called Hierarchical Deep-learning Neural Networks 
+
+
+ 
+18 
+ (HiDeNN) . Specifically, the authors demonstrated the construction of a few class es of deep 
+learning interpolation functions , such as  the reproducing kernel particle method (RKPM), non-
+uniform rational B -spline (NURBS), and isogeometric analysis (IGA), among other 
+approximation techniques . Saha et al.  (2021) generalized HiDeNN to a unified Artificial 
+intelligence (AI) -framework, called HiDeNN -AI. HiDeNN -AI can assimilate many data -driven 
+tools in an appropriate way, which provides a general approach to solve challenging science and 
+engineering problems with little or no available physics as well as with extreme computational 
+demand.    
+ 
+To reduce the FE computational cost, the so -called two -stage data -driven methods have been 
+proposed of which during the offline stage, a data base generated by the finite element methods 
+is first developed, and the final solutions are computed during the o nline stage. C. Farhat and his 
+group at Stanford University have developed several  dimensional reduction of nonlinear finite 
+element dynamic models , including mesh sampling and weighting for the hyper reduction  of 
+nonlinear Petrov‐Galerkin reduced‐order mo dels. To further reduce the finite element 
+computational burden, Z. Liu et. al.,  (2016) applied the unsupervised machine learning 
+technique s, such as the k -mean clustering method to group the material points  during the offline 
+stage and  obtain the final solutions by solving the reduced -ordered Lippmann -Schwinger 
+micromechanics equations . This class of data -driven approaches circumvents the computational 
+burden of the well-established  FE square method,  the offline -online database approach to solve 
+the concurrent FEM problems . They named the method  the Finite Element -self-consistent 
+clusteri ng analysis (FE -SCA) of which the computational cost of the microscale analysis is 
+reduced tremendously  in multiple orders of magnitude speed up . J. Gao proposed an alternative 
+(FE-SCAxSCA…xSCA) clustering analysis, of which the continuum finite element scale is 
+concurrently solved with the (n -1) coupled -scale Lippmann -Schwinger micromechanics 
+equations ( Gao, 2020).  
+ 
+M. Ortiz and his group at Caltech developed data -driven finite element s for dynamics and noise 
+data.  J. -S. Chen and his co -workers have developed a physics -constrained data -driven RKPM 
+method based on locally convex reconstruction for noisy database s (He and Chen 2020) . S. Li 
+and his group at UC -Berkeley utilized finite element solution generated data to develop a 
+machine learning based inverse solution to predict pre -crash data of car collision. Bessa et al ., 
+(2017) proposed a data -driven framework to address the longstanding challenge of a two -scale 
+analysis and design of materials under uncertainty  applicable to problems that involve 
+unacceptable computational expense when solved by standard FEM analysis of representative 
+volume elements. The paper defined a framework that incorporates the SCA method to build large 
+databas es suitable for machine learning. The authors believe that this will open new avenues to 
+finding innovative materials with new capabilities in an era of high -throughput computing (“big -
+data”).  
+ 
+Reduced order modeling has been another active research field over the last decades. Early 
+research works focus ed on the proper orthogonal decomposition (POD) method (also known as 
+Karhunen -Loève transform, or principal component analysis) with the purpose of reducing the 
+degrees of freedom of the discretized equatio ns. The POD based model reduction has shown great 
+success in computational fluid dynamics, see e.g., the works of P . Holmes and  J . L. Lumley (1993). 
+For further accelerating the simulations, K . Willcox and her coworkers ( 2008, 2002) proposed a 
+
+ 
+19 
+ missing point estimation method, which is known later as a hyper reduction method. Other notable 
+works related to POD and hyper reduction methods are the Gauss –Newton with approximated 
+tensors (GNAT) method, Grassmann manifold based reduce d basis adaptation, thanks to C . Farhat 
+and his coworkers (2008, 2013). For solid mechanics, D . Ryckelynck and his group (2005) 
+proposed a hyper reduction method based on FEM for dealing with nonlinear problems. Another 
+type of model reduction method, whic h is based on mathematics and has a rigorous error bound 
+estimate, is called reduced basis method, as proposed by Y . Maday and E . M Rønquist (2002). The 
+proper generalized decomposition (PGD) based model reduction, as an extension of POD, can be 
+dated back  to 1980s, and it was introduced by P . Ladevèze (1985) under the name of radial time -
+space approximation. F . Chinesta and his coworkers (2005, 2013) developed a PGD method to 
+account for the parameter space, aiming at building offline computational vademec um for fast 
+online predictions. It is noted that PGD methods are based on the idea of separation of variables 
+and in particular a canonical tensor decompostion (CD). Zhang et al. (2021) consolidated the 
+various attributes of the PGD methods with HiDeNN. The proposed HiDeNN -PGD method  and 
+the general reduced order machine learning finite element framework (Lu et al. 2021) provide 
+powful tools for sovling large scale high dimensional problems.  
+ 
+The development of model reduction methods meets the urgent deman d in the industry for fast and 
+nearly real time simulations of engineering problems, such as online dynamic system control, 
+structural health monitoring , vehicle health monitoring, on-line advanced manufacturing feedback 
+control, automated driving controls and decisions, etc. Such applications usually require an 
+intensive interaction between sensors, control algorithms, and simulation tools. Practical optimal 
+control may require a re liable prediction within the range of milli - or sub -milli -second. Reducing 
+the computation cost of simulations has been one of the major motivations for developing model 
+reduction methods. Other reduced order modeling related topics are the feature enginee ring and 
+data analytics, which constitute an extensive literature in field of machine learning. Thus, the 
+reduced order modeling and the machine learning have intrinsic connections. Developing reduced 
+order machine learning methods may enable physics -data combined models that can overcome the 
+current bottleneck in model reduction methods and purely data -driven machine learning 
+approaches.   
+ 
+Acknowledgement s 
+The authors w ould like  to acknowledg e the sources of some historic facts  cited  in this paper , which  
+are taken from the following finite element history articles and books : 
+ 
+1. Oden, J.T. (1990). Historical comments on finite elements. In   A history of scientific 
+computing  , 152 -166. 
+2. Lax, P. (1993). Feng Kang . SIAM News , 26(11).  
+3. Clough, R.W. and Wilson, E.L.  (1999 ), August. Early finite element research at Berkeley. 
+In Fifth US National Conference on Computational Mechanics , 1-35. 
+4. Felippa, C.A.  (2004). Introduction to finite element methods.  University of Colorado , 885. 
+5. Owen, D.R.J. and Feng, Y.T. (2012). Fifty years of finite elements —a solid mechanics 
+perspective.  Theoretical and Applied Mechanics Letters , 2(5), p.051001.  
+6. Stein, E. (2014). History of the finite element method –mathematics meets mechanics –part 
+I: Engineering developments. In  The History of Theoretical, Material and Computational 
+
+ 
+20 
+ Mechanics -Mathematics Meets Mechanics and Engineering  (pp. 399 -442). Springer, 
+Berlin, Heidelberg.  
+7. Clough, R.W.  (1980 ). The finite element method after twenty -five years: a  personal 
+view.  Computers & Structures , 12(4), 361 -370. 
+8. Wikipedia: Finite Element Method, https://en.wikipedia.org/wiki/Finite_element_method  
+  
+
+ 
+21 
+ References  
+Ainsworth, M., and Oden, J.T.  (1997).  A posteriori error estimation in finite element 
+analysis.  Computer methods in applied mechanics and engineering , 142(1-2), 1-88. 
+Ainsworth, M. and Senior, B. (1998). An adaptive refinement strategy for hp -finite element 
+computations.  Applied Numerical Mathematics , 26(1-2), 165 -178. 
+Ainsworth, M., and Oden, J.T.  (2000). A posteriori error estimation in finite element analysis,  
+John Wiley & Sons . 
+Ammar, A., Mokdad, B., Chinesta, F., and Keunings, R.  (2006). A new family of solvers for some 
+classes of multidimensional partial differential equations enco untered in kinetic theory modeling 
+of complex fluids. Journal of non -Newtonian fluid Mechanics , 139(3),153-176. 
+Amsallem, D. and Farhat, C.  (2008).  Interpolation method for adapting reduced -order models and 
+application to aeroelasticity.  AIAA journal , 46(7), 1803 -1813.  
+Amsallem, D., & Farhat, C. (2008). Interpolation method for adapting reduced -order models and 
+application to aeroelasticity. AIAA journal, 46(7) ,1803 -1813.  
+Andelfinger, U. and Ramm, E.  (1993).  EAS‐elements for two‐dimensional, three‐dimensional, 
+plate and shell structures and their equivalence to HR‐elements.  International journal for 
+numerical methods in enginee ring, 36(8), 1311 -1337.  
+Argyris, JH.  (1954).  Energy Theorems and Structural Analysis, Aircraft Engineering, 26, 347 -356 
+(Oct. 1954), 383 -387, 394 (Nov.).  
+Argyris, JH. (1955).  Energy Theorems and Structural Analysis, Aircraft Engineering, 27, 42 -58 
+(Feb.), 80-94 (March), 125 -134 (April), 145 -158 (May 1955).  
+Argyris, JH. (1965). Continua and Discontinua, Proceedings, Conference on Matrix Methods in 
+Structural Mechanics, Preziemiencki et al. (Eds.), AFFDL -TR-66-80, (Oct. 26 -28, 1965), Wright -
+Patterson AFB, Ohi o, 11 -190. 
+Arnold, D., Falk, R. and Winther, R. (2010). Finite element exterior calculus: from Hodge theory 
+to numerical stability.  Bulletin of the American mathematical society , 47(2), 281 -354. 
+Arsenlis A, and Parks DM. (1999). Crystallographic aspects of geometrically -necessary and 
+statistically -stored dislocation density. Acta Mater . 47(5), 1597 –611. 
+Arsenlis A, and Parks DM. (2002). Modeling the evolution of crystallographic dislocation density 
+in crystal plasticity. J Mech P hys Solids. 50(9), 1979 –2009.  
+Arsenlis, A., Parks, D.M., Becker, R. and Bulatov, V.V. (2004). On the evolution of 
+crystallographic dislocation density in non -homogeneously deforming crystals.  Journal of the 
+Mechanics and Physics of Solids , 52(6), 1213 -1246 . 
+Astrid, P., Weiland, S., Willcox, K.,  and Backx, T. (2008). Missing point estimation in models 
+described by proper orthogonal decomposition. IEEE Transactions on Automatic Control, 53(10), 
+2237 -2251.  
+Atluri, S.N. and Zhu, T. (1998). A new meshless local Petrov -Galerkin (MLPG) approach in 
+computational mechanics.  Computational mechanics , 22(2) 117 -127. 
+Aubin, J.P. (1967). Behavior of the Error of the Approximate Solutions of Boundary -Value 
+Problems for Linear Elliptic Operators by Galerkin's Method and Fin ite Differences, Annali della 
+Scuola Normale di Pisa, Series 3, 21 , 599-637. 
+Aziz, A.K. (1972). Editor of The Mathematical Foundations of the Finite Element Method with 
+Applications to Partial Differential Equations, Academic Press, N.Y.  
+Babuska, I. (1976). Finite Element Methods for Domains with Corners, Computing, 6, 264 -273. 
+
+ 
+22 
+ Babushka, I. and Aziz, AK. (1972). Survey Lectures on the Mathematical Foundation of the Finite 
+Element Method", Aziz, AK. (Ed.)  The Mathematical Foundation of the Finite Elem ent Method 
+with Applications to Partial Differential Equations, Academic Press, N.Y. 5 -359. 
+Babuska, I. Oden, TJ. And Lee, JK. (1977). Mixed -Hybrid Finite Element Approximations of 
+Second -Order Elliptic Boundary -Value Problems, Computer Methods in Applied Mechanics and 
+Engineering, 11, 175 -206. 
+Babuska , I. (1971). Error bounds for the finite element method, Numerische Math., 16, 322-333. 
+Babuska, I.,  Szabo, B.A., and Kat, I.N. (1981 ). The p -Version of the Finite Element Method, SIAM 
+J. Numer. An l., 18, 515 -544. 
+Babuska, I.,  Szabo, BA., and Kat, IN. (1982). On the Rates of Convergence of the Finite Element 
+Method, Int. J. Numer. Meth.Engng.,  18, 323-341.  
+Babuška, I. and Melenk, J.M.  (1997 ). The partition of unity method.  International journal for 
+numerical method s in engineering , 40(4), pp.727 -758. 
+Baumann, C.E. and Oden, J.T. (1999). A discontinuous hp finite element method for convection —
+diffusion problems.  Computer Methods in Applied Mechanics and Engineering , 175(3-4), 311 -
+341. 
+Belytschko, T. and Black, T.  (1999 ). Elastic crack growth in finite elements with minimal 
+remeshing.  International journal for numerical methods in engineering , 45(5), 601 -620. 
+Bazant, Z.P., Belytschko, T.B. and Chang, T.P.  (1984 ). Continuum theory for strain -
+softening.  Journal of Engi neering Mechanics , 110(12), pp.1666 -1692.  
+Bažant, Z.P. and Chang, T.P., 1987. Nonlocal finite element analysis of strain -softening 
+solids.  Journal of engineering mechanics , 113(1), pp.89 -105. 
+Beirão da Veiga, L., Brezzi, F., Cangiani, A., Manzini, G., Marini, L.D. and Russo, A. (2013). 
+Basic principles of virtual element methods.  Mathematical Models and Methods in Applied 
+Sciences , 23(01), 199 -214. 
+Beirão da Veiga, L., Brezzi, F., Marini, L.D. and Russo, A. (2014). The hitchhiker's guide to the 
+virtual element method.  Mathematical models and methods in applied sciences , 24(08), pp.1541 -
+1573.  
+Belytschko, T., Lu, Y.Y. and Gu, L. (1994). Element‐free Galerkin methods.  International 
+journal for nume rical methods in engineering , 37(2), 229 -256. 
+Belytschko, T. and Black, T. (1999). Elastic crack growth in finite elements with minimal 
+remeshing, International journal for numerical methods in engineering , 45(5), 601 -620. 
+Belytschko, T., Liu, W.K., Moran, B. and Elkhodary, K.  (2013). Nonlinear finite elements for 
+continua and structures , John Wiley & sons.  
+Bennett, J.A. and Botkin, M.E. (1985). Structural shape optimization with geometric description 
+and adaptive mesh refin ement.  AIAA journal , 23(3), 458 -464. 
+Berkooz, G., Holmes, P., & Lumley, J. L. (1993). The proper orthogonal decomposition in the 
+analysis of turbulent flows. Annual review of fluid mechanics , 25(1), 539 -575. 
+Bessa, M.A., Bostanabad, R., Liu, Z., Hu, A., Apley, D.W., Brinson, C., Chen, W. and Liu, W.K. 
+(2017), A framework for data -driven analysis of materials under uncertainty: Countering the curse 
+of dimensionality.  Computer Methods in Applied Mechanics and Engineering , 320, 633 -667. 
+Best, G. and Oden, J.  (1963). Stiffness matrices for shell -type structures, Research & Engineering 
+Department, General Dynamics, Fort Worth.  
+Birkhoff, G. (1969). Piecewise bicubic interpolation and approximation in polygons, in 
+approximations with special emphasis on spline fu nctions, edited by I. J Shoenberg, Academic 
+Press, New York, 85 -121. 
+
+ 
+23 
+ Bischoff, M. and Ramm, E. (199 8). Shear deformable shell elements for large strains and 
+rotations.  International Journal for Numerical Methods in Engineering , 40(23),4427 -4449.  
+Borden, M. J., Verhoosel, C.V., Scott, M.,A., Hughes, T.J., and Landis, C.M. (2012). A phase -field 
+description of dynamic brittle fracture.  Computer Methods in Applied Mechanics and 
+Engineering , 217, 77-95. 
+Botkin, M.E. (1982). Shape optimization of plate and shell s tructures.  AIAA Journal , 20(2), 268 -
+273. 
+Bramble JH, Nitsche JA, Schatz AH. (1975). Maximum -norm interior estimates for Ritz -Galerkin 
+methods. Mathematics of Computation. 29(131), 677 -88. 
+Brocca, M. and Bažant, Z.P. (2001). Size effect in concrete columns: finite -element analysis with 
+microplane model.  Journal of Structural Engineering , 127(12), pp.1382 -1390.  
+Brooks, A.N. and Hughes, T.J. (1982). Streamline upwind/Petrov -Galerkin formulations for 
+convection dominated flows with particular emphasis o n the incompressible Navier -Stokes’s  
+equations.  Computer methods in applied mechanics and engineering , 32(1-3), 199 -259. 
+Carlberg, K., Farhat, C., Cortial, J., & Amsallem, D. (2013). The GNAT method for nonlinear 
+model reduction: effective implementation a nd application to computational fluid dynamics and 
+turbulent flows. Journal of Computational Physics, 242 (2013) 623 -647. 
+Caner, F.C. and Bažant, Z.P. (2009). Size effect on strength of laminate -foam sandwich plates: 
+Finite element analysis with interface fracture.  Composites Part B: Engineering , 40(5), pp.337 -
+348. 
+Carey, G.F. and Oden, T.J. (1986). Finite Elements: Fluid Mechanics Vol., VI . Prentice -Hall, Inc.  
+Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function, Mathematics of 
+Control, Signals and Systems 2 (4), 303 –314. 
+Chen, J.S., Wu, C.T., Yoon, S. and You, Y.  (2001 ). A stabilized conforming nodal integration 
+for Galerkin mesh‐free methods.  International journal for numerical methods in  engineering,  
+50(2), 435 -466. 
+Chen, Q., Xie, Y., Ao, Y., Li, T., Chen, G., Ren, S., Wang, C. and Li, S. (2021). A deep neural 
+network inverse solution to recover pre -crash impact data of car collisions, Transportation 
+Research Part C,  126, 103009.  
+Chinesta, F., Leygue, A., Bordeu, F., Aguado, J. V., Cueto, E., González, D., ... and Huerta, A. 
+(2013). PGD -based computational vademecum for efficient design, optimization and control. 
+Archives of Computational Methods in Engineering , 20(1), 31 -59. 
+Chine sta, F., Ladeveze, P., Ibanez, R., Aguado, J.V., Abisset -Chavanne, E. and Cueto, E. (2017). 
+Data -driven computational plasticity.  Procedia engineering , 207, 209 -214. 
+Clough, R.W.  (1960 ). The finite element method in plane stress analysis. In  Proceedings of 2nd 
+ASCE Conference on Electronic Computation, Pittsburgh Pa., Sept. 8 and 9, 1960 . 
+Clough, R.W.  (1962 ) The stress distribution of Norfork Dam . California Univ Berkeley Inst of 
+Engineering Research.  
+Clough, R.W. and Wilson, E.L. (1999). August. Early finite element research at Berkeley. In  Fifth 
+US National Conference on Computational Mechanics ,1-35. 
+Cottrell, J.A., Hughes, T.J. and Bazilevs, Y., 2009.  Isogeometric analysis: toward integration of 
+CAD and FEA . John Wiley & Sons.  
+Courant, R. (1943). Variational methods for the solution of problems of equilibrium and vibrations, 
+Bulletin of the American Mathematical Society . 49, 1 –23. 
+De Borst, R. (1991). Simulation of strain localization: a reappraisal of the Cosserat 
+continuum.  Engineering computations . 8 (4), 317 -332.    
+
+ 
+24 
+ De Borst, R. and Mühlhaus, H.B. (1992). Gradient‐dependent plasticity: formulation and 
+algorithmic aspects.  International Journal for Numerical Methods in Engineering , 35(3) 521 -539. 
+De Borst, R., Cri sfield, M.A., Remmers, J.J. and Verhoosel, C.V. (2012).  Nonlinear finite element 
+analysis of solids and structures . John Wiley & Sons.  
+Demkowicz, L., Oden, J.T., Rachowicz, W. and Hardy, O.  (1989 ). Toward a universal hp adaptive 
+finite element strategy, Part 1. Constrained approximation and data structure.  Computer Methods 
+in Applied Mechanics and Engineering , 77(1-2), pp.79 -112. 
+Demkowicz, L., Oden, J.T. and Rachowicz, W. (1990). A new finite element method for solving 
+compressible Navier -Stoke s equations based on an operator splitting method and hp 
+adaptivity.  Computer methods in applied mechanics and engineering , 84(3), pp.275 -326. 
+Demkowicz, L., Monk, P., Vardapetyan, L. and Rachowicz, W. (2000). De Rham diagram for hp 
+finite element spaces.  Computers & Mathematics with Applications , 39(7-8), 29 -38. 
+Dietsche, A., Steinmann, P. and Willam, K. (1993). Micropolar elastoplasticity and its role in 
+localization.  International Journal of Plasticity , 9(7), 813 -831. 
+Donea, J., Giuliani, S. and Halleux, J.P., (1982). An arbitrary Lagrangian -Eulerian finite element 
+method for transient dynamic fluid -structure interactions.  Computer methods in applied mechanics 
+and engineering , 33(1-3), pp.689 -723. 
+Donea, J. and Huerta, A.  (2003 ). Finite element methods for flow problems . John Wiley & Sons.  
+Donea, J., Huerta, A., Ponthot, J.P. and Rodríguez‐Ferran, A.  (2017 ). Arbitrary Lagrangian –E 
+ulerian Methods.  Encyclopedia of Computational Mechanics Second Edition , 1-23. 
+Dvorak, G.J., Wafa, A.M. and Bahei -El-Din, Y.A. (1994). Implementation of the transformation 
+field analysis for inelastic composite materials.  Computational mechanics , 14(3), 201 -228. 
+Dupont, T. (1973). L^2 -estimates for Galerkin methods for second order h yperbolic 
+equations.  SIAM journal on numerical analysis , 10(5), pp.880 -889. 
+Douglas, J. and Dupont, T. (1973). Superconvergence for Galerkin methods for the two point 
+boundary problem via local projections.  Numerische Mathematik , 21(3), pp.270 -278. 
+Farhat,  C. (1994). Implicit parallel processing in structural mechanics.  Comp. Mech. Advances , 2, 
+1-124. 
+Farhat, C., Avery, P., Chapman, T. and Cortial, J., (2014). Dimensional reduction of nonlinear 
+finite element dynamic models with finite rotations and energy‐ based mesh sampling and 
+weighting for computational efficiency.  International Journal for Numerical Methods in 
+Engineering , 98(9), 625 -662. 
+Feng, K. (1965). Variational principle -based finite difference formulation, Applied and 
+Computational Mathematics , 2(4), 238 -262 (in Chinese),  
+Fish, J. (1992). The s -version of the finite element method.  Computers & Structures , 43(3), 539 -
+547. 
+Fish, J., S hek, K., Pandheeradi, M. and Shephard, M.S. (1997). Computational plasticity for 
+composite structures based on mathematical homogenization: Theory and practice.  Computer 
+methods in applied mechanics and engineering , 148(1-2), 53 -73. 
+Fleming, M, Chu, Y.A., Moran, B., and Belytschko, T. (1997). Enriched Element -Free Galerkin 
+Methods for Crack Tip Fields. International Journal for Numerical Methods in Engineering , 40, 
+1483 -1504.  
+Gao, J. (2020) Multiscale Modeling of Composite Laminate Structures: a Pathway Tow ards 
+Predictive Science and Engineering, PhD dissertation, Northwestern University.  
+
+ 
+25 
+ Gavini, V., Bhattacharya, K. and Ortiz, M.  (2007 ). Quasi -continuum orbital -free density -
+functional theory: A route to multi -million atom non -periodic DFT calculation.  Journal of the 
+Mechanics and Physics of Solids , 55(4), 697 -718. 
+Grimberg, S., Farhat, C., Tezaur, R. and Bou‐Mosleh, C. (2020). Mesh sampling and weighting 
+for the hyper reduction of nonlinear Petrov‐Galerkin reduced‐order models with local re duced‐
+order bases.  International Journal for Numerical Methods in Engineering , Online.  
+Hashash, Y.M.A., Jung, S. and Ghaboussi, J., (2004). Numerical implementation of a neural 
+network based material model in finite element analysis.  International Journal for numerical 
+methods in engineering , 59(7), pp.989 -1005.  
+Hilber, H.M., Hughes, T.J. and Taylor, R.L. (1977). Improved numerical dissipation for time 
+integration algorithms in structural dynamics.  Earthquake Engineering & Structural 
+Dynamics , 5(3),  283-292. 
+Hillerborg, A., Modéer, M. and Petersson, P.E.  (1976 ). Analysis of crack formation and crack 
+growth in concrete by means of fracture mechanics and finite elements.  Cement and concrete 
+research , 6(6),  773-781. 
+Hrennikoff, A. (1941). Solution of problems of elasticity by the framework method.  Journal of 
+Applied Mechanics.  8 (4): 169 –175. 
+He, Q. and Chen, J -S (2020). A physics -constrained data -driven approach based on locally convex 
+reconstruction for noisy database, Computer Methods in  Applied Mechanics and Engineering 363 
+112791.  
+Hornik, K, Stinchcombe, M. and White, H. et al. (1989) Multilayer feedforward networks are 
+universal approximators., Neural Networks 2 (5), 359 –366. 
+Imam, M.H. (1982) Three‐dimensional shape optimization.  International Journal for Numerical 
+Methods in Engineering , 18(5),  661 -673. 
+Hellinger, E., Klein, F. and Müller, C. (1914). Die allgemeinen Ansätzeder Mechanik der 
+Kontinua.  Enr. Math. Wti. 4, 602 , 694. 
+Holzapfel, G.A., Eberlein, R., Wriggers, P. and Weizsäcker, H.W. (1996). Large strain analysis of 
+soft biological membranes: Formulation and finite element analysis.  Computer methods in applied 
+mechanics and engineering , 132(1-2), 45 -61. 
+Hou, T.Y. and Wu, X.H. (1997).  A multiscale finite element method for elliptic problems in 
+composite materials and porous media.  Journal of computational physics , 134(1), pp.169 -189. 
+Hu, H.C., 1955. On some variational principles in the theory of elasticity and plastic ity. Sci. Sin. , 4, 
+33-54. 
+Hughes, T.J., Taylor, R.L., Sackman, J.L., Curnier, A. and Kanoknukulchai, W. (1976). A finite 
+element method for a class of contact -impact problems.  Computer methods in applied mechanics 
+and engineering , 8(3), pp.249 -276. 
+Hughes,  T.J. and Winget, J. (1980). Finite rotation effects in numerical integration of rate 
+constitutive equations arising in large‐deformation analysis.  International journal for numerical 
+methods in engineering , 15(12), 1862 -1867.  
+Hughes, T.J. and Tezduyar, T.  (1981 ). Finite elements based upon Mindlin plate theory with 
+particular reference to the four -node bilinear isoparametric element.  
+Hughes, T.J. and Liu, W.K. (1981). Nonlinear finite element analysis of shells: Part I. Three -
+dimensional shells . Computer methods in applied mechanics and engineering , 26(3), 331 -362. 
+Hughes, T.J., (2012).  The finite element method: linear static and dynamic finite element analysis . 
+Courier Corporation.  
+
+ 
+26 
+ Hughes, T.J., Liu, W.K. and Zimmermann, T.K., (1981). Lagrangian -Eulerian finite element 
+formulation for incompressible viscous flows.  Computer methods in applied mechanics and 
+engineering , 29(3), 329 -349. 
+Hughes, T.J., Mallet, M. and Akira, M.  (1986 ). A new finite element formulation for computational 
+fluid dynamics: II. Beyond SUPG.  Computer methods in applied mechanics and 
+engineering , 54(3), pp.341 -355. 
+Hughes, T.J., Franca, L.P. and Mallet, M.  (1986 ). A new finite element formulation for 
+computational fluid dynamics: I. Symmetric forms of the compressible Euler and Navier -Stokes 
+equations and the second law of thermodynamics.  Computer methods in applied mechanics and 
+engineering , 54(2), pp.223 -234. 
+Hughes, TJR, Franca, LP, and Balestra, M. (1986). A new finite element formulation for 
+computatio nal fluid dynamics: V. Circumventing the Babuška -Brezzi condition: A stable Petrov -
+Galerkin formulation of the Stokes problem accommodating equal -order 
+interpolations."  Computer Methods in Applied Mechanics and Engineering  59(1), 85 -99. 
+Hughes, T.J.  (1995) . Multiscale phenomena: Green's functions, the Dirichlet -to-Neumann 
+formulation, subgrid scale models, bubbles and the origins of stabilized methods.  Computer 
+methods in applied mechanics and engineering , 127(1-4), 387 -401. 
+Hughes, T.J., Cottrell, J .A. and Bazilevs, Y., (2005). Isogeometric analysis: CAD, finite elements, 
+NURBS, exact geometry and mesh refinement.  Computer methods in applied mechanics and 
+engineering , 194(39-41), 4135 -4195.  
+Iordache, M.M. and Willam, K., (1998). Localized failure ana lysis in elastoplastic Cosserat 
+continua, Computer  Methods in Applied Mechanics and Engineering , 151(3-4), pp.559 -586. 
+Karma, A. and Lobkovsky, A.E., (2004). Unsteady crack motion and branching in a phase -field 
+model of brittle fracture.  Physical review letters , 92(24), p.245510.  
+Karma, A., Kessler, D.A. and Levine, H. (2001). Phase -field model of mode III dynamic 
+fracture.  Physical Review Letters , 87(4),  045501.  
+Kikuchi, N., Chung, K.Y., Torigaki, T. and Taylor, J.E., (1986). Adaptive finite elem ent methods 
+for shape optimization of linearly elastic structures. In  the Optimum Shape,  139-169). Springer, 
+Boston, MA.  
+Kikuchi, N. and Oden, J.T. (1988).  Contact problems in elasticity: a study of variational 
+inequalities and finite element methods . Soci ety for Industrial and Applied Mathematics.  
+Kirchdoerfer, T. and Ortiz, M.(2017).  Data driven computing with noisy material data sets, 
+Computer Methods in Applied 530 Mechanics and Engineering 326, 622 – 641.  
+Kirchdoerfer, T. and Ortiz, M. (2018).  Data -driven computing in dynamics , International Journal 
+for Numerical Methods in Engineering  113, 1697 –1710.  
+Kuhn, C. and Müller, R. (2010). A continuum phase field model for fracture.  Engineering Fracture 
+Mechanics , 77(18), 3625 -3634.  
+Ladev`eze, P. (1985). New algorithms: mechanical framework and development (in French). 
+Technical Report 57, LMT -Cachan.  
+Lax, P. (1993). ``Kang Feng,’’ SIAM News 26(11)  page VII -VIII.  
+Li, H., Kafka, O.L., Gao, J., Yu, C., Nie, Y., Zhang, L., Tajdari, M., Tang, S., Guo,  X., Li, G. and 
+Tang, S. (2019). Clustering discretization methods for generation of material performance 
+databases in machine learning and design optimization.  Computational Mechanics , 64(2), 281 -305. 
+Li, S., Liu, W.K., Rosakis, A.J., Belytschko, T. and H ao, W. (2002). Mesh -free Galerkin 
+simulations of dynamic shear band propagation and failure mode transition.  International Journal 
+of solids and structures , 39(5),1213 -1240.  
+
+ 
+27 
+ Li, S., Ren, B. and Minaki, H.(2014). Multiscale crystal defect dynamics: a dual -lattice process 
+zone model.  Philosophical Magazine , 94(13),1414 -1450.  
+Liu, W.K., Belytschko, T. and Mani, A. (1986). Random field finite elements.  International 
+journal for numerical methods in engineering , 23(10),1831 -1845.  
+Liu, W.K., Jun, S. and Zhang, Y. F. (1995). Reproducing kernel particle methods.  International 
+journal for numerical methods in fluids , 20(8‐9),1081 -1106.  
+Liu, W. K., Jun, S., Li, S., Adee, J. and Belytschko, T. (1995). Reproducing kernel particle methods 
+for structural dynamics.  International Journal for Numerical Methods in Engineering  38(10), 655 -
+1679.  
+Liu, Z., Bessa, M. A., and  Liu, W. K.  (2016).  Self-consistent clustering analysis: an efficient 
+multi -scale scheme for inelastic heterogeneous materials. Computer Metho ds in Applied 
+Mechanics and Engineering, 306 , 319-341. 
+Liu, Z., Fleming, M. A., and  Liu, W. K. , (2018). Microstructural Material Database for Self -
+consistent Clustering Analysis of Elastoplastic Strain Softening Materials. Comput. Methods Appl. 
+Mech. Engr g., Volume 330 , Pages 547 -577. 
+Liu, W. K., Gan, Z., Fleming, M. A., (2021) Mechanistic Data Science for STEM Education and 
+Applic ations . Springer.  
+Lubliner, J., Oliver, J., Oller, S. and Oñate, E.  (1989 ). A plastic -damage model for 
+concrete.  International Journal of solids and structures , 25(3), 299 -326. 
+Lu, Y., Li, H., Saha, S., Mojumder,  S., Amin , A., Suarez, D., Liu, Y., Qian, D., Liu, W. K., ( 2021)  
+Reduced order machine learning finite element methods: concept,  implementation, and future 
+applications . Computer Modeling in Engineering & Sciences , under review.  
+Lyu, D. and Li, S. (2019). A multiscale dislocation pattern dyn amics: Towards an atomistic -
+informed crystal plasticity theory.  Journal of the Mechanics and Physics of Solids , 122. 613 -632. 
+Maday, Y. and Rønquist, E. M. (2002). A reduced -basis element method. Journal of scientific 
+computing , 17(1), 447 -459. 
+Ma A, Roters F. and Raabe D.(2006). A dislocation density based constitutive model for crystal 
+plasticity FEM including geometrically nec essary dislocations. Acta Mater, 54, 2169 –79. 
+Mathur, K.K. and Dawson, P.R. (1989). On modeling the development of crystallographic texture 
+in bulk forming processes.  International Journal of Plasticity , 5(1), .67 -94. 
+Melenk, J.M. and Babuška, I.  (1996 ). The partition of unity finite element method: basic theory 
+and applications.  Computer methods in applied mechanics and engineering , 139(1-4), pp.289 -314. 
+McHenry, D. (1943). A lattice analogy for the solution of stress problems,  Journal of the institution 
+of civil engineers , 21(2), 59 -82. 
+Mizukami, A. and Hughes, T.J.  (1985 ). A Petrov -Galerkin finite element method for convection -
+dominated flows: an accurate upwinding  technique for satisfying the maximum 
+principle.  Computer methods in applied mechanics and engineering , 50(2), 181 -193. 
+Moës, N., Dolbow, J. and Belytschko, T.  (1999 ). A finite element method for crack growth without 
+remeshing.  International journal for nu merical methods in engineering , 46(1), 131 -150. 
+Miehe, C., Schröder, J. and Schotte, J. (1999). Computational homogenization analysis in finite 
+plasticity simulation of texture development in polycrystalline materials.  Computer methods in 
+applied mechanics and engineering , 171(3-4), 387 -418. 
+Miehe, C., Hofacker, M. and Welschinger, F. (2010). A phase field model for rate -independent 
+crack propagation: Robust algorithmic implementation based on operator splits.  Computer 
+Methods in Applied Mechanics and Engineering , 199(45-48) , 2765 -2778.  
+
+ 
+28 
+ Moës, N., Dolbow, J. and Belytschko, T. (1999). A finite element method for crack growth without 
+remeshing.  International journal for numerical methods in engineering , 46(1), 131 -150. 
+Oden, J.T. (1963). Analysis of thin plates supported at their corners : Prepared for Office of 
+Engineering Research, College of Engineering , School of Civil Engineering, Oklahoma State 
+University.  
+Oden, J.T. and Wellford Jr, L.C.  (1972 ). Analysis of flow of viscous fluids by the finite -element 
+method.  AIAA Journal , 10(12), pp.1590 -1599.  
+Oden, J.T., Demkowicz, L., Rachowicz, W. and Westermann, T.A.  (1989 ). Toward a universal hp 
+adaptive finite element strategy, Part 2. A posteriori error estimation.  Computer methods in applied 
+mech anics and engineering , 77(1-2), 113 -180. 
+Oden, J.T., Duarte, C.A.M. and Zienkiewicz, O.C. (1998). A new cloud -based hp finite element 
+method.  Computer methods in applied mechanics and engineering , 153(1-2), 117 -126. 
+Oden, J.T.  (2006). Finite elements of nonlinear continua , Courier Corporation.  
+Oden, J.T. and Reddy, J.N. (2012).  An introduction to the mathematical theory of finite elements , 
+Courier Corporation.  
+Papadopoulos, P. and Taylor, R.L.  (1992 ). A mixed formulation for the finite element solution of 
+contact problems.  Computer Methods in Applied Mechanics and Engineering , 94(3), pp.373 -389. 
+Pian, T.H. (1964). Derivation of element stiffness matrices by assumed stress distributions.  AIAA 
+journal , 2(7), 1333 -1336.  
+Pian, T.H. and Sumih ara, K. (1984). Rational approach for assumed stress finite 
+elements.  International Journal for Numerical Methods in Engineering , 20(9), (1685 -1695.  
+Peirce, D., Asaro, R.J. and Needleman, A. (1982). An analysis of nonuniform and localized 
+deformation in du ctile single crystals.  Acta metallurgica , 30(6), 1087 -1119.  
+Peterson, P.E.  (1980 ). Fracture energy of concrete: Method of determination.  Cement and 
+Concrete research , 10(1), 79 -89. 
+Nitsche, J. (1970). Lineare spline -funktionen und die methoden von Ritz für elliptische 
+randwertprobleme. Archive for Rational Mechanics and Analysis , 36(5), 348-355. 
+Nitsche, J.A. and Schatz, A.H.  (1974).  Interior estimates for Ritz -Galerkin methods.  Mathematics 
+of Computat ion, 28(128) , 937-958. 
+Pham, K.H., Ravi -Chandar, K. and Landis, C.M.  (2017).  Experimental validation of a phase -field 
+model for fracture.  International Journal of Fracture , 205(1), 83-101. 
+Pietruszczak, S.T. and Mroz, Z.  (1981 ). Finite element analysis of deformation of strain‐softening 
+materials.  International Journal for Numerical Methods in Engineering , 17(3), 327 -334. 
+Raabe D, Klose P, Engl B, Imlau K -P, Friedel F, Roters  F. (2002). Concepts for integrating plastic 
+anisotropy into metal forming simulations. Adv Eng Mater; 4, 169 –80. 
+Rashid, Y.R.  (1968 ). Ultimate strength analysis of prestressed concrete pressure vessels.  Nuclear 
+engineering and design , 7(4), 334-344. 
+Roters, F., Eisenlohr, P., Hantcherli, L., Tjahjanto, D.D., Bieler, T.R. and Raabe, D. (2010). 
+Overview of constitutive laws, kinematics, homogenization and multiscale methods in crystal 
+plasticity finite -element modeling: Theory, experiments, app lications.  Acta Materialia , 58(4), 
+1152 -1211.  
+Research Report No. 233, General Dynamics, Ft. Worth, Texas.  
+Prager, W. and Synge, J.L.  (1947).  Approximations in elasticity based on the concept of function 
+space.  Quarterly of Applied Mathematics , 5(3), 241-269. 
+
+ 
+29 
+ Quey, R., Dawson, P.R. and Barbe, F. (2011). Large -scale 3D random polycrystals for the finite 
+element method: Generation, meshing and remeshing.  Computer Methods in Applied Mechanics 
+and Engineering , 200(17-20), 1729 -1745.  
+Rahimi -Aghdam, S., Chau , V.T., Lee, H., Nguyen, H., Li, W., Karra, S., Rougier, E., Viswanathan, 
+H., Srinivasan, G. and Bažant, Z.P., 2019. Branching of hydraulic cracks enabling permeability of 
+gas or oil shale with closed natural fractures.  Proceedings of the National Academy of 
+Sciences , 116(5), pp.1532 -1537.  
+Reissner, E. (1950). On a variational theorem in elasticity.  Journal of Mathematics and 
+Physics , 29(1-4), 90 -95. 
+Roters, F., Eisenlohr, P., Hantcherli, L., Tjahjanto, D.D., Bieler, T.R. and Raabe, D. (2010). 
+Overv iew of constitutive laws, kinematics, homogenization and multiscale methods in crystal 
+plasticity finite -element modeling: Theory, experiments, applications.  Acta Materialia , 58(4),  
+1152 -1211.  
+Ryckelynck, D.  (2005).   A priori hyper reduction method: an adaptive approach. Journal of 
+computational physics, 202(1) , 346-366. 
+Selmic, R.R. and Lewis, F.L.  (2002).  Neural -network approximation of piecewise continuous 
+functions: application to friction compensation.  IEEE tran sactions on neural networks , 13(3), 
+745-751. 
+Saha, S., Gan, Z., Cheng, L., Gao, J., Kafka, O.L., Xie, X., Li, H., Tajdari, M., Kim, H.A. and Liu, 
+W.K. (2021). Hierarchical Deep Learning Neural Network (HiDeNN): An artificial intelligence 
+(AI) framework for  computational science and engineering.  Computer Methods in Applied 
+Mechanics and Engineering , 373, 113452.  
+Shakib, F., Hughes, T.J. and Johan, Z.  (1991 ). A new finite element formulation for computational 
+fluid dynamics: X. The compressible Euler and Navier -Stokes equations.  Computer Methods in 
+Applied Mechanics and Engineering , 89(1-3), 141 -219. 
+Simo, J.C. and Taylor, R.L.  (1985).  Consistent tangent operators for rate -independent 
+elastoplasticity.  Computer methods in applied mechanics and engineering , 48(1), 101-118. 
+Simo, J.C., Wriggers, P. and Taylor, R.L.  (1985 ). A perturbed Lagrangian formulation for the finite 
+element solution of contact problems.  Computer methods in applied mechanics and 
+engineering , 50(2), pp.163 -180. 
+Simo, J.C. and Vu-Quoc, L.  (1986).  A three -dimensional finite -strain rod model. Part II: 
+Computational aspects.  Computer methods in applied mechanics and engineering , 58(1), 79-116. 
+Simo, J.C. and Armero, F.  (1992).  Geometrically non‐linear enhanced strain mixed methods and 
+the method of incompatible modes.  International Journal for Numerical Methods in 
+Engineering , 33(7), 1413 -1449.  
+Simo, J.C. and Ortiz, M.  (1985).  A unified approach to finite deformation elastoplastic analysis 
+based on the use of hyperelastic constituti ve equations.  Computer methods in applied mechanics 
+and engineering , 49(2), 221-245. 
+Simo, J.C., Fox, D.D. and Rifai, M.S. (1989).  On a stress resultant geometrically exact shell model. 
+Part II: The linear theory; computational aspects.  Computer Methods in Applied Mechanics and 
+Engineering , 73(1), 53-92. 
+Simo, J.C. and Laursen, T.A.  (1992 ). An augmented Lagrangian treatment of contact problems 
+involving friction.  Computers & Structures , 42(1), pp.97 -116. 
+Simo, J.C. and Hughes, T.J.  (2006). Computational inelasticity  (Vol. 7) Springer Science & 
+Business Media.  
+
+ 
+30 
+ Simo, J.C. and Rifai, M. (1990). A class of mixed assumed strain methods and the method of 
+incompatible modes.  International journal for numerical methods in engineering , 29(8),1595 -
+1638.  
+Šmilauer, V., Hoover, C.G., Bažant, Z.P., Caner, F.C., Waas, A.M. and Shahwan, K.W.  (2011 ). 
+Multiscale simulation of fracture of braided composites via repetitive unit cells.  Engineering 
+Fracture Mechanics , 78(6),  901-918. 
+Strang, G. and Fix, G.J.  (1973 ). An analysis of the finite element method, Prentice Hall.  
+Szabo, B. A., and Mehta, A.K.  (1978).  p-Convergent Finite Element Approximations in Fracture 
+Mechanics, Int. J. Num. Meth. Engng , 12, 551-560. 
+Synge, J.L. and Rheinboldt, W.C.  (1957).  The hyper  circle in mathematical physics.  Physics 
+Today , 10(10), 45. 
+Taylor, C.A., Hughes, T.J. and Zarins, C.K. (1998). Finite element modeling of blood flow in 
+arteries. Computer methods in applied mechanics and engineering , 158(1-2) (1998) 155 -196. 
+Tvergaard, V. and Needleman, A.  Analysis of the cup -cone fracture in a r ound tensile bar.  Acta 
+metallurgica , 32(1) (1984)157 -169. 
+Turner, M.J., Clough, R.W., Martin, H.C. and Topp, L.J. (1956). Stiffness and deflection analysis 
+of complex structures.  journal of the Aeronautical Sciences , 23(9), 805 -823. 
+Wagner, G.J. and Liu, W .K. (2003). Coupling of atomistic and continuum simulations using a 
+bridging scale decomposition.  Journal of Computational Physics , 190(1), 249-274. 
+Washizu, K., 1955.  On the variational principles of elasticity and plasticity . MASSACHUSETTS 
+INST OF TECH C AMBRIDGE AEROELASTIC AND STRUCTURES RESEARCH LAB.  
+Willcox, K. and Peraire, J. (2002). Balanced model reduction via the proper orthogonal 
+decomposition. AIAA journal , 40(11), 2323 -2330.  
+Williamson, F.  (1980). A historical note on the finite element method , Int. J. Num. Meth's. Eng.,  
+15,  930 -934 
+Wilson, Z.A., Borden, M.J. and Landis, C.M. (2013). A phase -field model for fracture in 
+piezoelectric ceramics.  International Journal of Fracture , 183(2), 135 -153. 
+Wriggers, P. and Moftah, S.O.  (2006 ). Mesoscale models for concrete: Homogeni zation and 
+damage behavio r. Finite elements in analysis and design , 42(7),  623-636. 
+Yu, C.,  Kafka, O. L.,  and Liu, W.K., (2019). Self-consistent clustering analysis for multiscale 
+modeling at finite Strains . Com puter Methods in Applied Mechanics and Engineering. 349, 339 –
+359. 
+Zienkiewicz, O.C. and Cheung, Y.K. (1967) The Finite Element Method in Structural and 
+Continuum Mechanics, McGraw -Hill, New York.  
+Zlamal, M. (1968).  On the finite element method, Numerische  Math ., 12, 394 -40. 
+Zhang, L., Gerstenberger, A., Wang, X. and Liu, W.K. (2004). Immersed finite element 
+method.  Computer Methods in Applied Mechanics and Engineering , 193(21-22)  2051 -2067.  
+Zhang, L., Lu, Y., Tang, S., Liu, W. K. (2021).   HiDeNN -PGD:   reduced -order hierarchical deep 
+learning neural networks, arXiv, 2105.06363.  
+ 
+

@@ -1,0 +1,92 @@
+\section{Introduction/Motivation}
+
+Stateful computer systems are ubiquitous. Embedded devices, computer
+networks and banking systems all involve states and transitions between
+different states. We can formally verify programs using tools like
+Spin~\cite{holzmannModelCheckerSPIN1997}
+or
+\textsc{Uppaal}~\cite{bengtssonUPPAALToolSuite1996},
+however these tools rarely scale to real-world code bases due to the State
+Explosion Problem (although progress is steadily being
+made)~\cite{valmariStateExplosionProblem1998,%
+      clarkeProgressStateExplosion2001,%
+      demriParametricAnalysisStateexplosion2006,%
+      clarkeModelCheckingMy2008,%
+      clarkeModelCheckingState2012%
+}.
+There are also several testing tools and methodologies one can employ, such as Test-Driven Development {\textemdash}
+{\`a} la JUnit {\textemdash} and
+Fuzz-testing~\cite{yangFindingUnderstandingBugs2011,%
+  hollerFuzzingCodeFragments2012%
+},
+which typically target imperative programming languages.
+
+For functional languages, \acrfull{pbt} using
+QuickCheck~\cite{claessenQuickCheckLightweightTool2000}
+has proven widely
+successful~\cite{hughesQuickCheckTestingFun2007,%
+      claessenFindingRaceConditions2009,%
+      artsTestingAUTOSARSoftware2015,%
+      hughesExperiencesQuickCheckTesting2016,%
+      chenPropertyBasedTestingClimbing2022%
+}
+and been ported to other languages, both functional and
+imperative~\cite{berghoferRandomTestingIsabelle2004,%
+      denesQuickChickPropertyBasedTesting2014,%
+      padhyeJQFCoverageguidedPropertybased2019%
+}.
+Test-driven methods are well understood, but the tests are only as good as the
+cases which the programmer can think of. On the flip side, model-checking tools
+require a secondary implementation of the program in the form of a formal model,
+which opens the verification process up to errors in translation leading to a
+semantic mismatch between the running code and the verified
+model~\cite{artsTestingAUTOSARSoftware2015}).
+
+Dependently Typed languages like
+Agda~\cite{boveBriefOverviewAgda2009}
+and
+\idris~\cite{bradyIdrisGeneralpurposeDependently2013,%
+      bradyIdrisQuantitativeType2021%
+}
+can be used for ``correct by construction'' programming, where typically an
+\acrfull{edsl} is constructed to ensure the program is valid by
+definition~\cite{bhattiDomainSpecificLanguages2009,%
+      bradyCorrectbyConstructionConcurrencyUsing2010,%
+      bradyResourceSafeSystemsProgramming2012,%
+      castro-perezZooidDSLCertified2021%
+}.
+However, well-typed programs can go wrong. Occasionally, this is due to bugs in
+the type
+checker~\cite{chaliasosWelltypedProgramsCan2021}
+or due to problems with how programmers use the language-provided escape
+hatches~\cite{qinUnderstandingMemoryThread2020},
+but there is also a third, arguably more likely, case: what if the types
+themselves are subtly incorrect? One could imagine a program requiring that a
+certain number remain positive but either by habit or by accident, the
+programmer gives the type \texttt{Int} instead of \texttt{Nat}. This is unlikely
+to be caught by the type checker, tests, or implementations, as the programmers
+are likely to carry this assumption in their minds, thereby avoiding including
+it in both tests and implementation error-checks. Nevertheless, the code
+modelling the specification has now introduced subtly different permitted
+states. How can we be sure that the \acrshort{dsl} does not accidentally permit
+an incorrect state or transition?
+
+  \subsection{Contributions}
+  We make the following contributions:
+  \begin{itemize}
+    % C1 - main idea
+    \item An implementation of QuickCheck for use with dependent types at
+          compile time.
+    % C2 - follows
+    \item A framework for simultaneously specifying, implementing, and testing
+          a stateful model of an \acrfull{atm}, using \QC to increase confidence
+          in the correctness of all 3 parts.
+    % C3 - generalisation
+    \item We demonstrate the power of the framework by generalising it to
+          stateful programs, both finite and infinite, and evaluate it by
+          implementing an example of a network protocol.
+  \end{itemize}
+
+  In doing so, we aim to increase confidence in the correctness of the
+  types we use to model stateful systems, using type level testing to help
+  us understand the behaviour of state machines.
