@@ -1,0 +1,598 @@
+Relation Types
+
+various properties that make these effective mechanisms for resolving universe level problems
+when working with algebra types.
+
+Lifting and lowering
+Let us be more concrete about what is at issue here by considering a typical example. Agda
+frequently encounters errors during the type-checking process and responds by printing an error
+message. Often the message has the following form.
+Birkhoff.lagda:498,20-23
+U != O ⊔ V ⊔ ( U + ) when checking that... has type...
+
+This error message means that Agda encountered the universe U on line 498 (columns 20–23)
+of the file Birkhoff.lagda, but was expecting to find the universe O ⊔ V ⊔ U+ instead.
+The general Lift record type that we now describe makes these situations easier to deal with.
+It takes a type inhabiting some universe and embeds it into a higher universe and, apart from
+syntax and notation, it is equivalent to the Lift type one finds in the Level module of the Agda
+Standard Library.
+record Lift { W U : Universe} (A : U  ) : U ⊔ W  where
+constructor lift
+field lower : A
+open Lift
+
+The point of having a ramified hierarchy of universes is to avoid Russell’s paradox, and this
+would be subverted if we were to lower the universe of a type that wasn’t previously lifted. However, we can prove that if an application of lower is immediately followed by an application of
+lift, then the result is the identity transformation. Similarly, lift followed by lower is the identity.
+lift∼lower : { W U : Universe}{A : U  } → lift ◦ lower ≡ id (Lift{ W} A)
+lift∼lower = refl
+lower∼lift : { W U : Universe}{A : U  } → lower{ W}{ U} ◦ lift ≡ id A
+lower∼lift = refl
+
+The proofs are trivial. Nonetheless, we’ll come across some holes these types can fill.
+
+3
+
+Relation Types
+
+We now present the AgdaUALib’s Relations module and its submodules. In §3.1 we define types
+that represent unary and binary relations, which we refer to as “discrete relations” to contrast
+them with the (“continuous”) general and dependent relations that we introduce in §3.2. We
+call the latter “continuous relations” because they can have arbitrary arity (general relations)
+and they can be defined over arbitrary families of types (dependent relations).
+
+3.1
+
+Discrete relations
+
+This section presents the Relations.Discrete module of the AgdaUALib, slightly abridged.23
+
+23
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Relations.Discrete.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Relations/Discrete.lagda).
+
+Agda UALib, Part 1: Foundation
+
+17
+
+Unary relations
+In set theory, given two sets A and P, we say that P is a subset of A, and we write P ⊆
+A, just in case ∀ x (x ∈ P → x ∈ A). We need a mechanism for representing this notion in
+Agda. A typical approach is to use a unary predicate type which we will denote by Pred and
+define as follows. Given two universes U W and a type A : U  , the type Pred A W represents properties that inhabitants of A may or may not satisfy. We write P : Pred A U to
+represent the collection of inhabitants of A that satisfy (or belong to) P. Here is the definition.24
+Pred : U  → ( W : Universe) → U ⊔ W +
+Pred A W = A → W 
+
+
+
+This is a general unary predicate type, but by taking the codomain to be Bool = {0, 1}, we
+obtain the usual interpretation of set membership; that is, for P : Pred A Bool and for each
+x : A, we would interpret P x ≡ 0 to mean x ∈
+/ A, and P x ≡ 1 to mean x ∈ A.
+The UALib includes types that represent the element inclusion and subset inclusion relations
+from set theory. For example, given a predicate P, we may represent that “x belongs to P” or
+that “x has property P,” by writing either x ∈ P or P x. The definition of ∈ is standard, as is
+the definition of ⊆ for the subset relation; nonetheless, here they are.24
+_∈_ : A → Pred A W → W 
+x∈P=Px
+_⊆_ : Pred A W → Pred A Z → U ⊔ W ⊔ Z 
+P ⊆ Q = ∀ {x} → x ∈ P → x ∈ Q
+
+Predicates toolbox
+Here is a small collection of tools that will come in handy later. The first is an inductive type
+that represents disjoint union.25
+data _⊎_ (A : U  ) (B : W  ) : U ⊔ W  where
+inj1 : (x : A) → A ⊎ B
+inj2 : (y : B) → A ⊎ B
+
+And this can be used to define a type representing union, as follows.
+_∪_ : Pred A W → Pred A Z → Pred A ( W ⊔ Z)
+P∪Q=λx→x∈P⊎x∈Q
+
+Next we define convenient notation for asserting that the image of a function (the first argument) is contained in a predicate (the second argument).
+Im_⊆_ : (A → B) → Pred B Z → U ⊔ Z 
+Im f ⊆ S = ∀ x → f x ∈ S
+
+The empty set is naturally represented by the empty type, 0, and the latter is defined in the
+Empty-Type module of TypeTopo.25,26
+
+24
+
+cf. Relation/Unary.agda in the Agda Standard Library.
+Unicode Hints. In agda2-mode, \u+ ⇝ ⊎, \b0 ⇝ 0, \B0 ⇝ 0.
+26
+The empty type is an inductive type with no constructors; that is, data 0 { U} : U  where – (empty body).
+25
+
+18
+
+Relation Types
+
+∅ : Pred A U0
+∅_=0
+
+We close our little predicates toolbox with a natural way to encode singletons.
+{ }
+_ : A → Pred A _
+{ }
+x
+
+= x ≡_
+
+Binary Relations
+In set theory, a binary relation on a set A is simply a subset of the Cartesian product A × A.
+As such, we could model such a relation as a (unary) predicate over the product type A × A,
+or as an inhabitant of the function type A → A → W  (for some universe W). Note, however,
+this is not the same as a unary predicate over the function type A → A since the latter has
+type (A → A) → W  , while a binary relation should have type A → (A → W  ).
+A generalization of the notion of binary relation is a relation from A to B, which we define
+first and treat binary relations on a single A as a special case.
+REL : U  → W  → (Z : Universe) → U ⊔ W ⊔ Z +
+REL A B Z = A → B → Z 
+
+
+
+Rel : U  → (Z : Universe) → U ⊔ Z + 
+Rel A Z = REL A A Z
+
+The kernel of a function
+The kernel of a function f : A → B is defined informally by {(x , y) ∈ A × A : f x = f y}.
+This can be represented in type theory in a number of ways, each of which may be useful in a
+particular context. For example, we could define the kernel to be an inhabitant of a (binary)
+relation type, a (unary) predicate type, a (curried) Sigma type, or an (uncurried) Sigma type.
+Since the first two alternatives are the ones we use thoughout the UALib, we present them here.
+ker : (A → B) → Rel A W
+ker g x y = g x ≡ g y
+kernel : (A → B) → Pred (A × A) W
+kernel g (x , y) = g x ≡ g y
+
+Similarly, the identity relation (which is equivalent to the kernel of an injective function) can be
+represented by a number of different types. Here we only show the representation that we use
+later to construct the zero congruence. The notation we use here is close to that of conventional
+algebra notation, where 0A is used to denote the identity relation {(x, y) ∈ A × A : x = y}.25
+0 : Rel A U
+0xy=x≡y
+
+The implication relation27
+The following types represent implication for binary relations.
+
+27
+
+The definitions here are from the Agda Standard Library, translated into TypeTopo/UALib notation.
+
+Agda UALib, Part 1: Foundation
+
+19
+
+_on_ : (B → B → C) → (A → B) → (A → A → C)
+R on g = λ x y → R (g x) (g y)
+_⇒_ : REL A B X → REL A B Y → U ⊔ W ⊔ X ⊔ Y 
+P ⇒ Q = ∀ {i j} → P i j → Q i j
+
+These combine to give a nice, general implication operation.
+_=[_]⇒_ : Rel A X → (A → B) → Rel B Y → U ⊔ X ⊔ Y 
+P =[ g ]⇒ Q = P ⇒ (Q on g)
+
+Operation type and compatibility
+Notation. For consistency and readability, throughout the UALib we reserve two universe
+variables for special purposes. The first of these is O which shall be reserved for types that
+represent operation symbols (see Algebras.Signatures). The second is V which we reserve for
+types representing arities of relations or operations.
+Below we will define types that are useful for asserting and proving facts about compatibility
+of operations and relations, but first we need a general type with which to represent operations.
+Here is the definition, which we justify below.
+Op : V  → U  → U ⊔ V 
+Op I A = (I → A) → A
+
+The definition of Op codifies the arity of an operation as an arbitrary type I : V  , which gives
+us a very general way to represent an operation as a function type with domain I → A (the
+type of “I-tuples”) and codomain A. For example, the I-ary projection operations on A are
+represented as inhabitants of the type Op I A as follows.
+π : {I : V  } {A : U  } → I → Op I A
+πix=xi
+
+Let us review the informal definition of compatibility. Suppose A and I are types and fix
+f : Op I A and R : Rel A W (an I-ary operation and a binary relation on A, respectively). We
+say that f and R are compatible and we write28 f |: R just in case ∀ u v : I → A,
+Π i : I , R (u i) (v i) → R (f u) (f v).
+To implement this in Agda, we first define a function eval-rel which “lifts” a binary relation to
+the corresponding I-ary relation, and we use this to define the function |: representing compatibility of an I-ary operation with a binary relation.
+eval-rel : {A : U  }{I : V  } → Rel A W → Rel (I → A)( V ⊔ W)
+eval-rel R u v = Π i : _ , R (u i) (v i)
+_|:_ : {A : U  }{I : V  } → Op I A → Rel A W → U ⊔ V ⊔ W 
+f |: R = (eval-rel R) =[ f ]⇒ R
+
+28
+
+The symbol |: denoting compatibility comes from Cliff Bergman’s universal algebra textbook [1].
+
+20
+
+Relation Types
+
+3.2
+
+Continuous relations*29
+
+This section presents the Relations.Continuous module of the AgdaUALib.
+
+Motivation
+In set theory, an n-ary relation on a set A is a subset of the n-fold product A × · · · × A. We
+could try to model these as predicates over a product type representing A × · · · × A, or as
+relations of type A → A → · · · → A → W  (for some universe W). To implement such types
+requires knowing the arity in advance, and then form an n-fold product or n-fold arrow. It
+turns out to be both easier and more general if we define an arity type I : V  , and define
+the type representing I-ary relations on A as the function type (I → A) → W  . Then, if we
+happen to be interested in n-ary relations for some natural number n, we could take I to be the
+n-element type Fin n, [23].
+Below we will define ContRel to be the type (I → A) → W  and we will call this the type
+of continuous relations. This generalizes the discrete relations we defined in Relations.Discrete
+(unary, binary, etc.) since continuous relations can be of arbitrary arity. They are not completely general, however, since they are defined over a single type. Said another way, these are
+“single-sorted” relations. We will remove this limitation when we define the type of dependent
+continuous relations. Just as Rel A W was the single-sorted special case of the multisorted REL
+A B W type, so too will ContRel I A W be the single-sorted version of dependent continuous
+relations. The latter will represent relations that not only have arbitrary arities, but also are
+defined over arbitrary families of types.
+To be more concrete, given an arbitrary family A : I → U  of types, we may have a relation
+from A i to A j to A k to . . ., where the collection represented by the indexing type I might
+not even be enumerable.30 We will refer to such relations as dependent continuous relations (or
+dependent relations) because the definition of a type that represents them requires dependent
+types. The DepRel type that we define below manifests this completely general notion of
+relation.
+
+Continuous and dependent relation types
+Here we define the types ContRel and DepRel. The first of these represents predicates of arbitrary arity over a single type A; we call these continuous relations.31 To define the type DepRel
+of dependent relations, we exploit the full power of dependent types to provide a completely
+general relation type.
+ContRel : V  → U  → ( W : Universe) → V ⊔ U ⊔ W +
+ContRel I A W = (I → A) → W 
+
+
+
+DepRel : (I : V  ) → (I → U  ) → ( W : Universe) → V ⊔ U ⊔ W +
+DepRel I A W = Π A → W 
+
+29
+
+
+
+Sections marked with an asterisk may be safely skimmed or skipped on a first reading; they present some
+potentially interesting new types that are not yet employed in other parts of the UALib.
+30
+Because the collection represented by the indexing type I might not even be enumerable, technically
+speaking, instead of “A i to A j to A k to . . .,” we should have written something like “TO (i : I) , A i.”
+31
+For consistency and readability, throughout the UALib we reserve two universe variables for special purposes:
+O is reserved for types representing operation symbols; V is reserved for types representing arities of relations
+or operations (see Algebras.Signatures).
+
+Agda UALib, Part 1: Foundation
+
+21
+
+Here, the tuples of a relation of type DepRel I A W will inhabit the dependent function type
+A : I → U  , where the codomain may depend on the input coordinate i : I of the domain.
+Heuristically, we can think of an inhabitant of DepRel I A W as a relation from A i to A j to
+A k to . . .. (This is only a rough heuristic since I could denote an uncountable collection.30
+
+Compatibility with general relations
+It will be helpful to have functions that make it easy to assert that a given operation is compatibile with a given relation. The following functions serve this purpose.
+eval-cont-rel : ContRel I A W → (I → J → A) → V ⊔ W 
+eval-cont-rel R a = Π j : J , R λ i → a i j
+cont-compatible-op : Op J A → ContRel I A W → V ⊔ U ⊔ W 
+cont-compatible-op f R = Π a : (I → J → A) , (eval-cont-rel R a → R λ i → (f ( a i)))
+
+The first of these is an evaluation function which “lifts” an I-ary relation to an (I → J)-ary
+relation. The lifted relation will relate an I-tuple of J-tuples when the “I-slices” (or “rows”) of
+the J-tuples belong to the original relation. The second definition denotes compatibility of an
+operation with a continuous relation.
+Readers who find the syntax of the last two definitions nauseating might be helped by an
+explication of the semantics of these definitions. First, internalize the fact that a : I → J → A
+denotes an I-tuple of J-tuples of inhabitants of A. Next, recall that a continuous relation R
+denotes a certain collection of I-tuples (if x : I → A, then R x asserts that x “belongs to” or
+“satisfies” R). For such R, the type eval-cont-rel R represents a certain collection of I-tuples of
+J-tuples, namely, the tuples a : I → J → A for which eval-cont-rel R a holds.
+For simplicity, pretend for a moment that J is a finite set, say, {1, 2, ..., J}, so that we
+can write down a couple of the J-tuples as columns. For example, here are the i-th and k-th
+columns (for some i k : I).
+ai1
+ai2
+..
+.
+aiJ
+
+ak1
+ak2
+..
+.
+akJ
+
+← (if there are I columns, then each row forms an I-tuple)
+
+Now eval-cont-rel R a is defined by ∀ j → R (λ i → ( a i) j) which asserts that each row of the
+I columns shown above belongs to the original relation R. Finally, cont-compatible-op takes a
+J-ary operation on A, say, f : Op J A, and an I-tuple a i : J → A of J-tuples, and determines
+whether the I-tuple λ i → f ( a i) belongs to R.
+We conclude this section by defining the (only slightly more complicated) lift of dependent
+relations, and the type that represents compatibility of a tuple of operations with a dependent
+relation. Here we assume I J : V  and A : I → U  .
+eval-dep-rel : DepRel I A W → (∀ i → (J → A i)) → V ⊔ W 
+eval-dep-rel R a = ∀ j → R (λ i → ( a i) j)
+dep-compatible-op : (∀ i → Op J ( A i)) → DepRel I A W → V ⊔ U ⊔ W 
+dep-compatible-op f R = ∀ a → (eval-dep-rel R) a → R λ i → (f i)( a i)
+
+where we let Agda infer that the type of a is Π i : I , (J → A i).
+
+22
+
+Relation Types
+
+3.3
+
+Equivalence relations and quotients
+
+This section presents the Relations.Quotients module of the AgdaUALib, slightly abridged.32
+
+Equivalence relations
+In the Relations.Discrete module we defined types for representing and reasoning about binary
+relations on A. In this module we will define types for binary relations that have special properties. The most important special properties of relations are the ones we now define.
+Refl : {A : U  } → Rel A W → U ⊔ W 
+Refl _≈_ = ∀{x} → x ≈ x
+Symm : {A : U  } → Rel A W → U ⊔ W 
+Symm _≈_ = ∀{x}{y} → x ≈ y → y ≈ x
+Antisymm : {A : U  } → Rel A W → U ⊔ W 
+Antisymm _≈_ = ∀{x}{y} → x ≈ y → y ≈ x → x ≡ y
+Trans : {A : U  } → Rel A W → U ⊔ W 
+Trans _≈_ = ∀{x}{y}{z} → x ≈ y → y ≈ z → x ≈ z
+
+Here is a type from TypeTopo that expresses proof-irrelevance for binary relations.
+is-subsingleton-valued : {A : U  } → Rel A W → U ⊔ W 
+is-subsingleton-valued _≈_ = ∀ x y → is-subsingleton (x ≈ y)
+
+Thus, if R : Rel A W, then is-subsingleton-valued R asserts that for each pair x y : A there is
+at most one proof of R x y. In the section on Truncation below (§ 3.4) we introduce a number
+of similar but more general types to represent uniqueness-of-proofs principles for relations of
+arbitrary arity, over arbitrary types.
+A binary relation is called a preorder if it is reflexive and transitive, and an equivalence
+relation is a symmetric preorder. We represent the property of being an equivalence relation by
+the following record type.
+record IsEquivalence {A : U  }(R : Rel A W) : U ⊔ W  where
+field rfl : Refl R; sym : Symm R; trans : Trans R
+
+The type of equivalence relations is then defined as follows.
+Equivalence : U  → U ⊔ W + 
+Equivalence A = Σ R : Rel A W , IsEquivalence R
+
+Thus, if we have (R , p) : Equivalence A, then R denotes a binary relation over A and p is of
+record type IsEquivalence R whose fields contain the three proofs required to show that R is an
+equivalence relation.
+A prominent example of an equivalence relation is the kernel of any function.
+ker-IsEquivalence : {A : U  }{B : W  }(f : A → B) → IsEquivalence (ker f)
+ker-IsEquivalence f = record { rfl = refl; sym = λ z → ≡-sym z ; trans = λ p q → ≡-trans p q }
+
+32
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Relations.Quotients.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Relations/Quotients.lagda).
+
+Agda UALib, Part 1: Foundation
+
+23
+
+Quotients
+If R is an equivalence relation on A, then for each u : A there is an equivalence class (or equivalence block, or R-block) containing u, which we denote by [ u ] := {v : A | R u v}. We call
+this the R-block containing a.
+[_] : {A : U  } → A → {R : Rel A W} → Pred A W
+[ u ]{R} = R u
+
+Thus, v ∈ [ u ] if and only if R u v, as desired. We often refer to [ u ] as the R-block containing
+u. A predicate C over A is an R-block if and only if C ≡ [ u ] for some u : A. We represent this
+characterization of an R-block as follows.
+IsBlock : {A : U  }(C : Pred A W){R : Rel A W} → U ⊔ W +
+IsBlock {A} C {R} = Σ a : A , C ≡ [ a ] R
+
+
+
+Thus, a proof of the assertion IsBlock C is a dependent pair (u , p), with u : A and p is a proof
+of C ≡ [ u ]{R}.
+If R is an equivalence relation on A, then the quotient of A modulo R is denoted by A / R
+and is defined to be the collection {[ u ] | y : A} of all R-blocks.
+_/_ : (A : U  ) → Rel A W → U ⊔ ( W + ) 
+A / R = Σ C : Pred A W , IsBlock C {R}
+
+We use the following type to represent an R-block with a designated representative.
+⟪_⟫ : {A : U  } → A → {R : Rel A W} → A / R
+⟪ a ⟫ {R} = [ a ] R , (a , refl)
+
+This serves as a kind of introduction rule. Dually, the next type provides an elimination rule.33
+⌞_⌟ : {A : U  }{R : Rel A W} → A / R → A
+⌞ C , (a , p) ⌟ = a
+
+It will be convenient to have the following subset inclusion lemmas on hand when working with
+quotient types. (Assume a context including U W : Universe, A : U  , x y : A, and R : Rel A W.)
+/-subset : IsEquivalence R → R x y → [ x ] R ⊆ [ y ] R
+/-subset Req Rxy {z} Rxz = (trans Req) ((sym Req) Rxy) Rxz
+/-supset : IsEquivalence R → R x y → [ y ] R ⊆ [ x ] R
+/-supset Req Rxy {z} Ryz = (trans Req) Rxy Ryz
+
+An example application of these is the block-ext type in the Relations.Extensionality module.
+
+3.4
+
+Truncation
+
+This section presents the Relations.Truncation module of the AgdaUALib, slightly abridged.34 We
+start with a brief discussion of standard notions of truncation, h-sets (which we just call sets),
+and the uniqueness of identity types principle. We then prove that a monic function into a set
+
+33
+34
+
+Unicode Hint. Type ⌜ and ⌝ as \cul and \cur in agda2-mode.
+For unabridged docs (source code) see https://ualib.gitlab.io/Relations.Truncation.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Relations/Truncation.lagda).
+
+24
+
+Relation Types
+
+is an embedding. We conclude the section with a uniqueness of identity proofs principle for
+blocks of equivalence relations.35
+
+Uniqueness of identity proofs
+This brief introduction is intended for novices; those already familiar with the concept of truncation and uniqueness of identity proofs (UIP) may want to skip to the next subsection.
+In general, we may have multiple inhabitants of a given type, hence (via Curry-Howard)
+multiple proofs of a given proposition. For instance, suppose we have a type X and an identity
+relation _≡0 _ on X so that, given two inhabitants of X, say, a b : X, we can form the type a ≡0
+b. Suppose p and q inhabit the type a ≡0 b; that is, p and q are proofs of a ≡0 b, in which case
+we write p q : a ≡0 b. We might then wonder whether the two proofs p and q are equivalent.
+We are asking about an identity type on the identity type ≡0 , and whether there is some
+inhabitant, say, r of this type; i.e., whether there is a proof r : p ≡1 q that the proofs of a ≡0
+b are the same. If such a proof exists for all p q : a ≡0 b, then the proof of a ≡0 b is unique; as
+a property of the types X and ≡0 , this is sometimes called uniqueness of identity proofs (UIP).
+Now, perhaps we have two proofs, say, r s : p ≡1 q that the proofs p and q are equivalent.
+Then of course we wonder whether r ≡2 s has a proof! But at some level we may decide that the
+potential to distinguish two proofs of an identity in a meaningful way (so-called proof-relevance)
+is not useful or desirable. At that point, say, at level k, we would be naturally inclined to assume
+that there is at most one proof of any identity of the form p ≡k q. This is called truncation (at
+level k).
+
+Sets
+In homotopy type theory, a type X with an identity relation ≡0 is called a set (or 0-groupoid)
+if for every pair x y : X there is at most one proof of x ≡0 y. In other words, the type X, along
+with it’s equality type ≡x , form a set if for all x y : X there is at most one proof of x ≡0 y. This
+notion is formalized in TypeTopo, using the is-subsingleton type (§2.4), as follows.
+is-set : U  → U 
+is-set A = (x y : A) → is-subsingleton (x ≡ y)
+
+Thus, the pair (X , ≡0 ) forms a set iff it satisfies ∀ x y : X → is-subsingleton (x ≡0 y).
+We will also need the type to-Σ-≡, part of Escardó’s characterization of equality in Sigma
+types in [10], defined as follows. (Assume a context including A : U  and B : A → W  .)
+to-Σ-≡ : {σ τ : Σ B} → Σ p : | σ | ≡ | τ | , (transport B p ∥ σ ∥) ≡ ∥ τ ∥ → σ ≡ τ
+to-Σ-≡ (refl {x = x} , refl {x = a}) = refl {x = (x , a)}
+
+Injective functions are set embeddings
+Before moving on to define propositions, we discharge an obligation mentioned but left unfulfilled in the embeddings section of the Overture.Inverses module. Recall, we described and
+imported the is-embedding type, and we remarked that an embedding is not simply a monic
+function. However, if we assume that the codomain is truncated so as to have unique identity
+proofs, then we can prove that every monic function into that codomain will be an embedding.
+
+35
+
+Readers who want to learn more about “proof-relevant mathematics” and other concepts mentioned in this
+section may wish to consult other sources, such as [10, §34], [3], or [18, §7.1].
+
+Agda UALib, Part 1: Foundation
+
+25
+
+On the other hand, embeddings are always monic, so we will end up with an equivalence.
+monic-is-embedding|Set : (f : A → B) → is-set B → Monic f → is-embedding f
+monic-is-embedding|Set f Bset fmon b (u , fu≡b) (v , fv≡b) = γ
+where
+fuv : f u ≡ f v
+fuv = ≡-trans fu≡b (fv≡b −1 )
+uv : u ≡ v
+uv = fmon u v fuv
+arg1 : Σ p : (u ≡ v) , (transport (λ a → f a ≡ b) p fu≡b) ≡ fv≡b
+arg1 = uv , Bset (f v) b (transport (λ a → f a ≡ b) uv fu≡b) fv≡b
+γ : u , fu≡b ≡ v , fv≡b
+γ = to-Σ-≡ arg1
+
+In stating the previous result, we introduce a new convention to which we will try to adhere. If
+the antecedent of a theorem includes the assumption that one of the types involved is a set, then
+we add to the name of the theorem the suﬀix |sets, which calls to mind the standard notation
+for the restriction of a function to a subset of its domain.
+
+Equivalence class truncation
+Recall, the definition IsBlock C = Σ u : A , C ≡ [ u ], from the Relations.Quotients module.
+In the next module (Relations.Extensionality) we will define a quotient extensionality principle
+that will require a form of unique identity proofs—specifically, we will assume that for each
+predicate C : Pred A W there is at most one proof of IsBlock C. We call this proof-irrelevance
+principle “uniqueness of block identity proofs” and define it as follows.
+blk-uip : { W U : Universe}(A : U  )(R : Rel A W ) → U ⊔ W + 
+blk-uip { W} A R = ∀ (C : Pred A W) → is-subsingleton (IsBlock C {R})
+
+It might seem unreasonable to postulate that there is at most one inhabitant of IsBlock C, since
+equivalence classes typically have multiple members, any one of which could serve as a class
+representative. However, postulating blk-uip A R is tantamount to collapsing each R-block to
+a single point, and this is indeed the correct semantic interpretation of the elements of the
+quotient A / R.
+
+General propositions*29
+This section defines more general truncated predicates which we call continuous propositions
+and dependent propositions. Recall, above (in the Relations.Continuous module) we defined types
+called ContRel and DepRel to represent relations of arbitrary arity over arbitrary collections of
+sorts. Naturally, we define the corresponding truncated continuous relation type and truncated
+dependent relation type, the inhabitants of which we will call continuous propositions and dependent propositions, respectively. (Assume the context includes U : Universe and I : V  .)
+IsContProp : {A : U  }{ W : Universe} → ContRel I A W → V ⊔ U ⊔ W 
+IsContProp {A = A} P = Π a : (I → A) , is-subsingleton (P a)
+ContProp : U  → ( W : Universe) → U ⊔ V ⊔ W + 
+ContProp A W = Σ P : (ContRel I A W) , IsContProp P
+
+26
+
+Relation Types
+
+cont-prop-ext : U  → ( W : Universe) → U ⊔ V ⊔ W + 
+cont-prop-ext A W = {P Q : ContProp A W } → | P | ⊆ | Q | → | Q | ⊆ | P | → P ≡ Q
+IsDepProp : {I : V  }{ A : I → U  }{ W : Universe} → DepRel I A W → V ⊔ U ⊔ W 
+IsDepProp {I = I} { A} P = Π a : Π A , is-subsingleton (P a)
+DepProp : (I → U  ) → ( W : Universe) → U ⊔ V ⊔ W +
+DepProp A W = Σ P : (DepRel I A W) , IsDepProp P
+
+
+
+dep-prop-ext : (I → U  ) → ( W : Universe) → U ⊔ V ⊔ W + 
+dep-prop-ext A W = {P Q : DepProp A W} → | P | ⊆ | Q | → | Q | ⊆ | P | → P ≡ Q
+
+To see the point of the types just defined, suppose dep-prop-ext A W holds. Then we can
+prove that logically equivalent dependent propositions (of type DepProp A W) are equivalent.
+In other words, under the stated hypotheses, we obtain the following extensionality lemma for
+dependent propositions (assuming the context includes A : I → U  and W : Universe).
+.
+dep-prop-ext’ : dep-prop-ext A W → {P Q : DepProp A W} → | P | = | Q | → P ≡ Q
+dep-prop-ext’ pe hyp = pe | hyp | ∥ hyp ∥
+
+3.5
+
+Relation extensionality
+
+This section presents the Relations.Extensionality module of the AgdaUALib, slightly abridged.36
+The principle of proposition extensionality asserts that logically equivalent propositions are
+equivalent. That is, if P and Q are propositions such that P ⊆ Q and Q ⊆ P, then P ≡ Q.
+For our purposes, it will suﬀice to formalize this principle for general predicates, rather than
+propositions (i.e., truncated predicates). The following definition codifies the extensionality
+principle we require.
+pred-ext : ( U W : Universe) → ( U ⊔ W) + 
+pred-ext U W = ∀ {A : U  }{P Q : Pred A W } → P ⊆ Q → Q ⊆ P → P ≡ Q
+
+Note that pred-ext does not itself postulate the axiom of predicate extensionality; it merely
+defines what that axiom asserts. If we want to postulate the axiom, we must assume we have
+an inhabitant (or “witness”) of the pred-ext type (see block-ext below, for example).
+
+Quotient extensionality
+We need an identity type for congruence classes (blocks) over sets so that two different presentations of the same block (e.g., using different representatives) may be identified. This requires
+two postulates: (1) predicate extensionality manifested by the blk-uip type defined earlier (§3.4).
+We now use pred-ext and blk-uip to define a type called block-ext|uip which we require for the
+proof of the First Homomorphism Theorem presented in Homomorphisms.Noether. (Assume a
+context including U W : Universe, A : U  , and R : Rel A W.)
+block-ext : pred-ext U W → IsEquivalence R → {u v : A} → R u v → [ u ]{R} ≡ [ v ]{R}
+block-ext pe Req {u}{v} Ruv = pe (/-subset Req Ruv) (/-supset Req Ruv)
+
+36
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Relations.Extensionality.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Relations/Extensionality.lagda).
+
+Agda UALib, Part 1: Foundation
+
+27
+
+to-subtype|uip : blk-uip A R → {C D : Pred A W}{c : IsBlock C {R}}{d : IsBlock D {R}}
+→ C ≡ D → (C , c) ≡ (D , d)
+to-subtype|uip buip {C}{D}{c}{d}CD = to-Σ-≡(CD , buip D(transport(λ B → IsBlock B)CD c)d)
+block-ext|uip : pred-ext U W → blk-uip A R → IsEquivalence R
+→ {u v : A} → R u v → ⟪ u ⟫ ≡ ⟪ v ⟫

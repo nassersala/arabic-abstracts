@@ -1,0 +1,1825 @@
+The Agda Universal Algebra Library
+Part 1: Foundation
+Equality, extensionality, truncation, and dependent types for relations and algebras
+
+William DeMeo a S
+Department of Algebra, Charles University in Prague
+
+Abstract
+The Agda Universal Algebra Library (UALib) is a library of types and programs (theorems and proofs)
+we developed to formalize the foundations of universal algebra in dependent type theory using the Agda
+programming language and proof assistant. The UALib includes a substantial collection of definitions,
+theorems, and proofs from general algebra and equational logic, including many examples that exhibit
+the power of inductive and dependent types for representing and reasoning about relations, algebraic
+structures, and equational theories. In this paper we discuss the logical foundations on which the library
+is built, and describe the types defined in the first 13 modules of the library. Special attention is given
+to aspects of the library that seem most interesting or challenging from a type theory or mathematical
+foundations perspective.
+2012 ACM Subject Classification Theory of computation → Logic and verification; Computing methodologies → Representation of mathematical objects; Theory of computation → Type theory
+Keywords and phrases Agda, constructive mathematics, dependent types, equational logic, formalization of mathematics, model theory, type theory, universal algebra
+Related Version hosted on arXiv
+Part 2, Part 3: http://arxiv.org/a/demeo_w_1
+Supplementary Material
+Documentation: ualib.org
+Software: https://gitlab.com/ualib/ualib.gitlab.io.git
+
+Acknowledgements
+The author thanks Cliff Bergman, Hyeyoung Shin, and Siva Somayyajula for supporting and
+contributing to this project, Adreas Abel for helpful corrections, and three anonymous referees
+for invaluable feedback on an early draft of this work. Thanks are also owed to Martín Escardó
+for creating the Type Topology library and teaching us about it at the 2019 Midlands Graduate
+School in Computing Science [10]. Finally, the AgdaUALib would not exist in its current form
+without the Agda language, for which we thank the Agda Team (Andreas Abel, Guillaume
+Allais, Liang-Ting Chen, Jesper Cockx, Nils Anders Danielsson, Víctor López Juan, Ulf Norell,
+Andrés Sicard-Ramírez, Andrea Vezzosi, and Tesla Ice Zhang).
+
+This work and the Agda Universal Algebra Library by William DeMeo is licensed under a
+Creative Commons Attribution-ShareAlike 4.0 International License.
+© 2021 William DeMeo. Based on work at https://gitlab.com/ualib/ualib.gitlab.io.
+Compiled with xelatex on 20 Apr 2021 at 16:48.
+
+2
+
+Introduction
+
+Contents
+1 Introduction
+1.1 Motivation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.2 Attributions and Contributions . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.3 Prior art . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.4 Organization of the paper . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.5 Resources . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2
+2
+3
+3
+3
+4
+
+2 Overture
+5
+2.1 Preliminaries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.2 Equality . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.3 Function extensionality . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+2.4 Inverses . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+2.5 Lifts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+3 Relation Types
+16
+3.1 Discrete relations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+3.2 Continuous relations*1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+3.3 Equivalence relations and quotients . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+3.4 Truncation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+3.5 Relation extensionality . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+4 Algebra Types
+27
+4.1 Signatures . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+4.2 Algebras . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+4.3 Products . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+4.4 Congruences . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+5 Concluding Remarks
+
+1
+
+32
+
+Introduction
+
+To support formalization in type theory of research level mathematics in universal algebra and
+related fields, we present the Agda Universal Algebra Library (AgdaUALib), a software library
+containing formal statements and proofs of the core definitions and results of universal algebra.
+The UALib is written in Agda [17], a programming language and proof assistant based on
+Martin-Löf Type Theory (MLTT) that supports dependent and inductive types.
+
+1.1
+
+Motivation
+
+The seminal idea for the AgdaUALib project was the observation that, on the one hand, a number
+of fundamental constructions in universal algebra can be defined recursively, and theorems
+about them proved by structural induction, while, on the other hand, inductive and dependent
+types make possible very precise formal representations of recursively defined objects, which
+often admit elegant constructive proofs of properties of such objects. An important feature of
+such proofs in type theory is that they are total functional programs and, as such, they are
+computable, composable, and machine-verifiable.
+Finally, our own research experience has taught us that a proof assistant and programming
+language (like Agda), when equipped with specialized libraries and domain-specific tactics to
+
+Agda UALib, Part 1: Foundation
+
+3
+
+automate the proof idioms of our field, can be an extremely powerful and effective asset. As
+such we believe that proof assistants and their supporting libraries will eventually become
+indispensable tools in the working mathematician’s toolkit.
+
+1.2
+
+Attributions and Contributions
+
+The mathematical results described in this paper have well known informal proofs. Our main
+contribution is the formalization, mechanization, and verification of the statements and proofs
+of these results in dependent type theory using Agda.
+Unless explicitly stated otherwise, the Agda source code described in this paper is due to the
+author, with the following caveat: the UALib depends on the Type Topology library of Martín
+Escardó [10]. For convenience, we refer to Escardó’s library as TypeTopo throughout the paper.
+For the sake of completeness and clarity, and to keep the paper mostly self-contained, we repeat
+some definitions from TypeTopo, but in each instance we cite the original source.2
+
+1.3
+
+Prior art
+
+There have been a number of efforts to formalize parts of universal algebra in type theory prior
+to ours, most notably
+Capretta [4] (1999) formalized the basics of universal algebra in the Calculus of Inductive
+Constructions using the Coq proof assistant;
+Spitters and van der Weegen [19] (2011) formalized the basics of universal algebra and some
+classical algebraic structures, also in the Calculus of Inductive Constructions using the Coq
+proof assistant, promoting the use of type classes;
+Gunther, et al [11] (2018) developed what seems to be (prior to the UALib) the most extensive
+library of formal universal algebra to date; in particular, this work includes a formalization
+of some basic equational logic; also (unlike the UALib) it handles multisorted algebraic structures; (like the UALib) it is based on dependent type theory and the Agda proof assistant.
+Some other projects aimed at formalizing mathematics generally, and algebra in particular,
+have developed into very extensive libraries that include definitions, theorems, and proofs about
+algebraic structures, such as groups, rings, modules, etc. However, the goals of these efforts
+seem to be the formalization of special classical algebraic structures, as opposed to the general
+theory of (universal) algebras. Moreover, the part of universal algebra and equational logic
+formalized in the UALib extends beyond the scope of prior efforts. In particular, the library
+now includes a proof of Birkhoff’s variety theorem. Most other proofs of this theorem that we
+know of are informal and nonconstructive.3
+
+1.4
+
+Organization of the paper
+
+In this paper we limit ourselves to the presentation of the core foundational modules of the
+UALib so that we have space to discuss some of the more interesting type theoretic and foundational issues that arose when developing the library and attempting to represent advanced
+mathematical notions in type theory and formalize them in Agda. This is the first in a series of
+
+2
+
+In the UALib, such instances occur only inside hidden modules that are never actually used, followed
+immediately by a statement that imports the code in question from its original source.
+3
+After completing the formal proof in Agda, we learned about a constructive version of Birkhoff’s theorem
+proved by Carlström in [5]. The latter is presented in the informal style of standard mathematical writing,
+and as far as we know it was never formalized in type theory and type-checked with a proof assistant.
+Nonetheless, a comparison of Carlström’s proof and the UALib proof would be interesting.
+
+4
+
+Introduction
+
+three papers describing the AgdaUALib. The second paper ([8]) covers homomorphisms, terms,
+and subalgebras. The third paper ([9]) covers free algebras, equational classes of algebras (i.e.,
+varieties), and Birkhoff’s HSP theorem.
+This present paper is organized into three parts as follows. The first part is §2 which
+introduces the basic concepts of type theory with special emphasis on the way such concepts
+are formalized in Agda. Specifically, §2.1 introduces Sigma types and Agda’s hierarchy of
+universes. The important topics of equality and function extensionality are discussed in §2.2
+and §2.3; §2.4 covers inverses and inverse images of functions. In §2.5 we describe a technical
+problem that one frequently encounters when working in a noncumulative universe hierarchy
+and offer some tools for resolving the type-checking errors that arise from this.
+The second part is §3 which covers relation types and quotient types. Specifically, §3.1 defines
+types that represent unary and binary relations as well as function kernels. These “discrete
+relation types,” are all very standard. In §3.2 we introduce the (less standard) types that we
+use to represent general and dependent relations. We call these “continuous relations” because
+they can have arbitrary arity (general relations) and they can be defined over arbitrary families
+of types (dependent relations). In §3.3 we cover standard types for equivalence relations and
+quotients, and in §3.4 we discuss a family of concepts that are vital to the mechanization
+of mathematics using type theory; these are the closely related concepts of truncation, sets,
+propositions, and proposition extensionality.
+The third part of the paper is §4 which covers the basic domain-specific types offered by
+the UALib. It is here that we finally get to see some types representing algebraic structures.
+Specifically, we describe types for operations and signatures (§4.1), general algebras (§4.2),
+and product algebras (§4.3), including types for representing products over arbitrary classes of
+algebraic structures. Finally, we define types for congruence relations and quotient algebras
+in §4.4.
+
+1.5
+
+Resources
+
+We conclude this introduction with some pointers to helpful reference materials. For the required background in Universal Algebra, we recommend the textbook by Clifford Bergman [1].
+For the type theory background, we recommend the HoTT Book [18] and Escardó’s Introduction
+to Univalent Foundations of Mathematics with Agda [10].
+The following are informed the development of the UALib and are highly recommended.
+Introduction to Univalent Foundations of Mathematics with Agda, Escardó [10].
+Dependent Types at Work, Bove and Dybjer [2].
+Dependently Typed Programming in Agda, Norell and Chapman [16].
+Formalization of Universal Algebra in Agda, Gunther, Gadea, Pagano [11].
+Programming Languages Foundations in Agda, Philip Wadler [24].
+More information about AgdaUALib can be obtained from the following oﬀicial sources.
+ualib.org (the web site) documents every line of code in the library.
+gitlab.com/ualib/ualib.gitlab.io (the source code) AgdaUALib is open source.4
+The Agda UALib, Part 2: homomorphisms, terms, and subalgebras [8].
+The Agda UALib, Part 3: free algebras, equational classes, and Birkhoff’s theorem [9].
+
+4
+
+License: Creative Commons Attribution-ShareAlike 4.0 International License.
+
+Agda UALib, Part 1: Foundation
+
+5
+
+The first item links to the oﬀicial UALib html documentation which includes complete proofs
+of every theorem we mention here, and much more, including the Agda modules covered in the
+first and third installments of this series of papers on the UALib.
+Finally, readers will get much more out of reading the paper if they download the AgdaUALib
+from https://gitlab.com/ualib/ualib.gitlab.io, install the library, and try it out for
+themselves.
+
+2
+
+Overture
+
+2.1
+
+Preliminaries
+
+This section presents the Overture.Preliminaries module of the AgdaUALib, slightly abridged.5
+Here we define or import the basic types of Martin-Löf type theory (MLTT). Although this is
+standard stuff, we take this opportunity to highlight aspects of the UALib syntax that may differ
+from that of “standard Agda.”
+
+Logical foundations
+The AgdaUALib is based on a type theory that is the same or very close to the one on which
+on which Martín Escardó’s Type Topology (TypeTopo) Agda library is based. We don’t discuss
+MLTT in great detail here because there are already nice and freely available resources covering
+the theory. (See, for example, the section A spartan Martin-Löf type theory of the lecture
+notes by Escardó [10], the ncatlab entry on Martin-Löf dependent type theory, or the HoTT
+Book [18].)
+The objects and assumptions that form the foundation of MLTT are few. There are the
+primitive types (0, 1, and N, denoting the empty type, one-element type, and natural numbers),
+the type formers (+, Π, Σ, Id, denoting binary sum, product, sum, and the identity type).
+Each of these type formers is defined by a type forming rule which specifies how that type is
+constructed. Lastly, we have an infinite collection of type universes (types of types) and universe
+variables to denote them. Following Escardó, we denote universes in the UALib by upper-case
+calligraphic letters from the second half of the English alphabet; to be precise, these are O, Q,
+R, . . ., X, Y, Z.6
+That’s all. There are no further axioms or logical deduction (proof derivation) rules needed
+for the foundation of MLTT that we take as the starting point of the AgdaUALib. The logical
+semantics come from the propositions-as-types correspondence [15]: propositions and predicates
+are represented by types and the inhabitants of these types are the proofs of the propositions
+and predicates. As such, proofs are constructed using the type forming rules. In other words,
+the type forming rules are the proof derivation rules.
+To this foundation, we add certain extensionality principles when and were we need them.
+These will be developed as we progress. However, classical axioms such as the Axiom of Choice
+or the Law of the Excluded Middle are not needed and are not assumed anywhere in the library.
+In that sense, all theorems and proofs in the UALib are constructive (as defined, e.g., in [13]).
+A few specific instances (e.g., the proof of the Noether isomorphism theorems and Birkhoff’s HSP theorem) require certain truncation assumptions. In such cases, the theory is not
+predicative (as defined, e.g., in [14]). These instances are always clearly identified.
+
+5
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Preliminaries.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Preliminaries.lagda).
+6
+We avoid using P as a universe variable because it is used to denote the powerset type in TypeTopo.
+
+6
+
+Overture
+
+Specifying logical foundations in Agda
+An Agda program typically begins by setting some options and by importing types from existing Agda libraries. Options are specified with the OPTIONS pragma and control the way Agda
+behaves, for example, by specifying the logical axioms and deduction rules we wish to assume
+when the program is type-checked to verify its correctness. Every Agda program in the UALib
+begins with the following line.
+{-# OPTIONS –without-K –exact-split –safe #-}
+
+(1)
+
+These options control certain foundational assumptions that Agda makes when type-checking
+the program to verify its correctness.
+1. –without-K disables Streicher’s K axiom, which makes Agda compatible with proof-relevant
+type theories; see the discussion of proof-relevance in § 3.4; see also [20, 7];
+2. –exact-split makes Agda accept only definitions that are judgmental equalities; see [22];
+3. –safe ensures that nothing is postulated outright—every non-MLTT axiom has to be an
+explicit assumption (e.g., an argument to a function or module); see [21, 22].
+Throughout this paper we take assumptions 1–3 for granted without mentioning them explicitly.
+
+Agda Modules
+The OPTIONS pragma is usually followed by the start of a module. For example, the Overture.Preliminaries module begins with the following line.
+module Overture.Preliminaries where
+
+Sometimes we want to declare parameters that will be assumed throughout the module. For
+instance, when working with algebras, we often assume they come from a particular fixed signature, and this signature is something we could fix as a parameter at the start of a module.
+Thus, we might start an anonymous submodule of the main module with a line like7
+module _ {S : Signature O V} where
+
+Such a module is called anonymous because an underscore appears in place of a module name.
+Agda determines where a submodule ends by indentation. This can take some getting used
+to, but after a short time it will feel very natural. The main module of a file must have the
+same name as the file, without the .agda or .lagda file extension. The code inside the main
+module is not indented. Submodules are declared inside the main module and code inside
+these submodules must be indented to a fixed column. As long as the code is indented, Agda
+considers it part of the submodule. A submodule is exited as soon as a nonindented line of code
+appears.
+
+Universes in Agda
+For the very small amount of background we require about the notion of type universe (or level),
+we refer the reader to the brief section on universe-levels in the Agda documentation.8
+Throughout the AgdaUALib we use many of the nice tools that Martín Escardó has developed
+and made available in TypeTopo library of Agda code for the Univalent Foundations of math-
+
+7
+8
+
+The Signature type will be defined in Section 4.1.
+See https://agda.readthedocs.io/en/v2.6.1.3/language/universe-levels.html.
+
+Agda UALib, Part 1: Foundation
+
+7
+
+ematics.9 The first of these is the Universes module which we import as follows.
+open import Universes public
+
+Since we use the public directive, the Universes module will be available to all modules that
+import the present module (Overture.Preliminaries). This module declares symbols used to denote universes. As mentioned, we adopt Escardó’s convention of denoting universes by capital
+calligraphic letters, and most of the ones we use are already declared in Universes; those that
+are not are declared as follows.
+variable O X Y Z : Universe
+
+The Universes module also provides alternative syntax for the primitive operations on universes that Agda supports. Specifically, the  operator maps a universe level U to the type
+Set U, and the latter has type Set (lsuc U). The Agda level lzero is renamed U0 , so U0  is an
+alias for Set lzero. Thus, U  is simply an alias for Set U, and we have Set U : Set (lsuc U).
+Finally, Set (lsuc lzero) is equivalent to Set U0 + , which we (and Escardó) denote by U0 +  .
+To justify the introduction of this somewhat nonstandard notation for universe levels, Escardó points out that the Agda library uses Level for universes (so what we write as U  is
+written Set U in standard Agda), but in univalent mathematics the types in U  need not be
+sets, so the standard Agda notation can be a bit confusing, especially to newcomers.
+There will be many occasions calling for a type living in a universe at the level that is the
+least upper bound of two universe levels, say, U and V. The universe level U ⊔ Vdenotes this
+least upper bound. Here ⊔ is an Agda primitive designed for precisely this purpose.
+
+Dependent types
+Sigma types (dependent pairs)
+Given universes U and V, a type A : U  , and a type family B : A → V  , the Sigma type (or
+dependent pair type, or dependent product type) is denoted by Σ x : A , B x and generalizes the
+Cartesian product A × B by allowing the type B x of the second argument of the ordered pair
+(x , y) to depend on the value x of the first. That is, an inhabitant of the type Σ x : A , B x is
+a pair (x , y) such that x : A and y : B x.
+The dependent product type is defined in TypeTopo in a standard way. For pedagogical
+purposes we repeat the definition here.10
+record Σ { U V} {A : U  } (B : A → V  ) : U ⊔ V  where
+constructor _,_
+field
+pr1 : A
+pr2 : B pr1
+
+Agda’s default syntax for this type is Σ λ(x : A) → B, but we prefer the notation Σ x : A , B,
+
+9
+
+Escardó has written an outstanding set of notes called Introduction to Univalent Foundations of Mathematics with Agda, which we highly recommend to anyone looking for more details than we provide here
+about MLTT and Univalent Foundations/HoTT in Agda. [10].
+10
+In the UALib we put such redundant definitions inside “hidden” modules so that they doesn’t conflict with
+the original definitions which we import and use. It may seem odd to define something in a hidden module
+only to import and use an alternative definition, but we do this in order to exhibit all of the types on which
+the UALib depends while ensuring that this cannot be misinterpreted as a claim to originality.
+
+8
+
+Overture
+
+which is closer to the syntax in the preceding paragraph, and will be familiar to readers of the
+HoTT book [18], for example. Fortunately, TypeTopo makes the preferred notation available
+with the following type definition and syntax declaration (see [10, Σ types]).11
+-Σ : { U V : Universe} (A : U  ) (B : A → V  ) → U ⊔ V 
+-Σ A B = Σ B
+syntax -Σ A (λ x → B) = Σ x : A , B
+
+A special case of the Sigma type is the one in which the type B doesn’t depend on A. This
+is the usual Cartesian product, defined in Agda as follows.
+_×_ : U  → V  → U ⊔ V 
+A×B=Σx:A,B
+
+Pi types (dependent functions)
+Given universes U and V, a type A : U  , and a type family B : A → V  , the Pi type (or
+dependent function type) is denoted by Π x : A , B x and generalizes the function type A → B by
+letting the type B x of the codomain depend on the value x of the domain type. The dependent
+function type is defined in TypeTopo in a standard way. For the reader’s benefit, however, we
+repeat the definition here.
+Π : {A : U  } (A : A → W  ) → U ⊔ W 
+Π {A} A = (x : A) → A x
+
+To make the syntax for Π conform to the standard notation for Pi types, Escardó uses the same
+trick as the one used above for Sigma types.11
+-Π : (A : U  )(B : A → W  ) → U ⊔ W 
+-Π A B = Π B
+syntax -Π A (λ x → b) = Π x : A , b
+
+Once we have studied the types (defined in TypeTopo and repeated here for convenience and
+illustration purposes), the original definitions are imported like so.
+open import Sigma-Type public
+open import MGS-MLTT using (pr1 ; pr2 ; _×_; -Σ; Π; -Π) public
+
+Projection notation
+The definition of Σ (and thus ×) includes the fields pr1 and pr2 representing the first and second
+projections out of the product. Sometimes we prefer to denote these projections by |_| and ∥_∥,
+respectively. However, for emphasis or readability we alternate between these and the following
+standard notations: pr1 and fst for the first projection, pr2 and snd for the second. We define
+these alternative notations for projections as follows.
+module _ { U : Universe}{A : U  }{B : A → V  } where
+|_| fst : Σ B → A
+
+11
+
+Attention! The symbol : that appears in the special syntax defined here for the Σ type, and below for
+the Π type, is not the ordinary colon; rather, it is the symbol obtained by typing \:4 in agda2-mode.
+
+Agda UALib, Part 1: Foundation
+
+9
+
+|x,y|=x
+fst (x , y) = x
+∥_∥ snd : (z : Σ B) → B (pr1 z)
+∥x,y∥=y
+snd (x , y) = y
+
+Remarks.
+We place these definitions (of |_|, fst, ∥_∥ and snd) inside an anonymous module, which is a
+module that begins with the module keyword followed by an underscore character (instead
+of a module name). The purpose is to move some of the postulated typing judgments—the
+“parameters” of the module (e.g., U : Universe)—out of the way so they don’t obfuscate the
+definitions inside the module. In library documentation, such as the present paper, we often
+omit such module directives. In contrast, the collection of html pages at ualib.org, which
+is the most current and comprehensive documentation of the UALib, omits nothing.
+As the four definitions above make clear, multiple inhabitants of a single type (e.g., |_| and
+fst) may be declared on the same line.
+
+2.2
+
+Equality
+
+This section presents the Overture.Equality module of the AgdaUALib, slightly abridged.12
+
+Definitional equality
+Here we discuss the basic but important type of MLTT called definitional equality. This concept
+is most understood, at least heuristically, with the following slogan: “Definitional equality is
+the substitution-preserving equivalence relation generated by definitions.” We will make this
+precise below, but first let us quote from a primary source. Per Martin-Löf offers the following
+definition in [12, §1.11] (italics added):13
+Definitional equality is defined to be the equivalence relation, that is, reflexive, symmetric
+and transitive relation, which is generated by the principles that a definiendum is always
+definitionally equal to its definiens and that definitional equality is preserved under
+substitution.
+To be sure we understand what this means, let := denote the relation with respect to which x is
+related to y (denoted x := y) if and only if y is the definition of x. Then the definitional equality
+relation ≡ is the reflexive, symmetric, transitive, substitutive closure of :=. By subsitutive
+closure we mean closure under the following substitution rule.
+{A : U  } {B : A → W  } {x y : A} x ≡ y
+(subst)
+Bx≡By
+The datatype used in the UALib to represent definitional equality is imported from the
+Identity-Type module of TypeTopo, but apart from superficial syntactic differences, it is equivalent to the standard Paulin-Mohring style identity type found in most other Agda libraries. We
+12
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Equality.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Equality.lagda).
+13
+The definiendum is the left-hand side of a defining equation, the definiens is the right-hand side.
+For readers who have never generated an equivalence relation: the reflexive closure of R ⊆ A × A is the
+union of R and all pairs of the form (a , a); the symmetric closure is the union of R and its inverse {(y , x)
+: (x , y) ∈ R}; we leave it to the reader to come up with the correct definition of transitive closure.
+
+10
+
+Overture
+
+repeat the definition here for easy reference.
+data _≡_ { U} {A : U  } : A → A → U  where refl : {x : A} → x ≡ x
+
+Whenever we need to complete a proof by simply asserting that x is definitionally equal to itself,
+we invoke refl. If we need to make explicit the implicit argument x, then we use refl {x = x}.
+
+Assumed module contexts
+Before proceeding, a word about a special convention we adopt in the sequel is in order. To
+reduce reader strain, we often omit easily inferred typing judgments which would normally
+appear in the list of parameters of a module or at the start of a type definition, though we
+sometimes make an announcement like the following (which applies to the present section):
+Unless otherwise indicated, the prevailing context in this section is given by
+module _ { U : Universe} {A : U  } where
+which means that all code in the current section is to be interpreted as occurring inside such
+an anonymous module, where the given typing judgments are taken for granted.
+
+Identity is an equivalence relation
+The relation ≡ just defined is naturally an equivalence relation, and the formal proof of this
+fact is trivial. Indeed, we don’t need to prove reflexivity, since that is the defining property of
+≡, and the proofs of symmetry and transitivity are immediate.
+≡-sym : {x y : A} → x ≡ y → y ≡ x
+≡-sym refl = refl
+≡-trans : {x y z : A} → x ≡ y → y ≡ z → x ≡ z
+≡-trans refl refl = refl
+
+We prove that ≡ obeys the substitution rule (subst) in the next subsection (see ap), but first
+we define some syntactic sugar that will make it easier to apply symmetry and transitivity of
+≡ in proofs.14
+_−1 : {x y : A} → x ≡ y → y ≡ x
+p −1 = ≡-sym p
+
+If we have a proof p : x ≡ y, and we need a proof of y ≡ x, then instead of ≡-sym p we can
+use the more intuitive p −1 . Similarly, the following syntactic sugar makes abundant appeals
+to transitivity easier to stomach.
+_·_ : {x y z : A} → x ≡ y → y ≡ z → x ≡ z
+p · q = ≡-trans p q
+
+Transport (substitution)
+Alonzo Church characterized equality by declaring two things equal if and only if no property
+(predicate) can distinguish them (see [6]). In other terms, x and y are equal if and only if for
+
+14
+
+Unicode Hints (agda2-mode): \^-\^1 ⇝ −1 ; \Mii\Mid ⇝ id; \.⇝ ·. In general, for information about
+a character, place the cursor on the character and type M-x describe-char (or M-x h d c).
+
+Agda UALib, Part 1: Foundation
+
+11
+
+all P we have P x → P y. One direction of this implication is sometimes called substitution
+or transport or transport along an identity. It asserts the following: if two objects are equal
+and one of them satisfies a given predicate, then so does the other. A type representing this
+notion is defined, along with the (polymorphic) identity function, in the MGS-MLTT module of
+TypeTopo as follows.15
+id : { U : Universe} (A : U  ) → A → A
+id A = λ x → x
+transport : {A : U  } (B : A → W  ) {x y : A} → x ≡ y → B x → B y
+transport B (refl {x = x}) = id (B x)
+
+A function is well-defined if and only if it maps equivalent elements to a single element and
+we often use this nature of functions in Agda proofs. It is equivalent to the substitution rule
+(subst) we defined in the last section. If we have a function f : A → B, two elements x y : A
+of the domain, and an identity proof p : x ≡ y, then we obtain a proof of f x ≡ f y by simply
+applying the ap function like so, ap f p : f x ≡ f y. Escardó defines ap in TypeTopo as follows.
+ap : {A : U  }{B : V  } (f : A → B){a b : A} → a ≡ b → f a ≡ f b
+ap f {a} p = transport (λ - → f a ≡ f -) p (refl {x = f a})
+
+This establishes that our definitional equality satisfies the substitution rule (subst).
+Here’s a useful variation of ap that we borrow from the Relation/Binary/Core.agda module of the Agda Standard Library (transcribed into TypeTopo/UALib).
+cong-app : {A : U  }{B : A → W  }{f g : Π B} → f ≡ g → (a : A) → f a ≡ g a
+cong-app refl _ = refl
+
+2.3
+
+Function extensionality
+
+This section presents the Overture.Extensionality module of the AgdaUALib, slightly abridged.16
+This brief introduction to function extensionality is intended for novices. Those already familiar
+with the concept might wish to skip to the next subsection.
+What does it mean to say that two functions f g : X → Y are equal? Suppose f and g are
+defined on X = Z (the integers) as follows: f x := x + 2 and gx := ((2 ∗ x) − 8)/2 + 6. Should
+we call f and g equal? Are they the “same” function? What does that even mean?
+It’s hard to resist the urge to reduce g to x + 2 and proclaim that f and g are equal. Indeed,
+this is often an acceptable answer and the discussion normally ends there. In the science of
+computing, however, more attention is paid to equality, and with good reason.
+We can probably all agree that the functions f and g above, while not syntactically equal,
+do produce the same output when given the same input so it seems fine to think of the functions
+as the same, for all intents and purposes. But we should ask ourselves at what point do we
+notice or care about the difference in the way functions are defined? What if we had started out
+this discussion with two functions f and g both of which take a list as argument and produce
+as output a correctly sorted version of the input list? Suppose f is defined using the merge sort
+
+15
+
+Including every line of code of the AgdaUALib in this paper would result in an unbearable reading experience.
+We include all significant sections of code from the first 13 modules, but we omit lines indicating that
+redundant definitions of functions (e.g., transport and ap) occur inside named “hidden” modules. We also
+omit lines importing the original definitions of such duplicate definitions from TypeTopo library.
+16
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Extensionality.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Extensionality.lagda).
+
+12
+
+Overture
+
+algorithm, while g uses quick sort. Probably few of us would call f and g the “same” in this
+case.
+In the examples above, it is common to say that the two functions are extensionally equal,
+since they produce the same external output when given the same input, but they are not
+intensionally equal, since their internal definitions differ. In the next subsection we describe
+types that manifest this idea of extensional equality of functions, or function extensionality.17
+
+Types for postulating function extensionality
+As explained above, a natural notion of function equality is defined as follows: f and g are said
+to be pointwise equal provided ∀x → f x ≡ gx. Here is how this is expressed in type theory
+(e.g., in TypeTopo).
+_∼_ : {A : U  } {B : A → W  } → Π B → Π B → U ⊔ W 
+f∼g=∀x→fx≡gx
+
+Function extensionality is the principle that pointwise equal functions are definitionally equal;
+that is, ∀ f g (f ∼ g → f ≡ g). In type theory this principle is represented by the types funext
+(for nondependent functions) and dfunext (for dependent functions) ([18, §2.9]). For example,
+the latter is defined as follows.18
+dfunext : ∀ U W → ( U ⊔ W) + 
+dfunext U W = {A : U  }{B : A → W  }{f g : ∀(x : A) → B x} → f ∼ g → f ≡ g
+
+In informal settings, this so-called point-wise equality of functions is typically what one means
+when one asserts that two functions are “equal.”19 However, it is important to keep in mind
+the following fact: function extensionality is known to be neither provable nor disprovable in
+Martin-Löf type theory. It is an independent statement.. [10]
+The next type defines a converse of function extensionality for dependent function types (cf.
+cong-app in Overture.Equality and [18, (2.9.2)]).
+happly : {A : U  }{B : A → W  }(f g : Π B) → f ≡ g → f ∼ g
+happly _ _ refl _ = refl
+
+Though it may seem obvious to some readers, we wish to emphasize the important conceptual
+distinction between two different forms of type definitions by comparing the definitions of
+dfunext and happly. In the definition of dfunext, the codomain is a parameterized type, namely,
+U+ ⊔ V+  , and the right-hand side of the defining equation of dfunext is an assertion (which
+may or may not hold). In the definition of happly, the codomain is an assertion, namely, f ∼
+g, and the right-hand side of the defining equation is a proof of this assertion. As such, happly
+is a proof object; it proves (or inhabits the type that represents) the proposition asserting that
+
+17
+
+Most of these types are already defined in TypeTopo, so the UALib imports the definitions from there; as
+usual, we redefine some of these types here for the purpose of explication.
+18
+Previous versions of the UALib made heavy use of a global function extensionality principle which asserts
+that function extensionality holds at all universe levels. However, we removed all instances of global
+function extensionality in favor of local applications of the principle. This makes transparent precisely
+how and where the library depends on function extensionality. The price we pay for this precision is a
+proliferation of extensionality postulates. Eventually we will likely be able to remove these postulates with
+other approach to extensionality; e.g., univalence and/or Cubical Agda.
+19
+In fact, if one assumes the univalence axiom of Homotopy Type Theory [18], then point-wise equality of
+functions is equivalent to definitional equality of functions. See the section “Function extensionality from
+univalence” of [10].
+
+Agda UALib, Part 1: Foundation
+
+13
+
+definitionally equivalent functions are pointwise equal. In contrast, dfunext is a type, and we
+may or may not wish to postulate an inhabitant of this type. That is, we could postulate that
+function extensionality holds by assuming we have a witness, say, fe : dfunext U V, but as
+noted above the existence of such a witness cannot be proved in MLTT.
+Finally, a useful alternative for expressing dependent function extensionality, which is essentially equivalent to dfunext, is to assert that happly is actually an equivalence in a sense that we
+now describe. This requires a few definitions from the MGS-Equivalences module of TypeTopo.
+First, a type is a singleton if it has exactly one inhabitant and a subsingleton if it has at most
+one inhabitant.
+is-center : (A : U  ) → A → U 
+is-center A c = (x : A) → c ≡ x
+is-singleton : U  → U 
+is-singleton A = Σ c : A , is-center A c
+is-subsingleton : U  → U 
+is-subsingleton A = (x y : A) → x ≡ y
+
+Next, we consider the type is-equiv which is used to assert that a function is an equivalence in
+the sense that we now describe. This requires the concept of a fiber of a function, which can be
+represented as a Sigma type whose inhabitants denote inverse images of points in the codomain
+of the given function.
+fiber : {A : U  } {B : W  } (f : A → B) → B → U ⊔ W 
+fiber {A} f y = Σ x : A , f x ≡ y
+
+A function is called an equivalence if all of its fibers are singletons.
+is-equiv : {A : U  } {B : W  } → (A → B) → U ⊔ W 
+is-equiv f = ∀ y → is-singleton (fiber f y)
+
+Finally we are ready to fulfill the promise of a type that provides an alternative means of postulating function extensionality.
+hfunext : ∀ U W → ( U ⊔ W)+ 
+hfunext U W = {A : U  }{B : A → W  } (f g : Π B) → is-equiv (happly f g)
+
+2.4
+
+Inverses
+
+This section presents the Overture.Inverses module of the AgdaUALib, slightly abridged.20 Assume the following typing judgments: { U W : Universe}{A : U  }{B : W  }.
+We begin by defining an inductive type that represents the inverse image of a function.
+data Image_∋_ (f : A → B) : B → U ⊔ W  where
+im : (x : A) → Image f ∋ f x
+eq : (b : B) → (a : A) → b ≡ f a → Image f ∋ b
+
+Next we verify that the type behaves as we expect.
+
+20
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Inverses.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Inverses.lagda).
+
+14
+
+Overture
+
+ImageIsImage : (f : A → B)(b : B)(a : A) → b ≡ f a → Image f ∋ b
+ImageIsImage f b a b≡fa = eq b a b≡fa
+
+An inhabitant of Image f ∋ b is a pair (a , p), where a : A, and p is a proof that f maps a to
+b; that is, p : b ≡ f a. Since the proof that b belongs to the image of f is always accompanied
+by a witness a : A, we can actually compute a pseudoinverse of f. This will be a function that
+takes an arbitrary b : B and a (witness, proof )-pair, (a , p) : Image f ∋ b, and returns a.
+Inv : (f : A → B){b : B} → Image f ∋ b → A
+Inv f {.(f a)} (im a) = a
+Inv f (eq _ a _) = a
+
+We can prove that Inv f is the right-inverse of f, as follows.
+InvIsInv : (f : A → B){b : B}(q : Image f ∋ b) → f(Inv f q) ≡ b
+InvIsInv f {.(f a)} (im a) = refl
+InvIsInv f (eq _ _ p) = p −1
+
+Epics (surjective functions)
+We represent an epic (or surjective) function from A to B as an inhabitant of the following type.
+Epic : (A → B) → U ⊔ W 
+Epic f = ∀ y → Image f ∋ y
+
+With the next definition, we can represent the right-inverse of an epic function.
+EpicInv : (f : A → B) → Epic f → B → A
+EpicInv f fE b = Inv f (fE b)
+
+The right-inverse of f is obtained by applying EpicInv to f along with a proof of Epic f. To see
+that this does indeed give the right-inverse we prove the EpicInvIsRightInv lemma below. This
+requires function composition, denoted ◦ and defined in TypeTopo library.
+_◦_ : {C : B → W  } → Π C → (f : A → B) → (x : A) → C (f x)
+g ◦ f = λ x → g (f x)
+
+Note that the next proof requires function extensionality, which we postulate a module declaration like this: module _ { U W : Universe}{fe : funext W W}{A : U  }{B : W  } where
+EpicInvIsRightInv : (f : A → B)(fE : Epic f) → f ◦ (EpicInv f fE) ≡ id B
+EpicInvIsRightInv f fE = fe (λ x → InvIsInv f (fE x))
+
+Monics (injective functions)
+We say that a function g : A → B is monic (or injective) if it does not map distinct elements
+to a common point. The following types manifest this property and prove that monic functions
+have left-inverses.
+Monic : (g : A → B) → U ⊔ W 
+Monic g = ∀ a1 a2 → g a1 ≡ g a2 → a1 ≡ a2
+MonicInv : (f : A → B) → Monic f → (b : B) → Image f ∋ b → A
+MonicInv f _ = λ b imfb → Inv f imfb
+
+Agda UALib, Part 1: Foundation
+
+15
+
+MonicInvIsLeftInv : {f : A → B}{fM : Monic f}{x : A} → (MonicInv f fM)(f x)(im x) ≡ x
+MonicInvIsLeftInv = refl
+
+Embeddings
+The is-embedding type is defined in TypeTopo in the following way.
+is-embedding : (A → B) → U ⊔ W 
+is-embedding f = ∀ b → is-subsingleton (fiber f b)
+
+Thus, is-embedding f asserts that f is a function all of whose fibers are subsingletons. Observe
+that an embedding is not simply an injective map. However, if we assume that the codomain
+B has unique identity proofs (UIP), then we can prove that a monic function into B is an
+embedding. We discuss the UIP principle in §3.4 where we present the Relations.Truncation
+module.
+Finding a proof that a function is an embedding isn’t always easy, but one path that is often
+straightforward is to first prove that the function is invertible and then invoke the following
+theorem.
+invertibles-are-embeddings : (f : A → B) → invertible f → is-embedding f
+invertibles-are-embeddings f fi = equivs-are-embeddings f (invertibles-are-equivs f fi)
+
+Finally, embeddings are monic; from a proof p : is-embedding f that f is an embedding we can
+construct a proof of Monic f. We confirm this as follows.
+embedding-is-monic : (f : A → B) → is-embedding f → Monic f
+embedding-is-monic f femb x y fxfy = ap pr1 ((femb (f x)) fx fy) where
+fx fy : fiber f (f x)
+fx = x , refl
+fy = y , (fxfy −1 )
+
+2.5
+
+Lifts
+
+This section presents the Overture.Lifts module of the AgdaUALib, slightly abridged.21
+
+Agda’s universe hierarchy
+The hierarchy of universes in Agda is structured as follows: U  : U +  , U +  : U ++  , etc.22
+This means that the universe U  has type U +  , and U +  has type U ++  , and so on. It
+is important to note, however, this does not imply that U  : U ++  . In other words, Agda’s
+universe hierarchy is noncumulative. This can be advantageous as it becomes possible to treat
+universe levels more generally and precisely. On the other hand, a noncumulative hierarchy can
+sometimes make it seem unduly diﬀicult to convince Agda that a program or proof is correct.
+To help us overcome this technical issue, there are some general universe lifting and lowering
+functions, which we describe in the next subsection. In Section 4.2 we will define a couple
+of domain-specific analogs of these tools. Later, in the modules presented in [8, 9], we prove
+
+21
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Lifts.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Lifts.lagda).
+22
+Recall, from the Overture.Preliminaries module (§2.1), the special notation we use to denote Agda’s levels
+and universes.
+
+16
+
+Relation Types
+
+various properties that make these effective mechanisms for resolving universe level problems
+when working with algebra types.
+
+Lifting and lowering
+Let us be more concrete about what is at issue here by considering a typical example. Agda
+frequently encounters errors during the type-checking process and responds by printing an error
+message. Often the message has the following form.
+Birkhoff.lagda:498,20-23
+U != O ⊔ V ⊔ ( U + ) when checking that... has type...
+
+This error message means that Agda encountered the universe U on line 498 (columns 20–23)
+of the file Birkhoff.lagda, but was expecting to find the universe O ⊔ V ⊔ U+ instead.
+The general Lift record type that we now describe makes these situations easier to deal with.
+It takes a type inhabiting some universe and embeds it into a higher universe and, apart from
+syntax and notation, it is equivalent to the Lift type one finds in the Level module of the Agda
+Standard Library.
+record Lift { W U : Universe} (A : U  ) : U ⊔ W  where
+constructor lift
+field lower : A
+open Lift
+
+The point of having a ramified hierarchy of universes is to avoid Russell’s paradox, and this
+would be subverted if we were to lower the universe of a type that wasn’t previously lifted. However, we can prove that if an application of lower is immediately followed by an application of
+lift, then the result is the identity transformation. Similarly, lift followed by lower is the identity.
+lift∼lower : { W U : Universe}{A : U  } → lift ◦ lower ≡ id (Lift{ W} A)
+lift∼lower = refl
+lower∼lift : { W U : Universe}{A : U  } → lower{ W}{ U} ◦ lift ≡ id A
+lower∼lift = refl
+
+The proofs are trivial. Nonetheless, we’ll come across some holes these types can fill.
+
+3
+
+Relation Types
+
+We now present the AgdaUALib’s Relations module and its submodules. In §3.1 we define types
+that represent unary and binary relations, which we refer to as “discrete relations” to contrast
+them with the (“continuous”) general and dependent relations that we introduce in §3.2. We
+call the latter “continuous relations” because they can have arbitrary arity (general relations)
+and they can be defined over arbitrary families of types (dependent relations).
+
+3.1
+
+Discrete relations
+
+This section presents the Relations.Discrete module of the AgdaUALib, slightly abridged.23
+
+23
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Relations.Discrete.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Relations/Discrete.lagda).
+
+Agda UALib, Part 1: Foundation
+
+17
+
+Unary relations
+In set theory, given two sets A and P, we say that P is a subset of A, and we write P ⊆
+A, just in case ∀ x (x ∈ P → x ∈ A). We need a mechanism for representing this notion in
+Agda. A typical approach is to use a unary predicate type which we will denote by Pred and
+define as follows. Given two universes U W and a type A : U  , the type Pred A W represents properties that inhabitants of A may or may not satisfy. We write P : Pred A U to
+represent the collection of inhabitants of A that satisfy (or belong to) P. Here is the definition.24
+Pred : U  → ( W : Universe) → U ⊔ W +
+Pred A W = A → W 
+
+
+
+This is a general unary predicate type, but by taking the codomain to be Bool = {0, 1}, we
+obtain the usual interpretation of set membership; that is, for P : Pred A Bool and for each
+x : A, we would interpret P x ≡ 0 to mean x ∈
+/ A, and P x ≡ 1 to mean x ∈ A.
+The UALib includes types that represent the element inclusion and subset inclusion relations
+from set theory. For example, given a predicate P, we may represent that “x belongs to P” or
+that “x has property P,” by writing either x ∈ P or P x. The definition of ∈ is standard, as is
+the definition of ⊆ for the subset relation; nonetheless, here they are.24
+_∈_ : A → Pred A W → W 
+x∈P=Px
+_⊆_ : Pred A W → Pred A Z → U ⊔ W ⊔ Z 
+P ⊆ Q = ∀ {x} → x ∈ P → x ∈ Q
+
+Predicates toolbox
+Here is a small collection of tools that will come in handy later. The first is an inductive type
+that represents disjoint union.25
+data _⊎_ (A : U  ) (B : W  ) : U ⊔ W  where
+inj1 : (x : A) → A ⊎ B
+inj2 : (y : B) → A ⊎ B
+
+And this can be used to define a type representing union, as follows.
+_∪_ : Pred A W → Pred A Z → Pred A ( W ⊔ Z)
+P∪Q=λx→x∈P⊎x∈Q
+
+Next we define convenient notation for asserting that the image of a function (the first argument) is contained in a predicate (the second argument).
+Im_⊆_ : (A → B) → Pred B Z → U ⊔ Z 
+Im f ⊆ S = ∀ x → f x ∈ S
+
+The empty set is naturally represented by the empty type, 0, and the latter is defined in the
+Empty-Type module of TypeTopo.25,26
+
+24
+
+cf. Relation/Unary.agda in the Agda Standard Library.
+Unicode Hints. In agda2-mode, \u+ ⇝ ⊎, \b0 ⇝ 0, \B0 ⇝ 0.
+26
+The empty type is an inductive type with no constructors; that is, data 0 { U} : U  where – (empty body).
+25
+
+18
+
+Relation Types
+
+∅ : Pred A U0
+∅_=0
+
+We close our little predicates toolbox with a natural way to encode singletons.
+{ }
+_ : A → Pred A _
+{ }
+x
+
+= x ≡_
+
+Binary Relations
+In set theory, a binary relation on a set A is simply a subset of the Cartesian product A × A.
+As such, we could model such a relation as a (unary) predicate over the product type A × A,
+or as an inhabitant of the function type A → A → W  (for some universe W). Note, however,
+this is not the same as a unary predicate over the function type A → A since the latter has
+type (A → A) → W  , while a binary relation should have type A → (A → W  ).
+A generalization of the notion of binary relation is a relation from A to B, which we define
+first and treat binary relations on a single A as a special case.
+REL : U  → W  → (Z : Universe) → U ⊔ W ⊔ Z +
+REL A B Z = A → B → Z 
+
+
+
+Rel : U  → (Z : Universe) → U ⊔ Z + 
+Rel A Z = REL A A Z
+
+The kernel of a function
+The kernel of a function f : A → B is defined informally by {(x , y) ∈ A × A : f x = f y}.
+This can be represented in type theory in a number of ways, each of which may be useful in a
+particular context. For example, we could define the kernel to be an inhabitant of a (binary)
+relation type, a (unary) predicate type, a (curried) Sigma type, or an (uncurried) Sigma type.
+Since the first two alternatives are the ones we use thoughout the UALib, we present them here.
+ker : (A → B) → Rel A W
+ker g x y = g x ≡ g y
+kernel : (A → B) → Pred (A × A) W
+kernel g (x , y) = g x ≡ g y
+
+Similarly, the identity relation (which is equivalent to the kernel of an injective function) can be
+represented by a number of different types. Here we only show the representation that we use
+later to construct the zero congruence. The notation we use here is close to that of conventional
+algebra notation, where 0A is used to denote the identity relation {(x, y) ∈ A × A : x = y}.25
+0 : Rel A U
+0xy=x≡y
+
+The implication relation27
+The following types represent implication for binary relations.
+
+27
+
+The definitions here are from the Agda Standard Library, translated into TypeTopo/UALib notation.
+
+Agda UALib, Part 1: Foundation
+
+19
+
+_on_ : (B → B → C) → (A → B) → (A → A → C)
+R on g = λ x y → R (g x) (g y)
+_⇒_ : REL A B X → REL A B Y → U ⊔ W ⊔ X ⊔ Y 
+P ⇒ Q = ∀ {i j} → P i j → Q i j
+
+These combine to give a nice, general implication operation.
+_=[_]⇒_ : Rel A X → (A → B) → Rel B Y → U ⊔ X ⊔ Y 
+P =[ g ]⇒ Q = P ⇒ (Q on g)
+
+Operation type and compatibility
+Notation. For consistency and readability, throughout the UALib we reserve two universe
+variables for special purposes. The first of these is O which shall be reserved for types that
+represent operation symbols (see Algebras.Signatures). The second is V which we reserve for
+types representing arities of relations or operations.
+Below we will define types that are useful for asserting and proving facts about compatibility
+of operations and relations, but first we need a general type with which to represent operations.
+Here is the definition, which we justify below.
+Op : V  → U  → U ⊔ V 
+Op I A = (I → A) → A
+
+The definition of Op codifies the arity of an operation as an arbitrary type I : V  , which gives
+us a very general way to represent an operation as a function type with domain I → A (the
+type of “I-tuples”) and codomain A. For example, the I-ary projection operations on A are
+represented as inhabitants of the type Op I A as follows.
+π : {I : V  } {A : U  } → I → Op I A
+πix=xi
+
+Let us review the informal definition of compatibility. Suppose A and I are types and fix
+f : Op I A and R : Rel A W (an I-ary operation and a binary relation on A, respectively). We
+say that f and R are compatible and we write28 f |: R just in case ∀ u v : I → A,
+Π i : I , R (u i) (v i) → R (f u) (f v).
+To implement this in Agda, we first define a function eval-rel which “lifts” a binary relation to
+the corresponding I-ary relation, and we use this to define the function |: representing compatibility of an I-ary operation with a binary relation.
+eval-rel : {A : U  }{I : V  } → Rel A W → Rel (I → A)( V ⊔ W)
+eval-rel R u v = Π i : _ , R (u i) (v i)
+_|:_ : {A : U  }{I : V  } → Op I A → Rel A W → U ⊔ V ⊔ W 
+f |: R = (eval-rel R) =[ f ]⇒ R
+
+28
+
+The symbol |: denoting compatibility comes from Cliff Bergman’s universal algebra textbook [1].
+
+20
+
+Relation Types
+
+3.2
+
+Continuous relations*29
+
+This section presents the Relations.Continuous module of the AgdaUALib.
+
+Motivation
+In set theory, an n-ary relation on a set A is a subset of the n-fold product A × · · · × A. We
+could try to model these as predicates over a product type representing A × · · · × A, or as
+relations of type A → A → · · · → A → W  (for some universe W). To implement such types
+requires knowing the arity in advance, and then form an n-fold product or n-fold arrow. It
+turns out to be both easier and more general if we define an arity type I : V  , and define
+the type representing I-ary relations on A as the function type (I → A) → W  . Then, if we
+happen to be interested in n-ary relations for some natural number n, we could take I to be the
+n-element type Fin n, [23].
+Below we will define ContRel to be the type (I → A) → W  and we will call this the type
+of continuous relations. This generalizes the discrete relations we defined in Relations.Discrete
+(unary, binary, etc.) since continuous relations can be of arbitrary arity. They are not completely general, however, since they are defined over a single type. Said another way, these are
+“single-sorted” relations. We will remove this limitation when we define the type of dependent
+continuous relations. Just as Rel A W was the single-sorted special case of the multisorted REL
+A B W type, so too will ContRel I A W be the single-sorted version of dependent continuous
+relations. The latter will represent relations that not only have arbitrary arities, but also are
+defined over arbitrary families of types.
+To be more concrete, given an arbitrary family A : I → U  of types, we may have a relation
+from A i to A j to A k to . . ., where the collection represented by the indexing type I might
+not even be enumerable.30 We will refer to such relations as dependent continuous relations (or
+dependent relations) because the definition of a type that represents them requires dependent
+types. The DepRel type that we define below manifests this completely general notion of
+relation.
+
+Continuous and dependent relation types
+Here we define the types ContRel and DepRel. The first of these represents predicates of arbitrary arity over a single type A; we call these continuous relations.31 To define the type DepRel
+of dependent relations, we exploit the full power of dependent types to provide a completely
+general relation type.
+ContRel : V  → U  → ( W : Universe) → V ⊔ U ⊔ W +
+ContRel I A W = (I → A) → W 
+
+
+
+DepRel : (I : V  ) → (I → U  ) → ( W : Universe) → V ⊔ U ⊔ W +
+DepRel I A W = Π A → W 
+
+29
+
+
+
+Sections marked with an asterisk may be safely skimmed or skipped on a first reading; they present some
+potentially interesting new types that are not yet employed in other parts of the UALib.
+30
+Because the collection represented by the indexing type I might not even be enumerable, technically
+speaking, instead of “A i to A j to A k to . . .,” we should have written something like “TO (i : I) , A i.”
+31
+For consistency and readability, throughout the UALib we reserve two universe variables for special purposes:
+O is reserved for types representing operation symbols; V is reserved for types representing arities of relations
+or operations (see Algebras.Signatures).
+
+Agda UALib, Part 1: Foundation
+
+21
+
+Here, the tuples of a relation of type DepRel I A W will inhabit the dependent function type
+A : I → U  , where the codomain may depend on the input coordinate i : I of the domain.
+Heuristically, we can think of an inhabitant of DepRel I A W as a relation from A i to A j to
+A k to . . .. (This is only a rough heuristic since I could denote an uncountable collection.30
+
+Compatibility with general relations
+It will be helpful to have functions that make it easy to assert that a given operation is compatibile with a given relation. The following functions serve this purpose.
+eval-cont-rel : ContRel I A W → (I → J → A) → V ⊔ W 
+eval-cont-rel R a = Π j : J , R λ i → a i j
+cont-compatible-op : Op J A → ContRel I A W → V ⊔ U ⊔ W 
+cont-compatible-op f R = Π a : (I → J → A) , (eval-cont-rel R a → R λ i → (f ( a i)))
+
+The first of these is an evaluation function which “lifts” an I-ary relation to an (I → J)-ary
+relation. The lifted relation will relate an I-tuple of J-tuples when the “I-slices” (or “rows”) of
+the J-tuples belong to the original relation. The second definition denotes compatibility of an
+operation with a continuous relation.
+Readers who find the syntax of the last two definitions nauseating might be helped by an
+explication of the semantics of these definitions. First, internalize the fact that a : I → J → A
+denotes an I-tuple of J-tuples of inhabitants of A. Next, recall that a continuous relation R
+denotes a certain collection of I-tuples (if x : I → A, then R x asserts that x “belongs to” or
+“satisfies” R). For such R, the type eval-cont-rel R represents a certain collection of I-tuples of
+J-tuples, namely, the tuples a : I → J → A for which eval-cont-rel R a holds.
+For simplicity, pretend for a moment that J is a finite set, say, {1, 2, ..., J}, so that we
+can write down a couple of the J-tuples as columns. For example, here are the i-th and k-th
+columns (for some i k : I).
+ai1
+ai2
+..
+.
+aiJ
+
+ak1
+ak2
+..
+.
+akJ
+
+← (if there are I columns, then each row forms an I-tuple)
+
+Now eval-cont-rel R a is defined by ∀ j → R (λ i → ( a i) j) which asserts that each row of the
+I columns shown above belongs to the original relation R. Finally, cont-compatible-op takes a
+J-ary operation on A, say, f : Op J A, and an I-tuple a i : J → A of J-tuples, and determines
+whether the I-tuple λ i → f ( a i) belongs to R.
+We conclude this section by defining the (only slightly more complicated) lift of dependent
+relations, and the type that represents compatibility of a tuple of operations with a dependent
+relation. Here we assume I J : V  and A : I → U  .
+eval-dep-rel : DepRel I A W → (∀ i → (J → A i)) → V ⊔ W 
+eval-dep-rel R a = ∀ j → R (λ i → ( a i) j)
+dep-compatible-op : (∀ i → Op J ( A i)) → DepRel I A W → V ⊔ U ⊔ W 
+dep-compatible-op f R = ∀ a → (eval-dep-rel R) a → R λ i → (f i)( a i)
+
+where we let Agda infer that the type of a is Π i : I , (J → A i).
+
+22
+
+Relation Types
+
+3.3
+
+Equivalence relations and quotients
+
+This section presents the Relations.Quotients module of the AgdaUALib, slightly abridged.32
+
+Equivalence relations
+In the Relations.Discrete module we defined types for representing and reasoning about binary
+relations on A. In this module we will define types for binary relations that have special properties. The most important special properties of relations are the ones we now define.
+Refl : {A : U  } → Rel A W → U ⊔ W 
+Refl _≈_ = ∀{x} → x ≈ x
+Symm : {A : U  } → Rel A W → U ⊔ W 
+Symm _≈_ = ∀{x}{y} → x ≈ y → y ≈ x
+Antisymm : {A : U  } → Rel A W → U ⊔ W 
+Antisymm _≈_ = ∀{x}{y} → x ≈ y → y ≈ x → x ≡ y
+Trans : {A : U  } → Rel A W → U ⊔ W 
+Trans _≈_ = ∀{x}{y}{z} → x ≈ y → y ≈ z → x ≈ z
+
+Here is a type from TypeTopo that expresses proof-irrelevance for binary relations.
+is-subsingleton-valued : {A : U  } → Rel A W → U ⊔ W 
+is-subsingleton-valued _≈_ = ∀ x y → is-subsingleton (x ≈ y)
+
+Thus, if R : Rel A W, then is-subsingleton-valued R asserts that for each pair x y : A there is
+at most one proof of R x y. In the section on Truncation below (§ 3.4) we introduce a number
+of similar but more general types to represent uniqueness-of-proofs principles for relations of
+arbitrary arity, over arbitrary types.
+A binary relation is called a preorder if it is reflexive and transitive, and an equivalence
+relation is a symmetric preorder. We represent the property of being an equivalence relation by
+the following record type.
+record IsEquivalence {A : U  }(R : Rel A W) : U ⊔ W  where
+field rfl : Refl R; sym : Symm R; trans : Trans R
+
+The type of equivalence relations is then defined as follows.
+Equivalence : U  → U ⊔ W + 
+Equivalence A = Σ R : Rel A W , IsEquivalence R
+
+Thus, if we have (R , p) : Equivalence A, then R denotes a binary relation over A and p is of
+record type IsEquivalence R whose fields contain the three proofs required to show that R is an
+equivalence relation.
+A prominent example of an equivalence relation is the kernel of any function.
+ker-IsEquivalence : {A : U  }{B : W  }(f : A → B) → IsEquivalence (ker f)
+ker-IsEquivalence f = record { rfl = refl; sym = λ z → ≡-sym z ; trans = λ p q → ≡-trans p q }
+
+32
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Relations.Quotients.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Relations/Quotients.lagda).
+
+Agda UALib, Part 1: Foundation
+
+23
+
+Quotients
+If R is an equivalence relation on A, then for each u : A there is an equivalence class (or equivalence block, or R-block) containing u, which we denote by [ u ] := {v : A | R u v}. We call
+this the R-block containing a.
+[_] : {A : U  } → A → {R : Rel A W} → Pred A W
+[ u ]{R} = R u
+
+Thus, v ∈ [ u ] if and only if R u v, as desired. We often refer to [ u ] as the R-block containing
+u. A predicate C over A is an R-block if and only if C ≡ [ u ] for some u : A. We represent this
+characterization of an R-block as follows.
+IsBlock : {A : U  }(C : Pred A W){R : Rel A W} → U ⊔ W +
+IsBlock {A} C {R} = Σ a : A , C ≡ [ a ] R
+
+
+
+Thus, a proof of the assertion IsBlock C is a dependent pair (u , p), with u : A and p is a proof
+of C ≡ [ u ]{R}.
+If R is an equivalence relation on A, then the quotient of A modulo R is denoted by A / R
+and is defined to be the collection {[ u ] | y : A} of all R-blocks.
+_/_ : (A : U  ) → Rel A W → U ⊔ ( W + ) 
+A / R = Σ C : Pred A W , IsBlock C {R}
+
+We use the following type to represent an R-block with a designated representative.
+⟪_⟫ : {A : U  } → A → {R : Rel A W} → A / R
+⟪ a ⟫ {R} = [ a ] R , (a , refl)
+
+This serves as a kind of introduction rule. Dually, the next type provides an elimination rule.33
+⌞_⌟ : {A : U  }{R : Rel A W} → A / R → A
+⌞ C , (a , p) ⌟ = a
+
+It will be convenient to have the following subset inclusion lemmas on hand when working with
+quotient types. (Assume a context including U W : Universe, A : U  , x y : A, and R : Rel A W.)
+/-subset : IsEquivalence R → R x y → [ x ] R ⊆ [ y ] R
+/-subset Req Rxy {z} Rxz = (trans Req) ((sym Req) Rxy) Rxz
+/-supset : IsEquivalence R → R x y → [ y ] R ⊆ [ x ] R
+/-supset Req Rxy {z} Ryz = (trans Req) Rxy Ryz
+
+An example application of these is the block-ext type in the Relations.Extensionality module.
+
+3.4
+
+Truncation
+
+This section presents the Relations.Truncation module of the AgdaUALib, slightly abridged.34 We
+start with a brief discussion of standard notions of truncation, h-sets (which we just call sets),
+and the uniqueness of identity types principle. We then prove that a monic function into a set
+
+33
+34
+
+Unicode Hint. Type ⌜ and ⌝ as \cul and \cur in agda2-mode.
+For unabridged docs (source code) see https://ualib.gitlab.io/Relations.Truncation.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Relations/Truncation.lagda).
+
+24
+
+Relation Types
+
+is an embedding. We conclude the section with a uniqueness of identity proofs principle for
+blocks of equivalence relations.35
+
+Uniqueness of identity proofs
+This brief introduction is intended for novices; those already familiar with the concept of truncation and uniqueness of identity proofs (UIP) may want to skip to the next subsection.
+In general, we may have multiple inhabitants of a given type, hence (via Curry-Howard)
+multiple proofs of a given proposition. For instance, suppose we have a type X and an identity
+relation _≡0 _ on X so that, given two inhabitants of X, say, a b : X, we can form the type a ≡0
+b. Suppose p and q inhabit the type a ≡0 b; that is, p and q are proofs of a ≡0 b, in which case
+we write p q : a ≡0 b. We might then wonder whether the two proofs p and q are equivalent.
+We are asking about an identity type on the identity type ≡0 , and whether there is some
+inhabitant, say, r of this type; i.e., whether there is a proof r : p ≡1 q that the proofs of a ≡0
+b are the same. If such a proof exists for all p q : a ≡0 b, then the proof of a ≡0 b is unique; as
+a property of the types X and ≡0 , this is sometimes called uniqueness of identity proofs (UIP).
+Now, perhaps we have two proofs, say, r s : p ≡1 q that the proofs p and q are equivalent.
+Then of course we wonder whether r ≡2 s has a proof! But at some level we may decide that the
+potential to distinguish two proofs of an identity in a meaningful way (so-called proof-relevance)
+is not useful or desirable. At that point, say, at level k, we would be naturally inclined to assume
+that there is at most one proof of any identity of the form p ≡k q. This is called truncation (at
+level k).
+
+Sets
+In homotopy type theory, a type X with an identity relation ≡0 is called a set (or 0-groupoid)
+if for every pair x y : X there is at most one proof of x ≡0 y. In other words, the type X, along
+with it’s equality type ≡x , form a set if for all x y : X there is at most one proof of x ≡0 y. This
+notion is formalized in TypeTopo, using the is-subsingleton type (§2.4), as follows.
+is-set : U  → U 
+is-set A = (x y : A) → is-subsingleton (x ≡ y)
+
+Thus, the pair (X , ≡0 ) forms a set iff it satisfies ∀ x y : X → is-subsingleton (x ≡0 y).
+We will also need the type to-Σ-≡, part of Escardó’s characterization of equality in Sigma
+types in [10], defined as follows. (Assume a context including A : U  and B : A → W  .)
+to-Σ-≡ : {σ τ : Σ B} → Σ p : | σ | ≡ | τ | , (transport B p ∥ σ ∥) ≡ ∥ τ ∥ → σ ≡ τ
+to-Σ-≡ (refl {x = x} , refl {x = a}) = refl {x = (x , a)}
+
+Injective functions are set embeddings
+Before moving on to define propositions, we discharge an obligation mentioned but left unfulfilled in the embeddings section of the Overture.Inverses module. Recall, we described and
+imported the is-embedding type, and we remarked that an embedding is not simply a monic
+function. However, if we assume that the codomain is truncated so as to have unique identity
+proofs, then we can prove that every monic function into that codomain will be an embedding.
+
+35
+
+Readers who want to learn more about “proof-relevant mathematics” and other concepts mentioned in this
+section may wish to consult other sources, such as [10, §34], [3], or [18, §7.1].
+
+Agda UALib, Part 1: Foundation
+
+25
+
+On the other hand, embeddings are always monic, so we will end up with an equivalence.
+monic-is-embedding|Set : (f : A → B) → is-set B → Monic f → is-embedding f
+monic-is-embedding|Set f Bset fmon b (u , fu≡b) (v , fv≡b) = γ
+where
+fuv : f u ≡ f v
+fuv = ≡-trans fu≡b (fv≡b −1 )
+uv : u ≡ v
+uv = fmon u v fuv
+arg1 : Σ p : (u ≡ v) , (transport (λ a → f a ≡ b) p fu≡b) ≡ fv≡b
+arg1 = uv , Bset (f v) b (transport (λ a → f a ≡ b) uv fu≡b) fv≡b
+γ : u , fu≡b ≡ v , fv≡b
+γ = to-Σ-≡ arg1
+
+In stating the previous result, we introduce a new convention to which we will try to adhere. If
+the antecedent of a theorem includes the assumption that one of the types involved is a set, then
+we add to the name of the theorem the suﬀix |sets, which calls to mind the standard notation
+for the restriction of a function to a subset of its domain.
+
+Equivalence class truncation
+Recall, the definition IsBlock C = Σ u : A , C ≡ [ u ], from the Relations.Quotients module.
+In the next module (Relations.Extensionality) we will define a quotient extensionality principle
+that will require a form of unique identity proofs—specifically, we will assume that for each
+predicate C : Pred A W there is at most one proof of IsBlock C. We call this proof-irrelevance
+principle “uniqueness of block identity proofs” and define it as follows.
+blk-uip : { W U : Universe}(A : U  )(R : Rel A W ) → U ⊔ W + 
+blk-uip { W} A R = ∀ (C : Pred A W) → is-subsingleton (IsBlock C {R})
+
+It might seem unreasonable to postulate that there is at most one inhabitant of IsBlock C, since
+equivalence classes typically have multiple members, any one of which could serve as a class
+representative. However, postulating blk-uip A R is tantamount to collapsing each R-block to
+a single point, and this is indeed the correct semantic interpretation of the elements of the
+quotient A / R.
+
+General propositions*29
+This section defines more general truncated predicates which we call continuous propositions
+and dependent propositions. Recall, above (in the Relations.Continuous module) we defined types
+called ContRel and DepRel to represent relations of arbitrary arity over arbitrary collections of
+sorts. Naturally, we define the corresponding truncated continuous relation type and truncated
+dependent relation type, the inhabitants of which we will call continuous propositions and dependent propositions, respectively. (Assume the context includes U : Universe and I : V  .)
+IsContProp : {A : U  }{ W : Universe} → ContRel I A W → V ⊔ U ⊔ W 
+IsContProp {A = A} P = Π a : (I → A) , is-subsingleton (P a)
+ContProp : U  → ( W : Universe) → U ⊔ V ⊔ W + 
+ContProp A W = Σ P : (ContRel I A W) , IsContProp P
+
+26
+
+Relation Types
+
+cont-prop-ext : U  → ( W : Universe) → U ⊔ V ⊔ W + 
+cont-prop-ext A W = {P Q : ContProp A W } → | P | ⊆ | Q | → | Q | ⊆ | P | → P ≡ Q
+IsDepProp : {I : V  }{ A : I → U  }{ W : Universe} → DepRel I A W → V ⊔ U ⊔ W 
+IsDepProp {I = I} { A} P = Π a : Π A , is-subsingleton (P a)
+DepProp : (I → U  ) → ( W : Universe) → U ⊔ V ⊔ W +
+DepProp A W = Σ P : (DepRel I A W) , IsDepProp P
+
+
+
+dep-prop-ext : (I → U  ) → ( W : Universe) → U ⊔ V ⊔ W + 
+dep-prop-ext A W = {P Q : DepProp A W} → | P | ⊆ | Q | → | Q | ⊆ | P | → P ≡ Q
+
+To see the point of the types just defined, suppose dep-prop-ext A W holds. Then we can
+prove that logically equivalent dependent propositions (of type DepProp A W) are equivalent.
+In other words, under the stated hypotheses, we obtain the following extensionality lemma for
+dependent propositions (assuming the context includes A : I → U  and W : Universe).
+.
+dep-prop-ext’ : dep-prop-ext A W → {P Q : DepProp A W} → | P | = | Q | → P ≡ Q
+dep-prop-ext’ pe hyp = pe | hyp | ∥ hyp ∥
+
+3.5
+
+Relation extensionality
+
+This section presents the Relations.Extensionality module of the AgdaUALib, slightly abridged.36
+The principle of proposition extensionality asserts that logically equivalent propositions are
+equivalent. That is, if P and Q are propositions such that P ⊆ Q and Q ⊆ P, then P ≡ Q.
+For our purposes, it will suﬀice to formalize this principle for general predicates, rather than
+propositions (i.e., truncated predicates). The following definition codifies the extensionality
+principle we require.
+pred-ext : ( U W : Universe) → ( U ⊔ W) + 
+pred-ext U W = ∀ {A : U  }{P Q : Pred A W } → P ⊆ Q → Q ⊆ P → P ≡ Q
+
+Note that pred-ext does not itself postulate the axiom of predicate extensionality; it merely
+defines what that axiom asserts. If we want to postulate the axiom, we must assume we have
+an inhabitant (or “witness”) of the pred-ext type (see block-ext below, for example).
+
+Quotient extensionality
+We need an identity type for congruence classes (blocks) over sets so that two different presentations of the same block (e.g., using different representatives) may be identified. This requires
+two postulates: (1) predicate extensionality manifested by the blk-uip type defined earlier (§3.4).
+We now use pred-ext and blk-uip to define a type called block-ext|uip which we require for the
+proof of the First Homomorphism Theorem presented in Homomorphisms.Noether. (Assume a
+context including U W : Universe, A : U  , and R : Rel A W.)
+block-ext : pred-ext U W → IsEquivalence R → {u v : A} → R u v → [ u ]{R} ≡ [ v ]{R}
+block-ext pe Req {u}{v} Ruv = pe (/-subset Req Ruv) (/-supset Req Ruv)
+
+36
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Relations.Extensionality.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Relations/Extensionality.lagda).
+
+Agda UALib, Part 1: Foundation
+
+27
+
+to-subtype|uip : blk-uip A R → {C D : Pred A W}{c : IsBlock C {R}}{d : IsBlock D {R}}
+→ C ≡ D → (C , c) ≡ (D , d)
+to-subtype|uip buip {C}{D}{c}{d}CD = to-Σ-≡(CD , buip D(transport(λ B → IsBlock B)CD c)d)
+block-ext|uip : pred-ext U W → blk-uip A R → IsEquivalence R
+→ {u v : A} → R u v → ⟪ u ⟫ ≡ ⟪ v ⟫
+block-ext|uip pe buip Req Ruv = to-subtype|uip buip (block-ext pe Req Ruv)
+
+4
+
+Algebra Types
+
+Finally we are ready to present the Algebras module of the AgdaUALib. Here we use type theory
+and Agda to codify the most basic objects of universal algebra, such as operations and signatures
+(§4.1), algebras (§4.2), product algebras (§4.3), congruence relations and quotient algebras (§4.4).
+A popular way to represent algebraic structures in type theory is with record types. The
+Sigma type provides an equivalent alternative that we happen to prefer and we use it throughout
+the library, both for consistency and because of its direct connection to the existential quantifier
+of logic. Recall that inhabitants of the type Σ x : X , P are pairs (x, p) such that x : X and
+p : P x. In this sense, when such a Sigma type is inhabited we conclude, “there exists x in
+X such that P x holds;” in symbols, ∃ x ∈ X , P x. Moreover, the pair (x, p) is not merely a
+proof of the logical sentence ∃ x ∈ X , P x; it is also a witness of the truth of this sentence. We
+sometimes say that a proof of an existentially quantified sentence has “computational content”
+if it provides such a witness, or a function that can extract a witness from the proof.
+
+4.1
+
+Signatures
+
+This section presents the Algebras.Signatures module of the AgdaUALib, slightly abridged.37
+We define the signature of an algebraic structure in Agda like this.
+Signature : (O V : Universe) → (O ⊔ V) +
+Signature O V = Σ F : O  , (F → V  )
+
+
+
+As mentioned in §3.1, the symbol O always denotes the universe of operation symbol types,
+while V is always the universe of arity types.
+In §2.1 we defined special syntax for the first and second projections—namely, |_| and ∥_∥,
+respectively. Consequently, if S : Signature O V is a signature, then | S | denotes the set of
+operation symbols, and ∥ S ∥ denotes the arity function. If f : | S | is an operation symbol in
+the signature S, then ∥ S ∥ f is the arity of f .
+
+Example of a signature
+Here is how we could define the signature for monoids as an inhabitant of the type Signature O V.
+data monoid-op : O  where
+e : monoid-op
+· : monoid-op
+monoid-sig : Signature O U0
+monoid-sig = monoid-op , λ { e → 0; · → 2 }
+
+37
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Algebras.Signatures.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Algebras/Signatures.lagda).
+
+28
+
+Algebra Types
+
+Thus, the signature for a monoid consists of two operation symbols, e and ·, and a function
+λ { e → 0 ; · → 2 } which maps e to the empty type 0 (since e is the nullary identity) and
+maps · to the two element type 2 (since · is binary).38
+
+4.2
+
+Algebras
+
+This section presents the Algebras.Algebras module of the AgdaUALib, slightly abridged.39
+Recall, the signature type Signature O V (§4.1) was defined as the Sigma type Σ F : O  , (F → V  ).
+The operation symbol type Op I A (§3.1) was defined as the function type (I → A) → A. For a
+fixed signature S : Signature O V and universe U, we define the type of algebras in the signature
+S (or S-algebras) with domain (or carrier) of type U  as follows.40
+Algebra : ( U : Universe)(S : Signature O V) → O ⊔ V ⊔ U + 
+Algebra U S = Σ A : U  ,
+– the domain
+Π f : | S | , Op (∥ S ∥ f) A – the basic operations
+
+To be precise we could call an inhabitant of this type an “∞-algebra” because its domain
+can be an arbitrary type, say, A : U  and need not be truncated at some level. In particular, A
+need not be a set (§3.4). We could then proceed to define the type of “0-algebras” as algebras
+whose domains would be sets, which may be closer to what most of us have in mind when
+doing informal universal algebra. However, we have found that the domains of our algebras
+need to be sets in just a few places in the UALib, and it seems preferable to work with general
+(∞-)algebras throughout and then assume uniqueness of identity proofs (UIP) explicitly and
+only where needed. This makes any dependence on UIP more transparent (which is also the
+reason –without-K appears at the top of every module in the UALib).
+
+Operation interpretation syntax
+We now define a convenient shorthand for the interpretation of an operation symbol. This looks
+more similar to the standard notation one finds in the literature as compared to the double bar
+notation we started with, so we will use this new notation almost exclusively in the remaining
+modules of the UALib.
+_ ˆ_ : (f : | S |)(A : Algebra U S) → (∥ S ∥ f → | A |) → | A |
+f ˆ A = λ a → (∥ A ∥ f ) a
+
+Thus, if f : | S | is an operation symbol in the signature S and if a : ∥ S ∥ f → | A | is a tuple
+of the same arity, then (f ˆ A) a denotes the operation f interpreted in A and evaluated at a.
+
+Lifts of algebras
+Recall, in §2.5 we described a common diﬀiculty one encounters when working with a noncumulative universe hierarchy. We made a promise to provide some domain-specific level lifting and
+lowering methods. Here we fulfill this promise by supplying a couple of bespoke tools designed
+
+38
+
+The types 0 and 2 are defined in the MGS-MLTT module of TypeTopo.
+For unabridged docs (source code) see https://ualib.gitlab.io/Algebras.Algebras.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Algebras/Algebras.lagda).
+40
+Universal algebraists often call the domain of an algebra its universe. We avoid this terminology since
+“universe” is used in type theory for levels of the type hierarchy.
+39
+
+Agda UALib, Part 1: Foundation
+
+29
+
+specifically for our operation and algebra types.
+Lift-op : ((I → A) → A) → ( W : Universe) → ((I → Lift{ W} A) → Lift { W} A)
+Lift-op f W = λ x → lift (f (λ i → lower (x i)))
+Lift-alg : Algebra U S → ( W : Universe) → Algebra ( U ⊔ W) S
+Lift-alg A W = Lift | A | , (λ (f : | S |) → Lift-op (f ˆ A) W)
+
+What makes the Lift-alg type so useful for resolving type level errors is the nice properties
+it possesses. Indeed, in the UALib we prove that Lift-alg preserves term identities and is a
+homomorphism, an algebraic invariant, and a sublagebraic invariant.41
+
+Compatibility of binary relations
+We now define the function compatible so that, if A is an algebra and R a binary relation, then
+compatible A R will denote the assertion that R is compatible with all basic operations of A.
+Using the relation |: (§3.1) this implication is expressed as (f ˆ A) |: R, yielding a compact
+representation of compatibility of algebraic operations and binary relations.
+compatible : (A : Algebra U S) → Rel | A | W → O ⊔ U ⊔ V ⊔ W 
+compatible A R = ∀ f → (f ˆ A) |: R
+
+Compatibility of continuous relations*29
+In the Relations.Continuous module we defined a function called cont-compatible-op to represent
+the assertion that a given continuous relation is compatible with a given operation. With that
+it is easy to define a function, which we call cont-compatible, representing compatibility of a
+continuous relation with all operations of an algebra. Similarly, we define the analogous depcompatible function for the (even more general) type of dependent relations.
+cont-compatible : {I : V  }(A : Algebra U S) → ContRel I | A | W → O ⊔ U ⊔ V ⊔ W 
+cont-compatible A R = Π f : | S | , cont-compatible-op (f ˆ A) R
+dep-compatible : {I : V  }(A : I → Algebra U S) → DepRel I (λ i → | A i |) W → O ⊔ U ⊔ V ⊔ W 
+dep-compatible A R = Π f : | S | , dep-compatible-op (λ i → f ˆ (A i)) R
+
+4.3
+
+Products
+
+This section presents the Algebras.Products module of the AgdaUALib, slightly abridged.42
+Recall the informal definition of a product of a family of S-algebras. Given a type I : I 
+d
+and a family A : I → Algebra U S, the product
+A is the algebra whose domain is the
+Cartesian product Π i : I , | A i | of the domains of the algebras in A, and the operation symbols are interpreted point-wise in the following sense: if f is a J-ary operation symbol and if
+d
+a : Π i : I , J → A i gives, for each i : I, a J-tuple of elements of A i, then we define (f ˆ A) a
+:= (i : I) → (f ˆ A i)(a i). We now define a type that codifies this informal definition of product
+algebra.
+
+41
+42
+
+See EquationalLogic.html, Homomorphisms.Basic.html, Isomorphisms.html, and Subalgebras.html, resp.
+For unabridged docs (source code) see https://ualib.gitlab.io/Algebras.Products.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Algebras/Products.lagda).
+
+30
+
+Algebra Types
+d
+d
+
+: (A : I → Algebra U S ) → Algebra ( I ⊔ U) S
+
+A = (Π i : I , | A i |) ,
+– domain of the product algebra
+λ f a i → (f ˆ A i) λ x → a x i – basic operations of the product algebra
+
+Before going further, let us agree on another convenient notational convention, which is used
+in many of the later modules of the UALib. Given a signature S : Signature O V, the type
+Algebra U S has type O ⊔ V ⊔ U +  , and O ⊔ V remains fixed since O and V always denote
+the universes of operation and arity types, respectively. Such levels occur so often in the UALib
+that we define the following shorthand for their universes: ov U := O ⊔ V ⊔ U + .
+
+Products of classes of algebras
+An arbitrary class K of algebras is represented as a predicate over the type Algebra U S, for
+some universe level U and signature S. That is, K : Pred(Algebra U S) W for some W. Later
+we will formally state and prove that the product of all subalgebras of algebras in K belongs to
+d
+the class SP(K) of subalgebras of products of algebras in K. That is,
+S(K) ∈ SP(K). This
+turns out to be a nontrivial exercise.
+To begin, we need to define types that represent products over arbitrary (non-indexed) families such as K or S(K). Observe that Π K is certainly not what we want. For recall that
+Pred(Algebra U S) W is just an alias for the function type Algebra U S → W  , and the semantics of the latter takes K A to mean that A belongs to the class K. Therefore, by definition
+Π K = Π A : (Algebra U S) , K A = ∀ (A : Algebra U S) → A ∈ K,
+which denotes the assertion that every inhabitant of the type Algebra U S belongs to K. .
+Evidently this is not the product algebra that we seek.
+What we need is a type that serves to index the class K, and a function A that maps an
+index to the inhabitant of K at that index. But K is a predicate (of type (Algebra U S) → W  )
+and the type Algebra U S seems rather nebulous in that there is no natural indexing class with
+which to “enumerate” all inhabitants of Algebra U S that belong to K.43
+The solution is to essentially take K itself to be the index type; at least heuristically that
+is how one can think of the type I that we now define.44
+I : ov U 
+I = Σ A : (Algebra U S) , (A ∈ K)
+
+Taking the product over the index type I requires a function that maps an index i : I to the
+corresponding algebra. Each i : I denotes a pair, (A , p), where A is an algebra and p is a proof
+that A belongs to K, so the function mapping such an index to the corresponding algebra is
+simply the first projection.
+A : I → Algebra U S
+A = λ (i : I) → | i |
+
+Finally, we represent the product of all members of the class K by the following type.
+class-product : Algebra (ov U) S
+d
+class-product =
+A
+
+43
+44
+
+If you haven’t seen this before, give it some thought and see if the correct type comes to you organically.
+Unicode Hints. Some of our types are denoted with Gothic (“mathfrak”) symbols. To produce them in
+agda2-mode, type \Mf followed by a letter. For example, \MfI ⇝ I.
+
+Agda UALib, Part 1: Foundation
+
+31
+
+Observe that the application of A to the pair (A , p) (the result of which is simply the algebra
+d
+A) may be viewed as the projection out of the product A and onto the “(A, p)-th component”
+of that product.
+
+4.4
+
+Congruences
+
+This section presents the Algebras.Congruences module of the AgdaUALib, slightly abridged.45
+Recall that a congruence relation of an algebra A is defined to be an equivalence relation
+that is compatible with the basic operations of A. This concept can be represented in a number
+of alternative but equivalent ways. Formally, we define a record type (IsCongruence) to represent the property of being a congruence, and we define a Sigma type (Con) to represent the type
+of congruences of a given algebra.
+record IsCongruence (A : Algebra U S)(θ : Rel | A | W) : ov W ⊔ U  where
+constructor mkcon
+field is-equivalence : IsEquivalence θ
+is-compatible : compatible A θ
+Con : (A : Algebra U S) → U ⊔ ov W 
+Con A = Σ θ : ( Rel | A | W ) , IsCongruence A θ
+
+Each of these types captures what it means to be a congruence and they are equivalent in the
+sense that each implies the other. One implication is the “uncurry” operation and the other is
+the second projection.
+IsCongruence→Con : {A : Algebra U S}(θ : Rel | A | W) → IsCongruence A θ → Con A
+IsCongruence→Con θ p = θ , p
+Con→IsCongruence : {A : Algebra U S} → ((θ , _) : Con A) → IsCongruence A θ
+Con→IsCongruence θ = ∥ θ ∥
+
+Above we defined the zero relation 0 (3.3) and we now build the trivial congruence, which has
+0 as its underlying relation. Observe that 0 is equivalent to the identity relation ≡ (§2.2) and
+these are obviously both equivalence relations. We already proved this of ≡, so we can simply
+apply the corresponding proofs. The fact that 0 is compatible with all operations of all algebras
+is equally clear.
+0-IsEquivalence : {A : U  } → IsEquivalence {A = A} 0
+0-IsEquivalence = record {rfl = refl; sym = ≡-sym; trans = ≡-trans}
+0-compatible-op : funext V U → {A : Algebra U S} (f : | S |) → (f ˆ A) |: 0
+0-compatible-op fe {A} f {i}{j} ptws0 = ap (f ˆ A) (fe ptws0)
+0-compatible : funext V U → {A : Algebra U S} → compatible A 0
+0-compatible fe {A} = λ f args → 0-compatible-op fe {A} f args
+
+Finally, we have the ingredients need to construct the zero congruence of any algebra we like.
+∆ : (A : Algebra U S){fe : funext V U} → IsCongruence A 0
+∆ A {fe} = mkcon 0-IsEquivalence (0-compatible fe)
+
+45
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Algebras.Congruences.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Algebras/Congruences.lagda).
+
+32
+
+Concluding Remarks
+
+0 : (A : Algebra U S){fe : funext V U} → Con{ U} A
+0 A {fe} = IsCongruence→Con 0 (∆ A {fe})
+
+Quotient Algebras
+In many areas of abstract mathematics the quotient of an algebra A with respect to a congruence relation θ of A plays an important role. This quotient is typically denoted by A / θ and
+Agda allows us to define and express quotients using this standard notation.46
+_⧸_ : (A : Algebra U S) → Con{ W} A → Algebra ( U ⊔ W + ) S
+A ⧸ θ = (| A | / | θ |) ,
+– the domain of the quotient algebra
+λ f a → ⟪ (f ˆ A)(λ i → fst ∥ a i ∥) ⟫ – the basic operations of the quotient algebra
+
+Example. Denote by 0[ A ⧸ θ ] the zero relation on the quotient algebra A ⧸ θ, which is
+defined as follows.
+0[_⧸_] : (A : Algebra U S)(θ : Con { W} A) → Rel (| A | / | θ |)( U ⊔ W + )
+0[ A ⧸ θ ] = λ u v → u ≡ v
+
+From this we obtain the zero congruence of A ⧸ θ by applying the ∆ function defined above.
+0[_⧸_] : (A : Algebra U S)(θ : Con{ W} A){fe : funext V ( U ⊔ W + )} → Con (A ⧸ θ)
+0[ A ⧸ θ ] {fe} = 0[ A ⧸ θ ] , ∆ (A ⧸ θ) {fe}
+
+Finally, the following elimination rule is sometimes useful.
+/-≡ : (θ : Con{ W} A){u v : | A |} → ⟪ u ⟫ {| θ |} ≡ ⟪ v ⟫ → | θ | u v
+/-≡ θ refl = IsEquivalence.rfl (is-equivalence ∥ θ ∥)
+
+5
+
+Concluding Remarks
+
+We’ve reached the end of Part 1 of our three-part series describing the AgdaUALib. Part 2 will
+cover homomorphism, terms, and subalgebras, and Part 3 will cover free algebras, equational
+classes of algebras (i.e., varieties), and Birkhoff’s HSP theorem.
+We conclude by noting that one of our goals is to make computer formalization of mathematics more accessible to mathematicians working in universal algebra and model theory. We
+welcome feedback from the community and are happy to field questions about the UALib, how it
+is installed, and how it can be used to prove theorems that are not yet part of the library. Merge
+requests submitted to the UALib’s main gitlab repository are especially welcomed. Please visit
+the repository at https://gitlab.com/ualib/ualib.gitlab.io/ and help us improve it.
+References
+1
+2
+
+46
+
+Clifford Bergman. Universal Algebra: fundamentals and selected topics, volume 301 of Pure and
+Applied Mathematics (Boca Raton). CRC Press, Boca Raton, FL, 2012.
+Ana Bove and Peter Dybjer. Dependent Types at Work, pages 57–99. Springer Berlin Heidelberg,
+Berlin, Heidelberg, 2009. doi:10.1007/978-3-642-03153-3_2.
+
+Unicode Hints. Produce the ⧸ symbol in agda2-mode by typing \--- and then C-f a number of times.
+
+Agda UALib, Part 1: Foundation
+
+3
+
+4
+
+5
+6
+7
+8
+9
+10
+11
+
+12
+
+13
+14
+15
+16
+17
+
+18
+
+19
+20
+21
+22
+
+23
+24
+
+33
+
+Guillaume Brunerie. Truncations and truncated higher inductive types, September 2012.
+URL: https://homotopytypetheory.org/2012/09/16/truncations-and-truncated-higher-inductivetypes/.
+Venanzio Capretta. Universal algebra in type theory. In Theorem proving in higher order logics
+(Nice, 1999), volume 1690 of Lecture Notes in Comput. Sci., pages 131–148. Springer, Berlin,
+1999. doi:10.1007/3-540-48256-3_10.
+Jesper Carlström. A constructive version of Birkhoff’s theorem. Mathematical Logic Quarterly,
+54(1):27–34, 2008. doi:10.1002/malq.200710023.
+Alonzo Church. A formulation of the simple theory of types. The Journal of Symbolic Logic,
+5(2):56–68, 1940. URL: http://www.jstor.org/stable/2266170.
+Jesper Cockx. Dependent pattern matching and proof-relevant unification, 2017. URL: https:
+//lirias.kuleuven.be/retrieve/456787.
+William DeMeo. The Agda Universal Algebra Library, Part 2: Structure. CoRR, abs/2103.09092,
+2021. Source code: https://gitlab.com/ualib/ualib.gitlab.io. arXiv:2103.09092.
+William DeMeo. The Agda Universal Algebra Library, Part 3: Identity. CoRR, 2021. (to appear)
+Source code: https://gitlab.com/ualib/ualib.gitlab.io.
+Martín Hötzel Escardó. Introduction to univalent foundations of mathematics with Agda. CoRR,
+abs/1911.00580, 2019. arXiv:1911.00580.
+Emmanuel Gunther, Alejandro Gadea, and Miguel Pagano. Formalization of universal algebra
+in Agda. Electronic Notes in Theoretical Computer Science, 338:147 – 166, 2018. The 12th
+Workshop on Logical and Semantic Frameworks, with Applications (LSFA 2017). doi:https:
+//doi.org/10.1016/j.entcs.2018.10.010.
+Per Martin-Löf. An intuitionistic theory of types: predicative part. In Logic Colloquium ’73
+(Bristol, 1973), pages 73–118. Studies in Logic and the Foundations of Mathematics, Vol. 80.
+North-Holland, Amsterdam, 1975.
+nLab authors. Constructive Mathematics. http://ncatlab.org/nlab/show/constructive%
+20mathematics, March 2021. Revision 65.
+nLab authors.
+Predicative Mathematics.
+http://ncatlab.org/nlab/show/predicative%
+20mathematics, March 2021. Revision 22.
+nLab authors. Propositions as Types. http://ncatlab.org/nlab/show/propositions%20as%
+20types, March 2021. Revision 40.
+Ulf Norell. Dependently typed programming in agda. In International school on advanced functional programming, pages 230–266. Springer, 2008.
+Ulf Norell. Dependently typed programming in Agda. In Proceedings of the 6th International
+Conference on Advanced Functional Programming, AFP’08, pages 230–266, Berlin, Heidelberg,
+2009. Springer-Verlag. URL: http://dl.acm.org/citation.cfm?id=1813347.1813352.
+The Univalent Foundations Program. Homotopy Type Theory: Univalent Foundations of Mathematics. Lulu and The Univalent Foundations Program, Institute for Advanced Study, 2013.
+URL: https://homotopytypetheory.org/book.
+Bas Spitters and Eelis Van der Weegen. Type classes for mathematics in type theory. CoRR,
+abs/1102.1323, 2011. arXiv:1102.1323.
+The Agda Team. Agda Language Reference section on Axiom K, 2021. URL: https://agda.
+readthedocs.io/en/v2.6.1/language/without-k.html.
+The Agda Team. Agda Language Reference section on Safe Agda, 2021. URL: https://agda.
+readthedocs.io/en/v2.6.1/language/safe-agda.html#safe-agda.
+The Agda Team. Agda Tools Documentation section on Pattern matching and equality,
+2021. URL: https://agda.readthedocs.io/en/v2.6.1/tools/command-line-options.html#
+pattern-matching-and-equality.
+The Agda Team. The Fin type of the Agda Standard Library, 2021. URL: https://agda.github.
+io/agda-stdlib/Data.Fin.html.
+Philip Wadler, Wen Kokke, and Jeremy G. Siek. Programming Language Foundations in Agda.
+July 2020. URL: http://plfa.inf.ed.ac.uk/20.07/.
+
+

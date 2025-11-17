@@ -1,0 +1,2532 @@
+arXiv:2009.04887v2 [math.LO] 14 Dec 2020
+
+Contents
+1. Introduction
+2. Preliminaries
+2.1. Definitions and notations
+2.2. Logical systems
+3. Proofs of Gödel’s incompleteness theorems
+3.1. Introduction
+3.2. Overview and modern formulation
+3.2.1. Three steps towards G1 and G2
+3.2.2. Properties of G1
+3.2.3. Between truth and provability
+3.2.4. Properties of G2
+3.3. Proofs of G1 and G2 from mathematical logic
+3.3.1. Rosser’s proof
+3.3.2. Recursion-theoretic proofs
+3.3.3. Proofs based on Arithmetic Completeness
+3.3.4. Proofs based on Kolmogorov complexity
+3.3.5. Model-theoretic proofs
+3.4. Proofs of G1 and G2 based on logical paradox
+3.4.1. Introduction
+3.4.2. Berry’s paradox
+3.4.3. Unexpected Examination and Grelling-Nelson’s Paradox.
+3.4.4. Yablo’s paradox
+3.4.5. Beyond arithmetization
+3.5. Concrete incompleteness
+3.5.1. Introduction
+3.5.2. Paris-Harrington and beyond
+3.5.3. Harvey Friedman’s contributions
+4. The limit of the applicability of G1
+4.1. Introduction
+4.2. Generalizations of G1 beyond PA
+4.3. Generalizations of G1 below PA
+4.3.1. Generalizations of G1 via interpretability
+4.3.2. The limit of G1 w.r.t. interpretation and Turing reducibility
+5. The limit of the applicability of G2
+5.1. Introduction
+5.2. Some generalizations of G2
+5.3. The intensionality of G2
+5.3.1. Introduction
+5.3.2. The choice of provability predicate
+5.3.3. The choice of the formula expressing consistency
+5.3.4. The choice of base theory
+5.3.5. The choice of numbering
+5.3.6. The choice of the formula representing the set of axioms
+6. Conclusion
+
+2
+4
+4
+7
+11
+11
+12
+12
+14
+15
+17
+18
+18
+19
+19
+21
+22
+22
+22
+22
+24
+25
+26
+26
+26
+27
+28
+29
+29
+30
+31
+31
+34
+35
+35
+36
+38
+38
+39
+40
+41
+43
+43
+47
+
+1
+
+References
+
+47
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS
+THEOREMS
+YONG CHENG
+Abstract. We give a survey of current research on Gödel’s incompleteness theorems from the following three aspects: classiﬁcations of
+diﬀerent proofs of Gödel’s incompleteness theorems, the limit of the applicability of Gödel’s ﬁrst incompleteness theorem, and the limit of the
+applicability of Gödel’s second incompleteness theorem.
+
+1. Introduction
+Gödel’s first and second incompleteness theorem are some of the most
+important and profound results in the foundations of mathematics and have
+had wide influence on the development of logic, philosophy, mathematics,
+computer science as well as other fields. Intuitively speaking, Gödel’s incompleteness theorems express that any rich enough logical system cannot
+prove its own consistency, i.e. that no contradiction like 0 = 1 can be derived
+within this system.
+Gödel [46] proves his first incompleteness theorem (G1) for a certain formal system P related to Russell-Whitehead’s Principia Mathematica based
+on the simple theory of types over the natural number series and the DedekindPeano axioms (see [8], p.3). Gödel announces the second incompleteness theorem (G2) in an abstract published in October 1930: no consistency proof
+of systems such as Principia, Zermelo-Fraenkel set theory, or the systems
+investigated by Ackermann and von Neumann is possible by methods which
+can be formulated in these systems (see [153], p.431).
+Gödel comments in a footnote of [46] that G2 is corollary of G1 (and in
+fact a formalized version of G1): if T is consistent, then the consistency
+of T is not provable in T where the consistency of T is formulated as the
+arithmetic formula which says that there exists an unprovable sentence in
+2000 Mathematics Subject Classification. 03F40, 03F30, 03F25.
+Key words and phrases. Gödel’s ﬁrst incompleteness theorem, Gödel’s second incompleteness theorem, Concrete incompleteness, Interpretation, Intensionality.
+Some materials of my old paper “Note on some misinterpretations of Gödel’s incompleteness theorems” have been incorporated into this paper. I would like to thank Matthias
+Baaz, Ulrich Kohlenbach, Taishi Kurahashi, Zachiri McKenzie, Fedor Pakhomov, Michael
+Rathjen, Saeed Salehi, Sam Sanders and Albert Visser for their valuable comments on
+this work. Especially, I would like to thank Sam Sanders and Zachiri McKenzie for their
+proofreading of my English writing of this paper. I would like to thank the referees for
+providing detailed and helpful comments for improvements. I thank the lamp for my feet,
+and the light on my path. This paper is the research result of the Humanities and Social
+Sciences of Ministry of Education Planning Fund project “Research on Gödel’s incompleteness theorem” (project no: 17YJA72040001). I would like to thank the fund support
+by the Humanities and Social Sciences of Ministry of Education Planning Fund.
+2
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+3
+
+T . Gödel [46] sketches a proof of G2 and promises to provide full details in
+a subsequent publication. This promise is not fulfilled, and a detailed proof
+of G2 for first-order arithmetic only appears in a monograph by Hilbert and
+Bernays [62]. Abstract logic-free formulations of Gödel’s incompleteness
+theorems have been given by Kleene [80] (“symmetric form”), Smullyan
+[124] (“representation systems”), and others. The following is a modern
+reformulation of Gödel’s incompleteness theorems.
+Theorem 1.1 (Gödel, [46]). Let T be a recursively axiomatized extension
+of PA.
+G1 If T is ω-consistent, then T is incomplete.
+G2 If T is consistent, then the consistency of T is not provable in T .
+Gödel’s incompleteness theorems G1 and G2 are of a rather different nature and scope. In this paper, we will discuss different versions of G1 and
+G2, from incompleteness for extensions of PA to incompleteness for systems
+weaker than PA w.r.t. interpretation. We will freely use G1 and G2 to refer
+to both Gödel’s first and second incompleteness theorems, and their different versions. The meaning of G1 and G2 will be clear from the context in
+which we refer to them.
+Gödel’s incompleteness theorems exhibit certain weaknesses and limitations of a given formal system. For Gödel, his incompleteness theorems indicate the creative power of human reason. In Emil Post’s celebrated words:
+mathematical proof is an essentially creative activity (see [102], p.339). The
+impact of Gödel’s incompleteness theorems is not confined to the community
+of mathematicians and logicians; popular accounts are well-known within
+the general scientific community and beyond. Gödel’s incompleteness theorems raise a number of philosophical questions concerning the nature of logic
+and mathematics as well as mind and machine. For the impact of Gödel’s
+incompleteness theorems, Feferman said:
+their relevance to mathematical logic (and its offspring in the
+theory of computation) is paramount; further, their philosophical relevance is significant, but in just what way is far
+from settled; and finally, their mathematical relevance outside of logic is very much unsubstantiated but is the object
+of ongoing, tantalizing efforts (see [35], p.434).
+From the literature, there are some good textbooks and survey papers on
+Gödel’s incompleteness theorems. For textbooks, we refer to [30, 102, 95,
+38, 121, 15, 123, 124, 55, 41]. For survey papers, we refer to [122, 8, 83, 17,
+138, 13, 24]. In the last twenty years, there have been a lot of advances in
+the study of incompleteness. We felt that a comprehensive survey paper for
+the current state-of-art of this research field is missing from the literature.
+The motivation of this paper is four-fold:
+• Give the reader an overview of the current state-of-art of research
+on incompleteness.
+• Classify these new advances on incompleteness under some important themes.
+• Propose some new questions not covered in the literature.
+• Set the direction for the future research of incompleteness.
+
+4
+
+YONG CHENG
+
+Due to space limitations and our personal taste, it is impossible to cover all
+research results from the literature related to incompleteness in this survey.
+Therefore, we will focus on three aspects of new advances in research on
+incompleteness:
+• classifications of different proofs of Gödel’s incompleteness theorems;
+• the limit of the applicability of G1;
+• the limit of the applicability of G2.
+We think these are the most important three aspects of research on incompleteness and reflect the depth and breadth of the research on incompleteness after Gödel. In this survey, we will focus on logical and mathematical
+aspects of research on incompleteness.
+An important and interesting topic concerning incompleteness is missing
+in this paper: philosophy of Gödel’s incompleteness theorems. For us, the
+widely discussed and most important philosophical questions about Gödel’s
+incompleteness theorems are: the relationship between G1 and the mechanism thesis, the status of Gödel’s disjunctive thesis, and the intensionality
+problem of G2. We leave a survey of philosophical discussions of Gödel’s
+incompleteness theorems for a future philosophy paper.
+This paper is structured as follows. In Section 1, we introduce the motivation, the main content and the structure of this paper. In Section 2, we
+list the preliminary notions and definitions used in this paper. In Section 3,
+we examine different proofs of Gödel’s incompleteness theorems and classify
+these proofs based on nine criteria. In Section 4, we examine the limit of
+the applicability of G1 both for extensions of PA, and for theories weaker
+than PA w.r.t. interpretation. In Section 5, we examine the limit of the
+applicability of G2, and discuss sources of indeterminacy in the formulation
+of the consistency statement.
+2. Preliminaries
+2.1. Definitions and notations. We list the definitions and notations required below. These are standard and used throughout the literature.
+Definition 2.1 (Basic notions).
+• A language consists of an arbitrary number of relation and function
+symbols of arbitrary finite arity.1 For a given theory T , we use L(T )
+to denote the language of T , and often equate L(T ) with the list of
+non-logical symbols of the language.
+• For a formula φ in L(T ), ‘T ⊢ φ’ denotes that φ is provable in T : i.e.,
+there is a finite sequence of formulas hφ0 , · · · , φn i such that φn = φ,
+and for any 0 ≤ i ≤ n, either φi is an axiom of T , or φi follows from
+some φj (j < i) by using one inference rule.
+• A theory T is consistent if no contradiction is provable in T .
+• We say a sentence φ is independent of T if T 0 φ and T 0 ¬φ.
+• A theory T is incomplete if there is a sentence φ in L(T ) which is
+independent of T ; otherwise, T is complete (i.e., for any sentence φ
+in L(T ), either T ⊢ φ or T ⊢ ¬φ).
+1We may view nullary functions as constants, and nullary relations as propositional
+variables.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+5
+
+In this paper, we focus on first-order theories based on a countable language, and always assume the arithmetization of the base theory with a
+recursive set of non-logical symbols. For the technical details of arithmetization, we refer to [102, 19]. Arithmetization means that any formula or
+finite sequence of formulas can be coded by a natural number, called the
+Gödel number. This representation of syntax was pioneered by Gödel.
+Definition 2.2 (Basic notions following arithmetization).
+• We say a set of sentences Σ is recursive if the set of Gödel numbers
+of sentences in Σ is recursive.
+• A theory T is decidable if the set of sentences provable in T is recursive; otherwise it is undecidable.
+• A theory T is recursively axiomatizable if it has a recursive set of
+axioms (i.e. the set of Gödel numbers of axioms of T is recursive).
+• A theory T is finitely axiomatizable if it has a finite set of axioms.
+• A theory T is locally finitely satisfiable if every finitely axiomatized
+subtheory of T has a finite model.
+• A theory T is recursively enumerable (r.e.) if it has a recursively
+enumerable set of axioms.
+• A theory T is essentially undecidable if any recursively axiomatizable
+consistent extension of T in the same language is undecidable.
+• A theory T is essentially incomplete if any recursively axiomatizable
+consistent extension of T in the same language is incomplete.2
+• A theory T is minimal essentially undecidable if T is essentially
+undecidable, and if deleting any axiom of T , the remaining theory is
+no longer essentially undecidable.
+Definition 2.3 (Basic notations).
+• We denote by n the numeral representing n ∈ ω in L(PA).
+• We denote by pφq the numeral representing the Gödel number of φ.
+• We denote by pφ(ẋ)q the numeral representing the Gödel number of
+the sentence obtained by replacing x with the value of x.3
+Definition 2.4 (Representations, translations, and interpretations).
+• A n-ary relation R(x1 , · · · , xn ) on ω n is representable in T if there is a
+formula φ(x1 , · · · , xn ) such that T ⊢ φ(m1 , · · · , mn ) when R(m1 , · · · , mn )
+holds, and T ⊢ ¬φ(m1 , · · · , mn ) when R(m1 , · · · , mn ) does not hold.
+• We say that a total function f (x1 , · · · , xn ) on ω n is representable in T
+if there is a formula ϕ(x1 , · · · , xn , y) such that T ⊢ ∀y(ϕ(a1 , · · · , an , y) ↔
+y = m) whenever a1 , · · · , an , m ∈ ω are such that f (a1 , · · · , an ) = m.
+• Let T be a theory in a language L(T ), and S a theory in a language
+L(S). In its simplest form, a translation I of language L(T ) into
+language L(S) is specified by the following:
+– an L(S)-formula δI (x) denoting the domain of I;
+– for each relation symbol R of L(T ), as well as the equality relation =, an L(S)-formula RI of the same arity;
+2The theory of completeness/incompleteness is closely related to the theory of decidability/undecidability (see [129]).
+3Note that the variable x is free in the formula pφ(ẋ)q but not in pφ(x)q.
+
+6
+
+YONG CHENG
+
+– for each function symbol F of L(T ) of arity k, an L(S)-formula
+FI of arity k + 1.
+• If φ is an L(T )-formula, its I-translation φI is an L(S)-formula constructed as follows: we rewrite the formula in an equivalent way so
+that function symbols only occur in atomic subformulas of the form
+F (x) = y, where xi , y are variables; then we replace each such atomic
+formula with FI (x, y), we replace each atomic formula of the form
+R(x) with RI (x), and we restrict all quantifiers and free variables
+to objects satisfying δI . We take care to rename bound variables to
+avoid variable capture during the process.
+• A translation I of L(T ) into L(S) is an interpretation of T in S if S
+proves the following:
+– for each function symbol F of L(T ) of arity k, the formula
+expressing that FI is total on δI :
+∀x0 , · · · ∀xk−1 (δI (x0 ) ∧ · · · ∧ δI (xk−1 ) → ∃y(δI (y) ∧ FI (x0 , · · · , xk−1 , y)));
+– the I-translations of all axioms of T , and axioms of equality.
+The simplified picture of translations and interpretations above actually
+describes only one-dimensional, parameter-free, and one-piece translations.
+For precise definitions of a multi-dimensional interpretation, an interpretation with parameters, and a piece-wise interpretation, we refer to [137] [135]
+[136] for more details.
+The notion of interpretation provides us with a method for comparing
+different theories in different languages, as follows.
+Definition 2.5 (Interpretations II).
+• A theory T is interpretable in a theory S if there exists an interpretation of T in S. If T is interpretable in S, then all sentences provable
+(refutable) in T are mapped, by the interpretation function, to sentences provable (refutable) in S.
+• We say that a theory U weakly interprets a theory V (or V is weakly
+interpretable in U ) if V is interpretable in some consistent extension
+of U in the same language (or equivalently, for some interpretation
+τ , the theory U + V τ is consistent).
+• Given theories S and T , let ‘S ✂ T ’ denote that S is interpretable in
+T (or T interprets S); let ‘S ✁ T ’ denote that T interprets S but S
+does not interpret T ; we say S and T are mutually interpretable if
+S ✂ T and T ✂ S.
+Interpretability provides us with one measure of comparing strength of
+different theories. If theories S and T are mutually interpretable, then T
+and S are equally strong w.r.t. interpretation. In this paper, whenever we
+say that theory S is weaker than theory T w.r.t. interpretation, this means
+that S ✁ T .
+A general method for establishing the undecidability of theories is developed in [129]. The following theorem provides us with two methods for
+proving the essentially undecidability of a theory respectively via interpretation and representability.
+Theorem 2.6 (Theorem 7, Corollary 2, [129]).
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+7
+
+• Let T1 and T2 be two consistent theories such that T2 is interpretable
+in T1 . If T2 is essentially undecidable, then T1 is essentially undecidable.
+• If all recursive functions are representable in a consistent theory T ,
+then T is essentially undecidable.
+We shall also need some basic notions from recursion theory, as follows.
+Definition 2.7 (Basic recursion theory).
+• Let φ0 , φ1 , · · · be a list of all unary computable (partial recursive)
+functions such that φi (j), if it exists, can be computed from i and j.
+• A recursively enumerable set (r.e. for short) is the domain of φi for
+some i ∈ ω, which is denoted by Wi .
+• The notation φi (j) ↑ means that the function φi is not defined at j,
+or j ∈
+/ Wi ; and φi (j) ↓ means that φi is defined at j, or j ∈ Wi .
+Provability logic provides us with an important tool to study the metamathematics of arithmetic and incompleteness. A good reference on the
+basics of provability logic is [15].
+Definition 2.8 (Modal logic).
+• The modal system K consisting of the following axiom schemes:
+– All tautologies;
+– ✷(A → B) → (✷A → ✷B);
+as well as two inference rules:
+– if ⊢ A and ⊢ A → B, then ⊢ B;
+– if ⊢ A, then ⊢ ✷A.
+• We denote by GL the modal system consisting of all axioms of K, all
+instances of the scheme ✷(✷A → A) → ✷A, and the same inference
+rules with K.
+• We denote by GLS the modal system consisting of all theorems of
+GL, and all instances of the scheme ✷A → A. However, GLS has
+only one inference rule: Modus Ponens.
+2.2. Logical systems. In this section, we introduce some well-known theories weaker than PA w.r.t. interpretation from the literature. In Section
+4, we will show that these theories are essentially incomplete.
+Robinson Arithmetic Q is introduced in [129] by Tarski, Mostowski and
+Robinson as a base axiomatic theory for investigating incompleteness, and
+undecidability.
+Definition 2.9 (Robinson Arithmetic Q). Robinson Arithmetic Q is defined in the language {0, S, +, ×} with the following axioms:
+Q1 : ∀x∀y(Sx = Sy → x = y);
+Q2 : ∀x(Sx 6= 0);
+Q3 : ∀x(x 6= 0 → ∃y(x = Sy));
+Q4 : ∀x∀y(x + 0 = x);
+Q5 : ∀x∀y(x + Sy = S(x + y));
+Q6 : ∀x(x × 0 = 0);
+Q7 : ∀x∀y(x × Sy = x × y + x).
+Robinson Arithmetic Q is very weak: it cannot even prove that addition
+is associative.
+
+8
+
+YONG CHENG
+
+Definition 2.10 (Peano Arithmetic PA). The theory PA consists of the
+axioms Q1 -Q2 , Q4 -Q7 in Definition 2.9 and the following axiom scheme of
+induction:
+(Induction)
+
+(φ(0) ∧ ∀x(φ(x) → φ(Sx))) → ∀xφ(x),
+
+where φ is a formula with at least one free variable x. Let N = hN, +, ×i
+denote the standard model of arithmetic.
+We now introduce a well-known hierarchy of L(PA)-formulas called the
+arithmetical hierarchy (see [102, 55]).
+Definition 2.11 (Arithmetical hierarchy).
+• Bounded formulas (Σ00 , or Π00 , or ∆00 formula) are built from atomic
+formulas using only propositional connectives and bounded quantifiers (in the form ∀x ≤ y or ∃x ≤ y).
+• A formula is Σ0n+1 if it has the form ∃xφ where φ is Π0n .
+• A formula is Π0n+1 if it has the form ∀xφ where φ is Σ0n . Thus,
+a Σ0n -formula has a block of n alternating quantifiers, the first one
+being existential, and this block is followed by a bounded formula.
+Similarly for Π0n -formulas.
+• A formula is ∆0n if it is equivalent to both a Σ0n formula and a Π0n
+formula.
+We can now formally introduce the notion of consistency in its various
+guises, as well as the various fragments of Peano arithmetic PA.
+Definition 2.12 (Formal consistency and systems).
+• A theory T is said to be ω-consistent if there is no formula ϕ(x) such
+that T ⊢ ∃xϕ(x), and for any n ∈ ω, T ⊢ ¬ϕ(n̄).
+• A theory T is 1-consistent if there is no such ∆01 formula ϕ(x).
+• We say a theory T is Σ01 -sound if for any Σ01 sentences φ, if T ⊢ φ,
+then N |= φ.
+• The collection axiom for Σ0n+1 formulas is the following principle:
+(∀x < u)(∃y)ϕ(x, y) → (∃v)(∀x < u)(∃y < v)ϕ(x, y) where ϕ(x, y)
+is a Σ0n+1 formula possibly containing parameters distinct from u, v.
+• The theory IΣn is Q plus induction for Σ0n formulas, and BΣn+1 is
+IΣ0 plus collection for Σ0n+1 formulas.
+• The theory I∆0 is Q plus induction for ∆00 formulas.
+• The theory PA is the union of all IΣn .
+It is well-known that the following form a strictly increasing hierarchy:
+IΣ0 , BΣ1 , IΣ1 , BΣ2 , · · · , IΣn , BΣn+1 , · · · , PA.
+Moreover, there are weak fragments of PA that play an important role
+in computer science, namely in complexity theory ([18, 19]). These systems
+are based on the following concept.
+By [36, Proposition 2, p.299], there is a bounded formula Exp(x, y, z) such
+that IΣ0 proves that Exp(x, 0, z) ↔ z = 1, and Exp(x, Sy, z) ↔ ∃t(Exp(x, y, t)∧
+z = t · x). However, IΣ0 cannot prove the totality of Exp(x, y, z).
+Definition 2.13 (Sub-exponential functions).
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+9
+
+• Let exp denote the statement postulating the totality of the exponential function ∀x∀y∃zExp(x, y, z).
+• Elementary Arithmetic (EA) is I∆0 + exp.
+• Define ω1 (x) = x|x| , and ωn+1 (x) = 2ωn (|x|) where |x| is the length
+of the binary expression of x.
+• Let Ωn ≡ (∀x)(∃y)(ωn (x) = y) express that ωn (x) is total.
+Theorem 2.14 ([53, 36]).
+• The theory IΣ0 + Ωn is interpretable in Q for any n ≥ 1 (see [36,
+Theorem 3, p.304]).
+• The theory IΣ0 + exp is not interpretable in Q.4
+• The theory IΣ1 is not interpretable in IΣ0 + exp (see [53, Theorem
+1.1], p.186).
+• The theory IΣn+1 is not interpretable in BΣn+1 (see [53, Theorem
+1.2], p.186).
+• The theory BΣ1 +exp is interpretable in IΣ0 +exp (see [53, Theorem
+2.4], p.188).
+• The theory BΣ1 + Ωn is interpretable in IΣ0 + Ωn for each n ≥ 1
+(see [53, Theorem 2.5], p.189).
+• The theory BΣn+1 is interpretable in IΣn for each n ≥ 0 (see [53,
+Theorem 2.6], p.189).
+The theory PA− is the theory of commutative, discretely ordered semirings with a minimal element plus the subtraction axiom. The theory PA−
+has the following axioms, where the language L(PA− ) is L(PA) ∪ {≤}:
+Definition 2.15 (The system PA− ).
+• x + 0 = x;
+• x + y = y + x;
+• (x + y) + z = x + (y + z);
+• x × 1 = x;
+• x × y = y × x;
+• (x × y) × z = x × (y × z);
+• x × (y + z) = x × y + x × z;
+
+• x ≤ y ∨ y ≤ x;
+• (x ≤ y ∧ y ≤ z) → x ≤ z;
+• x + 1  x;
+• x ≤ y → (x = y ∨ x + 1 ≤ y);
+• x ≤ y → x + z ≤ y + z;
+• x ≤ y → x × z ≤ y × z;
+• x ≤ y → ∃z(x + z = y).
+
+The theory Q+ is the extension of Q in the language L(Q+ ) = L(Q)∪{≤}
+with the following extra axioms:
+Definition 2.16 (The system Q+ ). The system Q+ is Q plus
+Q8 : (x + y) + z = x + (y + z);
+Q9 : x × (y + z) = x × y + x × z;
+Q10 : (x × y) × z = x × (y × z);
+Q11 : x + y = y + x;
+Q12 : x × y = y × x;
+Q13 : x ≤ y ↔ ∃z(x + z = y).
+Andrzej Grzegorczyk considers a theory Q− in which addition and multiplication satisfy natural reformulations of the axioms of Q but are possibly
+4See [36, Theorem 6, p.313]. Solovay proves that IΣ + ¬exp is interpretable in Q (see
+0
+[36, Theorem 7, p.314]).
+
+10
+
+YONG CHENG
+
+non-total functions. More exactly, the language of Q− is {0, S, A, M } where
+A and M are ternary relations.
+Definition 2.17 (The system Q− ). The axioms of Q− are the axioms Q1 Q3 of Q plus the following six axioms about A and M :
+A: ∀x∀y∀z1 ∀z2 (A(x, y, z1 ) ∧ A(x, y, z2 ) → z1 = z2 );
+M: ∀x∀y∀z1 ∀z2 (M (x, y, z1 ) ∧ M (x, y, z2 ) → z1 = z2 );
+G4: ∀x A(x, 0, x);
+G5: ∀x∀y∀z(∃u(A(x, y, u) ∧ z = S(u)) → A(x, S(y), z));
+G6: ∀x M (x, 0, 0);
+G7: ∀x∀y∀z(∃u(M (x, y, u) ∧ A(u, x, z)) → M (x, S(y), z)).
+Samuel R. Buss [18] introduces S12 , a finitely axiomatizable theory, to
+study polynomial time computability. The theory S12 provides what is
+needed for formalizing the proof of G2 in a natural and effortless way: this
+process is actually easier in Buss’ theory than in full PA, since the restrictions present in S12 prevent one from making wrong turns and inefficient
+choices (see [137]).
+Next, we introduce adjunctive set theory AS which has a language with
+only one binary relation symbol ‘∈’.
+Definition 2.18 (Adjunctive set theory AS, [103]). The axioms of AS
+consist of the following:
+AS1: ∃x∀y(y ∈
+/ x).
+AS2: ∀x∀y∃z∀u(u ∈ z ↔ (u = x ∨ u = y)).
+We now consider the theory R introduced by A. Tarski, A. Mostowski
+and R. Robinson in [129], and some variants of it.
+Definition 2.19 (The theory R). Let R be the theory consisting of schemes
+Ax1-Ax5 with L(R) = {0, · · · , n, · · · , +, ×, ≤} where m, n ∈ ω.
+Ax1: m + n = m + n;
+Ax2: m × n = m × n;
+Ax3: m 6= n if m 6= n;
+Ax4: ∀x(x ≤ n → x = 0 ∨ · · · ∨ x = n);
+Ax5: ∀x(x ≤ n ∨ n ≤ x).
+As it happens, the system R contains all key properties of arithmetic for
+the proof of G1. Unlike Q, the theory R is not finitely axiomatizable.
+Definition 2.20 (Variations of R).
+• Let R0 be R without Ax5.
+• Let R1 be the system consisting of schemes Ax1, Ax2, Ax3 and
+Ax4′ where the latter is as follows
+Ax4′ : ∀x(x ≤ n ↔ x = 0 ∨ · · · ∨ x = n).
+• Let R2 be the system consisting of schemes Ax2, Ax3 and Ax4′ .
+The ‘concatination’ theory TC has the language {⌢, α, β} with a binary
+function symbol and two constants.
+Definition 2.21 (The system TC).
+TC1: ∀x∀y∀z(x ⌢ (y ⌢ z) = (x ⌢ y) ⌢ z);
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+11
+
+TC2: ∀x∀y∀u∀v(x ⌢ y = u ⌢ v → ((x = u ∧ y = v) ∨ ∃w((u = x ⌢
+w ∧ w ⌢ v = y) ∨ (x = u ⌢ w ∧ w ⌢ y = v))));
+TC3: ∀x∀y(α 6= x ⌢ y);
+TC4: ∀x∀y(β 6= x ⌢ y);
+TC5: α 6= β.
+Primitive recursive arithmetic (PRA) is a quantifier-free formalization
+of the natural numbers, and the language of PRA can express arithmetic
+statements involving natural numbers and any primitive recursive function.
+Weak Konig’s Lemma (WKL0 ) states that every infinite binary tree has an
+infinite branch. We refer to [55, 120] for the definitions of PRA and WKL0 .
+In a nutshell, the former system allows us to perform ‘iteration of functions
+f : N → N’, while the latter expresses a basic compactness argument for
+Cantor space.
+Theorem 2.22 (Friedman’s conservation theorem, Theorem 2.1, [75]). If
+WKL0 ⊢ φ, then PRA ⊢ φ for any Π02 sentence φ in L(PA).
+Finally, diagnolisation, in one form or other, forms the basis for the proof
+of G2. The following lemma is crucial in this regard.
+Lemma 2.23 (The Diagnolisation Lemma). Let T be a consistent r.e. extension of Q. For any formula φ(x) with exactly one free variable, there
+exists a sentence θ such that T ⊢ θ ↔ φ(pθq).
+Lemma 2.23 is the simplest and most often used version of the Diagnolisation Lemma. For a generalized version of the Diagnolisation Lemma, we
+refer to [15]. In this paper, we use the term “Diagnolisation Lemma” to
+refer to Lemma 2.23 and some variants of the generalized version.
+3. Proofs of Gödel’s incompleteness theorems
+3.1. Introduction. In this section, we discuss different proofs of Gödel’s
+incompleteness theorems from the literature, and propose nine criteria for
+classifying them.
+First of all, there are no requirements on the independent sentence in G1.
+In particular, such a sentence need not have any mathematical meaning.
+This is often the case when meta-mathematical (proof-theoretic or recursiontheoretic or model-theoretic) methods are used to construct the independent
+sentence. In Section 3.2-3.4, we will discuss proofs of Gödel’s incompleteness
+theorems via pure logic. In Section 3.5, we will give an overview of the
+“concrete incompleteness” research program which seeks to identify natural
+independent sentences with real mathematical meaning.
+Secondly, we say that a proof of G1 is constructive if it explicitly constructs
+the independent sentence from the base theory by algorithmic means. A nonconstructive proof of G1 only proves the mere existence of the independent
+sentence and does not show its existence algorithmically. We say that a proof
+of G1 for theory T has the Rosser property if the proof only assumes that
+T is consistent instead of assuming that T is ω-consistent or 1-consistent or
+Σ01 -sound; all these notions are introduced in Section 2.2.
+After Gödel, many different proofs of Gödel’s incompleteness theorems
+have been found. These proofs can be classified using the following criteria:
+
+12
+
+YONG CHENG
+
+• proof-theoretic proof;
+• recursion-theoretic proof;
+• model-theoretic proof;
+• proof via arithmetization;
+• proof via the Diagnolisation Lemma;
+• proof based on “logical paradox”;
+• constructive proof;
+• proof having the Rosser property;
+• the independent sentence has natural and real mathematical content.5
+However, these aspects are not exclusive: a proof of G1 or G2 may satisfy
+several of the above criteria.
+Thirdly, there are two kinds of proofs of Gödel’s incompleteness theorems
+via pure logic: one based on logical paradox and one not based on logical
+paradox. In Section 3.2, we first provide an overview of the modern reformulation of proofs of Gödel’s incompleteness theorems. We discuss proofs
+of Gödel’s incompleteness theorems not based on logical paradox in Section 3.3. We discuss proofs of Gödel’s incompleteness theorems based on
+logical paradox in Section 3.4.
+3.2. Overview and modern formulation. In a nutshell, the three main
+ideas in the (modern/standard) proofs of G1 and G2 are arithmetization,
+representability, and self-reference, as discussed in detail in Section 3.2.1.
+Interesting properties of G1 and G2 are discussed in Sections 3.2.2 and 3.2.4,
+while the formalized notions of ‘proof’ and ‘truth’ are discussed in Section 3.2.3. Finally, we formulate a blanket caveat for the rest of this section:
+Unless stated otherwise, we will always assume that T is a recursively
+axiomatizable consistent extension of Q.
+Other sections shall contain similar caveats and we sometimes stress these.
+3.2.1. Three steps towards G1 and G2. Intuitively speaking, Gödel’s incompleteness theorems can be proved based on the following key ingredients.
+• Arithmetization: since G1 and G2 are theorems about properties
+of the syntax of logic, we need to somehow represent the latter, which
+is done via a coding scheme called arithmetization.
+• Representations: the notion of ‘proof’ and related concepts in G1
+and G2 are then expressed (‘represented’) via arithmetization.
+• Self-reference: given a representation of ‘proof’ and related concepts, one can write down formal statements that intuitively express
+‘self-referential’ things like ‘this sentence does not have a proof’.
+As we will see, the intuitively speaking ‘self-referential’ statements are the
+key to proving G1 and G2. We now discuss these three notions in detail.
+5I.e. Gödel’s sentence is a pure logical construction (via the arithmetization of syntax
+
+and provability predicate) and has no relevance with classic mathematics (without any
+combinatorial or number-theoretic content). On the contrary, Paris-Harrington Principle is an independent arithmetic sentence from classic mathematics with combinatorial
+content.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+13
+
+First of all, arithmetization has the following intuitive content: it establishes a one-to-one correspondence between expressions of L(T ) and natural
+numbers. Thus, we can translate metamathematical statements about the
+formal theory T into statements about natural numbers. Furthermore, fundamental metamathematical relations can be translated in this way into
+certain recursive relations, hence into relations representable in T . Consequently, one can speak about a formal system of arithmetic, and about its
+properties as a theory in the system itself! This is the essence of Gödel’s
+idea of arithmetization, which was revolutionary at a time when computer
+hardware and software did not exist yet.
+Secondly, in light of the previous, we can define certain relations on natural numbers that express or represent crucial metamathematical concepts
+related to the formal system T , like ‘proof’ and ‘consistency’. For example,
+modulo plenty of technical details, we can readily define a binary relation
+on ω 2 expressing what it means to prove a formula in T , namely as follows:
+P roofT (m, n) if and only if n is the Gödel number of a proof in T of the
+formula with Gödel number m.
+Moreover, we can show that the relation P roofT (m, n) is recursive. In
+addition, Gödel proves that every recursive relation is representable in PA.
+Next, let Proof T (x, y) be the formula which represents P roofT (m, n) in
+PA.6 From the formula Proof T (x, y), we can define the ‘provability’ predicate ProvT (x) as ∃yProof T (x, y). The provability predicate Prov T (x)
+satisfies the following conditions which show that formal and intuitive provability have the same properties.
+(1) If T ⊢ ϕ, then T ⊢ Prov T (pϕq);
+(2) T ⊢ Prov T (pϕ → ψq) → (Prov T (pϕq) → ProvT (pψq));
+(3) T ⊢ Prov T (pϕq) → Prov T (pProv T (pϕq)q).
+For the proof of G1, Gödel defines the Gödel sentence G which asserts its
+own unprovability in T via a self-reference construction. Gödel shows that
+if T is consistent, then T 0 G, and if T is ω-consistent, then T 0 ¬G. One
+way of obtaining such a Gödel sentence is the Diagnolisation Lemma which
+intuitively speaking implies that the predicate ¬Prov T (x) has a fixed point,
+i.e. there is a sentence θ in L(T ) such that
+T ⊢ θ ↔ ¬Prov T (pθq).
+Clearly, T 0 θ while θ intuitively expresses its own unprovability, i.e. the
+aforementioned self-referential nature.
+For the proof of G2, we first define the arithmetic sentence Con(T ) in
+L(T ) as ¬ProvT (p0 6= 0q) which says that for all x, x is not a code of a
+proof of a contradiction in T . Gödel’s second incompleteness theorem (G2)
+states that if T is consistent, then the arithmetical formula Con(T ), which
+expresses the consistency of T , is not provable in T . In Section 5.3, we will
+discuss some other ways of expressing the consistency of T .
+6Via arithmetization and representability, one can speak about the property of T in
+PA itself!
+
+14
+
+YONG CHENG
+
+Finally, from the above conditions (1)-(3), one can show that T ⊢ Con(T ) ↔
+G. Thus, G2 holds: if T is consistent, then T 0 Con(T ). For more details
+on these proofs of G1 and G2, we refer to Chapter 2 in [102].
+3.2.2. Properties of G1. In this section, we discuss some (sometimes subtle)
+comments on G1.
+First of all, Gödel’s proof of G1 is constructive as follows: given a consistent r.e. extension T of PA, the proof constructs, in an algorithmic way, a
+true arithmetic sentence which is unprovable in T . In fact, one can effectively
+find a true Π01 sentence GT of arithmetic such that GT is independent of T .
+Gödel calls this the “incompletability or inexhaustability of mathematics”.
+Secondly, for Gödel’s proof of G1, only assuming that T is consistent
+does not suffice to show that Gödel sentence is independent of T . In fact,
+the optimal condition to show that Gödel sentence is independent of T is:
+T + Con(T ) is consistent (see Theorems 35-36 in [64]).7
+Thirdly, in summary, Gödel’s proof of G1 has the following properties:
+• uses proof-theoretic method with arithmetization;
+• does not directly use the Diagnolisation Lemma;
+• the proof formalizes the liar paradox;
+• the proof is constructive;
+• the proof does not have the Rosser property;
+• Gödel’s sentence has no real mathematical content.
+All these characteristics of Gödel’s proof of G1 are not necessary conditions
+for proving G1. For example, G1 can be proved using recursion-theoretic
+or model-theoretic method, using the Diagnolisation Lemma, using other
+logical paradoxes, using non-constructive methods, only assuming that T
+is consistent (i.e. having the Rosser property), and can be proved without
+arithmetization.
+Fourth, G1 does not tell us that any consistent theory is incomplete.
+In fact, there are many consistent complete first-order theories. For example, the following first-order theories are complete: the theory of dense
+linear orderings without endpoints (DLO), the theory of ordered divisible
+groups (ODG), the theory of algebraically closed fields of given characteristic (ACFp ), and the theory of real closed fields (RCF). We refer to [32]
+for details of these theories. In fact, G1 only tells us that any consistent
+first-order theory containing a large enough fragment of PA (such as Q) is
+incomplete: there is then a true Π01 sentence which is independent of the
+initial theory. Turing’s work in [131] shows that any true Π01 -sentence of
+arithmetic is provable in some transfinite iteration of PA. Feferman’s work
+in [34] extends Turing’s work and shows that any true sentence of arithmetic
+is provable in some transfinite iteration of PA.
+Fifth, whether a theory of arithmetic is complete depends on the language
+of the theory. There are respectively recursively axiomatized complete arithmetic theories in the language of L(0, S), L(0, S, <) and L(0, S, <, +) (see
+7This optimal condition is much weaker than ω-consistency.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+15
+
+Section 3.1-3.2 in [30]). Containing enough information of arithmetic is essential for a consistent arithmetic theory to be incomplete. For example, Euclidean geometry is not about arithmetic but only about points, circles and
+lines in general; but Euclidean geometry is complete as Tarski has proved
+(see [130]). If the theory contains only information about the arithmetic
+of addition without multiplication, then it can be complete. For example,
+Presburger arithmetic is a complete theory of the arithmetic of addition in
+the language of L(0, S, +) (see Theorem 3.2.2 in [102], p.222). Finally, containing the arithmetic of multiplication is not sufficient for a theory to be
+incomplete. For example, there exists a complete recursively axiomatized
+theory in the language of L(0, ×) (see [102], p.230).
+Finally, it is well-known that T h(N, +, ×) is interpretable in T h(Z, +, ×)
+and T h(Q, +, ×).8 Since T h(N, +, ×) is undecidable and has a finitely axiomatizable incomplete sub-theory Q, by Theorem 2.6, T h(Z, +, ×) and
+T h(Q, +, ×) are undecidable, and hence not recursively axiomatizable, but
+they respectively have a finitely axiomatizable incomplete sub-theory of integers and rational numbers. But T h(R, +, ×) is decidable and recursively axiomatizable (even if not finitely axiomatizable). In fact, T h(R, +, ×) = RCF
+(the theory of real closed field) (see [32], p.320-321). Note that this fact does
+not contradict G1 since none of N, Z and Q is definable in (R, +, ×).
+3.2.3. Between truth and provability. In this paper, unless stated otherwise,
+we equate a set of sentences with the set of Gödel’s numbers of these sentences. We discuss the formalized notions of ‘truth’ and ‘proof’, and how
+they relate to incompleteness.
+Definition 3.1. We define Truth = {φ ∈ L(PA) : N |= φ} and Prov =
+{φ ∈ L(PA) : PA ⊢ φ}, i.e. the formalized notions of ‘proof’ and ‘truth’.
+First of all, truth and provability are the same for purely existential statements. Put another way, incompleteness does not arise at the level of Σ01
+sentences. Indeed, we have Σ01 -completeness for T : for any Σ01 sentences φ,
+T ⊢ φ if and only if N |= φ. Thus, Gödel’s sentence is a true Π01 sentence in
+the form ∀xφ(x) such that T 0 ∀xφ(x) but ‘T ⊢ φ(n̄)’ holds for any n ∈ ω.
+Secondly, the properties of Truth are essentially different from that of
+Prov. Before Gödel’s work, it was thought that Truth = Prov. Thus,
+Gödel’s first incompleteness theorem (G1) reveals the difference between the
+notion of provability in PA and the notion of truth in the standard model
+of arithmetic N. There are some differences between Truth and Prov:
+• Prov ( Truth, i.e. there is a true arithmetic sentence which is
+unprovable in PA;
+• Tarski proves that: Truth is not definable in N but Prov is definable
+in N;
+• Truth is not arithmetic but Prov is recursive enumerable.
+However, both Truth and Prov are not recursive and not representable in
+PA. For more details on Truth and Prov, we refer to [102, 129].
+Thirdly, the differences between Truth and Prov can also be expressed
+in terms of arithmetical interpretations, defined as follows.
+8The key point is: N is deﬁnable in (Z, +, ×) and (Q, +, ×). See chapter XVI in [32].
+
+16
+
+YONG CHENG
+
+Definition 3.2 (Arithmetical interpretations). A mapping from the set of
+all modal propositional variables to the set of L(PA)-sentences is called an
+arithmetical interpretation.
+Every arithmetical interpretation f is uniquely extended to the mapping
+f ∗ from the set of all modal formulas to the set of L(T )-sentences so that
+f ∗ satisfies the following conditions:
+• f ∗ (p) = f (p) for each propositional variable p;
+• f ∗ commutes with every propositional connective;
+• f ∗ (✷A) is ProvT (pf ∗ (A)q) for every modal formula A.
+In the following, we equate arithmetical interpretations f with their unique
+extensions f ∗ defined on the set of all modal formulas. In this way, Solovay’s
+Arithmetical Completeness Theorems for GL and GLS characterize the
+difference between Prov and Truth via provability logic.
+Theorem 3.3 (Solovay, [127]).
+Arithmetical Completeness Theorem for GL: Let T be a Σ01 -sound
+r.e. extension of Q. For any modal formula φ in L(GL), GL ⊢ φ if
+and only if T ⊢ f (φ) for every arithmetic interpretation f .
+Arithmetical Completeness Theorem for GLS: For any modal formula φ, GLS ⊢ φ if and only if N |= f (φ) for every arithmetic interpretation f .
+Finally, one can study the notion of ‘proof predicate’ as given by Proof T (x, y)
+in an abstract setting, namely as follows. Recall that T is a recursively
+axiomatizable consistent extension of Q. We introduce general notions of
+proof predicate and provability predicate which generalize the proof predicate Proof T (x, y) and the provability predicate ProvT (x) defined above in
+Gödel’s proof of G1.
+Definition 3.4 (Proof predicate). We say a formula Prf T (x, y) is a proof
+predicate of T if it satisfies the following conditions:9
+• Prf T (x, y) is ∆01 (PA);10
+• PA ⊢ ∀x(ProvT (x) ↔ ∃yPrf T (x, y));
+• for any n ∈ ω and formula φ, N |= Proof T (pφq, n) ↔ Prf T (pφq, n);
+• PA ⊢ ∀x∀x′ ∀y(Prf T (x, y) ∧ Prf T (x′ , y) → x = x′ ).
+Definition 3.5 (Provability and consistency). We define the provability
+predicate PrT (x) from a proof predicate Prf T (x, y) by ∃y Prf T (x, y), and
+the consistency statement Con(T ) from a provability predicate PrT (x) by
+¬PrT (p0 6= 0q).
+The items D1-D3 below are called the Hilbert-Bernays-Löb derivability
+conditions. Note that D1 holds for any provability predicate PrT (x).
+Definition 3.6 (Standard proof predicate). We say that provability predicate PrT (x) is standard if it satisfies D2 and D3 as follows.
+9We can say that each proof predicate represents the relation “y is the code of a proof
+in T of a formula with Gödel number x”.
+10We say a formula φ is ∆0 (PA) if there exists a Σ0 formula α such that PA ⊢ φ ↔ α,
+1
+1
+and there exists a Π01 formula β such that PA ⊢ φ ↔ β.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+17
+
+D1: If T ⊢ φ, then T ⊢ PrT (pφq);
+D2: If T ⊢ PrT (pφ → ϕq) → (PrT (pφq) → PrT (pϕq));
+D3: T ⊢ PrT (pφq) → PrT (pPrT (pφq)q).
+We say that Prf T (x, y) is a standard proof predicate if the induced provability predicate from it is standard.
+The previous definition leads to another blanket caveat:
+Unless stated otherwise, we always assume that PrT (x) is a standard
+provability predicate, and Con(T ) is the canonical consistency statement
+defined as ¬PrT (p0 6= 0q) via the standard provability predicate PrT (x).
+3.2.4. Properties of G2. In this section, we discuss some (sometimes subtle)
+comments on G2.
+First of all, we examine a somewhat delicate mistake in the argument
+which claims that, by an easy application of the compactness theorem, we
+can show that for any recursive axiomatization of a consistent theory T , T
+can not prove its own consistency. Visser presents this argument in [140] as
+an interesting dialogue between Alcibiades and Socrates:
+Suppose a consistent theory T can prove its own consistency
+under some axiomatization. By compactness theorem, there
+must be a finitely axiomatized sub-theory S of T such that
+S already proves the consistency of T . Since S proves the
+consistency of T , it must also prove the consistency of S. So,
+we have a finitely axiomatized theory which proves its own
+consistency. But G2 applies to the finite axiomatization and
+we have a contradiction. It follows that T can not prove its
+own consistency.
+The mistake in this argument is: from the fact that S can prove the consistency of T we cannot infer that S can prove the consistency of S. Some may
+argue that since S is a sub-theory of T and S can prove the consistency of
+T , then of course S can prove the consistency of S.
+However, as Visser correctly points out in [140], we should carefully distinguish three perspectives of the theory T : our external perspective, the
+internal perspective of S, and the internal perspective of T . From each perspective, the consistency of the whole theory implies the consistency of its
+sub-theory. From T ’s perspective, S is a sub-theory of T . But from S’s
+perspective, S may not be a sub-theory of T . From the fact that T knows
+that S is a sub-theory of T , we cannot infer that S also knows that S is a
+sub-theory of T since S is a finite sub-theory of T and may not know any
+information that T knows, leading to the following (dramatic) conclusion:
+the sub-theory relation between theories is not absolute.
+Similarly, the notion of consistency is not absolute. For example, let S =
+PA + ¬Con(PA). From G2, S is consistent from the external perspective.
+But since S ⊢ ¬Con(S), the theory S is not consistent from the internal
+perspective of S. Note that PA ⊢ PrPA (0 6= 0) → PrPA (PrPA (0 6= 0) →
+0 6= 0). Thus, a theory may be consistent from the external perspective but
+inconsistent from the internal perspective.
+
+18
+
+YONG CHENG
+
+From Gödel’s proof of G2, we cannot infer that if T is a consistent r.e. extension of Q, then Con(T ) is independent of T . The key point is: it is
+not enough to show that T 0 ¬Con(T ) only assuming that T is consistent.
+However, we can show that Con(T ) is independent of T assuming that T
+is 1-consistent.11 In fact, the formalized version of “if T is consistent, then
+Con(T ) is independent of T ” is not provable in T .12
+Definition 3.7 (Reflexivity).
+• A first-order theory T containing PA is said to be reflexive if T ⊢
+Con(S) for each finite sub-theory S of T where Con(S) is similarly
+defined as Con(PA).
+• We say the theory T is essentially reflexive if any consistent extension
+of T in L(T ) is reflexive.
+• Let Con(T )↾ x denote the finite consistency statement “there are
+no proofs of contradiction in T with ≤ x symbols”.
+Mostowski proves that PA is essentially reflexive (see [102, Theorem
+2.6.12]). In fact one can show that for every n ∈ N, IΣ0n+1 ⊢ Con(IΣ0n ).13
+For a large class of natural theories U , Pudlák [114] shows that the lengths of
+the shortest proofs of Con(U )↾ n for n ∈ ω in the theory U itself are bounded
+by a polynomial in n. Pudlák conjectures [114] that U does not have polynomial proofs of the finite consistency statements Con(U + Con(U )) ↾ n
+for n ∈ ω.
+Finally, a big open question about G2 is: can we find a genuinely selfreference free proof of G2? As far as we know, at present there is no convincing essentially self-reference-free proofs of either G2 or of Tarski’s Theorem
+of the Undefinability of Truth. In [141], Visser gives a self-reference-free
+proof of G2 from Tarski’s Theorem of the Undefinability of Truth, which is
+a step in a program to find self-reference-free proofs of both G2 and Tarski’s
+Theorem (see [141]). Visser’s argument in [141] is model-theoretic and the
+main tool is the Interpretation Existence Lemma.14 Visser’s proof in [141] is
+not constructive. An interesting question is then whether Visser’s argument
+can be made constructive.
+3.3. Proofs of G1 and G2 from mathematical logic. In this section, we
+discuss various different proofs of G1 and G2. We mention Jech’s [65] short
+proof of G2 for ZF: if ZF is consistent, then it is unprovable in ZF that
+there exists a model of ZF. Jech’s proof uses the Completeness Theorem,
+and also yields G2 for PA (see [65]). Other (lengthier) proofs are discussed
+in Sections 3.3.1-3.3.5.
+3.3.1. Rosser’s proof. Rosser [116] proves a “stronger” version of G1, called
+Rosser’s first incompleteness theorem, which only assumes the consistency
+of T : if T is a consistent r.e. extension of Q, then T is incomplete. Gödel’s
+11It is an easy fact that if T is 1-consistent and S is not a theorem of T , then Pr (pSq)
+T
+
+is not a theorem of T .
+12See [15, Theorem 4, p.97] for a modal proof in GL of this fact using the Arithmetic
+Completeness Theorem for GL.
+13For a proof of this result, we refer to Hájek and Pudlák [55].
+14We refer to [139] for more details about the Interpretation Existence Lemma.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+19
+
+proof of G1 assumes that T is ω-consistent. Note that ω-consistency implies
+consistency. But the converse does not hold and the notion of ω-consistency
+is stronger than consistency since we can find examples of theories that
+are consistent but not ω-consistent.15 Rosser’s proof is constructive and
+algorithmically constructs the Rosser sentence that is independent of T .
+Gödel’s proof of G1 uses a standard provability predicate but Rosser’s proof
+of G1 uses a Rosser provability predicate which is a kind of non-standard
+provability predicate, giving rise to the following.
+Definition 3.8. Let T be a recursively axiomatizable consistent extension of
+Q, and Prf T (x, y) be any proof predicate of T . Define the Rosser provability
+˙ z))
+predicate PrR
+T (x) to be the formula ∃y(Prf T (x, y) ∧ ∀z ≤ y¬Prf T (¬x,
+where ¬˙ is a function symbol expressing a primitive recursive function calculating the code of ¬φ from the code of φ. The fixed point of the predicate
+R
+¬PrR
+T (x) is called the Rosser sentence of PrT (x), i.e. a sentence θ satisfying
+R
+PA ⊢ θ ↔ ¬PrT (pθq).
+In general, one can show that each Rosser sentence based on any Rosser
+provability predicate of T is independent of T . In particular, this independence does not rely on the choice of the proof predicate.
+3.3.2. Recursion-theoretic proofs. Gödel’s first incompleteness theorem (G1)
+is well-known in the context of recursion theory. Recall that We = {n ∈ ω :
+φe (n)↓}. Let hWe : e ∈ ωi be the list of recursive enumerable subsets of N.
+The following is an example of an ‘effective’ version of G1:
+there exists a recursive function f such that for any e ∈ ω, if We ⊆ Truth,
+then f (e) is defined and f (e) ∈ Truth \ We ([31]).
+Similarly, Avigad [2] proves G1 and G2 in terms of the undecidability of the
+halting problem (see Theorem 3.1, Theorem 3.2 in [2]). Another related
+result due to Kleene is as follows.
+Theorem 3.9 (Kleene’s theorem, Theorem 2.2, [119]). For any consistent
+r.e. theory T that contains Q, there exists some t ∈ ω such that ϕt (t) ↑ holds
+but T 0 “ϕt (t) ↑ ”.
+Kleene’s proof of his theorem uses recursion theory, and is not constructive. Salehi and Seraji [119] show that there is a constructive proof of
+Kleene’s theorem, but this constructive proof does not have the Rosser
+property. Salehi and Seraji [119] comment that there could be a ‘Rosserian’ version of this constructive proof of Kleene’s theorem.
+3.3.3. Proofs based on Arithmetic Completeness. Hilbert and Bernays [61]
+present the Arithmetic Completeness Theorem expressing that any recursively axiomatizable consistent theory has an arithmetically definable model.
+Later, Kreisel [84] and Wang [143] adapt the Arithmetic Completeness Theorem and use paradoxes to obtain undecidability results.
+Now, the Arithmetic Completeness Theorem is an important tool in
+model-theoretic proofs of the incompleteness theorems. For more details,
+we refer to [95, 71, 83]. Walter Dean [29] gives a detailed discussion on
+15For example, assuming PA is consistent, then PA + ¬Con(PA) is consistent, but
+not ω-consistent.
+
+20
+
+YONG CHENG
+
+how the Arithmetized Completeness Theorem provides a tool for obtaining
+formal incompleteness results from some certain paradoxes.
+Theorem 3.10 (Arithmetic Completeness, Theorem 3.1, [72]). Let T be a
+recursively axiomatized consistent extension of Q. There exists a formula
+TrT (x) in L(PA) that defines a model of T in PA + Con(T ).
+Lemma 3.11 is a corollary of the Arithmetized Completeness Theorem,
+and is essential for model-theoretic proofs of the incompleteness theorems.
+Lemma 3.11 ([75, 72]). Let T be a recursively axiomatized consistent extension of Q, and TrT (x) is the formula as asserted in Theorem 3.10. For
+any model M0 of PA + Con(T ), there exists a model M1 of T such that for
+any sentence φ, M0 |= TrT (pφq) if and only if M1 |= φ.
+Kreisel first applies the Arithmetized Completeness Theorem to establish
+model-theoretic proofs of G2 (cf. Kreisel [86], Smoryński [122] and Kikuchi
+[72]). Kikuchi-Tanaka [75], Kikuchi [72, 73] and Kotlarski [81] use the Arithmetized Completeness Theorem to give model-theoretic proofs of G2. For
+example, Kikuchi [72] proves G2 model-theoretically via the Arithmetized
+Completeness Theorem (Lemma 3.11): if PA is consistent, then Con(PA)
+is not provable in PA (see Theorem 3.4, [72]).16
+Proofs of G2 by Kreisel [86] and Kikuchi [72] do not directly yield the
+formalized version of G2. Kikuchi’s proof of G2 in [73] is not formalizable
+in PRA. Kikuchi and Tanaka [75] prove in WKL0 that Con(PA) implies ¬PrPA (pCon(PA)q), since the Completeness Theorem is provable in
+WKL0 , and the key Lemma 3.11 used in Kikuchi’s proof [72] is provable in
+RCA0 .17 Using Theorem 2.22, Tanaka [75] proves the formalized version of
+G2: PRA ⊢ Con(PA) → Con(PA + ¬Con(PA)).
+One can give a simple proof of G1 via the Diagnolisation Lemma (see
+[102]). Kotlarski [81] proves the formalized version of G1 and G2 via modeltheoretic arguments (e.g. using the Arithmetized Completeness Theorem
+and some quickly growing functions). Kotlarski [81] proves the following
+version of G1 assuming that PA is ω-consistent, and shows that the following
+sentence is provable in PA:
+if ∀ϕ, x{[ϕ ∈ ∆0 ∧ ∀yPrPA (¬ϕ(S x 0, S y 0))] → ¬PrPA (∃yϕ(S x 0, y))}, then
+∃ϕ ∈ ∆0 ∃x[¬PrPA (∃yϕ(S x 0, y)) ∧ ¬PrPA (¬∃yϕ(S x 0, y))].
+However, it is unknown whether the method in [81] can also give a
+new proof of Rosser’s first incompleteness theorem. Kotlarski [81] proves
+the following formalized version of G2: PA ⊢ Con(PA) → Con(PA +
+¬Con(PA)). Later, Kotlarski [82] transforms the proof of the formalized
+version of G2 in [81] to a proof-theoretic version without the use of the
+Arithmetized Completeness Theorem.
+16The idea of the proof is: assuming that PA is consistent and PA ⊢ Con(PA),
+
+then we get a contradiction from the fact that there is a model M of PA such that
+M |= Con(PA).
+17The theory RCA (Recursive Comprehension) is a subsystem of Second Order Arith0
+metic. For the deﬁnition of RCA0 , we refer to [120].
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+21
+
+3.3.4. Proofs based on Kolmogorov complexity. Intuitively, Kolmogorov complexity is a measure of the quantity of information in finite objects. Roughly
+speaking, the Kolmogorov complexity of a number n, denoted by K(n), is
+the size of a program which generates n.
+Definition 3.12 (Kolmogorov-Chaitin Complexity, [119]). For any natural
+number n ∈ ω, the Kolmogorov complexity for n, denoted by K(n), is defined
+as min{i ∈ ω | ϕi (0) ↓= n}.
+If n ≤ K(n), then n is called random. Kolmogorov shows in 1960’s that
+the set of non-random numbers is recursively enumerable but not recursive
+(c.f. Odifreddi [105]). Relations between G1 and Kolmogorov complexity
+have been intensively discussed in the literature (c.f. Li and Vitányi [94]).
+Chaitin [20] gives an information-theoretic formulation of G1, and proves
+the following weaker version of G1 in terms of Kolmogorov complexity.
+Theorem 3.13 (Chaitin [20, 119]). For any consistent r.e. extension T of
+Q, there exists a constant cT ∈ N such that for any e ≥ cT and any w ∈ N
+we have T 0 “K(w) > e”.
+Salehi and Seraji [119] show that we can algorithmically construct the
+Chaitin constant cT in Theorem 3.13. I.e. for a given consistent r.e. extension
+T of Q, one can algorithmically construct a constant cT ∈ N such that for
+all e ≥ cT and all w ∈ N, we have T 0 “K(w) > e” (see Theorem 3.4 in
+[119]). From Theorem 3.13, it is not clear whether “K(w) > e” holds (or
+whether “K(w) > e” is independent of T ). Salehi and Seraji [119] show that
+Chaitin’s proof of G1 is non-constructive: there is no algorithm such that
+given any consistent r.e. extension T of Q we can compute some wT such
+that K(wT ) > cT holds where cT is the Chaitin constant we can compute as
+in Theorem 3.13 (see Theorem 3.5, [119]). If such an algorithm exists, then
+for any consistent r.e. extension T of Q, we can compute some cT and wT
+such that K(wT ) > cT is true but unprovable in T .
+Salehi and Seraji [119] also strengthen Chaitin’s Theorem 3.13 assuming
+T is Σ01 -sound: if T is a Σ01 -sound r.e. theory extending Q, then there exists
+some cT (which is computable from T ) such that for any e ≥ cT there are
+cofinitely many w’s such that “K(w) > e” is independent of T (see Corollary
+3.7, [119]). Using a version of the Pigeonhole Principle in Q, Salehi and
+Seraji [119] also prove the Rosserian form of Chaitin’s Theorem: for any
+consistent r.e. extension T of Q, there is a constant cT (which is computable
+from T ) such that for any e ≥ cT there are cofinitely many w’s such that
+“K(w) > e” is independent of T (see Theorem 3.9, [119]).
+Kikuchi [73] proves the following formalized version of G1 via Kolmogorov
+complexity for any consistent r.e. extension T of PA: there exists e ∈ ω with
+• T ⊢ Con(T ) → ∀x(¬PrT (pK(x) > eq));
+• T ⊢ ω-Con(T ) → ∀x(e < K(x) → ¬PrT (pK(x) ≤ eq)).
+However, this proof is not constructive. Moreover, Kikuchi [73] proves G2
+via Kolmogorov complexity and the Arithmetic Completeness Theorem: if
+T is a consistent r.e. extension of PA, then T 0 Con(T ). Kikuchi’s proof
+of G2 in [73] cannot be formalized in PRA but can be carried out within
+
+22
+
+YONG CHENG
+
+WKL0 . Thus we can also obtain a formalized version of G2 in WKL0 by
+Theorem 2.22.
+3.3.5. Model-theoretic proofs. Adamowicz and Bigorajska [5] prove G2 via
+model-theoretic method using the notion of 1-closed models and existentially
+closed models.
+Definition 3.14.
+• A model M of a theory T is called 1-closed (w.r.t. T ) if for any
+a1 , · · · , an in M , any Σ1 formula φ and any M ′ such that M ≺0
+M ′ and M ′ |= T , we have: if M ′ |= φ(a1 , · · · , an ), then M |=
+φ(a1 , · · · , an ). In other words, we can say that M is 1-closed if
+for any M ′ such that M ≺0 M ′ , we have M ≺1 M ′ .
+• Let K be a class of structures in the same language. A model M ∈ K
+is existentially closed in K if for every model N ⊇ M such that
+N ∈ K, we have M 1 N : every existential formula with parameters
+from M which is satisfied in N is already satisfied in M .
+Adamowicz and Bigorajska [5] first prove G2 without the use of the
+Arithmetized Completeness Theorem: every 1-closed model of any subtheory T of PA extending I∆0 + exp satisfies ¬Con(PA). Then Adamowicz and Bigorajska [5] prove the formalized version of G2 via the idea of
+existentially closed models and the Arithmetized Completeness Theorem:
+PA ⊢ Con(PA) → Con(PA + ¬Con(PA)) (see Theorem 2.1, [5]). This
+is proved by showing that an arbitrary model of PA + Con(PA) satisfies
+Con(PA + ¬Con(PA)).
+3.4. Proofs of G1 and G2 based on logical paradox. We provide a
+survey of proofs of incompleteness theorems based on ‘logical paradox’.
+3.4.1. Introduction. As noted in Section 3.2.1, Gödel’s incompleteness theorems are closely related to paradox and self-reference. In fact, Gödel comments in his famous paper [45] that “any epistemological antinomy could be
+used for a similar proof of the existence of undecidable propositions”.
+Now, the Liar Paradox is an old and most famous paradox in modern
+science. In Gödel’s proof of G1, we can view Gödel’s sentence as the formalization of the Liar Paradox. Gödel’s sentence concerns the notion of
+provability but the liar sentence in the Liar Paradox concerns the notion of
+truth in the standard model of arithmetic. There is a big difference between
+the notion of provability and truth. Gödel’s sentence does not lead to a
+contradiction as the Liar sentence does.
+Besides the Liar Paradox, many other paradoxes have been used to give
+new proofs of incompleteness theorems: for example, Berry’s Paradox in
+[14, 20, 72, 77, 75, 142], Grelling-Nelson’s Paradox in [26], the Unexpected
+Examination Paradox in [37, 87], and Yablo’s Paradox in [27, 76, 89, 111].
+We now discuss some of these paradoxes in detail.
+3.4.2. Berry’s paradox. Berry’s Paradox introduced by Russell [117] is the
+paradox that “the least integer not nameable in fewer than nineteen syllables” is itself a name consisting of eighteen syllables. Informally, we say
+that an expression names a natural number n if n is the unique natural
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+23
+
+number satisfying the expression. Berry’s Paradox can be formalized in formal systems by interpreting the concept of “name” suitably. The following
+is Boolos’s formulation of the concept of “name” in [14].
+Definition 3.15 (Boolos [14]). Let n ∈ ω and ϕ(x) be a formula with only
+one free variable x. We say that ϕ(x) names n if N |= ϕ(n) ∧ ∀v0 ∀v1 (ϕ(v0 ) ∧
+ϕ(v1 ) → v0 = v1 ).
+Proofs of the incompleteness theorems based on Berry’s Paradox have
+been given by Vopěnka [142], Chaitin [20], Boolos [14], Kikuchi-KurahashiSakai [77], Kikuchi [72], and Kikuchi-Tanaka [75]. In fact, Robinson first
+uses Berry’s Paradox in [115] to prove Tarski’s theorem on the undefinability of truth, which anticipates the later use of Berry’s Paradox to obtain
+incompleteness results by Vopěnka [142], Boolos [14] and Kikuchi [73].
+Boolos [14] proves a weak form of G1 in the 1980’s by formalizing Berry’s
+Paradox in arithmetic via considering the length of formulas that name
+natural numbers in the standard model of arithmetic. Using this formulation
+of the concept of “name”, Boolos [14] first shows that Berry’s Paradox leads
+to a proof of G1 in the following form: there is no algorithm whose output
+contains all true statements of arithmetic and no false ones (i.e. the theory
+of true arithmetic is not recursively axiomatizable). Barwise [6] praises
+Boolos’s proof as “very lovely and the most straightforward proof of Gödel’s
+incompleteness theorem that I have ever seen”. The optimal sufficient and
+necessary condition for the independence of a Boolos sentence from PA is
+that PA + Con(PA) is consistent (see [119]).
+Boolos’s theorem is different from Gödel’s theorem in the following way:
+• Boolos’s theorem refers to the concept of truth but Gödel’s theorem
+does not;
+• Boolos’s proof is not constructive, and we can prove that there is no
+algorithm for computing the true but unprovable sentence;
+• Boolos’s theorem is weaker than Gödel’s first incompleteness theorem, and hence we cannot obtain the second incompleteness theorem
+from Boolos’s theorem in the standard way (see [77]).
+Boolos’s proof is modified by Kikuchi and Tanaka in [75, 72]. The difference
+between Kikuchi’s proof and Boolos’s proof lies in the interpretation of the
+word “name”. Kikuchi [72] modifies Boolos’s formulation of the concept of
+“name” by replacing “truth” with “provability” in the definition.
+Definition 3.16 (Definition 3.1, Kikuchi [72]). Let n ∈ ω and ϕ(x) be
+a formula with only one free variable x. We say that ϕ(x) names n if
+PA ⊢ ϕ(n) ∧ ∀v0 ∀v1 (ϕ(v0 ) ∧ ϕ(v1 ) → v0 = v1 ).
+Using this formulation of the concept of “name”, Kikuchi [72] gives a
+proof-theoretic proof of G1 by formalizing Berry’s paradox without the use
+of the Diagnolisation Lemma. Kikuchi [72] constructs a sentence θ and shows
+that if PA is consistent, then ¬θ is not provable in PA; if PA is ω-consistent,
+then θ is not provable in PA (see Theorem 2.2, [72]). Note that Kikuchi’s
+proof of G1 in [72] is constructive. Kikuchi and Tanaka [75] reformulate
+Kikuchi’s proof of G1 in [72], and show in WKL0 that if PA + Con(PA)
+is consistent, then θ is independent of PA. By Theorem 2.22, Kikuchi
+
+24
+
+YONG CHENG
+
+and Tanaka [75] prove the formalized version of G1: PRA ⊢ Con(PA +
+Con(PA)) → ¬PrPA (pθq) ∧ ¬PrPA (p¬θq). An interesting question not
+covered in [72, 75] is whether we can improve Kikuchi’s proof of G1 by only
+assuming that PA is consistent.
+Vopěnka [142] proves G2 for ZF by formalizing Berry’s Paradox, via
+adopting Kikuchi’s definition of the concept of “name” in [72] over models of ZF18: Con(ZF) is not provable in ZF. Vopěnka’s proof uses the
+Completeness Theorem but does not use the Arithmetic Completeness Theorem. Kikuchi, Kurahashi and Sakai [77] show that Vopěnka’s method can
+be adapted to prove G2 for PA based on Kikuchi’s formalization of Berry’s
+Paradox in [72] with an application of the Arithmetic Completeness Theorem.
+Proofs of G1 and G2 based on Berry’s Paradox by Vopěnka [142], Chaitin
+[20], Boolos [14] and Kikuchi [72] do not use the Diagnolisation Lemma. We
+can also prove G1 based on Berry’s Paradox using the Diagnolisation Lemma.
+For example, Kikuchi, Kurahashi and Sakai [77] adopt Kikuchi’s definition of
+the concept of “name” in [72], and show that the independent statement in
+Kikuchi’s proof in [72] can be obtained by using the Diagnolisation Lemma.
+In summary, the distinctions between using and not using the Diagnolisation Lemma, and between using and not using the Arithmetic Completeness
+Theorem are not essential for proofs of G1 and G2 based on Berry’s Paradox. From the above discussions, we can characterize different proofs of
+G1 and G2 based on Berry’s Paradox by the method of interpreting the
+word “name”: Boolos [14] uses the standard model of arithmetic; Kikuchi
+[72] uses provability in arithmetic; Chaitin [20] and Kikuchi [73] use Kolmogorov complexity; Kikuchi and Tanaka [75] use nonstandard models of
+arithmetic; and Vopěnka [142] uses models of ZF (see [77]).
+3.4.3. Unexpected Examination and Grelling-Nelson’s Paradox. First of all,
+Kritchman and Raz [87] give a new proof of G2 based on Chaitin’s incompleteness theorem and an argument that resembles the Unexpected Examination Paradox19 (for more details, we refer to [87]): for any consistent
+r.e. extension T of PA, if T is consistent, then T 0 Con(T ).
+Secondly, we say a one-place predicate is “heterological” if it does not
+apply to itself (e.g. “long” is heterological, since it’s not a long expression).
+Consider the question: is the predicate “heterological” we have just defined
+heterological? If “heterological” is heterological, then it isn’t heterological; and if “heterological” isn’t heterological, then it is heterological. This
+contradiction is called Grelling-Nelson’s Paradox.
+Cieśliński [26] presents semantic proofs of G2 for ZF and PA based on
+Grelling-Nelson’s Paradox. For a theory T containing ZF, Cieśliński defines
+18I.e. we say that ϕ(x) names n in ZF if ZF ⊢ ϕ(n) ∧ ∀v ∀v (ϕ(v ) ∧ ϕ(v ) → v = v )
+0
+1
+0
+1
+0
+1
+
+where ϕ(x) is a formula with only one free variable x (see [142]).
+19The Unexpected Examination Paradox is formulated as follows in [87]. The teacher
+announces in class: “next week you are going to have an exam, but you will not be able
+to know on which day of the week the exam is held until that day”. The exam cannot be
+held on Friday, because otherwise, the night before the students will know that the exam
+is going to be held the next day. Hence, in the same way, the exam cannot be held on
+Thursday. In the same way, the exam cannot be held on any of the days of the week.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+25
+
+the sentence HETT which says intuitively that the predicate “heterological”
+is itself heterological, and then shows that T 0 HETT and T ⊢ HETT ↔
+Con(T ). Finally, Cieśliński shows how to adapt the proof of G2 for ZF to
+a proof of G2 for PA. In fact, Cieśliński [26] proves the semantic version of
+G2: if T has a model, then T + ¬Con(T ) has a model (i.e. T 2 Con(T )).
+3.4.4. Yablo’s paradox. We discuss proofs of G1 and G2 based on Yablo’s
+Paradox in the literature. Yablo’s Paradox is an infinite version of the
+Liar Paradox proposed in [152]: consider an infinite sequence Y1 , Y2 , · · · of
+propositions such that each Yi asserts that Yj are false for all j > i. Different
+proofs of G1 and G2 based on Yablo’s Paradox have been given by some
+authors (e.g. Priest [111], Cieśliński-Urbaniak [27] and Kikuchi-Kurahashi
+[76]).
+Recall that we assume by default that T is a consistent r.e. extension of
+Q. Priest [111] first points out that G1 can be proved by formalizing Yablo’s
+Paradox. Priest defines a formula Y (x) as follows which says that for any
+y > x, Y (y) is not provable in T .
+Definition 3.17 ([27, 89]). A formula Y (x) is called a Yablo formula of T
+if T ⊢ ∀x(Y (x) ↔ ∀y > x¬PrT (pY (ẏ)q)).
+Cieśliński and Urbaniak originally prove the following version of G1, and
+show that each instance Y (n) of the Yablo formula is independent of T if T
+is Σ01 -sound (or 1-consistent).
+Theorem 3.18 (Theorem 19, [27]; see also Theorem 4, [89]). Let Y (x) be
+a Yablo formula.
+• If T is consistent, then T 0 Y (n).
+• If T is Σ01 -sound, then T 0 ¬Y (n).
+Cieśliński and Urbaniak originally prove that T ⊢ ∀x(Y (x) ↔ Con(T ))
+(see [27, Theorem 21-22]). As a corollary, we have T ⊢ ∀x∀y(Y (x) ↔ Y (y)),
+and G2 holds: if T is consistent, then T 0 Con(T ).
+Definition 3.19 ([89, 27]). A formula Y R (x) is called a Rosser-type Yablo
+R
+formula of Prf T (x, y) if PA ⊢ ∀x(Y R (x) ↔ ∀y > x¬PrR
+T (x)(pY (ẏ)q)).
+Theorem 3.20 shows that the Rosser-type Yablo formula is independent
+of any Σ01 -sound theory T .
+Theorem 3.20 (Theorem 10, [89]). Let Prf T (x, y) be any standard proof
+predicate of T , and Y R (x) be any Rosser-type Yablo formula of Prf T (x, y).
+Given n ∈ ω, if T is consistent, then T 0 Y R (n); if T is Σ01 -sound, then
+T 0 ¬Y R (n).
+The independence of Y R (n) for T which is not Σ01 -sound is discussed in
+[89]. For a consistent but not Σ01 -sound theory, the situation of Rosser-type
+Yablo formulas is quite different from that of Rosser sentences. Kurahashi
+[89] shows that for any consistent but not Σ01 -sound theory, the independence
+of each instance of a Rosser-type Yablo formula depends on the choice of
+standard proof predicates (see Theorem 12 and Theorem 25 in [89]). Kurahashi [89] shows that for any consistent but not Σ01 -sound theory T , there
+is a standard proof predicate of T such that each instance Y R (n) of the
+
+26
+
+YONG CHENG
+
+Rosser-type Yablo formula Y R (x) based on this proof predicate is provable
+in T for any n ∈ ω. Moreover, Kurahashi [89] constructs a standard proof
+predicate of T and a Rosser-type Yablo formula Y R (x) based on this proof
+predicate such that each instance of Y R (x) is independent of T . Proofs of
+these results use the technique of Guaspari and Solovay in [52].
+Cieśliński and Urbaniak [27] conjecture that any two distinct instances
+R
+Y (m) and Y R (n) of a Rosser-type Yablo formula Y R (x) based on a standard proof predicate are not provably equivalent. Leach-Krouse [88] and Kurahashi [89] construct a standard proof predicate, and a Rosser-type Yablo
+formula Y R (x) based on this proof predicate such that T ⊢ ∀x∀y(Y R (x) ↔
+Y R (y)) (see [88, Theorem 9] and [89, Corollary 21]).
+Kurahashi [89] constructs a partial counterexample to Cieśliński and Urbaniak’s conjecture: a standard proof predicate, and a Rosser-type Yablo
+formula Y R (x) based on this proof predicate such that ∀x∀y(Y R (x) ↔
+Y R (y)) is not provable in T (Corollary 20, [89]). Thus the provability of
+the sentence ∀x∀y(Y R (x) ↔ Y R (y)) also depends on the choice of standard
+proof predicates (see Corollary 20-21, [89]). Proofs of these results by LeachKrouse and Kurahashi also use the technique of Guaspari and Solovay in
+[52]. An interesting open question is: whether there is a standard proof
+predicate such that Y R (n) and Y R (n + 1) are not provably equivalent for
+some n ∈ ω (see [89]).
+3.4.5. Beyond arithmetization. All the proofs of G1 we have discussed use
+arithmetization. Andrzej Grzegorczyk proposes the theory TC in [49] as a
+possible alternative theory for studying incompleteness and undecidability,
+and shows that TC is essentially incomplete and mutually interpretable with
+Q without arithmetization.
+Now, in PA we have numbers that can be added or multiplied; while in
+TC, one has strings (or texts) that can be concatenated. In Gödel’s proof,
+the only use of numbers is coding of syntactical objects. The motivations for
+accepting strings rather than numbers as the basic notion are as follows: on
+metamathematical level, the notion of computability can be defined without
+reference to numbers; for Grzegorczyk, dealing with texts is philosophically
+better justified since intellectual activities like reasoning, communicating
+or even computing involve working with texts not with numbers (see [49]).
+Thus, it is natural to define notions like undecidability directly in terms of
+texts instead of natural numbers. Grzegorczyk only proves the incompleteness of TC in [49]. Later, Grzegorczyk and Zdanowski [50] prove that TC
+is essentially incomplete.
+3.5. Concrete incompleteness.
+3.5.1. Introduction. All proofs of Gödel’s incompleteness theorems we have
+discussed above make use of meta-mathematical or logical methods, and the
+independent sentence constructed has a clear meta-mathematical or logical
+flavour which is devoid of real mathematical content. To be blunt, from
+a purely mathematical point of view, Gödel’s sentence is artificial and not
+mathematically interesting. Gödel’s sentence is constructed not by reflecting
+about arithmetical properties of natural numbers, but by reflecting about
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+27
+
+an axiomatic system in which those properties are formalized (see [63]). A
+natural question is then: can we find true sentences not provable in PA with
+real mathematical content? The research program concrete incompleteness
+is the search for natural independent sentences with real mathematical content.
+This program has received a lot of attention because despite Gödel’s incompleteness theorems, one can still cherish the hope that all natural and
+mathematically interesting sentences about natural numbers are provable or
+refutable in PA, and that elementary arithmetic is complete w.r.t. natural
+and mathematically interesting sentences. However, after Gödel, many natural independent sentences with real mathematical content have been found.
+These independent sentences have a clear mathematical flavor, and do not
+refer to the arithmetization of syntax and provability.
+In this section, we provide an overview of the research on concrete incompleteness. The survey paper [16] provides a good overview on the state-ofthe-art up to Autumn 2006. For more detailed discussions about concrete
+incompleteness, we refer to Cheng [22], Bovykin [16] and Friedman [41].
+3.5.2. Paris-Harrington and beyond. Paris and Harrington [108] propose
+the first mathematically natural statement independent of PA: the ParisHarrington Principle PH which generalizes the finite Ramsey theorem. Gödel’s
+sentence is a pure logical construction (via the arithmetization of syntax
+and provability predicate) and has no relevance with classic mathematics
+(without any combinatorial or number-theoretic content). On the contrary,
+Paris-Harrington Principle is an independent arithmetic sentence from classic mathematics with combinatorial content as we will show. We refer to [63]
+for more discussions about the distinction between mathematical arithmetic
+sentences and meta-mathematical arithmetic sentences.
+Definition 3.21 (Paris-Harrington Principle (PH), [108]).
+• For set X and n ∈ ω, let [X]n be the set of all n-elements subset of
+X. We identify n with {0, · · · , n − 1}.
+• For all m, n, c ∈ ω, there is N ∈ ω such that for all f : [N ]m → c,
+we have: (∃H ⊆ N )(|H| ≥ n ∧ H is homogeneous for f ∧ |H| >
+min(H)).
+Theorem 3.22 (Paris-Harrington, [108]). The principle PH is true but not
+provable in PA.
+Now, PH has a clear combinatorial flavor, and is of the form ∀x∃yψ(x, y)
+where ψ is a ∆00 formula. It can be shown that for any given natural number
+n, PA ⊢ ∃yψ(n, y), i.e. all particular instances of PH are provable in PA.
+Following PH, many other mathematically natural statements independent of PA with combinatorial or number-theoretic content have been formulated: the Kanamori-McAloon principle [70], the Kirby-Paris sentence
+[109], the Hercules-Hydra game [109], the Worm principle [9, 58], the flipping principle [79], the arboreal statement [97], the kiralic and regal principles [28], and the Pudlák’s principle [112, 54] (see [16], p.40). In fact, all
+these principles are equivalent to PH (see [16], p.40).
+
+28
+
+YONG CHENG
+
+An interesting and amazing fact is: all the above mathematically natural principles are in fact provably equivalent in PA to a certain metamathematical sentence. Consider the following reflection principle for Σ01
+sentences: for any Σ01 sentence φ in L(PA), if φ is provable in PA, then
+φ is true. Using the arithmetization of syntax, one can write this principle as a sentence of L(PA), and denote it by RfnΣ0 (PA) (see [102, p.301]).
+1
+McAloon has shown that PA ⊢ PH ↔ RfnΣ0 (PA) (see [102], p.301), and
+1
+similar equivalences can be established for the other independent principles mentioned above. Equivalently, all these principles are equivalent to
+so-called 1-consistency of PA (see [8, p.36], [9, p.3] and [102, p.301]).
+The above phenomenon indicates that the difference between mathematical and meta-mathematical statements is perhaps not as huge as we might
+have expected. Moreover, the above principles are provable in fragments
+of Second-Order Arithmetic and are more complex than Gödel’s sentence:
+Gödel’s sentence is equivalent to Con(PA) in PA; but all these principles
+are not only independent of PA but also independent of PA + Con(PA)
+(see [8, p.36] and [102, p.301]).
+3.5.3. Harvey Friedman’s contributions. Incompleteness would not be complete without mentioning the work of Harvey Friedman who is a central
+figure in research on the foundations of mathematics after Gödel. He has
+made many important contributions to concrete mathematical incompleteness. The following quote is telltale:
+the long range impact and significance of ongoing investigations in the foundations of mathematics is going to depend
+greatly on the extent to which the Incompleteness Phenomena touches normal concrete mathematics (see [41], p.7).
+In the following, we give a brief introduction to H. Friedman’s work on concrete mathematical incompleteness. In his early work, H. Friedman examines how one uses large cardinals in an essential and natural way in number
+theory, as follows.
+the quest for a simple meaningful finite mathematical theorem that can only be proved by going beyond the usual
+axioms for mathematics has been a goal in the foundations
+of mathematics since Gödel’s incompleteness theorems (see
+[40], p.805).
+H. Friedman shows in [39, 40] that there are many mathematically natural
+combinatorial statements in L(PA) that are neither provable nor refutable
+in ZFC or ZFC + large cardinals. H. Friedman’s more recent monograph
+[41] is a comprehensive study of concrete mathematical incompleteness. H.
+Friedman studies concrete mathematical incompleteness over different systems, ranging from weak subsystems of PA to higher-order arithmetic and
+ZFC. H. Friedman lists many concrete mathematical statements in L(PA)
+that are independent of subsystems of PA, or stronger theories like higherorder arithmetic and set theory.
+The theories RCA0 (Recursive Comprehension), WKL0 (Weak Konig’s
+Lemma), ACA0 (Arithmetical Comprehension), ATR0 (Arithmetic Transfinite Recursion) and Π11 -CA0 (Π11 -Comprehension) are the most famous
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+29
+
+five subsystems of Second-Order Arithmetic (SOA), and are called the ‘Big
+Five’. For the definition of SOA and the ‘Big Five’, we refer to [120].
+To give the reader a better sense of H. Friedman’s work, we list some
+sections dealing with concrete mathematical incompleteness in [41].
+• Section 0.5 on Incompleteness in Exponential Function Arithmetic.
+• Section 0.6 on Incompleteness in Primitive Recursive Arithmetic,
+Single Quantifier Arithmetic, RCA0 , and WKL0 .
+• Section 0.7 on Incompleteness in Nested Multiply Recursive Arithmetic and Two Quantifier Arithmetic.
+• Section 0.8 on Incompleteness in Peano Arithmetic and ACA0 .
+• Section 0.9 on Incompleteness in Predicative Analysis and ATR0 .
+• Section 0.10 on Incompleteness in Iterated Inductive Definitions and
+Π11 -CA0 .
+• Section 0.11 on Incompleteness in Second-Order Arithmetic and
+ZFC− .20
+• Section 0.12 on Incompleteness in Russell Type Theory and Zermelo
+Set Theory.
+• Section 0.13 on Incompleteness in ZFC using Borel Functions.
+• Section 0.14 on Incompleteness in ZFC using Discrete Structures.
+H. Friedman [41] provides us with examples of concrete mathematical
+theorems not provable in subsystems of Second-Order Arithmetic stronger
+than PA, and a number of concrete mathematical statements provable in
+Third-Order Arithmetic but not provable in Second-Order Arithmetic.
+Related to Friedman’s work, Cheng [22, 25] gives an example of concrete
+mathematical theorems based on Harrington’s principle which is isolated
+from the proof of the Harrington’s Theorem (the determinacy of Σ11 games
+implies the existence of zero sharp), and shows that this concrete theorem
+saying that Harrington’s principle implies the existence of zero sharp is expressible in Second-Order Arithmetic, not provable in Second-Order Arithmetic or Third-Order Arithmetic, but provable in Fourth-Order Arithmetic
+(i.e. the minimal system in higher-order arithmetic to prove this concrete
+theorem is Fourth-Order Arithmetic).
+Many other examples of concrete mathematical incompleteness, and the
+discussion of this subject in 1970s-1980s can be found in the four volumes
+[126, 125, 106, 11]. Weiermann’s work in [144]-[149] provides us with more
+examples of naturally mathematical independent sentences. We refer to [41]
+for new advances in Boolean Relation Theory and for more examples of
+concrete mathematical incompleteness.
+4. The limit of the applicability of G1
+4.1. Introduction. In this section, we discuss the limit of the applicability
+of G1 based on the following two questions.
+• To what extent does G1 apply to extensions of PA?
+• To what extent does G1 apply to theories weaker than PA w.r.t. interpretation?
+20ZFC− denotes ZFC with the Power Set Axiom deleted and Collection instead of
+Replacement.
+
+30
+
+YONG CHENG
+
+Definition 4.1 (Conservativity).
+• Let Γ denote either Σ0n or Π0n for some n ≥ 1, and Γd denote either
+Π0n or Σ0n .
+• We say a sentence ϕ is Γ-conservative over theory T if for any Γ
+sentence ψ, T ⊢ ψ whenever T + ϕ ⊢ ψ.
+We list some generalizations of G1 needed below.
+Fact 4.2 (Guaspari [51]). Let T be a consistent r.e. extension of Q. Then
+there is a Γd sentence φ such that φ is Γ-conservative over T and T 0 φ.
+If T ⊢ ¬φ, then φ is not Γ-conservative over T because T is consistent.
+Thus, we can view Fact 4.2 as an extension of Rosser’s first incompleteness
+theorem. Solovay improves this fact and shows that there is a Γd sentence
+φ such that φ is Γ-conservative over T , ¬φ is Γd -conservative over T , but φ
+is independent of T .
+Fact 4.3 (Mostowski [100]). Let {Tn : n ∈ ω} be an r.e. sequence of consistent theories extending Q. Then there is a Π01 sentence φ such that for any
+n ∈ ω, Tn 0 φ, and Tn 0 ¬φ.
+4.2. Generalizations of G1 beyond PA. We study generalization of G1
+for extensions of PA w.r.t. interpretation. We know that G1 applies to all
+consistent r.e. extensions of PA. A natural question is then: whether G1
+can be extended to non-r.e. arithmetically definable extensions of PA.
+Kikuchi-Kurahashi [74] and Salehi-Seraji [118] make contributions to generalize Gödel-Rosser’s first incompleteness theorem to non-r.e. arithmetically
+definable extensions of PA.
+Definition 4.4 ([74]). Let T be a consistent extension of Q.
+• T is Σ0n -definable if there is a Σ0n formula φ(x) such that n is the
+Gödel number of some sentence of T if and only if N |= φ(n).21
+• T is Σ0n -sound if for all Σ0n sentences φ, T ⊢ φ implies N |= φ; T is
+sound if T is Σ0n -sound for any n ∈ ω.
+• T is Σ0n -consistent if for all Σ0n formulas φ with φ = ∃xθ(x) and
+θ ∈ Π0n−1 , if T ⊢ ¬θ(n) for all n ∈ ω, then T 0 φ.
+• T is Π0n -decisive if for all Π0n sentences φ, either T ⊢ φ or T ⊢ ¬φ
+holds.
+From G1, we have: if T is a Σ01 -definable and Σ01 -sound extension of Q,
+then T is not Π01 -decisive. Kikuchi and Kurahashi [74] generalize G1 to
+arithmetically definable theories via the notion of “Σ0n -sound”.
+Theorem 4.5 (Theorem 4.8 [74], Theorem 2.5 [118]). If T is a Σ0n+1 definable and Σ0n -sound extension of Q, then T is not Π0n+1 -decisive.
+Salehi and Seraji [118] point out that Theorem 4.5 has a constructive
+proof: given a Σ0n+1 -definable and Σ0n -sound extension T of Q, one can
+effectively construct a Π0n+1 sentence which is independent of T . The optimality of Theorem 4.5 is shown by Salehi and Seraji in [118]: there exists
+21Recall that N is the standard model of arithmetic.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+31
+
+a Σ0n−1 -sound and Σ0n+1 -definable complete extension of Q for any n ≥ 1
+(Theorem 2.6, [118]).
+Salehi and Seraji [118] generalize G1 to arithmetically definable theories
+via the notion of “Σ0n -consistent”.
+Theorem 4.6 (Theorem 4.9 [74], Theorem 4.3 [118]). If T is a Σ0n+1 definable and Σ0n -consistent extension of Q, then T is not Π0n+1 -decisive.
+Theorem 4.6 is also optimal: the complete Σ0n−1 -sound and Σ0n+1 -definable
+theory constructed in the proof of Theorem 2.6 in [118] is also Σ0n−1 -consistent
+since if a theory is Σ0n -sound, then it is Σ0n -consistent. The proof of Theorem 4.6 cannot be constructive as the following theorem shows.
+Theorem 4.7 (Non-constructivity of Σ0n -consistency incompleteness, Theorem 4.4, [118]). For n ≥ 3, there is no (partial) recursive function f (even
+with the oracle 0n ) such that if m codes (the Gödel code) a Σ0n+1 -formula
+which defines an Σ0n -consistent extension T of Q, then f (m) halts and codes
+a Π0n+1 sentence which is independent of T .22
+In summary, G1 can be generalized to the incompleteness of Σ0n+1 -definable
+and Σ0n -sound extensions of Q constructively; and to the incompleteness of
+Σ0n+1 -definable and Σ0n -consistent extensions of Q non-constructively (when
+n > 2).
+4.3. Generalizations of G1 below PA. We study generalizations of G1
+for theories weaker than PA w.r.t. interpretation.
+4.3.1. Generalizations of G1 via interpretability. We show that G1 can be
+generalized to theories weaker than PA via interpretability. Indeed, there
+exists a weak recursively axiomatizable consistent subtheory T of PA such
+that each recursively axiomatizable theory S in which T is interpretable is
+incomplete (see [129]). To generalize this fact further, we propose a new
+notion “G1 holds for T ”, as follows.
+Definition 4.8. Let T be a consistent r.e. theory. We say G1 holds for T if
+for any recursively axiomatizable consistent theory S, if T is interpretable
+in S, then S is incomplete.
+First of all, for a consistent r.e. theory T , it is not hard to show that the
+followings are equivalent (see [23]):
+• G1 holds for T .
+• T is essentially incomplete.
+• T is essentially undecidable.
+It is well-known that G1 holds for many weaker theories than PA w.r.t. interpretation (e.g. Robinson arithmetic Q).
+Secondly, we mention theories weaker than PA w.r.t. interpretation for
+which G1 holds. We first review some essentially undecidable theories weaker
+than PA w.r.t. interpretation from the literature (i.e. G1 holds for these
+22Salehi and Seraji [118] remark that there indeed exists some 0n+1 -(total) recursive
+function f such that if m codes a Σ0n+1 -formula deﬁning an Σ0n -consistent extension T of
+Q, then f (m) halts and codes a Π0n+1 sentence independent of T .
+
+32
+
+YONG CHENG
+
+theories). For the definition of theory Q, IΣn , BΣn , PA− , Q+ , Q− , S12 ,
+AS, EA, PRA, R, R0 , R1 and R2 , we refer to Section 2.
+Robinson shows that any consistent r.e. theory that interprets Q is undecidable, and hence Q is essentially undecidable. The fact that Q is essentially undecidable is very useful and can be used to prove the essentially
+undecidability of other theories via Theorem 2.6. Since Q is finitely axiomatized, it follows that any theory that weakly interprets Q is also undecidable.
+The Lindenbaum algebras of all r.e. theories that interpret Q are recursively isomorphic (see Pour-El and Kripke [110]). In fact, Q is minimal
+essentially undecidable in the sense that if deleting any axiom of Q, then
+the remaining theory is not essentially undecidable and has a complete decidable extension (see [129, Theorem 11, p.62]).
+Thirdly, Nelson [103] embarks on a program of investigating how much
+mathematics can be interpreted in Robinson’s Arithmetic Q: what can be
+interpreted in Q, and what cannot be interpreted in Q. In fact, Q represents a rich degree of interpretability since a lot of stronger theories are
+interpretable in it as we will show in the following passages. For example,
+using Solovay’s method of shortening cuts (see [52]), one can show that Q
+interprets fairly strong theories like I∆0 + Ω1 on a definable cut.
+Fourth, we discuss some prominent fragments of PA extending Q from
+the literature. As a corollary of Theorem 2.14, we have:
+• The theories Q, IΣ0 , IΣ0 +Ω1 , · · · , IΣ0 +Ωn , · · · , BΣ1 , BΣ1 +Ω1 , · · · ,
+BΣ1 + Ωn , · · · are all mutually interpretable;
+• IΣ0 + exp and BΣ1 + exp are mutually interpretable;
+• For n ≥ 1, IΣn and BΣn+1 are mutually interpretable;
+• Q ✁ IΣ0 + exp ✁ IΣ1 ✁ IΣ2 ✁ · · · ✁ IΣn ✁ · · · ✁ PA.
+Since any consistent r.e. theory which interprets Q is essentially undecidable,
+G1 holds for all these fragments of PA extending Q.
+Fifth, we discuss some weak theories mutually interpretable with Q from
+the literature. It is interesting to compare Q with its bigger brother PA− .
+From [137], PA− is interpretable in Q, and hence Q is mutually interpretable with PA− . The theory Q+ is interpretable in Q (see Theorem 1 in
+[36], p.296), and thus mutually interpretable with Q. A. Grzegorczyk asks
+whether Q− is essentially undecidable. Švejdar [128] provids a positive answer to Grzegorczyk’s original question by showing that Q is interpretable
+in Q− using the Solovay’s method of shortening cuts. Thus Q− is essentially
+undecidable and mutually interpretable with Q.
+Sixth, by [36], IΣ0 is interpretable in S12 , and S12 is interpretable in Q.
+Hence S12 is essentially undecidable and mutually interpretable with Q. The
+theory AS interprets Robinson’s Arithmetic Q, and hence is essentially
+undecidable. Nelson [103] shows that AS is interpretable in Q. Thus, AS
+is mutually interpretable with Q.
+Seventh, Grzegorczyk and Zdanowski [50] formulate but leave unanswered
+an interesting problem: are TC and Q mutually interpretable? M. Ganea
+[43] provs that Q is interpretable in TC using the detour via Q− (i.e. first
+show that Q− is interpretable in TC; since Q is interpretable in Q− , then
+we have Q is interpretable in TC). Sterken and Visser [134] give a proof of
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+33
+
+the interpretability of Q in TC not using Q− . Note that TC is easily interpretable in the bounded arithmetic IΣ0 . Thus, TC is mutually interpretable
+with Q.
+Note that R✁ Q since Q is not interpretable in R (if Q is interpretable in
+R, then Q is interpretable in some finite fragment of R; however R is locally
+finitely satisfiable and any model of Q is infinite). Visser [136] provides us
+with a unique characterization of R.
+Theorem 4.9 (Visser, Theorem 6, [136]). For any consistent r.e. theory
+T , T is interpretable in R if and only if T is locally finitely satisfiable.23
+Since relational Σ2 sentences have the finite model property, by Theorem 4.9, any consistent theory axiomatized by a recursive set of Σ2 sentences
+in a finite relational language is interpretable in R. Since all recursive functions are representable in R (see [129, theorem 6], p.56), as a corollary of
+Theorem 2.6, R is essentially undecidable. Cobham shows that R has a
+stronger property than essential undecidability. Vaught gives a proof of
+Cobham’s Theorem 4.10 via existential interpretation in [132].
+Theorem 4.10 (Cobham, [132]). Any consistent r.e. theory that weakly
+interprets R is undecidable.
+Eighth, we discuss some variants of R in the same language as L(R) =
+{0, · · · , n, · · · , +, ×, ≤}. The theory R0 is no longer essentially undecidable
+in the same language as R.24 In fact, whether R0 is essentially undecidable
+depends on the language of R0 : if L(R0 ) = {0, S, +, ×, ≤} with ≤ defined in
+terms of +, then R0 is essentially undecidable (Cobham first observed that
+R is interpretable in R0 in the same language {0, S, +, ×}, and hence R0
+is essentially undecidable (see [132] and [68])). The theory R1 is essentially
+undecidable since R is interpretable in R1 (see [68], p.62).
+However R1 is not minimal essentially undecidable. From [68], R is interpretable in R2 , and hence R2 is essentially undecidable.25 The theory
+R2 is minimal essentially undecidable in the sense that if we delete any
+axiom scheme of R2 , then the remaining system is not essentially undecidable.26 By essentially the same argument as in [137], we can show that any
+consistent r.e. theory that weakly interprets R2 is undecidable.
+Kojiro Higuchi and Yoshihiro Horihata introduce the theory of concatenation WTC−ǫ , which is a weak subtheory of Grzegorczyk’s theory TC,
+and show that WTC−ǫ is minimal essentially undecidable and WTC−ǫ is
+mutually interpretable with R (see [60]).
+In summary, we have the following pictures:
+23In fact, if T is locally ﬁnitely satisﬁable, then T is interpretable in R via a one-piece
+
+one-dimensional parameter-free interpretation.
+24The theory R has a decidable complete extension given by the theory of reals with
+0
+≤ as the empty relation on reals.
+25Another way to show that R is essentially undecidable is to prove that all recursive
+2
+functions are representable in R2 .
+26If we delete Ax2, then the theory of natural numbers with x × y deﬁned as x + y is
+a complete decidable extension; if we delete Ax3, then the theory of models with only one
+element is a complete decidable extension; if we delete Ax4′ , then the theory of reals is a
+complete decidable extension.
+
+34
+
+YONG CHENG
+
+• Theories PA− , Q+ , Q− , TC, AS, S12 and Q are all mutually interpretable, and hence G1 holds for them;
+• Theories R, R1 , R2 and WTC−ǫ are mutually interpretable, and
+hence G1 holds for them;
+• R ✁ Q ✁ EA ✁ PRA ✁ PA.
+4.3.2. The limit of G1 w.r.t. interpretation and Turing reducibility. We first
+discuss the limit of G1 for theories weaker than PA w.r.t. interpretation,
+i.e. finding a theory with minimal degree of interpretation for which G1
+holds.
+First of all, a natural question is: is Q the weakest finitely axiomatized
+essentially undecidable theory w.r.t. interpretation such that R ✁ Q? The
+following theorem tells us that the answer is no: for any finitely axiomatized subtheory A of Q that extends R, we can find a finitely axiomatized
+subtheory B of A such that B extends R and B does not interpret A.
+Theorem 4.11 (Visser, Theorem 2, [137]). Suppose A is a finitely axiomatized consistent theory and R ⊆ A. Then there is a finitely axiomatized
+theory B such that R ⊆ B ⊆ A and B ✁ A.
+Define X = {S : R ✂ S ✁ Q and S is finitely axiomatized}. Theorem 4.11
+shows that the structure hX, ✁i is not well-founded.
+Theorem 4.12 (Visser, Theorem 12, [137]). Suppose A and B are finitely
+axiomatized theories that weakly interpret Q. Then there are finitely axiomatized theories A ⊇ A and B ⊇ B such that A and B are incomparable (i.e.
+A 5 B and B 5 A).
+Theorem 4.12 shows that there are incomparable theories extending Q
+w.r.t. interpretation.
+Up to now, we do not have an example of essentially undecidable theory that is weaker than R w.r.t. interpretation. To this end, we introduce
+Jeřábek’s theory RepPRF .
+Definition 4.13 (The system RepPRF ).
+• Let PRF denote the sets of all partial recursive functions.
+• The language L(RepPRF ) consists of constant symbols n for each
+n ∈ ω, and function symbols f of appropriate arity for each partial
+recursive function f .
+• The theory RepPRF has axioms:
+– n 6= m for n 6= m ∈ ω;
+– f (n0 , · · · , nk−1 ) = m for each k-ary partial recursive function f
+such that f (n0 , · · · , nk−1 ) = m where n0 , · · · , nk−1 , m ∈ ω.
+The theory RepPRF is essentially undecidable since all recursive functions
+are representable in it. Since RepPRF is locally finitely satisfiable, by Theorem 4.9, RepPRF ✂ R. Jeřábek [67] proves that R is not interpretable in
+RepPRF . Thus RepPRF ✁ R.
+Cheng [23] provides more examples of a theory S such that G1 holds for S
+and S ✁ R, and shows that we can find many theories T such that G1 holds
+for T and T ✁ R based on Jeřábek’s work [67] which uses model theory.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+35
+
+Theorem 4.14 (Cheng, [23]). For any recursively inseparable pair hA, Bi,
+there is a r.e. theory UhA,Bi such that G1 holds for UhA,Bi , and UhA,Bi ✁ R.
+Define D = {S : S ✁ R and G1 holds for theory S}. Theorem 4.14
+shows that we could find many witnesses for D. Naturally, we could ask the
+following questions:
+Question 4.15.
+• Is hD, ✁i well-founded?
+• Are any two elements of hD, ✁i comparable?
+• Does there exist a minimal theory w.r.t. interpretation such that G1
+holds for it?
+We conjectured the following answers to these questions: hD, ✁i is not
+well founded, hD, ✁i has incomparable elements, and there is no minimal
+theory w.r.t. interpretation for which G1 holds.
+Finally, we discuss the limit of applicability of G1 w.r.t. Turing reducibility. We have discussed the limit of applicability of G1 w.r.t. interpretation.
+A natural question is: what is the limit of applicability of G1 w.r.t. Turing
+reducibility.
+Definition 4.16 (Turing reducibility, the structure D).
+• Let R be the structure of the r.e. degrees with the ordering ≤T
+induced by Turing reducibility with the least element 0 and the
+greatest element 0′ .
+• Let D = {S : S <T R and G1 holds for theory S} where S <T R
+stands for S ≤T R but R T S.
+Cheng [23] shows that for any Turing degree 0 < d < 0′ , there is a theory
+U such that G1 holds for U , U <T R, and U has Turing degree d. As
+a corollary of this result and known results about the degree structure of
+hR, <T i in recursion theory, we can answer above questions for the structure
+hD, <T i:
+Theorem 4.17 (Cheng, [23]).
+• hD, <T i is not well-founded;
+• hD, <T i has incomparable elements;
+• There is no minimal theory w.r.t. Turing reducibility such that G1
+holds for it.
+Moreover, Cheng [23] shows that for any Turing degree 0 < d < 0′ , there
+is a theory U such that G1 holds for U , U ✂ R, and U has Turing degree
+d. Thus, examining the limit of applicability of G1 w.r.t. interpretation is
+much harder than that w.r.t. Turing reducibility. The structure of hD, ✁i is
+a deep and interesting open question for future research.
+5. The limit of the applicability of G2
+5.1. Introduction. In our view, G2 is fundamentally different from G1.
+In fact, both mathematically and philosophically, G2 is more problematic
+than G1 for the following reason. On one hand, in the case of G1, we can
+construct a natural independent sentence with real mathematical content
+without referring to arithmetization and provability predicates. On the other
+
+36
+
+YONG CHENG
+
+hand, the meaning of G2 strongly depends on how we exactly formulate the
+consistency statement.
+Similar to [56], we call a result intensional if it depends on (the details
+of) the representation used. Thus, G1 can be called extensional (that is,
+non-intensional), while G2 is (highly) intensional. We refer to Section 5.3
+for more discussion on the intensionality of G2. In this section, we discuss
+the limit of applicability of G2: under what conditions G2 holds, and under
+what conditions G2 fails. In Section 5.2, we discuss generalizations of G2.
+5.2. Some generalizations of G2. After Gödel, generalizations of G2 are
+the subject of extensive studies. We know that G2 holds for any consistent
+r.e. extension of PA. However, it is not true that G2 holds for any extension
+of PA. For example, Karl-Georg Niebergall [104] shows that the theory
+(PA+RFN(PA))∩(PA + all true Π01 sentences) can prove its own canonical
+consistency sentence.27
+Similarly to G1, one can generalise G2 to arithmetically definable nonr.e. extensions of PA. Kikuchi and Kurahashi [74] reformulate G2 as: if S is a
+Σ01 -definable and consistent extension of PA, then for any Σ01 definition σ(u)
+of S, S 0 Conσ (S) (see fact 5.1 [74]). Kikuchi and Kurahashi [74] generalize
+G2 to arithmetically definable non-r.e. extensions of PA and prove that if
+S is a Σ0n+1 -definable and Σ0n -sound extension of PA, then there exists a
+Σ0n+1 definition σ(u) of some axiomatization of T h(S) such that Conσ (S) is
+independent of S. This corollary shows that the witness for the generalized
+version of G1 can be provided by the appropriate consistency statement.
+Chao-Seraji [21] and Kikuchi-Kurahashi [74] give another generalization
+of G2 to arithmetically definable non-r.e. extensions of PA: for each n ∈ ω,
+any Σ0n+1 -definable and Σ0n -sound extension of PA cannot prove its own
+Σ0n -soundness (see [21, Theorem 2] and [74, Theorem 5.6]). The optimality
+of this generalization is shown in [21]: there is a Σ0n+1 -definable and Σ0n−1 sound extension of PA that proves its own Σ0n−1 -soundness for n > 0 (see
+[21, Theorem 3]).
+Let T be a consistent r.e. extension of Q. Kreisel [85] shows that ¬Con(T )
+is Π01 -conservative over T which is a generalization of G2. We can also
+generalize G2 via the notion of standard provability predicate.
+Theorem 5.1. Let T be any consistent r.e. extension of Q. If PrT (x) is a
+standard provability predicate, then T 0 Con(T ).
+Lev Beklemishev and Daniyar Shamkanov [10] prove that in an abstract
+setting that presupposes the presence of Gödel’s fixed point (instead of directly constructing it, as in the case of formal arithmetic), the HilbertBernays-Löb conditions implies G2 even with fairly minimal conditions on
+the underlying logic. The following two theorems, due to Feferman and
+Visser, generalize G2 in terms of the notion of interpretation.
+Theorem 5.2 (Feferman’s theorem on the interpretability of inconsistency,
+[33]). If T is a consistent r.e. extension of Q, then T + ¬Con(T ) is interpretable in T .
+27For the deﬁnition of RFN(PA), we refer to [95]: RFN(PA) = {∀x((Γ(x) ∧
+PrPA (x)) → TrΓ (x)) : Γ arbitrary}.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+37
+
+Theorem 5.3 (Pudlák, [113, 55]). There is no consistent r.e. theory S
+such that (Q + Con(S)) ✂ S. 28
+As a corollary of Theorem 5.3, for any consistent r.e. theory S that interprets Q, G2 holds for S: S 0 Con(S). The Arithmetic Completeness
+Theorem tells us that S ✂ (Q + Con(S)) (see [135] for the details). As a
+corollary, we have the following version of G2 which highlights the interpretability power of consistency statements.
+Corollary 5.4. For any consistent r.e. theory S, we have S ✁(Q+Con(S)).
+Definition 5.5. Let T be a consistent extension of Q. A formula I(x) with
+one free variable (understood as a number variable) is a definable cut in T
+(in short, a T -cut) if
+• T ⊢ I(0);
+• T ⊢ ∀x(I(x) → I(x + 1));
+• T ⊢ ∀x∀y(y < x ∧ I(x) → I(y)).
+Definition 5.6. Let T ⊇ IΣ1 , let J be a T -cut and let τ be a Σexp
+0 -definition
+29
+of T .
+• PrIτ (x) is the formula ∃y(I(y) ∧ Proof Iτ (x, y)) (saying that there is
+a τ -proof of x in I).
+• ConIτ is the formula ¬∃y(I(y) ∧ Proof Iτ (0 6= 0, y)).
+The following theorem generalizes G2 to definable cuts.
+Theorem 5.7 (Theorem 3.11, [55]). Let T ⊇ IΣ1 , let J be a T -cut and τ
+I
+a Σexp
+0 -definition of T . Then T 0 Conτ .
+Next, consider a theory U and an interpretation N of the Tarski-MostowskiRobinson theory R in U . A U -predicate △ is an L-predicate for U, N if it
+satisfies the following Löb conditions. We write △A for △(pAq), where pAq
+is the numeral of the Gödel number of A and we interpret the numbers via
+N . The Gödel numbering is supposed to be fixed and standard.
+Definition 5.8 (Löb conditions).
+L1: ⊢ A ⇒ ⊢ △A.
+L2: △A, △(A → B) ⊢ △B.
+L3: △A ⊢ △△A.
+Proposition 5.9 (Löb’s theorem, Theorem 3.3.2, [138]). Suppose that U is
+a theory, N is an interpretation of the theory R in U , and △ is a U -predicate
+that is an L-predicate for U, N . Then:
+• For all U -sentences A we have: if U ⊢ △A → A, then U ⊢ A.
+• For all U -sentences A we have: U ⊢ △(△A → A) → △A.
+28Instead of Robinson’s Arithmetic Q, we can as well have taken S1 , or PA− , or
+2
+
+I∆0 + Ω1 . Moreover, instead of an arithmetical theory we can have employed a string
+theory like Grzegorczyk’s theory TC or adjunctive set theory AS. All these theories are
+the same in the sense that they are mutually interpretable (see [138]).
+29We extend the language L(PA) by a new unary function symbol 2x for the x-th power
+of two. The extended language is denoted L0 (exp). A formula is Σexp
+if it results from
+0
+atomic formulas of L0 (exp) by iterated application of logical connectives and bounded
+quantiﬁers of the form (∀x ≤ y) or (∃x ≤ y) (see [55]).
+
+38
+
+YONG CHENG
+
+As a corollary of Proposition 5.9, we formulate a general version of G2
+which does not mention the notion of provability predicate.
+Theorem 5.10 (Visser, [138]). For all consistent theories U and all interpretations N of R in U and all L-predicates △ for U, N , we have U 0 ¬△ ⊥.
+5.3. The intensionality of G2. In this section, we discuss the intensionality of G2 which reveals the limit of the applicability of G2.
+5.3.1. Introduction. For a consistent theory T , we say that G2 holds for T if
+the consistency of T is not provable in T . However, this definition is vague,
+and whether G2 holds for T depends on how we formulate the consistency
+statement. We refer to this phenomenon as the intensionality of G2. In fact,
+G2 is essentially different from G1 due to the intensionality of G2: “whether
+G2 holds for the base theory” depends on how we formulate the consistency
+statement in the first place.
+Both mathematically and philosophically, G2 is more problematic than
+G1. In the case of G1, we are mainly interested in the fact that some sentence
+is independent of PA. We make no claim to the effect that that sentence
+“really” expresses what we would express by saying “PA cannot prove this
+sentence”. But in the case of G2, we are also interested in the content
+of the consistency statement. We can say that G1 is extensional in the
+sense that we can construct a concrete independent mathematical statement
+without referring to arithmetization and provability predicate. However, G2
+is intensional and “whether G2 holds for T ” depends on varied factors as we
+will discuss.
+In this section, unless stated otherwise, we assume the following:
+• T is a consistent r.e. extension of Q;
+• the canonical arithmetic formula to express the consistency of the
+base theory T is Con(T ) , ¬PrT (0 6= 0);
+• the canonical numbering we use is Gödel’s numbering;
+• the provability predicate we use is standard;
+• the formula representing the set of axioms is Σ01 .
+The intensionality of Gödel sentence and the consistency statement has
+been widely discussed from the literature (e.g. Halbach-Visser [56, 57],
+Visser [135]). Halbach and Visser examine the sources of intensionality in the
+construction of self-referential sentences of arithmetic in [56, 57], and argue
+that corresponding to the three stages of the construction of self-referential
+sentences of arithmetic, there are at least three sources of intensionality:
+coding, expressing a property and self-reference. The three sources of intensionality are not independent of each other, and a choice made at an earlier
+stage will have influences on the availability of choices at a later stage.
+Visser [135] locates three sources of indeterminacy in the formalization of a
+consistency statement for a theory T :
+• the choice of a proof system;
+• the choice of a way of numbering;
+• the choice of a specific formula representing the set of axioms of T .
+In summary, the intensional nature ultimately traces back to the various
+parameter choices that one has to make in arithmetizing the provability
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+39
+
+predicate. That is the source of both the intensional nature of the Gödel
+sentence and the consistency sentence.
+Based on this and other works from the literature, we argue that “whether
+G2 holds for the base theory” depends on the following factors:
+(1) the choice of the provability predicate (Section 5.3.2);
+(2) the choice of the formula expressing consistency (Section 5.3.3);
+(3) the choice of the base theory (Section 5.3.4);
+(4) the choice of the numbering (Section 5.3.5);
+(5) the choice of the formula representing the set of axioms (Section 5.3.6).
+These factors are not independent, and a choice made at an earlier stage
+may have effects on the choices available at a later stage. In the following,
+unless stated otherwise, when we discuss how G2 depends on one factor,
+we always assume that other factors are fixed, and only the factor we are
+discussing is varied. For example, Visser [135] rests on fixed choices for (1)(2) and (4)-(5) but varies the choice of (3); Grabmayr [47] rests on fixed
+choices for (1)-(3) and (5) but varies the choice of (4); Feferman [33] rests
+on fixed choices for (1)-(4) but varies the choice of (5).
+5.3.2. The choice of provability predicate. In this section, we show that
+“whether G2 holds for the base theory” depends on the choice of the provability predicate we use.
+As Visser argues in [138], being a consistency statement is not an absolute
+concept but a role w.r.t. a choice of provability predicate (see Visser [138]).
+From Theorem 5.1, G2 holds for standard provability predicates. However,
+G2 may fail for non-standard provability predicates.
+Mostowski [101] gives an example of a Σ01 provability predicate for which
+0
+G2 fails. Let PrM
+T (x) be the Σ1 formula “∃y(Prf T (x, y) ∧ ¬Prf T (p0 6=
+0q, y))” where Prf T (x, y) is a ∆01 formula saying that “y is a proof of x”.
+Then ¬PrM
+T (p0 6= 0q) is trivially provable in PA. We know that G2 holds for
+provability predicates satisfying D1-D3. Since the formula PrM
+T (x) satisfies
+D1 and D3, it does not satisfy D2. Mostowski’s example [101] shows that
+G2 may fail for Σ01 provability predicates satisfying D1 and D3.
+One important non-standard provability predicate is Rosser provability
+predicate PrR
+T (x) introduced by Rosser [116] to improve Gödel’s first incompleteness theorem. Recall that we have defined the Rosser provability
+predicate in Definition 3.8. The consistency statement ConR (T ) based on a
+R
+Rosser provability predicate PrR
+T (x) is naturally defined as ¬PrT (p0 6= 0q).
+It is an easy fact that for any sentence φ and Rosser provability predicate
+R
+PrR
+T (x), if T ⊢ ¬φ, then T ⊢ ¬PrT (pφq) (see [78, Proposition 2.1]). As a
+corollary, the consistency statement ConR (T ) based on Rosser provability
+predicate PrR
+T (x) is provable in T . In this sense, we can say that G2 fails for
+the consistency statement constructed from Rosser provability predicates.
+We can construct different Rosser provability predicates with varied properties. We know that each Rosser provability predicate PrR
+T (x) does not
+satisfy at least one of conditions D2 and D3. Guaspari and Solovay [52]
+establish a very powerful method of constructing a new proof predicate with
+required properties from a given proof predicate by reordering nonstandard
+
+40
+
+YONG CHENG
+
+proofs. Applying this tool, Guaspari and Solovay [52] construct a Rosser
+provability predicate for which both D2 and D3 fail. Arai [1] constructs
+a Rosser provability predicate with condition D2, and a Rosser provability
+predicate with condition D3.
+Slow provability, introduced by S.D. Friedman, M. Rathjen and A. Weiermann [42], is another notion of nonstandard provability for PA from the
+literature. The slow consistency statement Con∗ (PA) asserts that a contradiction is not slow provable in PA (for the definition of Con∗ (PA), we
+refer to [42]). In fact, G2 holds for slow provability: Friedman, Rathjen and
+Weiermann show that PA 0 Con∗ (PA) (see [42, Proposition 3.3]). Moreover, Friedman, Rathjen and Weiermann [42] show that PA + Con∗ (PA) 0
+Con(PA) (see [42, Theorem 3.10]), and the logical strength of the theory
+PA + Con∗ (PA) lies strictly between PA and PA + Con(PA): PA
+PA + Con∗ (PA) PA + Con(PA). Henk and Pakhomov [59] study three
+variants of slow provability, and show that the associated consistency statement of each of these notions of provability yields a theory that lies strictly
+between PA and PA + Con(PA) in terms of logical strength.
+5.3.3. The choice of the formula expressing consistency. We show that “whether
+G2 holds for the base theory” depends on the choice of the arithmetic formula used to express consistency. In the literature, an arithmetic formula
+is usually used to express the consistency statement. Artemov [3] argues
+that in Hilbert’s consistency program, the original formulation of consistency “no sequence of formulas is a derivation of a contradiction” is about
+finite sequences of formulas, not about arithmetization, proof codes, and
+internalized quantifiers.
+The canonical consistency statement, the arithmetical formula Con(PA),
+says that for all x, x is not a code of a proof of a contradiction in PA. In
+a nonstandard model of PA, the universal quantifier “for all x” ranges over
+both standard and nonstandard numbers, and hence Con(PA) expresses the
+consistency of both standard and nonstandard proof codes (see [3]). Thus,
+Con(PA) is stronger than the original formulation of consistency which
+only talks about sequences of formulas and such sequences have only standard codes. Hence, Artemov [3] concludes that G2, saying that PA cannot
+prove Con(PA), does not actually exclude finitary consistency proofs of the
+original formulation of consistency (see [3]).
+Artemov shows that the original formulation of consistency admits a direct proof in informal arithmetic, and this proof is formalizable in PA (see
+[3]).30 Artemov’s work establishes the consistency of PA by finitary means,
+and vindicates Hilbert’s consistency program to some extent.
+In the following, we use a single arithmetic sentence to express the consistency statement. Among consistency statements defined via arithmetization, there are three candidates of arithmetic formulas to express consistency
+as follows:
+30Informal arithmetic is the theory of informal elementary number theory containing
+
+recursive identities of addition and multiplication as well as the induction principle. The
+formal arithmetic PA is just the conventional formalization of the informal arithmetic
+(see [3]).
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+41
+
+31
+• Con0 (T ) , ∀x(Fml(x) ∧ PrT (x) → ¬PrT (¬x));
+˙
+• Con(T ) , ¬PrT (p0 6= 0q);
+• Con1 (T ) , ∃x(Fml(x) ∧ ¬PrT (x)).
+Gödel originally formulates G2 with the consistency statement Con1 (T ):
+if T is consistent, then T 0 Con1 (T ). From the literature, Con(T ) is the
+widely used canonical consistency statement. Note that Con0 (T ) implies
+Con(T ), and Con(T ) implies Con1 (T ). However the converse implications
+do not hold in general (see [92]). Kurahashi [92] proposes different sets of
+derivability conditions (local version, uniform version and global version),
+and examines whether they are sufficient to show the unprovability of these
+consistency statements (e.g. Con(T ), Con0 (T ) and Con1 (T )).
+HB1: If T ⊢ φ → ϕ, then T ⊢ PrT (pφq) → PrT (pϕq).
+HB2: T ⊢ PrT (p¬φ(x)q) → PrT (p¬φ(ẋ)q).
+HB3: T ⊢ f (x) = 0 → PrT (pf (ẋ) = 0q) for every primitive recursive
+term f (x).
+HB1-HB3 is called the Hilbert-Bernays derivability conditions. If a provability predicate PrT (x) satisfies HB1-HB3, then T 0 Con0 (T ) (see [62]).
+Kurahashi [93] constructes two Rosser provability predicates satisfying HB1HB3. Thus, HB1-HB3 is not sufficient to prove that T 0 Con(T ).
+Löb [96] proves that if PrT (x) satisfies the Hilbert-Bernays-Löb derivability conditions D1-D3 (see Definition 3.6), then Löb’s theorem holds:
+for any sentence φ, if T ⊢ PrT (pφq) → φ, then T ⊢ φ. It is well-known
+that Löb’s theorem implies G2: T 0 Con(T ) (see [102]). Thus, if a provability predicate PrT (x) satisfies D1-D3, then T 0 Con(T ). Kurahashi
+[92, Proposition 4.11] constructes a provability predicate PrT (x) with conditions D1-D3, but T ⊢ Con1 (T ). Thus, D1-D3 is not sufficient to prove
+that T 0 Con1 (T ).
+Montagna [98] proves that if a provability predicate PrT (x) satisfies the
+following two conditions, then T 0 Con1 (T ):
+• T ⊢ ∀x(“x is a logical axiom” → PrT (x));
+• T ⊢ ∀x∀y(Fml(x)∧Fml(y) → (PrT (x → y) → (PrT (x) → PrT (y)))).
+
+5.3.4. The choice of base theory. We show that “whether G2 holds for the
+base theory” depends on the base theory we choose. A foundational question about G2 is: how much information about arithmetic is required for the
+proof of G2. If the base system does not contain enough information about
+arithmetic, then G2 may fail. The widely used notion of consistency is consistency in proof systems with cut elimination. However, notions like cutfree
+consistency, Herbrand consistency, tableaux consistency, and restricted consistency for different base theories behave differently (see [135]). We do have
+proof systems that prove their own cutfree consistency: for example, finitely
+axiomatized sequential theories prove their own cut-free consistency on a
+definable cut (see [140], p.25).
+A natural question is: whether G2 can be generalized to base systems
+weaker than PA w.r.t. interpretation. As a corollary of Theorem 5.3, we
+have Q 0 Con(Q) and hence Q 0 Con0 (Q). Bezboruah and Shepherdson
+31Fml(x) is the formula which represents the relation that x is a code of a formula.
+
+42
+
+YONG CHENG
+
+[12] define the consistency of Q as the sentence Con0 (Q)32, and prove that
+G2 holds for Q : Q 0 Con0 (Q). However, the method used by Bezboruah
+and Shepherdson in [12] is quite different from Theorem 5.3. BezboruahShepherdson’s proof depends on some specific assumptions about the coding,
+does not easily generalize to stronger theories, and tells us nothing about
+the question whether Q can prove its consistency on some definable cut (see
+[137]). The next question is: whether G2 holds for other theories weaker
+than Q w.r.t. interpretation (e.g. R). In a forthcoming paper, we will show
+that G2 holds for R via the canonical consistency statement. However, we
+can find weak theories mutually interpretable with R for which G2 fails.
+Willard [151] explores the generality and boundary-case exceptions of
+G2 over some base theories. Willard constructs examples of r.e. arithmetical theories that cannot prove the totality of their successor functions but
+can prove their own canonical consistencies (see [150], [151]). However, the
+theories Willard constructs are not completely natural since some axioms
+are constructed using Gödel’s Diagnolisation Lemma. Pakhomov [107] constructs a more natural example of this kind. Pakhomov [107] defines a
+theory H<ω , and shows that it proves its own canonical consistency. Unlike
+Willard’s theories, H<ω isn’t an arithmetical theory but a theory formulated
+in the language of set theory with an additional unary function. From [107],
+H<ω and R are mutually interpretable. Hence, the theory H<ω can be regarded as the set-theoretic analogue of R from the interpretability theoretic
+point of view.
+From Theorem 5.3, G2 holds for any consistent r.e. theory interpreting
+Q. However, it is not true that G2 holds for any consistent r.e. theory
+interpreting R since H<ω interprets R, but G2 fails for H<ω . We know that
+if S ✂ T and G1 holds for S, then G1 holds for T . However, it is not true
+that if S ✂ T and G2 holds for S, then G2 holds for T since R ✂ H<ω , G2
+holds for R but G2 fails for H<ω . This shows the difference between Q and
+R, and the difference between G1 and G2.
+One way to eliminate the intensionality of G2 is to uniquely characterize
+the consistency statement. In [135], Visser proposes the interesting question of a coordinate-free formulation of G2 and a unique characterization of
+the consistency statement. Visser [135] shows that consistency for finitely
+axiomatized sequential theories can be uniquely characterized modulo EAprovable equivalence (see [135], p.543). But characterizing the consistency of
+infinitely axiomatized r.e. theories is more delicate and a big open problem
+in the current research on the intensionality of G2.
+After Gödel, Gentzen constructs a theory T∗ (primitive recursive arithmetic with the additional principle of quantifier-free transfinite induction
+up to the ordinal ǫ0 )33, and proves the consistency of PA in T∗ . Gentzen’s
+theory T∗ contains Q but does not contain PA since T∗ does not prove
+the ordinary mathematical induction for all formulas. By the Arithmetized
+32This sentence says that for any x, if x is the code of a formula φ and φ is provable
+in Q, then ¬φ is not provable in Q.
+33ǫ is the ﬁrst ordinal α such that ω α = α.
+0
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+43
+
+Completeness Theorem, Q + Con(PA) interprets PA. Since Gentzen’s theory T∗ contains Q and T∗ ⊢ Con(PA), Gentzen’s theory T∗ interprets
+PA. By Pudlák’s result that no consistent r.e. extension T of Q can interpret Q + Con(T ), PA does not interpret Gentzen’s theory T∗ . Thus
+PA ✁ T∗ . Gentzen’s work has opened a productive new direction in proof
+theory: finding the means necessary to prove the consistency of a given
+theory. More powerful subsystems of Second-Order Arithmetic have been
+given consistency proofs by Gaisi Takeuti and others, and theories that have
+been proved consistent by these methods are quite strong and include most
+ordinary mathematics.
+5.3.5. The choice of numbering. We show that “whether G2 holds for the
+base theory” depends on the choice of the numbering encoding the language.
+For the influence of different numberings on G2, we refer to [47]. Any
+injective function γ from a set of L(PA)-expressions to ω qualifies as a
+numbering. Gödel’s numbering is a special kind of numberings under which
+the Gödel number of the set of axioms of PA is recursive. In fact, G2 is
+sensitive to the way of numberings. Let γ be a numbering and pϕγ q denote
+γ(ϕ), i.e., the standard numeral of the γ-code of ϕ.
+Definition 5.11 (Relativized Löb conditions). A formula PrγT (x) is said to
+satisfy Löb’s conditions relative to γ for the base theory T if for all L(PA)sentences ϕ and ψ we have that:
+D1∗ : If T ⊢ ϕ, then PA ⊢ PrγT (pϕγ q);
+D2∗ : T ⊢ PrγT (p(ϕ → ψ)γ q) → (PrγT (pϕγ q) → PrγT (pψ γ q));
+D3∗ : T ⊢ PrγT (pϕγ q) → PrγT (p(PrγT (pϕγ q))γ q).
+Grabmayr [47] examines different criteria of acceptability, and proves the
+invariance of G2 with regard to acceptable numberings (for the definition of
+acceptable numberings, we refer to [47]).
+Theorem 5.12 (Invariance of G2 under acceptable numberings, Theorem
+4.8, [47]). Let γ be an acceptable numbering and T be a consistent r.e. extension of Q. If PrγT (x) satisfies Löb’s conditions D1∗ -D3∗ relative to γ
+for T , then T 0 ¬PrγT (p(0 6= 0)γ q).
+Theorem 5.12 shows that G2 holds for acceptable numberings. But G2
+may fail for non-acceptable numberings. Grabmayr [47] gives some examples
+of deviant numberings γ such that G2 fails w.r.t. γ: T ⊢ PrγT (p(0 6= 0)γ q).
+Definition 5.13. We say that α(x) is a numeration of T if for any n, we
+have PA ⊢ α(n) if and only if n is the Gödel number of some φ ∈ T .
+5.3.6. The choice of the formula representing the set of axioms. We show
+that “whether G2 holds for T ” depends on the way the axioms of T are
+represented.
+First of all, Definition 5.14 gives a more general definition of provability
+predicate and consistency statement for T w.r.t. the numeration of T .
+Definition 5.14. Let T be any consistent r.e. extension of Q and α(x) be
+a formula in L(T ).
+
+44
+
+YONG CHENG
+
+• Define the formula Prf α (x, y) saying “y is the Gödel number of
+a proof of the formula with Gödel number x from the set of all
+sentences satisfying α(x)”.
+• Define the provability predicate Prα (x) of α(x) as ∃yPrf α (x, y) and
+the consistency statement Conα (T ) as ¬Prα (p0 6= 0q).
+For each formula α(x), we have:
+D2′
+
+PA ⊢ Prα (pϕ → ψq) → (Prα (pϕq) → Prα (pψq)).
+
+If α(x) is a numeration of T , then Prα (x) satisfies the following properties
+(see [90, Fact 2.2]):
+D1′ : If T ⊢ ϕ, then PA ⊢ Prα (pϕq);
+D3′ : If ϕ is Σ01 , then PA ⊢ ϕ → Prα (pϕq).
+Now we give a new reformulation of G2 via numerations.
+Theorem 5.15. Let T be any consistent r.e. extension of Q. If α(x) is any
+Σ01 numeration of T , then T 0 Conα (T ).
+In fact, G2 holds for any Σ01 numeration of T , but fails for some Π01
+numeration of T . Feferman [33] constructs a Π01 numeration π(x) of T such
+that G2 fails, i.e. Conπ (T ) , ¬Prπ (p0 6= 0q) is provable in T . Feferman’s
+construction keeps the proof predicate and its numbering fixed but varies
+the formula representing the set of axioms. Notice that Feferman’s predicate
+satisfies D1 and D2, but does not satisfy D3. Feferman’s example shows
+that G2 may fail for provability predicates satisfying D1 and D2.
+Generally, Feferman [33] shows that if T is a Σ01 -definable extension of
+Q, then there is a Π01 definition τ (u) of T such that T ⊢ Conτ (T ). In
+summary, G2 is not coordinate-free (it is dependent on numerations of PA).
+An important question is how to formulate G2 in a general way such that it
+is coordinate-free (independent of numerations of T ).
+The properties of the provability predicate are intensional and depend on
+the numeration of the theory. I.e., under different numerations of T , the
+provability predicate may have different properties. It may happen that T
+has two numerations α(x) and β(x) such that Conα (T ) is not equivalent
+to Conβ (T ). For example, under Gödel’s recursive numeration τ (x) and
+Feferman’s Π01 numeration π(x) of T , the corresponding consistency statement Conτ (T ) and Conπ (T ) are not equivalent. But PA does not know
+this fact, i.e. PA 0 ¬(Conτ (T ) ↔ Conπ (T )) since PA 0 ¬Conτ (T ).
+Generally, Kikuchi and Kurahashi prove in [74, Corollary 5.11] that if T
+is Σ0n+1 -definable and not Σ0n -sound, then there are Σ0n+1 definitions σ1 (x)
+and σ2 (x) of T such that T ⊢ Conσ1 (T ) and T ⊢ ¬Conσ2 (T ).
+Provability logic is an important tool for the study of incompleteness and
+meta-mathematics of arithmetic. The origins of provability logic (e.g. Henkin’s
+problem, the isolation of derivability conditions, Löb’s theorem) are all
+closely tied to Gödel’s incompleteness theorems historically. In this sense, we
+can say that Gödel’s incompleteness theorems play a unifying role between
+first order arithmetic and provability logic.
+Provability logic is the logic of properties of provability predicates. Note
+that G2 is very sensitive to the properties of the provability predicate used in
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+45
+
+its formulation. Provability logic provides us with a new viewpoint and an
+important tool that can be used to understand incompleteness. Provability
+logic based on different provability predicates reveals the intensionality of
+provability predicates which is one source of the intensionality of G2.
+Let T be a consistent r.e. extension of Q, and τ (u) be any numeration
+of T . Recall that an arithmetical interpretation f is a mapping from the
+set of all modal propositional variables to the set of L(T )-sentences. Every
+arithmetical interpretation f is uniquely extended to the mapping fτ from
+the set of all modal formulas to the set of L(T )-sentences such that fτ
+satisfies the following conditions:
+• fτ (p) is f (p) for each propositional variable p;
+• fτ (⊥) is 0 6= 0;
+• fτ commutes with every propositional connective;
+• fτ (✷A) is Prτ (pfτ (A)q) for every modal formula A.
+Provability logic provides us with a new way of examining the intensionality
+of provability predicates. Under different numerations of T , the provability predicate may have different properties, and hence may correspond to
+different modal principles under different arithmetical interpretations.
+Definition 5.16. Given a numeration τ (u) of T , the provability logic PLτ (T )
+of τ (u) is defined to be the set of modal formulas A such that T ⊢ fτ (A) for
+all arithmetical interpretations f .
+Note that the provability logic PLτ (T ) of a Σ0n numeration τ (x) of T is
+a normal modal logic. A natural and interesting question is: which normal modal logic can be realized as a provability logic PLτ (T ) of some Σ0n
+numeration τ (x) of T ? An interesting research program is to classify the
+provability logic PLα (T ) according to the numeration α(x) of T . We first
+discuss Σ01 numerations of T .
+Theorem 5.17 (Generalized Solovay’s Arithmetical Completeness Theorem, Theorem 2.5, [90]). Let T be any consistent r.e. extension of PA. If
+T is Σ01 -sound, then for any Σ01 numeration α(x) of T , the provability logic
+PLα (T ) is precisely GL.34
+Moreover, Visser [133] examines all possible provability logics for Σ01 numerations of Σ01 -unsound theories. To state Visser’s result, we need some
+definitions.
+Definition 5.18 (Definition 3.5-3.6, [91]). We define the sequence {Connτ :
+n ∈ ω} recursively as follows: Con0τ is 0 = 0, and Conn+1
+is ¬Prτ (p¬Connτ q).
+τ
+The height of τ (u) is the least natural number n such that T ⊢ ¬Connτ if
+such an n exists. If not, the height of τ (u) is ∞.
+For Σ01 -unsound theories, Visser proves that PLτ (T ) is determined by
+the height of the numeration τ (u). Visser [133, Theorem 3.7] shows that the
+height of τ (u) is ∞ if and only if PL(τ ) = GL; and the height of τ (u) is n if
+and only if PL(τ ) = GL + ✷n ⊥. Beklemishev [7, Lemma 7] shows that if T
+is Σ01 -unsound, then the height of Σ01 numerations of T can take any values
+except 0.
+34It is a big open problem that whether Solovay’s arithmetical completeness theorem
+holds for weak arithmetic.
+
+46
+
+YONG CHENG
+
+Let U be any consistent theory of arithmetic. Based on the previous
+work by Artemov, Visser and Japaridze, Beklemishev [7] proves that for Σ01
+numeration τ of U , PLτ (U ) coincides with one of the logics GLα , Dβ , Sβ
+and GL−
+β where α and β are subsets of ω and β is cofinite (for definitions
+of GLα , Dβ , Sβ and GL−
+β , we refer to [7, 4]).
+Feferman [33] constructs a Π01 numeration π(x) of T such that the consistency statement Conπ (T ) defined via Prπ (x) is provable in T . Thus,
+the provability logic PLπ (T ) of Prπ (x) contains the formula ¬✷⊥, and is
+different from GL. However, the exact axiomatization of the provability
+logic PLπ (T ) under Feferman’s numeration π(x) is not known. Kurahashi
+[90] proves that for any recursively axiomatized consistent extension T of
+PA, there exists a Σ02 numeration α(x) of T such that the provability logic
+PLα (T ) is the modal system K. As a corollary, the modal principles commonly contained in every provability logic PLα (T ) of T is just K.
+It is often thought that a provability predicate satisfies D1-D3 if and
+only if G2 holds (i.e. for the induced consistency statement Con(T ) from
+the provability predicate, T 0 Con(T )). But this is not true. From Definition 5.14, conditions D1-D2 hold for any numeration of T . Whether the
+provability predicate satisfies condition D3 depends on the numeration of T .
+For any Σ01 -numeration α(x) of T , D3 holds for Prα (x). From Kurahashi
+[90], there is a Σ02 -numeration α(x) of T such that the provability logic for
+that numeration is precisely K. Since K 0 ¬⊥, as a corollary, G2 holds
+for T , i.e. Conα (T ) defined as ¬Prα (p0 6= 0q) is not provable in T . But
+the Löb condition D3 does not hold since K 0 A → A. This gives us
+an example of a Σ02 numeration α(x) of T such that D3 does not hold for
+Prα (x) but G2 holds for T . Thus, G2 may hold for a provability predicate
+which does not satisfy the Löb condition D3.
+Moreover, Kurahashi [91] proves that for each n ≥ 2, there exists a Σ02
+numeration τ (x) of T such that the provability logic PLτ (T ) is just the
+modal logic K+(n p → p) → p. Hence there are infinitely many normal
+modal logics that are provability logics for some Σ02 numeration of T . A good
+question from Kurahashi [91] is: for n ≥ 2, is the class of provability logics
+PLτ (T ) for Σ0n numerations τ (x) of T the same as the class of provability
+logics PLτ (T ) for Σ0n+1 numerations τ (x) of T ? However, this question is
+still open as far as we know. Define that KD = K + ¬✷⊥. A natural and
+interesting question, which is also open as far as we know, is: can we find a
+numeration τ (x) of T such that PLτ (T ) = KD?
+In summary, G2 is intensional with respect to the following parameters:
+the formalization of consistency, the base theory, the method of numbering,
+the choice of a provability predicate, and the representation of the set of
+axioms. Current research on incompleteness reveals that G2 is a deep and
+profound theorem both mathematically and philosophically in the foundations of mathematics, and there is a lot more to be explored about the
+intensionality of G2.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+47
+
+6. Conclusion
+We conclude this paper with some personal comments. To the author,
+the research on concrete incompleteness is very deep and important.
+After Gödel, people have found many different proofs of incompleteness
+theorems via pure logic, and many concrete independent statements with
+real mathematical contents. As Harvey Friedman comments, the research
+on concrete mathematical incompleteness shows how the Incompleteness
+Phenomena touches normal concrete mathematics, and reveals the impact
+and significance of the foundations of mathematics.
+Harvey Friedman’s research project on concrete incompleteness plans to
+show that we will be able to find, in just about any subject of mathematics, many natural looking statements that are independent of ZFC. Harvey
+Friedman’s work is very profound and promising, and will reveal that incompleteness is everywhere in mathematics, which, if it is true, may be one of the
+most important discoveries after Gödel in the foundations of mathematics.
+References
+[1] Toshiyasu Arai; Derivability Conditions on Rosser’s Provability Predicates, Notre
+Dame Journal of Formal Logic, Volume 31, Number 4, Fall 1990.
+[2] Jeremy Avigad; Incompleteness via the halting problem, 2005.
+[3] Sergei N. Artemov; The Provability of Consistency, see arXiv:1902.07404v5, 2019.
+[4] Sergei N. Artemov and Lev D. Beklemishev; Provability logic. In D. Gabbay and
+F. Guenthner, editors, Handbook of Philosophical Logic, volume 13, pages 189-360.
+Springer, Dordrecht, 2nd edition, 2005.
+[5] Zoﬁa Adamowicz and Teresa Bigorajska; Existentially Closed Structures and Gödel’s
+Second Incompleteness Theorem, The Journal of Symbolic Logic, Vol. 66, No. 1, pp.
+349-356, Mar., 2001.
+[6] Kenneth Jon Barwise; Comments introducing boolos’ article. Notices of the American Mathematical Society, 36: 388, 1989.
+[7] Lev D. Beklemishev; On the classiﬁcation of propositional provability logics,
+Izvestiya Akademii Nauk SSSR, Seriya Matematicheskaya 53(5): 915-943, 1989,
+translated in Mathematics of the USSR-Izvestiya 35(2):247-275, 1990.
+[8] Lev D. Beklemishev; Gödel incompleteness theorems and the limits of their applicability I, Russian Math Surveys, 2010.
+[9] Lev D. Beklemishev; The Worm principle, Logic Group Preprint Series 219, Utrecht
+Univ, 2003.
+[10] Lev D. Beklemishev and D. S. Shamkanov; Some abstract versions of Gödel’s second
+incompleteness theorem based on non-classical logics, In Liber Amicorum Alberti,
+A tribute to Albert Visser, pages 15-29. College Publications, 2016.
+[11] C. Berline, K. McAloon and J.P. Ressayre (editors); Model Theory and Arithmetic,
+Lecture Notes in Mathematics, vol.890, Springer, Berlin, 1981.
+[12] A. Bezboruah and J. C. Shepherdson; Gödel’s Second Incompleteness Theorem for
+Q, The Journal of Symbolic Logic, Vol. 41, No. 2, pp. 503-512, Jun 1976.
+[13] Rasmus Blanck; Metamathematics of Arithmetic: Fixed Points, Independence, and
+Flexibility. Ph.d Thesis, 2017.
+[14] George Boolos; A new proof of the Gödel incompleteness theorem, Notices Amer.
+Math. Soc.36, 388-390, 1989.
+[15] George Boolos; The Logic of Provability, Cambridge University Press, 1993.
+[16] Andrey Bovykin; Brief introduction to unprovability, Logic Colloquium 2006, Lecture Notes in Logic 32.
+[17] Bernd Buldt; The Scope of Gödel’s First Incompleteness Theorem, Logica Universalis, 8 (3-4), 499-552, 2014.
+[18] Samuel R. Buss; Bounded Arithmetic, Bibliopolis, Napoli, 1986.
+
+48
+
+YONG CHENG
+
+[19] Samuel R. Buss; First-Order Theory of Arithmetic, in: Samuel R. Buss (ed), Handbook Proof Theory, Elsevier, Amsterdam, 1998.
+[20] Gregory J. Chaitin; Information-theoretic limitations of formal systems, Journal of
+the Association for Computing Machinery, 21: 403-424, 1974.
+[21] Conden Chao and Payam Seraji; Gödel’s second incompleteness theorem for Σn deﬁnable theories, Logic Journal of the IGPL, Volume 26, Issue 2, 27, Pages 255-257,
+March 2018.
+[22] Yong Cheng; Incompleteness for Higher-Order Arithmetic: An Example Based on
+Harrington’s Principle, Springer series: Springerbrief in Mathematics, Springer,
+2019.
+[23] Yong Cheng; Finding the limit of incompleteness I, Accepted and to appear in The
+Bulletin of Symbolic Logic, DOI: 10.1017/bsl.2020.09, see arXiv:1902.06658v2, 2020.
+[24] Yong Cheng; On the depth of Gödel’s incompleteness theorem, submited, see
+arXiv:2008.13142, 2020.
+[25] Yong Cheng and Ralf Schindler; Harrington’s Principle in higher order arithmetic,
+The Journal of Symbolic Logic, Volume 80, Issue 02, pp 477-489, June 2015.
+[26] Cezary Cieśliński; Heterologicality and incompleteness, Mathematical Logic Quarterly, 48(1), 105-110, 2002.
+[27] Cezary Cieśliński and Rafal Urbaniak; Gödelizing the Yablo sequence, Journal of
+Philosophical Logic, 42(5), 679-695, 2013.
+[28] P. Clote and K. McAloon; Two further combinatorial theorems equivalent to the
+1-consistency of Peano arithmetic, J. Symb. Log. vol.48, no.4, pp. 1090-1104, 1983.
+[29] Walter Dean; Incompleteness via paradox and completeness, Review of symbolic
+logic, Volume 13, Issue 3, pp. 541-592, September 2020.
+[30] Herbert B. Enderton; A mathematical introduction to logic (2nd ed.), Boston, MA:
+Academic Press, 2001.
+[31] Herbert B. Enderton; Computability theory, An introduction to recursion theory,
+Elsevier 2011.
+[32] Richard L. Epstein (with contributions by Leslaw W.Szczerba); Classical mathematical logic: The semantic foundations of logic, Princeton University Press, 2011
+[33] Solomon Feferman; Arithmetization of metamathematics in a general setting, Fundamenta Mathematicae 49:35-92, 1960.
+[34] Solomon Feferman; Transﬁnite recursive progressions of axiomatic theories, Journal
+of Symbolic Logic, vol. 27 (1962), pp. 259-316.
+[35] Solomon Feferman; The Impact of the Incompleteness Theorems on Mathematics,
+Notices of the AMS, Volume 53, Number 4, p.434-439, 2006.
+[36] Fernando Ferreira and Gilad Ferreira; Interpretability in Robinson’s Q, The Bulletin
+of Symbolic Logic, Vol. 19, No. 3, pp. 289-317, September 2013.
+[37] F.B. Fitch; A goedelized formulation of the prediction paradox, American Philosophical Quarterly, 1, 161-164, 1964.
+[38] Torkel Franzen; Inexhaustibility: A Non-Exhaustive Treatment, in Lecture Notes in
+Logic 16, 2004.
+[39] Harvey Friedman; On the necessary use of abstract set theory, Advances in Mathematics, 41, pp.209-280, 1981.
+[40] Harvey Friedman; Finite functions and the neccessary use of large cardinals, Ann.
+Math, 148, pp. 803-893, 1998.
+[41] Harvey Friedman; Boolean relation theory and incompleteness, Manuscript, to appear.
+[42] S.-D. Friedman, M. Rathjen, and A. Weiermann; Slow consistency, Annals of Pure
+and Applied Logic, 164(3): 382-393, 2013.
+[43] M. Ganea; Arithmetic on semigroups, J. Symb. Logic, 74(1):265-278, 2009.
+[44] Gerhard Gentzen; ”Beweisbarkeit und Unbeweisbarkeit von Anfangsfüllen der transﬁniten Induktion in der reinen Zahlentheorie”, Mathematische Annalen, 119: 140161, 1943.
+[45] Kurt Gödel; Kurt Gödel’s Collected Works, vol. 1, pp. 145-195.
+[46] Kurt Gödel; Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I, Monatsh. Math. Phys. 38:1, 173-198, 1931.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+49
+
+[47] Balthasar Grabmayr; On the Invariance of Gödel’s Second Theorem with regard to
+Numberings, To appear in The Review of Symbolic Logic, 2020.
+[48] Balthasar Grabmayr and Albert Visser; Self-reference upfront: a study of selfreferential Gödel numberings, arXiv:2006.12178v2, 2020.
+[49] Andrzej Grzegorczyk; Undecidability without arithmetization, Studia Logica,
+79(2):163-230, 2005.
+[50] Andrzej Grzegorczyk and Konrad Zdanowski; Undecidability and concatenation, In
+A. Ehrenfeucht, V. W. Marek, M. Srebrny (Eds.), Andrzej Mostowski and foundational studies (pp. 72-91). Amsterdam: IOS Press, 2008.
+[51] David Guaspari; Partially conservative extensions of arithmetic, Transactions of the
+American Mathematical Society, 254:47-68, 1979.
+[52] David Guaspari and R.M. Solovay; Rosser sentences, Annals of Mathematical Logic,
+16(1), 81-99, 1979.
+[53] Petr Hájek; Interpretability and Fragments of Arithmetic, Arithmetic, Proof Theory
+and Computational Complexity (Peter Clote; Jan Krajı́cek, J.). Oxford Logic Guides
+23, p. 185-196. Oxford: Clarendon Press, 1993.
+[54] Petr Hájek and Jeﬀ Paris; Combinatorial principles concerning approximations of
+functions, Archive Math. Logic vol.26, no.1-2, pp.13-28, 1986.
+[55] Petr Hájek and Pavel Pudlák; Metamathematics of First-Order Arithmetic, Berlin:
+Springer, 1993.
+[56] Volker Halbach and Albert Visser; Self-reference in arithmetic I (2014a), Review of
+Symbolic Logic 7(4), 671-691.
+[57] Volker Halbach and Albert Visser; Self-Reference in Arithmetic II (2014b), Review
+of Symbolic Logic 7(4), 692-712.
+[58] M. Hamano and M. Okada; A relationship among Gentzen’s proof-reduction, KirbyParis’ hydra game, and Buchholz’s hydra game, Math. Logic Quart 43:1, 103-120,
+1997.
+[59] Paula Henk and Fedor Pakhomov; Slow and Ordinary Provability for Peano Arithmetic, see arXiv:1602.1822, 2016.
+[60] Kojiro Higuchi and Yoshihiro Horihata; Weak theories of concatenation and minimal
+essentially undecidable theories-an encounter of WTC and S2S, Arch. Math. Log.,
+53(7-8):835-853, 2014.
+[61] D. Hilbert and P. Bernays; Grundlagen der Mathematik, Volume II, Springer, 1939.
+[62] D. Hilbert and P. Bernays; Grundlagen der Mathematik, Vols. I and II, 2d ed,
+Springer-Verlag, Berlin, 1968.
+[63] D. Isaacson; Arithmetical truth and hidden higher-order concepts, in J. Barwise,
+D. Kaplan, H.J. Keisler, P. Suppes, and A.S. Troelstra, eds, Logic Colloquium 85,
+pp. 147-169. Vol. 122 of Studies in Logic and the Foundations of Mathematics.
+Amsterdam: North-Holland, 1987.
+[64] D. Isaacson; Necessary and suﬃcient conditions for undecidability of the Gödel
+sentence and its truth, In: D. DeVidi, etal. (Eds.), Logic, Mathematics, Philosophy:
+Vintage Enthusiasms, Springer, ISBN 9789400702134, pp. 135-152, 2011.
+[65] Thomas Jech; On Gödel’s second incompleteness theorem, Proceedings of the American Mathematical Society, Volume 121, Number 1, May 1994.
+[66] Thomas Jech; Set Theory, Third millennium edition, revised and expanded,
+Springer, Berlin, 2003.
+[67] Emil Jeřábek; Recursive functions and existentially closed structures, Journal of
+Mathematical Logic 20 (2020).
+[68] J. P. Jones and J. C. Shepherdson; Variants of Robinson’s essentially undecidable
+theory R, Archive Math. Logic, 23, 65-77, 1983.
+[69] Akihiro Kanamori; Higher Infinite: Large Cardinals in Set Theory from Their Beginnings, Springer Monographs in Mathematics, Springer, Berlin, Second edition,
+2003.
+[70] Akihiro Kanamori and K. McAloon; On Gödel’s incompleteness and ﬁnite combinatorics, Ann. Pure Appl. Logic. 33:1, 23-41, 1987.
+[71] Richard Kaye and Henryk Kotlarski; On models constructed by means of the arithmetized completeness theorem, Mathematical Logic Quarterly, 46(4):505-516, 2000.
+
+50
+
+YONG CHENG
+
+[72] Makoto Kikuchi; A note on Boolos’ proof of the incompleteness theorem, Math. Log.
+Quart 40, 528-532, 1994.
+[73] Makoto Kikuchi; Kolmogorov complexity and the second incompleteness theorem,
+Archive for Mathematical Logic, 36(6):437-443, 1997.
+[74] Makoto Kikuchi and Taishi Kurahashi; Generalizations of Gödel’s incompleteness
+theorems for Σn -deﬁnable theories of arithmetic, The Review of Symbolic Logic,
+Volume 10, Number 4, December 2017.
+[75] Makoto Kikuchi and Kazuyuki Tanaka; On formalization of model-theoretic proofs
+of Gödel’s theorems, Notre Dame Journal of Formal Logic, 35(3):403-412, 1994.
+[76] Makoto Kikuchi and Taishi Kurahashi; Three short stories around Gödel’s incompleteness theorems (in Japanese), Journal of the Japan Association for Philosophy
+of Science, 38(2), 27-32, 2011.
+[77] Makoto Kikuchi, Taishi Kurahashi and H. Sakai; On proofs of the incompleteness
+theorems based on Berry’s paradox by Vopěnka, Chaitin, and Boolos, Mathematical
+Logic Quarterly, 58(4-5), 307-316, 2012.
+[78] Makoto Kikuchi and Taishi Kurahashi; Universal Rosser predicates, The Journal of
+Symbolic Logic, 82(1) 292-302, Mar 2017.
+[79] L. Kirby; Flipping properties in arithmetic, J. Symb. Log. vol.47, no.2, pp. 416-422,
+1982.
+[80] S.C. Kleene; A symmetric form of Godel’s theorem, Indagationes Mathematicae,
+12:244-246, 1950.
+[81] Henryk Kotlarski; On the incompleteness theorems, The Journal of Symbolic Logic,
+Volume 59, Number 4, December 1994.
+[82] Henryk Kotlarski; Other Proofs of Old Results, Math. Log. Quart. 44, 474-480, 1998.
+[83] Henryk Kotlarski; The incompleteness theorems after 70 years, Annals of Pure and
+Applied Logic, 126(1-3):125-138, 2004.
+[84] Georg Kreisel; Note on arithmetic models for consistent formulae of the predicate
+calculus, Fundamenta mathematicae 37, 265-285, 1950.
+[85] Georg Kreisel; On weak completeness of intuitionistic predicate logic, The Journal
+of Symbolic Logic, 27:139-158, 1962.
+[86] Georg Kreisel; A survey of proof theory, The Journal of Symbolic Logic, 33:321-388,
+1968.
+[87] Shira Kritchman and Ran Raz; The surprise examination paradox and the second incompleteness theorem, Notices of the American Mathematical Society, 57(11):14541458, 2010.
+[88] G. Leach-Krouse; Yablifying the Rosser sentence, Journal of Philosophical Logic,
+doi:10.1007/s10992-013-9291-5. 2013.
+[89] Taishi Kurahashi; Rosser-Type Undecidable Sentences Based on Yablo’s Paradox, J
+Philos Logic 43:999-1017, 2014.
+[90] Taishi Kurahashi; Arithmetical Completeness Theorem for Modal Logic K, Studia
+Logica, Volume 106, Issue 2, pp 219-235, April 2018.
+[91] Taishi Kurahashi; Arithmetical soundness and completeness for Σ2 numerations,
+Studia Logica, Volume 106, Issue 6, pp 1181-1196, December 2018.
+[92] Taishi Kurahashi; A note on derivability conditions, accepted for the publication in
+The Journal of Symbolic Logic, DOI: 10.1017/jsl.2020.33, 2020.
+[93] Taishi Kurahashi; Rosser provability and the second incompleteness theorem, accepted for the publication in Symposium on Advances in Mathematical Logic 2018
+proceedings.
+[94] Ming Li and Paul M.B. Vitányi; Kolmogorov complexity and its applications, In:
+van Leeuwen, J. (ed.) Handbook of Theoretical Computer Science, pp. 187-254, Amsterdam: Elsevier 1990.
+[95] P. Lindström; Aspects of incompleteness, Lecture Notes in Logic 10, Springer-Verlag,
+Berlin, 1997.
+[96] Martin Hugo Löb; Solution of a problem of Leon Henkin, The Journal of Symbolic
+Logic, 20(2):115-118, 1955.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+51
+
+[97] G. Mills; A tree analysis of unprovable combinatorial statements, Model Theory of
+Algebra and Arithmetic, Lecture Notes in Mathematics, vol.834, Springer, Berlin
+pp.248-311, 1980.
+[98] Franco Montagna; On the formulas of Peano arithmetic which are provably closed
+under modus ponens, Bollettino dell’Unione Matematica Italiana, 16(B5):196-211,
+1979.
+[99] A. Montalbán and R. A. Shore; The limits of determinacy in second-order Arithmetic, Proceedings of the London Math Society, 104, 223-252, 2012.
+[100] Andrzej Mostowski; A generalization of the incompleteness theorem, Fundamenta
+Mathematicae, 49:205-232, 1961.
+[101] Andrzej Mostowski; Thirty years of foundational studies: lectures on the development of mathematical logic and the study of the foundations of mathematics in
+1930-1964, In Acta Philosophica Fennica, volume 17, pages 1-180. 1965.
+[102] Roman Murawski; Recursive Functions and Metamathematics: Problems of Completeness and Decidability, Gödel’s Theorems, Springer Netherlands, 1999.
+[103] E. Nelson; Predicative arithmetic, Mathematical Notes, Princeton University Press,
+1986.
+[104] K.G. Niebergall; Natural representations and extensions of Gödel’s second theorem,
+In M. Baaz, S.D. Friedman, and J. Krajĺček, editors, Logic Colloquium 01, Lecture
+Notes in Logic, page 350-368. Cambridge University Press, 2005.
+[105] P. Odifreddi; Classical Recursion Theory, Amsterdam: North-Holland 1989.
+[106] L. Pacholski and J. Wierzejewski; Model Theory of Algebra and Arithmetic, Lecture
+Notes in Mathematics, vol.834, Springer, Berlin, 1980.
+[107] Fedor Pakhomov; A weak set theory that proves its own consistency, see
+arXiv:1907.00877v2, 2019.
+[108] J. Paris and L. Harrington; A mathematical incompleteness in Peano arithmetic, In:
+Handbook of mathematical logic (J. Barwise, ed.), Stud. Logic Found. Math., vol.
+90, North-Holland, Amsterdam-New York-Oxford, pp. 1133-1142, 1977.
+[109] J.Paris and L. Kirby; Accessible independence results for Peano arithmetic, The
+Bulletin of the London Mathematical Society, vol.14, no.4, pp. 285-293, 1982.
+[110] Marian Boykan Pour-El and Saul Kripke; Deduction-preserving “recursive isomorphisms” between theories, Fundam Math 61:141-163, 1967.
+[111] Graham Priest; Yablo’s paradox, Analysis, 57(4), 236-242, 1997.
+[112] Pavel Pudlák; Another combinatorial principle independent of Peano’s axioms, Unpublished, 1979.
+[113] Pavel Pudlák; Cuts, consistency statements and interpretations, The Journal of
+Symbolic Logic, 50, 423-441, 1985.
+[114] Pavel Pudlák; Incompleteness in the ﬁnite domain, The Bulletin of Symbolic Logic,
+Vol. 23, No. 4, pp. 405-441, 2017.
+[115] Abraham Robinson; On languages which are based on non-standard arithmetic,
+Nagoya Mathematical Journal 22, 83-117, 1963.
+[116] John Barkley Rosser; Extensions of some theorems of Gödel and Church, The Journal of Symbolic Logic, 1(3):87-91, 1936.
+[117] Bertrand Russell; Mathematical logic as based on the theory of types, American
+Journal of Mathematics, 30:222-262, 1908.
+[118] Saeed Salehi and Payam Seraji; Gödel-Rosser’s Incompleteness Theorem, generalized
+and optimized for deﬁnable theories, Journal of Logic and Computation, Volume 27,
+Issue 5, Pages 1391-1397, July 2017.
+[119] Saeed Salehi and Payam Seraji; On constructivity and the Rosser property: a closer
+look at some Gödelean proofs, Annals of Pure and Applied Logic 169 (2018) 971-980.
+[120] Stephen G. Simpson; Subsystems of second-order arithmetic, Perspectives in Logic
+(2nd ed.), Cambridge University Press, 2009.
+[121] Peter Smith; An Introduction to Gödel’s Theorems, Cambridge University Press,
+2007.
+[122] C. Smoryński; The Incompleteness Theorems, in: J. Barwise (Ed.), Handbook of
+Mathematical Logic, North-Holland, Amsterdam, pp. 821-865, 1977.
+
+52
+
+YONG CHENG
+
+[123] Raymond M. Smullyan; Gödel’s Incompleteness Theorems, Oxford Logic Guides,
+Oxford University Press, 1992.
+[124] Raymond M. Smullyan; Diagnolisation and Self-Reference, Oxford Logic Guides 27,
+Oxford University Press, 1994.
+[125] Stephen G. Simpson; Harvey Friedman’s Research on the Foundations of Mathematics, Studies in Logic and the Foundations of Mathematics, vol. 117, North-Holland
+Publishing, Amsterdam, 1985.
+[126] Stephen G. Simpson (editor); Logic and Combinatorics, Contemporary Mathematics,
+vol. 65, AMS, Providence, RI, 1987.
+[127] R.M. Solovay; Provability interpretations of modal logic, Israel Journal of Mathematics 25 (1976), pp. 287-304.
+[128] V. Švejdar; An interpretation of Robinson arithmetic in its Grzegorczyk’s weaker
+variant, Fundamenta Informaticae, 81(1-3):347-354, 2007.
+[129] Alfred Tarski, Andrzej Mostowski and Raphael M. Robinson; Undecidabe theories,
+Studies in Logic and the Foundations of Mathematics, North-Holland, Amsterdam,
+1953.
+[130] Alfred Tarski and Steven Givant; Tarski’s System of Geometry, The Bulletin of
+Symbolic Logic Vol. 5, No. 2 (Jun., 1999), pp. 175-214.
+[131] A. Turing; Systems of logic based on ordinals, Proceedings of the London Mathematical Society, vol. 45 (1939), pp. 161-228.
+[132] R.L.Vaught; On a theorem of Cobham concerning undecidable theories, In: Nagel
+E, Suppes P, Tarski A (eds) Proceedings of the 1960 international congress on logic,
+methodology and philosophy of science, Stanford University Press, Stanford, pp 1425, 1962.
+[133] Albert Visser; The provability logics of recursively enumerable theories extending
+Peano arithmetic at arbitrary theories extending Peano arithmetic, Journal of Philosophical Logic 13(2):181-212, 1984.
+[134] Albert Visser; Growing commas: a study of sequentiality and concatenation, Notre
+Dame J. Formal Logic, 50(1):61-85, 2009.
+[135] Albert Visser; Can we make the second incompleteness theorem coordinate free?
+Journal of Logic and Computation 21(4), 543-560, 2011.
+[136] Albert Visser; Why the theory R is special, In Foundational Adventures: Essay in
+honour of Harvey Friedman, pages 7-23, College Publications, 2014.
+[137] Albert Visser; On Q, Soft Comput, DOI 10.1007/s00500-016-2341-5, 2016.
+[138] Albert Visser; The Second Incompleteness Theorem: Reﬂections and Ruminations,
+Chapter in Gödel’s Disjunction: The scope and limits of mathematical knowledge,
+edited by Leon Horsten and Philip Welch, Oxford University Press, 2016.
+[139] Albert Visser; The interpretation existence lemma, In Feferman on Foundations,
+Outstanding Contributions to Logic 13, pages 101-144. Springer, 2017.
+[140] Albert Visser; Another look at the second incompleteness theorem, To appear in
+Review of Symbolic Logic, 2019.
+[141] Albert Visser; From Tarski to Gödel: or, how to derive the second incompleteness
+theorem from the undeﬁnability of truth without self-reference, Journal of Logic and
+Computation, Volume 29, Issue 5, September 2019, Pages 595-604.
+[142] Petr Vopěnka; A new proof of Gödel’s result on non-provability of consistency, Bulletin del’Académie Polonaise des Sciences. Série des Sciences Mathématiques. Astronomiques et Physiques, 14, 111-116.
+[143] Hao Wang; Undecidable sentences generated by semantic paradoxes, Journal of
+Symbolic Logic 20(1), 31-43, 1955.
+[144] Andreas Weiermann; An application of graphical enumeration to PA, J. Symb. Log,
+68 (1), pp. 5-16, 2003.
+[145] Andreas Weiermann; A classiﬁcation of rapidly growing Ramsey functions, Proceedings of the American Mathematical Society, 132, pp. 553-561, 2004.
+[146] Andreas Weiermann; Analytic combinatorics, proof-theoretic ordinals, and phase
+transitions for independence results, Ann. Pure Appl. Logic 136, pp. 189-218, 2005.
+[147] Andreas Weiermann; Classifying the provably total functions of PA, Bull. Symbolic
+Logic 12, no. 2, pp. 177-190, 2006.
+
+CURRENT RESEARCH ON GÖDEL’S INCOMPLETENESS THEOREMS
+
+53
+
+[148] Andreas Weiermann; Phase transition thresholds for some Friedman-style independence results, Math. Logic Quart 53, no. 1, pp. 4-18, 2007.
+[149] Lev. Gordeev and Andreas Weiermann; Phase transitions of iterated Higman-style
+well-partial-orderings, Archive Math. Logic, Volume 51, Issue 1-2, pp 127-161, 2012.
+[150] D. E. Willard; Self-verifying axiom systems, the incompleteness theorem and related
+reﬂection principles, Journal of Symbolic Logic, 66(2):536-596, 2001.
+[151] D. E. Willard; A generalization of the second incompleteness theorem and some
+exceptions to it, Ann. Pure Appl. Logic, 141(3):472-496, 2006.
+[152] S. Yablo; Paradox without self-reference, Analysis, 53(4), 251-252, 1993.
+[153] Richard Zach; Hilbert’s Program Then and Now, Philosophy of Logic, Handbook of
+the Philosophy of Science. 2007, Pages 411-447.
+
+100
+School of Philosophy, Wuhan University, Wuhan, Hubei Province, P.R.China,
+430072
+Email address: world-cyr@hotmail.com
+
+
