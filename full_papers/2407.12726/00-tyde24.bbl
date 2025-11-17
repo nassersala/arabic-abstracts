@@ -1,0 +1,748 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{41}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[A~R et~al\mbox{.}(2018)]%
+        {arOpenSourceAutomated2018}
+\bibfield{author}{\bibinfo{person}{Gokulnath A~R},
+  \bibinfo{person}{Chandrakumar S}, {and} \bibinfo{person}{Sudhakar T~D}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Open {{Source Automated SMD Pick}} and {{Place
+  Machine}}}.
+\newblock \bibinfo{journal}{\emph{Procedia Computer Science}}
+  \bibinfo{volume}{133} (\bibinfo{year}{2018}), \bibinfo{pages}{872--878}.
+\newblock
+\showISSN{18770509}
+\urldef\tempurl%
+\url{https://doi.org/10.1016/j.procs.2018.07.107}
+\showDOI{\tempurl}
+
+
+\bibitem[Arts et~al\mbox{.}(2015)]%
+        {artsTestingAUTOSARSoftware2015}
+\bibfield{author}{\bibinfo{person}{Thomas Arts}, \bibinfo{person}{John Hughes},
+  \bibinfo{person}{Ulf Norell}, {and} \bibinfo{person}{Hans Svensson}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Testing {{AUTOSAR}} Software with {{QuickCheck}}}.
+  In \bibinfo{booktitle}{\emph{2015 {{IEEE Eighth International Conference}} on
+  {{Software Testing}}, {{Verification}} and {{Validation Workshops}}
+  ({{ICSTW}})}}. \bibinfo{publisher}{IEEE}, \bibinfo{address}{Graz, Austria},
+  \bibinfo{pages}{1--4}.
+\newblock
+\showISBNx{978-1-4799-1885-0}
+\urldef\tempurl%
+\url{https://doi.org/10.1109/ICSTW.2015.7107466}
+\showDOI{\tempurl}
+
+
+\bibitem[Atkey(2018)]%
+        {atkeySyntaxSemanticsQuantitative2018}
+\bibfield{author}{\bibinfo{person}{Robert Atkey}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Syntax and {{Semantics}} of {{Quantitative Type
+  Theory}}}. In \bibinfo{booktitle}{\emph{Proceedings of the 33rd {{Annual
+  ACM}}/{{IEEE Symposium}} on {{Logic}} in {{Computer Science}}}}.
+  \bibinfo{publisher}{ACM}, \bibinfo{address}{Oxford United Kingdom},
+  \bibinfo{pages}{56--65}.
+\newblock
+\showISBNx{978-1-4503-5583-4}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3209108.3209189}
+\showDOI{\tempurl}
+
+
+\bibitem[Barwell et~al\mbox{.}(2023)]%
+        {barwellDesigningAsynchronousMultiparty2023}
+\bibfield{author}{\bibinfo{person}{Adam~D. Barwell}, \bibinfo{person}{Ping
+  Hou}, \bibinfo{person}{Nobuko Yoshida}, {and} \bibinfo{person}{Fangyi Zhou}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{Designing {{Asynchronous Multiparty Protocols}} with
+  {{Crash-Stop Failures}}}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.48550/arXiv.2305.06238}
+\showDOI{\tempurl}
+\showeprint[arxiv]{2305.06238}~[cs]
+
+
+\bibitem[Bengtsson et~al\mbox{.}(1996)]%
+        {bengtssonUPPAALToolSuite1996}
+\bibfield{author}{\bibinfo{person}{Johan Bengtsson}, \bibinfo{person}{Kim
+  Larsen}, \bibinfo{person}{Fredrik Larsson}, \bibinfo{person}{Paul
+  Pettersson}, {and} \bibinfo{person}{Wang Yi}.}
+  \bibinfo{year}{1996}\natexlab{}.
+\newblock \showarticletitle{{{UPPAAL}} --- a Tool Suite for Automatic
+  Verification of Real-Time Systems}.
+\newblock In \bibinfo{booktitle}{\emph{Hybrid {{Systems III}}}},
+  \bibfield{editor}{\bibinfo{person}{G.~Goos}, \bibinfo{person}{J.~Hartmanis},
+  \bibinfo{person}{J.~Van~Leeuwen}, \bibinfo{person}{Rajeev Alur},
+  \bibinfo{person}{Thomas~A. Henzinger}, {and} \bibinfo{person}{Eduardo~D.
+  Sontag}} (Eds.). Vol.~\bibinfo{volume}{1066}. \bibinfo{publisher}{Springer
+  Berlin Heidelberg}, \bibinfo{address}{Berlin, Heidelberg},
+  \bibinfo{pages}{232--243}.
+\newblock
+\showISBNx{978-3-540-61155-4 978-3-540-68334-6}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/BFb0020949}
+\showDOI{\tempurl}
+
+
+\bibitem[Berghofer and Nipkow(2004)]%
+        {berghoferRandomTestingIsabelle2004}
+\bibfield{author}{\bibinfo{person}{S. Berghofer} {and} \bibinfo{person}{T.
+  Nipkow}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{Random Testing in {{Isabelle}}/{{HOL}}}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the {{Second International
+  Conference}} on {{Software Engineering}} and {{Formal Methods}}, 2004.
+  {{SEFM}} 2004.}} \bibinfo{publisher}{IEEE}, \bibinfo{address}{Beijing,
+  China}, \bibinfo{pages}{230--239}.
+\newblock
+\showISBNx{978-0-7695-2222-7}
+\urldef\tempurl%
+\url{https://doi.org/10.1109/SEFM.2004.1347524}
+\showDOI{\tempurl}
+
+
+\bibitem[Bhatti et~al\mbox{.}(2009)]%
+        {bhattiDomainSpecificLanguages2009}
+\bibfield{author}{\bibinfo{person}{Saleem Bhatti}, \bibinfo{person}{Edwin
+  Brady}, \bibinfo{person}{Kevin Hammond}, {and} \bibinfo{person}{James
+  McKinna}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Domain {{Specific Languages}} ({{DSLs}}) for
+  {{Network Protocols}} ({{Position Paper}})}. In
+  \bibinfo{booktitle}{\emph{2009 29th {{IEEE International Conference}} on
+  {{Distributed Computing Systems Workshops}}}}. \bibinfo{publisher}{IEEE},
+  \bibinfo{address}{Montreal, Quebec, Canada}, \bibinfo{pages}{208--213}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1109/ICDCSW.2009.64}
+\showDOI{\tempurl}
+
+
+\bibitem[Bove et~al\mbox{.}(2009)]%
+        {boveBriefOverviewAgda2009}
+\bibfield{author}{\bibinfo{person}{Ana Bove}, \bibinfo{person}{Peter Dybjer},
+  {and} \bibinfo{person}{Ulf Norell}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{A {{Brief Overview}} of {{Agda}} -- {{A Functional
+  Language}} with {{Dependent Types}}}.
+\newblock In \bibinfo{booktitle}{\emph{Theorem {{Proving}} in {{Higher Order
+  Logics}}}}, \bibfield{editor}{\bibinfo{person}{Stefan Berghofer},
+  \bibinfo{person}{Tobias Nipkow}, \bibinfo{person}{Christian Urban}, {and}
+  \bibinfo{person}{Makarius Wenzel}} (Eds.). Vol.~\bibinfo{volume}{5674}.
+  \bibinfo{publisher}{Springer Berlin Heidelberg}, \bibinfo{address}{Berlin,
+  Heidelberg}, \bibinfo{pages}{73--78}.
+\newblock
+\showISBNx{978-3-642-03358-2 978-3-642-03359-9}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-642-03359-9_6}
+\showDOI{\tempurl}
+
+
+\bibitem[Brady(2013)]%
+        {bradyIdrisGeneralpurposeDependently2013}
+\bibfield{author}{\bibinfo{person}{Edwin Brady}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Idris, a General-Purpose Dependently Typed
+  Programming Language: {{Design}} and Implementation}.
+\newblock \bibinfo{journal}{\emph{Journal of Functional Programming}}
+  \bibinfo{volume}{23}, \bibinfo{number}{5} (\bibinfo{date}{Sept.}
+  \bibinfo{year}{2013}), \bibinfo{pages}{552--593}.
+\newblock
+\showISSN{0956-7968, 1469-7653}
+\urldef\tempurl%
+\url{https://doi.org/10.1017/S095679681300018X}
+\showDOI{\tempurl}
+
+
+\bibitem[Brady(2015)]%
+        {bradyResourceDependentAlgebraicEffects2015}
+\bibfield{author}{\bibinfo{person}{Edwin Brady}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Resource-{{Dependent Algebraic Effects}}}. In
+  \bibinfo{booktitle}{\emph{Trends in {{Functional Programming}}}}
+  \emph{(\bibinfo{series}{Lecture {{Notes}} in {{Computer Science}}},
+  Vol.~\bibinfo{volume}{8843})}, \bibfield{editor}{\bibinfo{person}{Jurriaan
+  Hage} {and} \bibinfo{person}{Jay McCarthy}} (Eds.).
+  \bibinfo{publisher}{Springer International Publishing},
+  \bibinfo{address}{Cham}, \bibinfo{pages}{18--33}.
+\newblock
+\showISBNx{978-3-319-14674-4 978-3-319-14675-1}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-319-14675-1_2}
+\showDOI{\tempurl}
+
+
+\bibitem[Brady(2017)]%
+        {bradyTypedrivenDevelopmentIdris2017}
+\bibfield{author}{\bibinfo{person}{Edwin Brady}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Type-Driven Development with {{Idris}}}}.
+\newblock \bibinfo{publisher}{Manning Publications Co},
+  \bibinfo{address}{Shelter Island, NY}.
+\newblock
+\showISBNx{978-1-61729-302-3}
+\showLCCN{QA76.62 .B73 2017}
+
+
+\bibitem[Brady(2021)]%
+        {bradyIdrisQuantitativeType2021}
+\bibfield{author}{\bibinfo{person}{Edwin Brady}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Idris 2: {{Quantitative Type Theory}} in
+  {{Practice}}}.
+\newblock \bibinfo{journal}{\emph{arXiv}} (\bibinfo{date}{April}
+  \bibinfo{year}{2021}).
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.4230/LIPIcs.ECOOP.2021.9}
+\showDOI{\tempurl}
+\showeprint[arxiv]{2104.00480}
+
+
+\bibitem[Brady and Hammond(2010)]%
+        {bradyCorrectbyConstructionConcurrencyUsing2010}
+\bibfield{author}{\bibinfo{person}{Edwin Brady} {and} \bibinfo{person}{Kevin
+  Hammond}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Correct-by-{{Construction Concurrency}}: {{Using
+  Dependent Types}} to {{Verify Implementations}} of {{Effectful Resource Usage
+  Protocols}}}.
+\newblock \bibinfo{journal}{\emph{Fundamenta Informaticae}}
+  \bibinfo{volume}{102}, \bibinfo{number}{2} (\bibinfo{year}{2010}),
+  \bibinfo{pages}{145--176}.
+\newblock
+\showISSN{01692968}
+\urldef\tempurl%
+\url{https://doi.org/10.3233/FI-2010-303}
+\showDOI{\tempurl}
+
+
+\bibitem[Brady and Hammond(2012)]%
+        {bradyResourceSafeSystemsProgramming2012}
+\bibfield{author}{\bibinfo{person}{Edwin Brady} {and} \bibinfo{person}{Kevin
+  Hammond}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Resource-{{Safe Systems Programming}} with
+  {{Embedded Domain Specific Languages}}}.
+\newblock In \bibinfo{booktitle}{\emph{Practical {{Aspects}} of {{Declarative
+  Languages}}}}, \bibfield{editor}{\bibinfo{person}{Claudio Russo} {and}
+  \bibinfo{person}{Neng-Fa Zhou}} (Eds.). Vol.~\bibinfo{volume}{7149}.
+  \bibinfo{publisher}{Springer Berlin Heidelberg}, \bibinfo{address}{Berlin,
+  Heidelberg}, \bibinfo{pages}{242--257}.
+\newblock
+\showISBNx{978-3-642-27693-4 978-3-642-27694-1}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-642-27694-1_18}
+\showDOI{\tempurl}
+
+
+\bibitem[Burton and Page(1992)]%
+        {burtonDistributedRandomNumber1992}
+\bibfield{author}{\bibinfo{person}{F.~Warren Burton} {and}
+  \bibinfo{person}{Rex~L. Page}.} \bibinfo{year}{1992}\natexlab{}.
+\newblock \showarticletitle{Distributed Random Number Generation}.
+\newblock \bibinfo{journal}{\emph{Journal of Functional Programming}}
+  \bibinfo{volume}{2}, \bibinfo{number}{2} (\bibinfo{year}{1992}),
+  \bibinfo{pages}{203--212}.
+\newblock
+\showISSN{0956-7968}
+\urldef\tempurl%
+\url{https://doi.org/10.1017/S0956796800000320}
+\showDOI{\tempurl}
+
+
+\bibitem[{Castro-Perez} et~al\mbox{.}(2021)]%
+        {castro-perezZooidDSLCertified2021}
+\bibfield{author}{\bibinfo{person}{David {Castro-Perez}},
+  \bibinfo{person}{Francisco Ferreira}, \bibinfo{person}{Lorenzo Gheri}, {and}
+  \bibinfo{person}{Nobuko Yoshida}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Zooid: A {{DSL}} for Certified Multiparty
+  Computation: From Mechanised Metatheory to Certified Multiparty Processes}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the 42nd {{ACM SIGPLAN
+  International Conference}} on {{Programming Language Design}} and
+  {{Implementation}}}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{Virtual
+  Canada}, \bibinfo{pages}{237--251}.
+\newblock
+\showISBNx{978-1-4503-8391-2}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3453483.3454041}
+\showDOI{\tempurl}
+
+
+\bibitem[Chaliasos et~al\mbox{.}(2021)]%
+        {chaliasosWelltypedProgramsCan2021}
+\bibfield{author}{\bibinfo{person}{Stefanos Chaliasos},
+  \bibinfo{person}{Thodoris Sotiropoulos}, \bibinfo{person}{Georgios-Petros
+  Drosos}, \bibinfo{person}{Charalambos Mitropoulos}, \bibinfo{person}{Dimitris
+  Mitropoulos}, {and} \bibinfo{person}{Diomidis Spinellis}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Well-Typed Programs Can Go Wrong: A Study of
+  Typing-Related Bugs in {{JVM}} Compilers}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the ACM on Programming
+  Languages}} \bibinfo{volume}{5}, \bibinfo{number}{OOPSLA}
+  (\bibinfo{date}{Oct.} \bibinfo{year}{2021}), \bibinfo{pages}{1--30}.
+\newblock
+\showISSN{2475-1421}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3485500}
+\showDOI{\tempurl}
+
+
+\bibitem[Chen et~al\mbox{.}(2022)]%
+        {chenPropertyBasedTestingClimbing2022}
+\bibfield{author}{\bibinfo{person}{Zilin Chen}, \bibinfo{person}{Christine
+  Rizkallah}, \bibinfo{person}{Liam O'Connor}, \bibinfo{person}{Partha
+  Susarla}, \bibinfo{person}{Gerwin Klein}, \bibinfo{person}{Gernot Heiser},
+  {and} \bibinfo{person}{Gabriele Keller}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Property-{{Based Testing}}: {{Climbing}} the
+  {{Stairway}} to {{Verification}}}. In \bibinfo{booktitle}{\emph{Proceedings
+  of the 15th {{ACM SIGPLAN International Conference}} on {{Software Language
+  Engineering}}}} \emph{(\bibinfo{series}{{{SLE}} 2022})}.
+  \bibinfo{publisher}{Association for Computing Machinery},
+  \bibinfo{address}{Auckland New Zealand}, \bibinfo{pages}{84--97}.
+\newblock
+\showISBNx{978-1-4503-9919-7}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3567512.3567520}
+\showDOI{\tempurl}
+
+
+\bibitem[Claessen and Hughes(2000)]%
+        {claessenQuickCheckLightweightTool2000}
+\bibfield{author}{\bibinfo{person}{Koen Claessen} {and} \bibinfo{person}{John
+  Hughes}.} \bibinfo{year}{2000}\natexlab{}.
+\newblock \showarticletitle{{{QuickCheck}}: {{A Lightweight Tool}} for {{Random
+  Testing}} of {{Haskell Programs}}}. In \bibinfo{booktitle}{\emph{Proceedings
+  of the Fifth {{ACM SIGPLAN}} International Conference on Functional
+  Programming}} \emph{(\bibinfo{series}{{{ICFP}} '00})}.
+  \bibinfo{publisher}{Association for Computing Machinery},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{268--279}.
+\newblock
+\showISBNx{1-58113-202-6}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/351240.351266}
+\showDOI{\tempurl}
+
+
+\bibitem[Claessen et~al\mbox{.}(2009)]%
+        {claessenFindingRaceConditions2009}
+\bibfield{author}{\bibinfo{person}{Koen Claessen}, \bibinfo{person}{Michal
+  Palka}, \bibinfo{person}{Nicholas Smallbone}, \bibinfo{person}{John Hughes},
+  \bibinfo{person}{Hans Svensson}, \bibinfo{person}{Thomas Arts}, {and}
+  \bibinfo{person}{Ulf Wiger}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Finding Race Conditions in {{Erlang}} with
+  {{QuickCheck}} and {{PULSE}}}. In \bibinfo{booktitle}{\emph{Proceedings of
+  the 14th {{ACM SIGPLAN}} International Conference on Functional Programming}}
+  \emph{(\bibinfo{series}{{{ICFP}} '09})}. \bibinfo{publisher}{Association for
+  Computing Machinery}, \bibinfo{address}{New York, NY, USA},
+  \bibinfo{pages}{149--160}.
+\newblock
+\showISBNx{978-1-60558-332-7}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/1596550.1596574}
+\showDOI{\tempurl}
+
+
+\bibitem[Claessen and Pa{\l}ka(2013)]%
+        {claessenSplittablePseudorandomNumber2013}
+\bibfield{author}{\bibinfo{person}{Koen Claessen} {and}
+  \bibinfo{person}{Micha{\l}~H. Pa{\l}ka}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Splittable Pseudorandom Number Generators Using
+  Cryptographic Hashing}. In \bibinfo{booktitle}{\emph{Proceedings of the 2013
+  {{ACM SIGPLAN}} Symposium on {{Haskell}}}} \emph{(\bibinfo{series}{Haskell
+  '13})}. \bibinfo{publisher}{Association for Computing Machinery},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{47--58}.
+\newblock
+\showISBNx{978-1-4503-2383-3}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/2503778.2503784}
+\showDOI{\tempurl}
+
+
+\bibitem[Clarke et~al\mbox{.}(2001)]%
+        {clarkeProgressStateExplosion2001}
+\bibfield{author}{\bibinfo{person}{Edmund Clarke}, \bibinfo{person}{Orna
+  Grumberg}, \bibinfo{person}{Somesh Jha}, \bibinfo{person}{Yuan Lu}, {and}
+  \bibinfo{person}{Helmut Veith}.} \bibinfo{year}{2001}\natexlab{}.
+\newblock \showarticletitle{Progress on the {{State Explosion Problem}} in
+  {{Model Checking}}}.
+\newblock In \bibinfo{booktitle}{\emph{Informatics}},
+  \bibfield{editor}{\bibinfo{person}{Gerhard Goos}, \bibinfo{person}{Juris
+  Hartmanis}, \bibinfo{person}{Jan {van Leeuwen}}, {and}
+  \bibinfo{person}{Reinhard Wilhelm}} (Eds.). Vol.~\bibinfo{volume}{2000}.
+  \bibinfo{publisher}{Springer Berlin Heidelberg}, \bibinfo{address}{Berlin,
+  Heidelberg}, \bibinfo{pages}{176--194}.
+\newblock
+\showISBNx{978-3-540-41635-7 978-3-540-44577-7}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/3-540-44577-3_12}
+\showDOI{\tempurl}
+
+
+\bibitem[Clarke(2008)]%
+        {clarkeModelCheckingMy2008}
+\bibfield{author}{\bibinfo{person}{Edmund~M Clarke}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Model {{Checking}} -- {{My}} 27-{{Year Quest}} to
+  {{Overcome}} the {{State Explosion Problem}}}.
+\newblock  (\bibinfo{year}{2008}), \bibinfo{pages}{1}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-540-89439-1_13}
+\showDOI{\tempurl}
+
+
+\bibitem[Clarke et~al\mbox{.}(2012)]%
+        {clarkeModelCheckingState2012}
+\bibfield{author}{\bibinfo{person}{Edmund~M. Clarke}, \bibinfo{person}{William
+  Klieber}, \bibinfo{person}{Milo{\v s} Nov{\'a}{\v c}ek}, {and}
+  \bibinfo{person}{Paolo Zuliani}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Model {{Checking}} and the {{State Explosion
+  Problem}}}.
+\newblock In \bibinfo{booktitle}{\emph{Tools for {{Practical Software
+  Verification}}}}, \bibfield{editor}{\bibinfo{person}{Bertrand Meyer} {and}
+  \bibinfo{person}{Martin Nordio}} (Eds.). Vol.~\bibinfo{volume}{7682}.
+  \bibinfo{publisher}{Springer Berlin Heidelberg}, \bibinfo{address}{Berlin,
+  Heidelberg}, \bibinfo{pages}{1--30}.
+\newblock
+\showISBNx{978-3-642-35745-9 978-3-642-35746-6}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-642-35746-6_1}
+\showDOI{\tempurl}
+
+
+\bibitem[Czarnecki et~al\mbox{.}(2004)]%
+        {czarneckiDSLImplementationMetaOCaml2004}
+\bibfield{author}{\bibinfo{person}{Krzysztof Czarnecki},
+  \bibinfo{person}{John~T. O'Donnell}, \bibinfo{person}{J{\"o}rg Striegnitz},
+  {and} \bibinfo{person}{Walid Taha}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{{{DSL Implementation}} in {{MetaOCaml}}, {{Template
+  Haskell}}, and {{C}}++}.
+\newblock In \bibinfo{booktitle}{\emph{Domain-{{Specific Program
+  Generation}}}}, \bibfield{editor}{\bibinfo{person}{Takeo Kanade},
+  \bibinfo{person}{Josef Kittler}, \bibinfo{person}{Jon~M. Kleinberg},
+  \bibinfo{person}{Friedemann Mattern}, \bibinfo{person}{John~C. Mitchell},
+  \bibinfo{person}{Moni Naor}, \bibinfo{person}{Oscar Nierstrasz},
+  \bibinfo{person}{C.~Pandu~Rangan}, \bibinfo{person}{Bernhard Steffen},
+  \bibinfo{person}{Madhu Sudan}, \bibinfo{person}{Demetri Terzopoulos},
+  \bibinfo{person}{Dough Tygar}, \bibinfo{person}{Moshe~Y. Vardi},
+  \bibinfo{person}{Gerhard Weikum}, \bibinfo{person}{Christian Lengauer},
+  \bibinfo{person}{Don Batory}, \bibinfo{person}{Charles Consel}, {and}
+  \bibinfo{person}{Martin Odersky}} (Eds.). Vol.~\bibinfo{volume}{3016}.
+  \bibinfo{publisher}{Springer Berlin Heidelberg}, \bibinfo{address}{Berlin,
+  Heidelberg}, \bibinfo{pages}{51--72}.
+\newblock
+\showISBNx{978-3-540-22119-7 978-3-540-25935-0}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-540-25935-0_4}
+\showDOI{\tempurl}
+
+
+\bibitem[Demri et~al\mbox{.}(2006)]%
+        {demriParametricAnalysisStateexplosion2006}
+\bibfield{author}{\bibinfo{person}{S. Demri}, \bibinfo{person}{F. Laroussinie},
+  {and} \bibinfo{person}{{\relax Ph}. Schnoebelen}.}
+  \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{A Parametric Analysis of the State-Explosion
+  Problem in Model Checking}.
+\newblock \bibinfo{journal}{\emph{J. Comput. System Sci.}}
+  \bibinfo{volume}{72}, \bibinfo{number}{4} (\bibinfo{date}{June}
+  \bibinfo{year}{2006}), \bibinfo{pages}{547--575}.
+\newblock
+\showISSN{00220000}
+\urldef\tempurl%
+\url{https://doi.org/10.1016/j.jcss.2005.11.003}
+\showDOI{\tempurl}
+
+
+\bibitem[D{\'e}n{\`e}s et~al\mbox{.}(2014)]%
+        {denesQuickChickPropertyBasedTesting2014}
+\bibfield{author}{\bibinfo{person}{Maxime D{\'e}n{\`e}s}, \bibinfo{person}{C{\u
+  a}t{\u a}lin Hri{\textcommabelow t}cu}, \bibinfo{person}{Leonidas
+  Lampropoulos}, \bibinfo{person}{Zoe Paraskevopoulou}, {and}
+  \bibinfo{person}{Benjamin~C Pierce}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \bibinfo{title}{{{QuickChick}}: {{Property-Based Testing}} for
+  {{Coq}}}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{http://prosecco.gforge.inria.fr/personal/hritcu/talks/coq6_submission_4.pdf}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Flor et~al\mbox{.}(2018)]%
+        {florPiwareHardwareDescription2018}
+\bibfield{author}{\bibinfo{person}{Jo{\~a}o Paulo~Pizani Flor},
+  \bibinfo{person}{Wouter Swierstra}, {and} \bibinfo{person}{Yorick Sijsling}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Pi-Ware: {{Hardware}} Description and Verification
+  in Agda}. In \bibinfo{booktitle}{\emph{21st International Conference on Types
+  for Proofs and Programs ({{TYPES}} 2015)}} \emph{(\bibinfo{series}{Leibniz
+  International Proceedings in Informatics ({{LIPIcs}})},
+  Vol.~\bibinfo{volume}{69})}, \bibfield{editor}{\bibinfo{person}{Tarmo
+  Uustalu}} (Ed.). \bibinfo{publisher}{Schloss Dagstuhl--Leibniz-Zentrum fuer
+  Informatik}, \bibinfo{address}{Dagstuhl, Germany},
+  \bibinfo{pages}{9:1--9:27}.
+\newblock
+\showISBNx{978-3-95977-030-9}
+\showISSN{1868-8969}
+\urldef\tempurl%
+\url{https://doi.org/10.4230/LIPIcs.TYPES.2015.9}
+\showDOI{\tempurl}
+
+
+\bibitem[Holler et~al\mbox{.}(2012)]%
+        {hollerFuzzingCodeFragments2012}
+\bibfield{author}{\bibinfo{person}{Christian Holler}, \bibinfo{person}{Kim
+  Herzig}, {and} \bibinfo{person}{Andreas Zeller}.}
+  \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Fuzzing with Code Fragments}. In
+  \bibinfo{booktitle}{\emph{21st {{USENIX}} Security Symposium ({{USENIX}}
+  Security 12)}}. \bibinfo{publisher}{USENIX Association},
+  \bibinfo{address}{Bellevue, WA}, \bibinfo{pages}{445--458}.
+\newblock
+\showISBNx{978-931971-95-9}
+\urldef\tempurl%
+\url{https://www.usenix.org/conference/usenixsecurity12/technical-sessions/presentation/holler}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Holzmann(1997)]%
+        {holzmannModelCheckerSPIN1997}
+\bibfield{author}{\bibinfo{person}{G.J. Holzmann}.}
+  \bibinfo{year}{1997}\natexlab{}.
+\newblock \showarticletitle{The Model Checker {{SPIN}}}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}}
+  \bibinfo{volume}{23}, \bibinfo{number}{5} (\bibinfo{year}{1997}),
+  \bibinfo{pages}{279--295}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1109/32.588521}
+\showDOI{\tempurl}
+
+
+\bibitem[Hughes(2007)]%
+        {hughesQuickCheckTestingFun2007}
+\bibfield{author}{\bibinfo{person}{John Hughes}.}
+  \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{{{QuickCheck Testing}} for {{Fun}} and {{Profit}}}.
+  In \bibinfo{booktitle}{\emph{Practical {{Aspects}} of {{Declarative
+  Languages}}}}, \bibfield{editor}{\bibinfo{person}{David Hutchison},
+  \bibinfo{person}{Takeo Kanade}, \bibinfo{person}{Josef Kittler},
+  \bibinfo{person}{Jon~M. Kleinberg}, \bibinfo{person}{Friedemann Mattern},
+  \bibinfo{person}{John~C. Mitchell}, \bibinfo{person}{Moni Naor},
+  \bibinfo{person}{Oscar Nierstrasz}, \bibinfo{person}{C.~Pandu~Rangan},
+  \bibinfo{person}{Bernhard Steffen}, \bibinfo{person}{Madhu Sudan},
+  \bibinfo{person}{Demetri Terzopoulos}, \bibinfo{person}{Dough Tygar},
+  \bibinfo{person}{Moshe~Y. Vardi}, \bibinfo{person}{Gerhard Weikum}, {and}
+  \bibinfo{person}{Michael Hanus}} (Eds.), Vol.~\bibinfo{volume}{4354}.
+  \bibinfo{publisher}{Springer Berlin Heidelberg}, \bibinfo{address}{Berlin,
+  Heidelberg}, \bibinfo{pages}{1--32}.
+\newblock
+\showISBNx{978-3-540-69608-7 978-3-540-69611-7}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-540-69611-7_1}
+\showDOI{\tempurl}
+
+
+\bibitem[Hughes(2016)]%
+        {hughesExperiencesQuickCheckTesting2016}
+\bibfield{author}{\bibinfo{person}{John Hughes}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Experiences with {{QuickCheck}}: {{Testing}} the
+  {{Hard Stuff}} and {{Staying Sane}}}.
+\newblock In \bibinfo{booktitle}{\emph{A {{List}} of {{Successes That Can
+  Change}} the {{World}}: {{Essays Dedicated}} to {{Philip Wadler}} on the
+  {{Occasion}} of {{His}} 60th {{Birthday}}}},
+  \bibfield{editor}{\bibinfo{person}{Sam Lindley}, \bibinfo{person}{Conor
+  McBride}, \bibinfo{person}{Phil Trinder}, {and} \bibinfo{person}{Don
+  Sannella}} (Eds.). Vol.~\bibinfo{volume}{9600}. \bibinfo{publisher}{Springer
+  International Publishing}, \bibinfo{address}{Cham},
+  \bibinfo{pages}{169--186}.
+\newblock
+\showISBNx{978-3-319-30936-1}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-319-30936-1_9}
+\showDOI{\tempurl}
+
+
+\bibitem[Lin and Costello(1983)]%
+        {linErrorControlCoding1983}
+\bibfield{author}{\bibinfo{person}{Shu Lin} {and} \bibinfo{person}{Daniel~J.
+  Costello}.} \bibinfo{year}{1983}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Error Control Coding: Fundamentals and
+  Applications} (\bibinfo{edition}{nachdr.} ed.)}.
+\newblock \bibinfo{publisher}{Prentice-Hall}, \bibinfo{address}{Englewood
+  Cliffs, NJ}.
+\newblock
+\showISBNx{978-0-13-283796-5}
+
+
+\bibitem[McBride(2016)]%
+        {mcbrideGotPlentyNuttin2016}
+\bibfield{author}{\bibinfo{person}{Conor McBride}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{I {{Got Plenty}} o' {{Nuttin}}'}.
+\newblock In \bibinfo{booktitle}{\emph{A {{List}} of {{Successes That Can
+  Change}} the {{World}}}}, \bibfield{editor}{\bibinfo{person}{Sam Lindley},
+  \bibinfo{person}{Conor McBride}, \bibinfo{person}{Phil Trinder}, {and}
+  \bibinfo{person}{Don Sannella}} (Eds.). Vol.~\bibinfo{volume}{9600}.
+  \bibinfo{publisher}{Springer International Publishing},
+  \bibinfo{address}{Cham}, \bibinfo{pages}{207--233}.
+\newblock
+\showISBNx{978-3-319-30935-4 978-3-319-30936-1}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-319-30936-1_12}
+\showDOI{\tempurl}
+
+
+\bibitem[O'Connor and Wickstr{\"o}m(2022)]%
+        {oconnorQuickstromPropertyBased2022}
+\bibfield{author}{\bibinfo{person}{Liam O'Connor} {and} \bibinfo{person}{Oskar
+  Wickstr{\"o}m}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \bibinfo{title}{Quickstrom: {{Property Based Acceptance Testing}}
+  with {{LTL Specifications}}}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.48550/arXiv.2203.11532}
+\showDOI{\tempurl}
+\showeprint[arxiv]{2203.11532}~[cs]
+
+
+\bibitem[Padhye et~al\mbox{.}(2019)]%
+        {padhyeJQFCoverageguidedPropertybased2019}
+\bibfield{author}{\bibinfo{person}{Rohan Padhye}, \bibinfo{person}{Caroline
+  Lemieux}, {and} \bibinfo{person}{Koushik Sen}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{{{JQF}}: {{Coverage-guided}} Property-Based Testing
+  in Java}. In \bibinfo{booktitle}{\emph{Proceedings of the 28th {{ACM
+  SIGSOFT}} International Symposium on Software Testing and Analysis}}
+  \emph{(\bibinfo{series}{{{ISSTA}} 2019})}. \bibinfo{publisher}{Association
+  for Computing Machinery}, \bibinfo{address}{New York, NY, USA},
+  \bibinfo{pages}{398--401}.
+\newblock
+\showISBNx{978-1-4503-6224-5}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3293882.3339002}
+\showDOI{\tempurl}
+
+
+\bibitem[Qin et~al\mbox{.}(2020)]%
+        {qinUnderstandingMemoryThread2020}
+\bibfield{author}{\bibinfo{person}{Boqin Qin}, \bibinfo{person}{Yilun Chen},
+  \bibinfo{person}{Zeming Yu}, \bibinfo{person}{Linhai Song}, {and}
+  \bibinfo{person}{Yiying Zhang}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Understanding Memory and Thread Safety Practices
+  and Issues in Real-World {{Rust}} Programs}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 41st {{ACM SIGPLAN Conference}}
+  on {{Programming Language Design}} and {{Implementation}}}}.
+  \bibinfo{publisher}{ACM}, \bibinfo{address}{London UK},
+  \bibinfo{pages}{763--779}.
+\newblock
+\showISBNx{978-1-4503-7613-6}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3385412.3386036}
+\showDOI{\tempurl}
+
+
+\bibitem[Schaathun(2015)]%
+        {schaathunEvaluationSplittablePseudorandom2015}
+\bibfield{author}{\bibinfo{person}{Hans~Georg Schaathun}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Evaluation of Splittable Pseudo-Random Generators}.
+\newblock \bibinfo{journal}{\emph{Journal of Functional Programming}}
+  \bibinfo{volume}{25} (\bibinfo{year}{2015}), \bibinfo{pages}{e6}.
+\newblock
+\showISSN{0956-7968, 1469-7653}
+\urldef\tempurl%
+\url{https://doi.org/10.1017/S095679681500012X}
+\showDOI{\tempurl}
+
+
+\bibitem[Steele and Vigna(2021)]%
+        {steeleComputationallyEasySpectrally2021}
+\bibfield{author}{\bibinfo{person}{Guy Steele} {and}
+  \bibinfo{person}{Sebastiano Vigna}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \bibinfo{title}{Computationally Easy, Spectrally Good Multipliers for
+  Congruential Pseudorandom Number Generators}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.48550/arXiv.2001.05304}
+\showDOI{\tempurl}
+\showeprint[arxiv]{2001.05304}~[cs]
+
+
+\bibitem[Valmari(1998)]%
+        {valmariStateExplosionProblem1998}
+\bibfield{author}{\bibinfo{person}{Antti Valmari}.}
+  \bibinfo{year}{1998}\natexlab{}.
+\newblock \showarticletitle{The State Explosion Problem}.
+\newblock In \bibinfo{booktitle}{\emph{Lectures on {{Petri Nets I}}: {{Basic
+  Models}}}}, \bibfield{editor}{\bibinfo{person}{Gerhard Goos},
+  \bibinfo{person}{Juris Hartmanis}, \bibinfo{person}{Jan Leeuwen},
+  \bibinfo{person}{Wolfgang Reisig}, {and} \bibinfo{person}{Grzegorz
+  Rozenberg}} (Eds.). Vol.~\bibinfo{volume}{1491}. \bibinfo{publisher}{Springer
+  Berlin Heidelberg}, \bibinfo{address}{Berlin, Heidelberg},
+  \bibinfo{pages}{429--528}.
+\newblock
+\showISBNx{978-3-540-65306-6 978-3-540-49442-3}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/3-540-65306-6_21}
+\showDOI{\tempurl}
+
+
+\bibitem[Yang et~al\mbox{.}(2011)]%
+        {yangFindingUnderstandingBugs2011}
+\bibfield{author}{\bibinfo{person}{Xuejun Yang}, \bibinfo{person}{Yang Chen},
+  \bibinfo{person}{Eric Eide}, {and} \bibinfo{person}{John Regehr}.}
+  \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Finding and Understanding Bugs in {{C}} Compilers}.
+\newblock \bibinfo{journal}{\emph{SIGPLAN Not.}} \bibinfo{volume}{46},
+  \bibinfo{number}{6} (\bibinfo{date}{June} \bibinfo{year}{2011}),
+  \bibinfo{pages}{283--294}.
+\newblock
+\showISSN{0362-1340}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/1993316.1993532}
+\showDOI{\tempurl}
+
+
+\end{thebibliography}

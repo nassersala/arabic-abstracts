@@ -1,0 +1,83 @@
+\section{Evaluation \& Further Work}\label{sec:evaln-further}
+
+The types, state transitions, and \texttt{Traceable} implementation for
+\acrshort{arq} come to around 30 lines of code, in contrast to the nearly 80 we
+had to write just for the supports for the \acrshort{atm} in
+\cref{ssec:atm-plumbing}. These are tricky lines of code {\textemdash} weaving
+the state in the types and making sure the trace generation follows the correct
+sequence {\textemdash} so having them in a generalised form saves us from the
+risk of incorrectly reimplementing them, in addition to also saving us a lot of
+tedious work.
+
+It could be argued that most \acrshortpl{dsl} are simple enough to manually
+reason about. However, as we have seen, seemingly trivial \acrshortpl{dsl} like
+the one for the \acrshort{atm} are easy to get wrong and this mistake can remain
+undetected for years. For more involved use cases like network protocols,
+resource management, or concurrency, where the host type system is leveraged to
+provide certain desirable guarantees for the target
+domain~\cite{czarneckiDSLImplementationMetaOCaml2004,%
+      bhattiDomainSpecificLanguages2009,%
+      bradyCorrectbyConstructionConcurrencyUsing2010,%
+      bradyResourceSafeSystemsProgramming2012,%
+      florPiwareHardwareDescription2018,%
+      castro-perezZooidDSLCertified2021%
+},
+the risk of the \acrshort{dsl} accidentally introducing subtle inconsistencies
+and unintended behaviour, is likely to be much higher, weakening the goal of
+eliminating certain bugs by using a stricter host language. Combined with the
+ubiquity of stateful systems, we therefore believe that our approach is
+worthwhile and intend to model and test more advanced protocols in the future.
+
+Throughout the paper, all the traces have had seemingly magic numbers as their
+bound.  The numbers were determined partially on reasoning: it is possible to
+get a good estimate of the depth needed by taking the number of transitions in
+the \acrshort{ism}, deciding on an upper bound for when the system should be in
+the desired state, and multiplying this by the number of transitions (or the
+number of states) in the system. Should the properties fail, they can be
+examined to either reveal a valid error case, possibly a fault in the
+generators, or a false positive caused by the model (as happened
+in~\cite{hughesExperiencesQuickCheckTesting2016}).
+For true positives the depth can be doubled until they pass, at which point a
+binary search can be used to find the smallest valid bound. We believe this to
+be part of the confidence building: the programmers can increase the bound until
+they are confident in their typed models, or they can decide that the current
+bound is sufficient. In our experience, this is not a hindrance, as the
+properties fail quickly, thereby quickly finding the initial upper bound.
+
+The type-level \acrshort{pbt} for the \acrshort{arq} model takes around 3.5
+seconds on a reasonably modern
+laptop\footnote{x86\_64 Intel Core i7-8750H @ 2.20GHz, boosting to
+\textasciitilde 4.08GHz, with 32GiB of SODIMM DDR4 RAM @ 2667MT/s}.
+While this may seem slow, it is worth remembering that the type checker is doing
+a lot of work. It is solving interface constraints, unifying values, running a
+\acrshort{prng}, and doing equality checks for non-trivial types at least 100
+times. The \iidris type checker is currently the main bottleneck to our approach
+and presents many interesting research questions in terms of how to speed up the
+elaboration process, when to expand and inline certain functions and datatypes,
+and how much information to keep around in the type checker and elaborator.
+
+In the future, we plan to examine and implement increasingly more advanced
+systems. ARQ with Sliding
+Window~\cite{linErrorControlCoding1983}
+would be a nice extension to the \acrshort{arq} example, as it improves the
+throughput of the protocol and presents some new challenges for the state
+function: how do we best model the packet window's movements? Pick and Place
+machines used for automatic placement of surface mounted
+components~\cite{arOpenSourceAutomated2018},
+file
+systems~\cite{chenPropertyBasedTestingClimbing2022},
+and protocols with crash-stop
+failures~\cite{barwellDesigningAsynchronousMultiparty2023},
+are all stateful systems which will present interesting modelling challenges as
+well as provide us with more performance and usability data.
+Additionally, it will be interesting to explore what kind of properties we can
+check. \acrfull{ltl} and \acrfull{ctl} are used extensively in model
+checking~\cite{clarkeModelCheckingMy2008,clarkeModelCheckingState2012},
+and there is recent work by O'Connor and Wickstr{\"o}m on combining
+\acrshort{ltl} with \acrshort{pbt} for use in testing
+\acrfullpl{gui}~\cite{oconnorQuickstromPropertyBased2022}.
+As such, it will be interesting to see how big the overlap might be between our
+approach and what model checkers can express and verify.
+
+All the code used in this paper is publicly available at:\\
+\url{https://github.com/CodingCellist/tyde-24-code}

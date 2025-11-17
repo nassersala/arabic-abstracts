@@ -1,0 +1,14 @@
+\section{Conclusion}\label{sec:conclusion}
+
+We successfully implemented \QC in \iidris and demonstrated how it can be
+extended to generate arbitrary instances of dependent types. We then highlighted
+how dependent types allow us to model stateful systems, that these models are
+tricky to get right, and how we can use \QC at the type-level to automatically
+detect this and help us fix it. Finally, we generalised the type-level framework
+to support any stateful system, and demonstrated its usefulness by modelling,
+implementing, and testing a network protocol. Our approach is not a proof
+system, however it should help prototype specifications and models faster,
+gaining confidence that the current system is sound, before potentially choosing
+to model check or to formalise and prove it. We believe that our generalisation
+is low-friction enough for wider adoption and are excited to see what this may
+lead to.

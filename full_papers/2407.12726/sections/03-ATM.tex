@@ -1,0 +1,680 @@
+\section{Example: ATM}\label{sec:atm}
+We now consider an example \acrfull{fsm} modelling the behaviour of an
+\acrfull{atm}. This example is used as a showcase of how dependent types can
+help with correct stateful
+programming~\cite{bradyTypedrivenDevelopmentIdris2017}.
+However, as we shall shortly see, while dependent types go a long way towards
+helping us be confident our program is correct, they are not enough on their
+own.
+
+  %% MARK: ATM description
+  \subsection{The ATM state machine}
+
+  The \acrshort{atm} state machine consists of three states:
+  \begin{itemize}
+    \item \textbf{Ready} {\textemdash} The starting state of the \acrshort{atm},
+          representing the machine being ready for operation.
+    \item \textbf{CardInserted} {\textemdash} When a card is present in the
+          \acrshort{atm}, pending authorisation.
+    \item \textbf{Session} {\textemdash} An authorised session whereby the user
+          can dispense an amount of money.
+  \end{itemize}
+
+  \Cref{fig:atm} illustrates the following transitions:
+  \begin{itemize}
+    \item \textit{Insert} {\textemdash} Inserting a bank card. This action is
+          only valid when the \acrshort{atm} is in the \textbf{Ready} state and
+          results in the machine changing to the \textbf{CardInserted} state.
+    \item \textit{Dispense} {\textemdash} Dispensing a given amount of money.
+          This is only valid when the card has been authenticated, i.e. the
+          machine is in a \textbf{Session}. Since a user may want to dispense
+          multiple amounts of money, \textit{Dispense} keeps the machine in its
+          \textbf{Session} state.
+    \item \textit{CheckPIN} {\textemdash} Verifying that the given PIN
+          authenticates the card. This is only valid when the \acrshort{atm} has
+          a card in it. This transition is unique in that it leads to different
+          states depending on the result of checking the PIN: \textit{Incorrect}
+          causes the machine to stay in the \textbf{CardInserted} state, whereas
+          \textit{Correct} moves the machine to the \textbf{Sesssion} state.
+    \item \textit{Eject} {\textemdash} At any point, the user may choose to
+          eject their card. This takes the machine back to the \textbf{Ready}
+          state.
+  \end{itemize}
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{ATM.png}
+    \caption{Diagram of the \acrshort{atm} state machine}
+      \label{fig:atm}
+    \Description{A state diagram with circles for each state, and labelled
+                 arrows between them, with the labels containing the transition
+                 names.}
+  \end{figure}
+
+
+  %% MARK: Idris2 ATM
+  \subsection{Modelling the ATM in \IIdris}
+
+  We can model this state machine in \iidris by declaring a new data type for the
+  \textit{CheckPIN} results, with constructors for each option, as well as a
+  data type for the states, with a constructor per state:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{CardInserted}\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Session}
+
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{PINok}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Incorrect}
+  \end{Verbatim}
+
+  Next, we model the function describing the dependent state transition for
+  \textit{CheckPIN}. This is a function from the result type, \texttt{PINok}, to
+  the type of the states, \texttt{ATMState}:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{ChkPINfn}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{PINok}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+ChkPINfn\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Session}
+ChkPINfn\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{CardInserted}
+  \end{Verbatim}
+
+  With the states, PIN results, and dependent transition modelled, we can now
+  model the transitions themselves. As described in the \idris
+  book~\cite{bradyTypedrivenDevelopmentIdris2017},
+  this is where dependent types really get a chance to shine for modelling and
+  programming these stateful systems: we index our operations by their result
+  type, their starting state, and their state transition functions. This allows
+  us to use the type declaration to state what the result type of our program
+  should be, its starting state, and its end state, and having the type checker
+  verify that we keep our promise and reach the end state via lawful
+  transitions. Furthermore, we supply a bind operator for \texttt{do}-notation.
+  The transition function, for most states, is a \texttt{const} function, as
+  they only move from one state to the next. However, for \textit{CheckPIN},
+  the state function is more interesting. We refer to the complete model of
+  operations as an \acrfull{ism}:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{  }\PY{n+nf}{Insert}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{CardInserted}\PY{o+ow}{)}
+\PY{+w}{  }\PY{n+nf}{CheckPIN}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}pin\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Int}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{k+kt}{PINok}\PY{+w}{ }\PY{k+kt}{CardInserted}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }ChkPINfn
+\PY{+w}{  }\PY{n+nf}{Dispense}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}amt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Session}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Session}\PY{o+ow}{)}
+\PY{+w}{  }\PY{n+nf}{Eject}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }st\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Ready}\PY{o+ow}{)}
+\PY{+w}{  }\PY{n+nf}{Pure}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}x\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }t\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }t\PY{+w}{ }\PY{o+ow}{(}stFn\PY{+w}{ }x\PY{o+ow}{)}\PY{+w}{ }stFn
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(\PYZgt{}\PYZgt{}=)}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }a\PY{+w}{ }s1\PY{+w}{ }s2f\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{((}x\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }a\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }b\PY{+w}{ }\PY{o+ow}{(}s2f\PY{+w}{ }x\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }s3f\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }b\PY{+w}{ }s1\PY{+w}{ }s3f
+  \end{Verbatim}
+
+  %% MARK: ATM programs
+  We can now use the model to write stateful
+  programs which are guaranteed to conform to the model:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{testProg}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Ready}\PY{o+ow}{)}
+testProg\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Insert}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }\PY{k+kt}{CheckPIN}\PY{+w}{ }\PY{l+m+mi}{1234}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{?}handle\PYZus{}incorrect
+\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Dispense}\PY{+w}{ }\PY{l+m+mi}{42}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Eject}
+  \end{Verbatim}
+
+  Here we use \iidris's pattern matching bind syntax to continue with the
+  \texttt{do} block if \texttt{CheckPIN} was happy, and a hole to leave the
+  unhappy case for later implementation.
+
+  Programs which attempt to misbehave are rejected:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{failing}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{Mismatch between: Session and CardInserted.}\PY{l+s}{\PYZdq{}}
+\PY{+w}{  }\PY{n+nf}{badProg}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Ready}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }badProg\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}\PY{+w}{ }\PY{k+kt}{Insert}\PY{+w}{ };\PY{+w}{ }\PY{k+kt}{Dispense}\PY{+w}{ }\PY{l+m+mi}{42}
+  \end{Verbatim}
+
+  This setup looks to be correct: we have our dependently typed model which
+  describes the desired semantics; we can use it to program with, expressing
+  state invariants which must be obeyed and which are automatically verified;
+  and whilst writing the program, the type checker keeps track of the state for
+  us. This is a very strong position compared to languages without such typed
+  modelling capabilities. However, while it may seem correct, there is a
+  mistake in this model of the ATM: the amount of PIN retries is unlimited. The
+  \texttt{ChkPINfn} only takes a \texttt{PINok} result, neither it nor the
+  \textbf{CardInserted}-state keeps track of how many times the user has tried
+  to enter a PIN. The following program, while not terminating, is completely
+  valid as far as the type checker knows:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{covering}
+\PY{n+nf}{loopProg}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Ready}\PY{o+ow}{)}
+loopProg\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Insert}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }pin\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{l+m+mi}{4321}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }loop\PY{+w}{ }pin
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{    }\PY{n+nf}{loop}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Int}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{CardInserted}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Ready}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }loop\PY{+w}{ }p\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }\PY{k+kt}{CheckPIN}\PY{+w}{ }p
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{?}omitted
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }loop\PY{+w}{ }p
+    \end{Verbatim}
+
+  Unfortunately, \emph{this error is not caught by the type checker.}
+  Even totality checking does not help: it is a terminating computation, for
+  example, to iterate over all 10,000 PINs and withdrawing all the money on
+  finding the correct one. This illustrates a tricky situation: as type-driven
+  programmers, we are inclined to believe that expressive types mean the type
+  checker will catch our mistakes. Nevertheless, subtle errors may occur in our
+  modelling, and there is no way to automatically catch these unless the
+  programmer tries to write non-obvious programs.
+  Who type checks the types?
+
+
+  %% MARK: Trace framework
+  \subsection{A framework for ATM simulation}
+
+  To gain confidence in our specification, we could try
+  modelling it in a formal verification tool or model
+  checker, but this does not solve the root of the problem: our models
+  themselves can be wrong, and so translating them into different tools gives
+  more places for introducing errors, or worse, different errors in each model.
+  We would instead like to generate example instances of each part of our model,
+  pass these through our state transitions, and specify properties which,
+  provided well-typed inputs, the model obeys. Ideally, this should be done in
+  the same development environment as the model and implementation, thus
+  eliminating the risk of translation mishaps. With some work, we can achieve
+  this with \QC.
+
+  In \cref{ssec:dept-qc} we saw how dependent pairs allow us to generate
+  arbitrary dependent types. This means we could, hypothetically, declare the
+  following \texttt{Arbitrary} instance:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }resT\PY{+w}{ }st\PY{+w}{ }nsFn\PY{o+ow}{)}
+  \end{Verbatim}
+
+  If we know the result type, state function's type, and some starting state, we
+  have all the necessary information to construct a concrete instance of the
+  \texttt{ATM} type. However, such an instance has a couple of problems:
+
+  \begin{enumerate}
+    \item It would only generate a single operation at a time, with no obvious
+          way to trace which operations were taken when. Related to this is the
+          issue of how to generate instances of the binding and sequencing
+          operators, which each require a specific pair of operations to work
+          correctly.
+    \item To advance to the next state, we need an instance of the result
+          type \texttt{resT}. However, we only know the
+          \emph{type} of results the operation returns, we do not know
+          \emph{which} instance of that type it returned. We could make up a
+          value, but then we would fix a parameter that we want to test.
+  \end{enumerate}
+
+  %% MARK: ATMOp vs Prog
+  \subsubsection{Separating operations from programming logic}\label{ssec:atm-op-prog}
+
+  To address the first problem, we split the operations and the sequencing into
+  separate types:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+  \PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+  \PY{+w}{  }\PY{n+nf}{Insert}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{CardInserted}\PY{o+ow}{)}
+  \PY{+w}{  }\PY{n+nf}{CheckPIN}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}pin\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Int}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{k+kt}{PINok}\PY{+w}{ }\PY{k+kt}{CardInserted}
+  \PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }ChkPINfn
+  \PY{+w}{  }\PY{n+nf}{Dispense}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}amt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Session}
+  \PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Session}\PY{o+ow}{)}
+  \PY{+w}{  }\PY{n+nf}{Eject}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }st\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Ready}\PY{o+ow}{)}
+
+  \PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+  \PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+  \PY{+w}{  }\PY{n+nf}{Op}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }t\PY{+w}{ }st\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }t\PY{+w}{ }st\PY{+w}{ }nsFn
+  \PY{+w}{  }\PY{n+nf}{Pure}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}x\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }t\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }t\PY{+w}{ }\PY{o+ow}{(}nsFn\PY{+w}{ }x\PY{o+ow}{)}\PY{+w}{ }nsFn
+  \PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(\PYZgt{}\PYZgt{}=)}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }a\PY{+w}{ }s1\PY{+w}{ }s2f\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{((}x\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }a\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }b\PY{+w}{ }\PY{o+ow}{(}s2f\PY{+w}{ }x\PY{o+ow}{)}
+  \PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }s3f\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }b\PY{+w}{ }s1\PY{+w}{ }s3f
+  \end{Verbatim}
+
+  This separation allows us to access the next-state function directly from the
+  \texttt{ATMOp} type. We already specify it as part of the type, so given a
+  concrete \texttt{ATMOp} we should have access to its next-state function. The
+  only caveat is that we need to be operating at the type level. \iidris erases
+  runtime-irrelevant proofs and types by default, meaning we are only allowed to
+  access them in parts of the program that are themselves erased, that is, those
+  defined at quantity $0$ in
+  \acrshort{qtt}~\cite{mcbrideGotPlentyNuttin2016,%
+      atkeySyntaxSemanticsQuantitative2018,%
+      bradyIdrisQuantitativeType2021%
+  }.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+m+mi}{0}\PY{+w}{ }nextState\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}st\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }t\PY{+w}{ }st\PY{+w}{ }nsFn
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}res\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }t\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+nextState\PY{+w}{ }st\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }res\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }nsFn\PY{+w}{ }res
+  \end{Verbatim}
+
+  On its own, this function is no more useful than the \texttt{Arbitrary}
+  instance from earlier, but as we shall demonstrate, extracting the state
+  transition function allows us to establish clear links between the model,
+  tests, and implementation.
+
+  %% MARK: TraceStep & Trace
+  \subsubsection{Tracing operations and programs}\label{ssec:atm-plumbing}
+
+  We now consider the second issue: needing to keep track of the result type
+  \emph{along with} a concrete instance of the result type, in a form we can
+  control and test. To do this, we store an operation along with its result in a
+  record type, \texttt{OpRes}:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{record}\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{(}currSt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}nsFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{constructor}\PY{+w}{ }\PY{k+kt}{MkOpRes}
+\PY{+w}{  }\PY{n+nf}{op}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }resT\PY{+w}{ }currSt\PY{+w}{ }nsFn
+\PY{+w}{  }\PY{n+nf}{res}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZob{}}\PY{k+kr}{auto}\PY{+w}{ }rShow\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Show}\PY{+w}{ }resT\PY{o+ow}{\PYZcb{}}
+  \end{Verbatim}
+
+  The auto-implicit \texttt{rShow} is so that \QC can print counterexamples if
+  necessary. Given \texttt{OpRes}, all that remains is to trace how a state and
+  operations are chained. We first consider each individual step, where an
+  \texttt{OpRes} and its resulting \texttt{ATMState} are stored in the same
+  record, and then create a type which, for a given bound, stores the trace:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{record}\PY{+w}{ }\PY{k+kt}{TraceStep}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{constructor}\PY{+w}{ }\PY{k+kt}{MkTS}
+\PY{+w}{  }\PY{n+nf}{opRes}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }rT\PY{+w}{ }aSt\PY{+w}{ }aStFn
+\PY{+w}{  }\PY{n+nf}{resSt}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}
+
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ATMTrace}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{  }\PY{n+nf}{MkATMTrace}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}initSt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{\PYZob{}}bound\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{\PYZcb{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}trace\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Vect}\PY{+w}{ }bound\PY{+w}{ }\PY{k+kt}{TraceStep}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMTrace}\PY{+w}{ }initSt\PY{+w}{ }bound
+  \end{Verbatim}
+
+  With this framework in place, we are finally ready to write meaningful
+  \texttt{Arbitrary} instances for testing our \acrshort{atm} model.
+
+
+  %% MARK: Arbitrary OpRes
+  \subsection{Arbitrary \texttt{OpRes}}\label{ssec:arb-opres}
+
+  In order to generate arbitrary traces, we first need to be able to generate
+  arbitrary operation-result pairs. Generating an \texttt{OpRes} requires
+  knowing what the current state is, as we need it to determine the set of valid
+  operations from it.  As with generating \texttt{Vect} instances, we use
+  dependent pairs to capture the chain of things we need to know about the type
+  of the operation. Once we know the concrete \texttt{resT} type, we know the
+  type of our \texttt{nsFn}, which means we know the type of our \texttt{OpRes}:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }resT\PY{+w}{ }st\PY{+w}{ }nsFn\PY{o+ow}{)}
+  \end{Verbatim}
+
+  For the concrete implementation, we can now pattern-match on the implicitly
+  given \texttt{st}. This restricts which operations are available, as only some
+  are valid in a given state, allowing us to return an operation chosen randomly
+  from the set of compatible operations. We can also assign weights to the
+  individual elements via QuickCheck's \texttt{frequency} function, thereby
+  controlling how often certain operations are picked compared to others. Our
+  \texttt{Arbitrary} instance for \texttt{OpRes} thus becomes:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{o+ow}{\PYZob{}}currSt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}
+\PY{k+kt}{Arbitrary}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }resT\PY{+w}{ }currSt\PY{+w}{ }nsFn\PY{o+ow}{)}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}currSt\PY{o+ow}{=}\PY{k+kt}{Ready}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{k+kt}{Insert}\PY{+w}{ }\PY{o+ow}{())}
+
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}currSt\PY{o+ow}{=}\PY{k+kt}{CardInserted}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }arbPIN\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{l+m+mi}{0}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }correct\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{CheckPIN}\PY{+w}{ }arbPIN\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Correct}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }incorrect\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{CheckPIN}\PY{+w}{ }arbPIN\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }eject\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{k+kt}{Eject}\PY{+w}{ }\PY{o+ow}{())}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }frequency\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{o+ow}{[}\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{1},\PY{+w}{ }pure\PY{+w}{ }correct\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ },\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{4},\PY{+w}{ }pure\PY{+w}{ }incorrect\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ },\PY{+w}{ }\PY{o+ow}{(}\PY{l+m+mi}{1},\PY{+w}{ }pure\PY{+w}{ }eject\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{]}
+
+\PY{+w}{ }\PY{+w}{ }arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}currSt\PY{o+ow}{=}\PY{k+kt}{Session}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }arbAmount\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }dispense\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Dispense}\PY{+w}{ }arbAmount\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{())}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }eject\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{k+kt}{Eject}\PY{+w}{ }\PY{o+ow}{())}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }oneof\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }map\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{[}dispense,\PY{+w}{ }eject\PY{o+ow}{]}
+  \end{Verbatim}
+
+
+  %% MARK: Arbitrary Trace
+  \subsection{Arbitrary \texttt{ATMTrace}}\label{ssec:arb-atm-trace}
+
+  To chain steps together, we make an instance of \texttt{Arbitrary ATMTrace}.
+  Recall that traces are bounded by their depth, therefore we pattern-matching
+  on the depth.
+
+  \subsubsection{If $depth = 0$:}
+  the remaining trace must be empty as the depth bound has been reached.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}depth\PY{o+ow}{=}\PY{l+m+mi}{0}\PY{o+ow}{\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{MkATMTrace}\PY{+w}{ }iSt\PY{+w}{ }\PY{o+ow}{[]}
+  \end{Verbatim}
+
+  \subsubsection{If $depth = (S\ b)$:}
+  the trace depth has not been reached and we need to generate at least one more
+  trace step.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}depth\PY{o+ow}{=}\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }b\PY{o+ow}{)\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{?}arbitrary\PYZus{}trace\PYZus{}rhs
+  \end{Verbatim}
+
+  The first step is to generate an arbitrary \texttt{OpRes}, which we can now do
+  thanks to the implementation from \cref{ssec:arb-opres}. We may not know the
+  \texttt{OpRes}'s result type or state function
+  but we can capture this in type variables:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}depth\PY{o+ow}{=}\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }b\PY{o+ow}{)\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }opRes\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }the\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }fn\PY{+w}{ }\PY{o+ow}{**}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }resT\PY{+w}{ }iSt\PY{+w}{ }fn\PY{o+ow}{))}\PY{+w}{ }arbitrary
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{?}arbitrary\PYZus{}trace\PYZus{}rhs
+  \end{Verbatim}
+
+  We have to use `\texttt{the}' to give a precise type to \texttt{arbitrary}, as
+  \iidris cannot infer it from the shape of the \texttt{opRes} variable.
+  Asking the compiler for the type of the hole gives us:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{+w}{  }\PY{n+nf}{iSt}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{  }\PY{n+nf}{b}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}
+\PY{+w}{  }\PY{n+nf}{opRes}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{o+ow}{(}fn\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{+w}{ }\PY{o+ow}{**}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{OpRes}\PY{+w}{ }resT\PY{+w}{ }iSt\PY{+w}{ }fn\PY{o+ow}{))}
+\PY{c+c1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n+nf}{arbitrary\PYZus{}trace\PYZus{}rhs}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{ATMTrace}\PY{+w}{ }iSt\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }b\PY{o+ow}{))}
+  \end{Verbatim}
+
+  The generated dependent pair containing our new \texttt{OpRes} is not too
+  useful as a single variable. However, we can split out its components via
+  pattern-matching.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}depth\PY{o+ow}{=}\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }b\PY{o+ow}{)\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkOpRes}\PY{+w}{ }op\PY{+w}{ }res\PY{o+ow}{))}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }the
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Gen}\PY{+w}{ }\PY{c+cm}{\PYZob{}\PYZhy{}}\PY{c+cm}{...}\PY{c+cm}{\PYZhy{}\PYZcb{}}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{?}arbitrary\PYZus{}trace\PYZus{}rhs
+  \end{Verbatim}
+
+  This gives us access to several critical pieces of data:
+
+  \begin{itemize}
+    \item \texttt{op} {\textemdash} The operation itself, so we can log what
+          operation led where.
+    \item \texttt{res} {\textemdash} The result of the operation. In order to
+          continue constructing our trace, we need to know what state we moved
+          to, which requires applying the next-state function to a concrete
+          result; this is exactly what is given here.
+    \item \texttt{nsFn} {\textemdash} The next-state function \emph{as written
+          directly in the type.} It is worth re-emphasising this: we are
+          guaranteed to use the same transition function as our
+          model/specification, because we are extracting it from the type which
+          uses it! We can access this because the entire process is happening at
+          type checking time, so we can use elements which will be erased at run
+          time.
+  \end{itemize}
+
+  And we can confirm this by taking a look at the updated information for our
+  hole:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{+w}{  }\PY{n+nf}{iSt}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{  }\PY{n+nf}{b}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}
+\PY{+w}{  }\PY{n+nf}{resT}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}
+\PY{+w}{  }\PY{n+nf}{nsFn}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{  }\PY{n+nf}{res}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT
+\PY{+w}{  }\PY{n+nf}{op}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }resT\PY{+w}{ }iSt\PY{+w}{ }nsFn
+\PY{c+c1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n+nf}{arbitrary\PYZus{}trace\PYZus{}rhs}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{ATMTrace}\PY{+w}{ }iSt\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }b\PY{o+ow}{))}
+  \end{Verbatim}
+
+  Applying \texttt{nsFn} to the generated \texttt{res} gives us the first state
+  of our trace:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}depth\PY{o+ow}{=}\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }b\PY{o+ow}{)\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkOpRes}\PY{+w}{ }op\PY{+w}{ }res\PY{o+ow}{))}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }the
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Gen}\PY{+w}{ }\PY{c+cm}{\PYZob{}\PYZhy{}}\PY{c+cm}{...}\PY{c+cm}{\PYZhy{}\PYZcb{}}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }fstTraceSt\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }nsFn\PY{+w}{ }res
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{?}arbitrary\PYZus{}trace\PYZus{}rhs
+  \end{Verbatim}
+
+  Which we again confirm by looking at our new supporting information:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{+w}{  }\PY{n+nf}{iSt}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{  }\PY{n+nf}{b}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}
+\PY{+w}{  }\PY{n+nf}{resT}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}
+\PY{+w}{  }\PY{n+nf}{nsFn}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{  }\PY{n+nf}{res}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }resT
+\PY{+w}{  }\PY{n+nf}{op}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }resT\PY{+w}{ }iSt\PY{+w}{ }nsFn
+\PY{+w}{  }\PY{n+nf}{fstTraceSt}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{c+c1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n+nf}{arbitrary\PYZus{}trace\PYZus{}rhs}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{ATMTrace}\PY{+w}{ }iSt\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }b\PY{o+ow}{))}
+  \end{Verbatim}
+
+  The first trace state can only have been obtained by following the
+  specification's semantics because the function we applied to generate it was
+  the exact function specified in the original type! We now construct the trace
+  by storing the operation and its resulting state and recursively generating
+  the rest of the trace:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+arbitrary\PY{+w}{ }\PY{o+ow}{\PYZob{}}depth\PY{o+ow}{=}\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }b\PY{o+ow}{)\PYZcb{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}resT\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkOpRes}\PY{+w}{ }op\PY{+w}{ }res\PY{o+ow}{))}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }the
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Gen}\PY{+w}{ }\PY{c+cm}{\PYZob{}\PYZhy{}}\PY{c+cm}{...}\PY{c+cm}{\PYZhy{}\PYZcb{}}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }fstTraceSt\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }nsFn\PY{+w}{ }res
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }atmTrace\PY{+w}{ }\PY{o+ow}{=}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkTS}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkOpRes}\PY{+w}{ }op\PY{+w}{ }res\PY{o+ow}{)}\PY{+w}{ }fstTraceSt\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{::}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{!(}trace\PY{+w}{ }b\PY{+w}{ }fstTraceSt\PY{o+ow}{)}\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }
+\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{MkATMTrace}\PY{+w}{ }iSt\PY{+w}{ }atmTrace
+  \end{Verbatim}
+
+  Above, we use a helper function, \texttt{trace}, because \texttt{MkATMTrace}
+  expects a \texttt{Vect} of exactly \texttt{bound} elements. We could extract
+  this from a recursive call to \texttt{arbitrary}, generating a new
+  \texttt{ATMTrace} and then pattern-matching on its constructor to extract the
+  \texttt{Vect}, however we prefer this solution of generating the \texttt{Vect}
+  in-place using a helper function. Its definition is almost verbatim that of
+  the \texttt{abitrary} instance:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nf}{trace}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{  }\PY{o+ow}{(}steps\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}st\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Gen}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Vect}\PY{+w}{ }steps\PY{+w}{ }\PY{k+kt}{TraceStep}\PY{o+ow}{)}
+trace\PY{+w}{ }\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{[]}
+trace\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }k\PY{o+ow}{)}\PY{+w}{ }st\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }nsFn\PY{+w}{ }\PY{o+ow}{**}\PY{+w}{ }opR\PY{o+ow}{@(}\PY{k+kt}{MkOpRes}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }res\PY{o+ow}{))}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }the
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Gen}\PY{+w}{ }\PY{c+cm}{\PYZob{}\PYZhy{}}\PY{c+cm}{...}\PY{c+cm}{\PYZhy{}\PYZcb{}}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kr}{let}\PY{+w}{ }nextState\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }nsFn\PY{+w}{ }res
+\PY{+w}{ }\PY{+w}{ }pure\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkTS}\PY{+w}{ }opR\PY{+w}{ }nextState\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{::}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{!(}trace\PY{+w}{ }k\PY{+w}{ }nextState\PY{o+ow}{)}
+  \end{Verbatim}
+
+  The as-pattern captures the entire \texttt{OpRes}, meaning we can omit the
+  operation being bound to a variable as we never use it in the body of the
+  function; and the bang-notation is shorthand for extracting the result of a
+  monadic
+  computation~\cite{bradyResourceDependentAlgebraicEffects2015}.
+
+
+  %% MARK: Type-lvl QC ATM
+  \subsection{\QC-ing the type-level \acrshort{atm}}
+
+  We have our specification, modelled as an \acrshort{ism}, with datatypes for
+  generating sample execution traces, so we are now in a position to specify
+  properties for \QC to verify.  To start, we check that when we are in the
+  \textbf{Ready} state, we always end up in \textbf{CardInserted} after a single
+  operation.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kt}{PROP\PYZus{}readyInsert}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Fn}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{ATMTrace}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{l+m+mi}{1}\PY{o+ow}{)}\PY{+w}{ }\PY{k+kt}{Bool}
+PROP\PYZus{}readyInsert\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{MkFn}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(\PYZbs{}}\PY{k+kr}{case}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkATMTrace}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{o+ow}{(}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkTS}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{k+kt}{CardInserted}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{::}\PY{+w}{ }\PY{o+ow}{[]))}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kt}{True}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkATMTrace}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{k+kt}{False}\PY{o+ow}{)}
+    \end{Verbatim}
+
+  Notice that our property is given at quantity 0, so that it is compile time
+  only. To \QC this, we wrap the default \texttt{quickCheck} function in a
+  type-level one, which tests the given property, specifying whether the test
+  should be considered passed if \QC exhausted the arguments.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kt}{QuickCheck}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Testable}\PY{+w}{ }t
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}allowExhaust\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Bool}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}prop\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }t\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Bool}
+QuickCheck\PY{+w}{ }allowExhaust\PY{+w}{ }prop\PY{+w}{ }\PY{o+ow}{=}
+\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Maybe}\PY{o+ow}{.}fromMaybe\PY{+w}{ }allowExhaust\PY{+w}{ }\PY{o+ow}{\PYZdl{}}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}quickCheck\PY{+w}{ }prop\PY{o+ow}{).}pass
+  \end{Verbatim}
+
+  Using the \iidris built-in data type \texttt{Data.So}, which is inhabited if
+  and only if its argument evaluates to \texttt{True}, we can now ask the
+  compiler to ensure the property holds:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kt}{RI\PYZus{}OK}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{So}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{QuickCheck}\PY{+w}{ }\PY{k+kt}{False}\PY{+w}{ }\PY{k+kt}{PROP\PYZus{}readyInsert}\PY{o+ow}{)}
+RI\PYZus{}OK\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Oh}
+  \end{Verbatim}
+
+  As the file loads successfully, we can be confident that our model is sound
+  with respect to the specified property. Next, we specify a property which we
+  hope \QC will find does not hold: that the \acrshort{atm} eventually gets back
+  to an available state within reasonable time.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kt}{PROP\PYZus{}eventuallyReady}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Fn}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{ATMTrace}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{l+m+mi}{10}\PY{o+ow}{)}\PY{+w}{ }\PY{k+kt}{Bool}
+PROP\PYZus{}eventuallyReady\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{MkFn}
+\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(\PYZbs{}}\PY{k+kr}{case}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{MkATMTrace}\PY{+w}{ }\PY{k+kr}{\PYZus{}}\PY{+w}{ }trace\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }elem\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}map\PY{+w}{ }\PY{o+ow}{(.}resSt\PY{o+ow}{)}\PY{+w}{ }trace\PY{o+ow}{))}
+
+\PY{l+m+mi}{0}\PY{+w}{ }\PY{k+kt}{ER\PYZus{}OK}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{So}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{QuickCheck}\PY{+w}{ }\PY{k+kt}{False}\PY{+w}{ }\PY{k+kt}{PROP\PYZus{}eventuallyReady}\PY{o+ow}{)}
+ER\PYZus{}OK\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Oh}
+  \end{Verbatim}
+
+  Trying to load the file with this property gives:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZhy{}\PYZhy{} Error: While processing right hand side of}
+\PY{c+c1}{\PYZhy{}\PYZhy{}        EventuallyReady\PYZus{}OK. When unifying:}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{So}\PY{+w}{ }\PY{k+kt}{True}
+\PY{c+c1}{\PYZhy{}\PYZhy{} and:}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{So}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{QuickCheck}\PY{+w}{ }\PY{k+kt}{False}\PY{+w}{ }\PY{k+kt}{PROP\PYZus{}eventuallyReady}\PY{o+ow}{)}
+\PY{c+c1}{\PYZhy{}\PYZhy{} Mismatch between: True and False}
+  \end{Verbatim}
+
+  \QC returns \texttt{False}, indicating that our property is failing.
+  Inspecting the reason by running \QC on the property at the \iidris REPL
+  reveals the cause of the issue:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kt}{MkQCRes}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Just}\PY{+w}{ }\PY{k+kt}{False}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZlt{}}log\PY{o+ow}{\PYZgt{}}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+\PY{l+s}{Falsifiable, after 4 tests:}
+\PY{l+s}{Starting @ Ready:}
+\PY{l+s}{[ (\PYZlt{}ATMOp \PYZsq{}Insert \PYZti{} ()\PYZsq{}\PYZgt{}, CardInserted)}
+\PY{l+s}{, (\PYZlt{}ATMOp \PYZsq{}CheckPIN 0 \PYZti{} Incorrect\PYZsq{}\PYZgt{}, CardInserted)}
+\PY{l+s}{, (\PYZlt{}ATMOp \PYZsq{}CheckPIN 0 \PYZti{} Incorrect\PYZsq{}\PYZgt{}, CardInserted)}
+\PY{l+s}{, (\PYZlt{}ATMOp \PYZsq{}CheckPIN 0 \PYZti{} Incorrect\PYZsq{}\PYZgt{}, CardInserted)}
+\PY{l+s}{, (\PYZlt{}ATMOp \PYZsq{}CheckPIN 0 \PYZti{} Incorrect\PYZsq{}\PYZgt{}, CardInserted)}
+\PY{l+s}{\PYZhy{}\PYZhy{} \PYZlt{}etc\PYZgt{}}
+\PY{l+s}{]}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+  \end{Verbatim}
+
+  This is the loop that was indeed wrong in the initial specification. Our setup
+  has constructed sample programs which use the same semantics as our model and
+  implementation, and discovered unintended behaviour in the model itself.
+
+  \textbf{Remark:} The first test is technically incorrect: the \acrshort{ism},
+  as it is specified, allows for the user to attempt to \textit{Eject} the card
+  in the \textbf{Ready} state, a no-op. However, our generator for
+  \texttt{OpRes} never includes this option. This is an inherent shortcoming
+  with \QC {\textemdash} it is no silver bullet to incomplete data generators.
+
+
+  %% MARK: ATM fix
+  \subsection{Fixing the ATM}
+
+  To fix the model, we index the \textbf{CardInserted}-state by the number of
+  retries available, and update \texttt{CheckPIN}'s next-state function to take
+  this number into account. This limits the number of permitted PIN attempts.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{CardInserted}\PY{+w}{ }\PY{k+kt}{Nat}\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Session}
+
+\PY{n+nf}{ChkPINfn}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{o+ow}{(}retries\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{PINok}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+ChkPINfn\PY{+w}{ }\PY{l+m+mi}{0}\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Session}
+ChkPINfn\PY{+w}{ }\PY{l+m+mi}{0}\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Ready}
+ChkPINfn\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }k\PY{o+ow}{)}\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{Session}
+ChkPINfn\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{S}\PY{+w}{ }k\PY{o+ow}{)}\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kt}{CardInserted}\PY{+w}{ }k
+  \end{Verbatim}
+
+  When we are out of retries, we \emph{must} get the PIN right or the
+  \acrshort{atm} resets. If we were to discard the result on zero retries and
+  always reset, we could technically permform the \texttt{CheckPIN} operation a
+  fourth time, but would have to discard the result even if the PIN was correct,
+  because the machine would return us to \textbf{Ready} regardless of the value.
+  This felt incorrect, and so we chose to interpret zero retries as ``final
+  try'', rather than ``out of tries''.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{data}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Type}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{o+ow}{(}t\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMState}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{Type}\PY{+w}{ }\PY{k+kr}{where}
+\PY{+w}{  }\PY{n+nf}{Insert}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{CardInserted}\PY{+w}{ }\PY{l+m+mi}{2}\PY{o+ow}{))}
+\PY{+w}{  }\PY{n+nf}{CheckPIN}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{  }\PY{o+ow}{(}pin\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Int}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{k+kt}{PINok}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{CardInserted}\PY{+w}{ }tries\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{(}ChkPINfn\PY{+w}{ }tries\PY{o+ow}{)}
+\PY{+w}{  }\PY{n+nf}{Dispense}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{  }\PY{o+ow}{(}amt\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{Nat}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{\PYZhy{}\PYZgt{}}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Session}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Session}\PY{o+ow}{)}
+\PY{+w}{  }\PY{n+nf}{Eject}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATMOp}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }st\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Ready}\PY{o+ow}{)}
+  \end{Verbatim}
+
+  The file reloads successfully, meaning the type-level property test
+  \texttt{ER\_OK} passed. And if we retest the property at the \iidris REPL, we
+  get:
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kt}{MkQCRes}\PY{+w}{ }\PY{o+ow}{(}\PY{k+kt}{Just}\PY{+w}{ }\PY{k+kt}{True}\PY{o+ow}{)}\PY{+w}{ }\PY{o+ow}{\PYZlt{}}log\PY{o+ow}{\PYZgt{}}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{OK, passed 100 tests}\PY{l+s}{\PYZdq{}}
+  \end{Verbatim}
+
+  We are now no longer able to introduce a loop in our implementation, as the
+  fourth attempt involves 0 remaining retries, which forces us back into
+  \textbf{Ready} thanks to the updated \texttt{ChkPINfn}.
+
+  \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kr}{failing}\PY{+w}{ }\PY{l+s}{\PYZdq{}}\PY{l+s}{Mismatch between: CardInserted ?tries}
+\PY{l+s}{         and Ready.}\PY{l+s}{\PYZdq{}}
+\PY{+w}{  }\PY{n+nf}{noLoop}\PY{+w}{ }\PY{o+ow}{:}\PY{+w}{ }\PY{k+kt}{ATM}\PY{+w}{ }\PY{o+ow}{()}\PY{+w}{ }\PY{k+kt}{Ready}\PY{+w}{ }\PY{o+ow}{(}const\PY{+w}{ }\PY{k+kt}{Ready}\PY{o+ow}{)}
+\PY{+w}{ }\PY{+w}{ }noLoop\PY{+w}{ }\PY{o+ow}{=}\PY{+w}{ }\PY{k+kr}{do}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{k+kt}{Insert}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{CheckPIN}\PY{+w}{ }\PY{l+m+mi}{1234}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{?}noLoop\PYZus{}rhs\PYZus{}1
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{CheckPIN}\PY{+w}{ }\PY{l+m+mi}{1243}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{?}noLoop\PYZus{}rhs\PYZus{}2
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{CheckPIN}\PY{+w}{ }\PY{l+m+mi}{1432}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{?}noLoop\PYZus{}rhs\PYZus{}3
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{k+kt}{Incorrect}\PY{+w}{ }\PY{o+ow}{\PYZlt{}\PYZhy{}}\PY{+w}{ }\PY{k+kt}{Op}\PY{+w}{ }\PY{o+ow}{\PYZdl{}}\PY{+w}{ }\PY{k+kt}{CheckPIN}\PY{+w}{ }\PY{l+m+mi}{4231}
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{|}\PY{+w}{ }\PY{k+kt}{Correct}\PY{+w}{ }\PY{o+ow}{=\PYZgt{}}\PY{+w}{ }\PY{o+ow}{?}noLoop\PYZus{}rhs\PYZus{}4
+\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{+w}{ }\PY{o+ow}{?}noLoop\PYZus{}rhs
+  \end{Verbatim}
+
+  This highlights the power of our new approach: an error in the specification
+  can be automatically found and, once fixed, the new model is automatically
+  threaded through to both the type checker {\textemdash} verifying all
+  implementations {\textemdash} and the sample program generation. This greatly
+  increases our confidence that the model is well-behaved, meaningfully tested,
+  and correctly implemented.

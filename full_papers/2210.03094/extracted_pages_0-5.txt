@@ -1,0 +1,362 @@
+VIMA: General Robot Manipulation with Multimodal Prompts
+Yunfan Jiang1Agrim Gupta1†Zichen Zhang2†Guanzhi Wang3 4†Yongqiang Dou5Yanjun Chen1
+Li Fei-Fei1Anima Anandkumar3 4Yuke Zhu3 6‡Linxi Fan3‡
+Abstract
+Prompt-based learning has emerged as a suc-
+cessful paradigm in natural language processing,
+where a single general-purpose language model
+can be instructed to perform any task specified by
+input prompts. Yet task specification in robotics
+comes in various forms, such as imitating one-
+shot demonstrations, following language instruc-
+tions, and reaching visual goals. They are often
+considered different tasks and tackled by special-
+ized models. We show that a wide spectrum of
+robot manipulation tasks can be expressed with
+multimodal prompts , interleaving textual and vi-
+sual tokens. Accordingly, we develop a new sim-
+ulation benchmark that consists of thousands of
+procedurally-generated tabletop tasks with mul-
+timodal prompts, 600K+ expert trajectories for
+imitation learning, and a four-level evaluation
+protocol for systematic generalization. We de-
+sign a transformer-based robot agent, VIMA , that
+processes these prompts and outputs motor ac-
+tions autoregressively. VIMA features a recipe
+that achieves strong model scalability and data
+efficiency. It outperforms alternative designs in
+the hardest zero-shot generalization setting by up
+to2.9×task success rate given the same train-
+ing data. With 10×less training data, VIMA
+still performs 2.7×better than the best competing
+variant. Code and video demos are available at
+vimalabs.github.io .
+1. Introduction
+Transformer models (Vaswani et al., 2017) have given rise
+to remarkable multi-task consolidation across many AI do-
+mains. For example, users can describe a task using natural
+language prompt to GPT-3 (Brown et al., 2020), allowing
+1Stanford University;2Macalester College, now at Allen Insti-
+tute for AI;3NVIDIA;4Caltech;5Tsinghua;6UT Austin. Work
+done during the first author’s internship at NVIDIA. †: Equal
+contribution. ‡: Equal advising.the same model to perform question answering, machine
+translation, text summarization, etc. Prompt-based learning
+provides an accessible and flexible interface to communicate
+a natural language understanding task to a general-purpose
+model.
+We envision that a generalist robot should have a similarly in-
+tuitive and expressive interface for task specification. What
+does such an interface for robot learning look like? As a
+motivating example, consider a personal robot tasked with
+household activities. We can ask the robot to bring us a cup
+of water by a simple natural language instruction. If we
+require more specificity, we can instead instruct the robot to
+“bring me <image of the cup> ”. For tasks requiring
+new skills, the robot should be able to adapt, preferably
+from a few video demonstrations (Duan et al., 2017). Tasks
+that need interaction with unfamiliar objects can be eas-
+ily explained via a few image examples for novel concept
+grounding (Hermann et al., 2017). Finally, to ensure safe
+deployment, we can further specify visual constraints like
+“do not enter <image> room”.
+To enable a single agent with all these capabilities, we make
+three key contributions in this work: 1) a novel multimodal
+prompting formulation that converts a wide spectrum of
+robot manipulation tasks into one sequence modeling prob-
+lem; 2) a large-scale benchmark with diverse tasks to
+systematically evaluate an agent’s scalability and generaliza-
+tion; and 3) a multimodal-prompted robot agent capable
+of multi-task and zero-shot generalization.
+We start with the observation that many robot manipu-
+lation tasks can be formulated by multimodal prompts
+that interleave language and images or video frames
+(Fig. 1). For example, Rearrangement (Batra et al., 2020),
+a type of Visual Goal , can be formulated as “Please re-
+arrange objects to match this {scene image }”;Few-
+shot Imitation can embed video snippet in the prompt
+“Follow this motion trajectory for the wooden cube:
+{frame 1},{frame 2},{frame 3},{frame 4}”. Multi-
+modal prompts not only have more expressive power than
+individual modalities but also enable a uniform sequence
+IO interface for training generalist robots. Previously, dif-
+ferent robot manipulation tasks required distinct policy ar-
+chitectures, objective functions, data pipelines, and training
+1arXiv:2210.03094v2  [cs.RO]  28 May 2023VIMA: General Robot Manipulation with Multimodal Prompts
+R e a r r a n g e  o b j e c t s  t o  m a t c h  t h i s  s c e n e :
+F o l l o w  t h i s  m o t i o n  f o r
+T h i s  i s  a  b l i c k e t
+ T h i s  i s  a  w u g P u t  a  w u g  i n t o  a  b l i c k e t
+S w e e p  a l l i n t o w i t h o u t  e x c e e d i n gO n e - s h o t  D e m o n s t r a t i o nV i s u a l  G o a l :  R e a r r a n g e m e n t
+V i s u a l  C o n s t r a i n t
+N o v e l  C o n c e p t  G r o u n d i n gV I M A
+T e x t  t o k e n
+O b j e c t  t o k e n
+P a d d i n g:
+Figure 1: Multimodal prompts for task specification. We observe that many robot manipulation tasks can be expressed as
+multimodal prompts that interleave language and image/video frames. We introduce VIMA , an embodied agent capable of
+processing mulitimodal prompts (left) and controlling a robot arm to solve the task (right).
+procedures (Aceituno et al., 2021; Stengel-Eskin et al., 2022;
+Lynch & Sermanet, 2021), leading to siloed robot systems
+that cannot be easily combined for a rich set of use cases. In-
+stead, our multimodal prompt interface allows us to harness
+the latest advances in large transformer models (Lin et al.,
+2021; Tay et al., 2020; Khan et al., 2021) for developing
+scalable multi-task robot learners.
+To systematically evaluate agents with multimodal prompts,
+we develop a new benchmark, named VIMA-B ENCH , built
+on the Ravens simulator (Zeng et al., 2020; Shridhar et al.,
+2021). We provide 17 representative tasks with multimodal
+prompt templates. Each task can be procedurally instanti-
+ated into thousands of instances by various combinations of
+textures and tabletop objects. VIMA-B ENCH establishes a
+four-level protocol to evaluate progressively stronger gener-
+alization capabilities, from randomized object placement to
+novel tasks (Fig. 2).
+To this end, we introduce the VisuoMotorAttention agent
+(VIMA ) to learn robot manipulation from multimodal
+prompts. The model architecture follows the encoder-
+decoder transformer design proven to be effective and scal-
+able in NLP (Raffel et al., 2020). VIMA encodes an input se-
+quence of interleaving textual and visual prompt tokens with
+a pre-trained language model (Tsimpoukelli et al., 2021)
+and decodes robot control actions autoregressively for each
+environment interaction step. The transformer decoder is
+conditioned on the prompt via cross-attention layers thatalternate with the usual causal self-attention. Instead of
+operating on raw images, VIMA adopts an object-centric
+approach. We parse all images in the prompt or observa-
+tion into objects by off-the-shelf then domain fine-tuned
+detectors (He et al., 2017) and flatten them into sequences
+of object tokens. To demonstrate the scalability of VIMA ,
+we train a spectrum of 7 models ranging from 2M to 200M
+parameters. Our approach outperforms other design alterna-
+tives, such as image patch tokens (Reed et al., 2022), image
+Perceiver (Jaegle et al., 2021b; Alayrac et al., 2022), and
+decoder-only conditioning (Radford et al., 2018). VIMA
+obtains consistent performance gains across all four levels
+of zero-shot generalization and all model capacities, in some
+cases by a large margin (up to 2.9×task success rate given
+the same amount of training data, and 2.7×better even
+with 10×less data). We open-source the simulation envi-
+ronment, training dataset, algorithm code, and pre-trained
+model checkpoints to ensure reproducibility and facilitate fu-
+ture work from the community. These materials along with
+video demos are available at vimalabs.github.io .
+2. Multimodal Prompts for Task Specification
+A central and open problem in robot learning is task specifi-
+cation (Agrawal, 2022). In prior literature (Stepputtis et al.,
+2020; Dasari & Gupta, 2020; Brunke et al., 2021b), differ-
+ent tasks often require diverse and incompatible interfaces,
+resulting in siloed robot systems that do not generalize well
+2VIMA: General Robot Manipulation with Multimodal Prompts
+T r a i n i n g L e v e l  1
+O b j e c t  P l a c e m e n tL e v e l  2
+N o v e l  C o m b i n a t i o nL e v e l  3
+N o v e l  O b j e c tL e v e l  4
+N o v e l  T a s k
+P u t  t h e             i n t o  t h e
+ P u t  t h e             i n t o  t h e P u t  t h e            i n t o  t h e P u t  t h e            i n t o  t h eP u t  a l l  o b j e c t s  w i t h  t h e  s a m e  
+
+t e x t u r e  a s                   i n t o  i t
+S t r o n g e r  G e n e r a l i z a t i o n
+Figure 2: Evaluation Protocol in VIMA-B ENCH .We design 4 levels of evaluation settings to systematically measure the
+zero-shot generalization capability of an agent. Each level deviates more from the training distribution, and thus is strictly
+more challenging than the previous level.
+across tasks. Our key insight is that various task specifica-
+tion paradigms (such as goal conditioning, video demon-
+stration, natural language instruction) can all be instantiated
+as multimodal prompts (Fig. 1). Concretely, a multimodal
+prompt Pof length lis defined as an ordered sequence of ar-
+bitrarily interleaved texts and images P:=x1, x2, . . . , x l
+,
+where each element xi∈ {text,image}.
+Task Suite. The flexibility afforded by multimodal
+prompts allows us to specify and build models for a
+variety of task specification formats. Here we consider the
+following six categories.
+1.Simple object manipulation. Simple tasks like “put
+<object> into<container> ”, where each image
+in the prompt corresponds to a single object;
+2.Visual goal reaching. Manipulating objects to reach a
+goal configuration, e.g.,Rearrangement (Batra et al.,
+2020);
+3.Novel concept grounding. The prompt contains un-
+familiar words like “dax” and “blicket”, which are
+explained by in-prompt images and then immediately
+used in an instruction. This tests the agent’s ability to
+rapidly internalize new concepts;
+4.One-shot video imitation. Watching a video demon-
+stration and learning to reproduce the same motion
+trajectory for a particular object;
+5.Visual constraint satisfaction. The robot must ma-
+nipulate the objects carefully and avoid violating the
+(safety) constraints;
+6.Visual reasoning. Tasks that require reason-
+ing skills, such as appearance matching “move
+all objects with same textures as <object>
+into <container> ”, and visual memory “put
+<object> in<container> and then restore to
+their original position”.Note that these six categories are not mutually exclusive.
+For example, a task may introduce a previously unseen
+verb ( Novel Concept ) by showing a video demonstration, or
+combine goal reaching with visual reasoning. More details
+about the task suite are discussed in Appendix, Sec. B.
+3. VIMA-B ENCH : Benchmark for
+Multimodal Robot Learning
+Simulation Environment. Existing benchmarks are
+generally geared towards a particular task specification.
+To our knowledge, there is no benchmark that provides a
+rich suite of multimodal tasks and a comprehensive testbed
+for targeted probing of agent capabilities. To this end, we
+introduce a new benchmark suite for multimodal robot
+learning called VIMA-B ENCH . We build our benchmark
+by extending the Ravens robot simulator (Zeng et al.,
+2020). VIMA-B ENCH supports extensible collections of
+objects and textures to compose multimodal prompts and to
+procedurally generate a large number of tasks. Specifically,
+we provide 17 tasks with multimodal prompt templates,
+which can be instantiated into thousands of task instances.
+Each task belongs to one or more of the 6 task categories
+mentioned above. VIMA-B ENCH can generate large
+quantities of imitation learning data via scripted oracle
+agents. More details are elaborated in Appendix, Sec. A.
+Observation and Actions. The observation space of our
+simulator includes RGB images rendered from both frontal
+view and top-down view. Ground-truth object segmentation
+and bounding boxes are also provided for training object-
+centric models (Sec. 4). We inherit the high-level action
+space from Zeng et al. (2020), which consists of primitive
+motor skills like “pick and place” and “wipe”. These are
+parameterized by poses of the end effector. Our simulator
+also features scripted oracle programs that can generate
+expert demonstrations by using privileged simulator state in-
+formation, such as the precise location of all objects, and the
+ground-truth interpretation of the multimodal instruction.
+3VIMA: General Robot Manipulation with Multimodal Prompts
+O b j e c t  E n c o d e r
+M u l t i m o d a l  P r o m p tI n t e r a c t i o nC r o s s - A t t e n t i o nS e l f - A t t e n t i o nS e l f - A t t e n t i o n
+T 5
+P r o m p t  T o k e n s
+T e x t  T o k e nO b j e c t  t o k e nA c t i o n  t o k e n
+H i s t o r y  T o k e n sC r o s s - A t t e n t i o n
+O b j e c t  E n c o d e rO b j e c t  E n c o d e r
+S w e e p  a l li n t ow i t h o u t  t o u c h i n g
+Figure 3: VIMA Architecture. We encode the multimodal prompts with a pre-trained T5 model, and condition the
+robot controller on the prompt through cross-attention layers. The controller is a causal transformer decoder consisting of
+alternating self and cross attention layers that predicts motor commands conditioned on prompts and interaction history.
+Training Dataset. We leverage oracles to generate a large
+offline dataset of expert trajectories for imitation learning.
+Our dataset includes 50K trajectories per task, and 650K
+successful trajectories in total. We hold out a subset of
+objects and textures for evaluation and designate 4 out of
+17 tasks as a testbed for zero-shot generalization.
+Evaluating Zero-Shot Generalization. Each task in
+VIMA-B ENCH has a binary success criterion and does not
+provide partial reward. During test time, we execute agent
+policies in the simulator for multiple episodes to compute
+a percentage success rate. The average success rate over
+all evaluated tasks will be the final reported metric.
+We design a four-level evaluation protocol (Fig. 2) to sys-
+tematically probe the generalization capabilities of learned
+agents. Each level deviates more from the training distribu-
+tion, and is thus strictly harder than the previous one.
+1.Placement generalization. All prompts are seen ver-
+batim during training, but only the placement of objects
+on the tabletop is randomized at testing;
+2.Combinatorial generalization. All textures and ob-
+jects are seen during training, but new combinations of
+them appear in testing;3.Novel object generalization. Test prompts and the
+simulated workspace include novel textures and ob-
+jects;
+4.Novel task generalization. New tasks with novel
+prompt templates at test time.
+4. VIMA: Visuomotor Attention Agent
+Our goal is to build a robot agent capable of performing
+any task specified by multimodal prompts. There is no
+prior method that works out of the box with multimodal
+prompts. To learn an effective multi-task robot policy, we
+propose VIMA , a robot agent with a multi-task encoder-
+decoder architecture and object-centric design (Fig. 3).
+Concretely, we learn a robot policy π(at|P,H), where
+H:=o1, a1, o2, a2, . . . , o t
+denotes the past interaction
+history, and ot∈ O, at∈ A are observations and actions
+at each interaction steps. We encode multimodal prompts
+via a frozen pre-trained language model and decode robot
+waypoint commands conditioned on the encoded prompts
+via cross-attention layers. Unlike prior work (Florence et al.,
+2019; Sieb et al., 2019; Zhu et al., 2022), VIMA adopts
+an object-centric representation that computes tokens from
+bounding box coordinates and cropped RGB patches.
+4VIMA: General Robot Manipulation with Multimodal Prompts
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 1
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 2
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 3
+2481 63 26 41 2 82 5 6M o d e l  S i z e  ( M )02 04 06 08 0L 4M o d e l  S c a l a b i l i t y
+D a t a  S i z e02 04 06 08 0L 1
+6  x  1 0 ²1 0 ³1 01 0D a t a  S i z e02 04 06 08 0L 2
+6  x  1 0 ²1 0 ³1 01 0D a t a  S i z e02 04 06 08 0L 3
+6  x  1 0 ²1 0 ³1 01 0D a t a  S i z e02 04 06 08 0L 4
+6  x  1 0 ²1 0 ³1 01 0D a t a  S c a l a b i l i t y
+O u r sV I M A - G a t oV I M A - F l a m i n g oV I M A - G P T
+Figure 4: Scaling model and data. Top: We compare performance of different methods with model sizes ranging from 2M
+to 200M parameters. Across all model sizes and generalization levels, VIMA outperforms baseline variants. Bottom : For a
+fixed model size of 92M parameters we compare the effect of imitation learning dataset size with 0.1%,1%,10%, and full
+data. VIMA is extremely sample efficient and can achieve performance comparable to other methods with 10×less data.
+Tokenization. There are 3formats of raw input in the
+prompt — text, image of a single object, and image of a
+full tabletop scene ( e.g., for Rearrangement or imitation
+from video frames). For text inputs , we use pre-trained T5
+tokenizer and word embedding to obtain word tokens. For
+images of full scenes , we first extract individual objects
+using domain fine-tuned Mask R-CNN (He et al., 2017)
+(Appendix, Sec. C.4). Each object is represented as a bound-
+ing box and a cropped image. We then compute object
+tokens by encoding them with a bounding box encoder and
+a ViT (Dosovitskiy et al., 2020), respectively. Since Mask
+R-CNN is imperfect, the bounding boxes can be noisy and
+the cropped images may have irrelevant pixels. For images
+of single objects , we obtain tokens in the same way except
+with a dummy bounding box. Prompt tokenization produces
+a sequence of interleaved textual and visual tokens. We then
+follow the practice in Tsimpoukelli et al. (2021) and encode
+the prompt via a pre-trained T5 encoder (Raffel et al., 2020) .
+Since T5 has been pre-trained on large text corpora, VIMA
+inherits the semantic understanding capability and robust-
+ness properties. To accommodate tokens from new modal-
+ities, we insert MLPs between non-textual tokens and T5.
+Robot Controller. A challenging aspect of designing
+a multi-task policy is to select a suitable conditioning
+mechanism. In our schema (Fig. 3), the robot controller
+(decoder) is conditioned on the prompt sequence Pby a
+series of cross-attention layers between Pand the trajectoryhistory sequence H. We compute key KPand value VP
+sequences from the prompt and query QHfrom the tra-
+jectory history, following the encoder-decoder convention
+in Raffel et al. (2020). Each cross-attention layer then
+generates an output sequence H′=softmax
+QHK⊺
+P√
+d
+VP,
+where dis the embedding dimension. Residual connections
+are added to connect higher layers with the input rollout
+trajectory sequence. The cross-attention design enjoys three
+advantages: 1) strengthened connection to prompt; 2) intact
+and deep flow of the original prompt tokens; and 3) better
+computational efficiency. VIMA decoder consists of L
+alternating cross-attention and self-attention layers. Finally,
+we follow common practice (Baker et al., 2022) to map
+predicted action tokens to discretized poses of the robot
+arm. See Appendix, Sec. C.2 for more details.
+Training. We follow behavioral cloning to train our
+models by minimizing the negative log-likelihood of
+predicted actions. Concretely, for a trajectory with Tsteps,
+we optimize minθPT
+t=1−logπθ(at|P,H). The entire
+training is conducted on an offline dataset with no simulator
+access. To make VIMA robust to detection inaccuracies and
+failures, we apply object augmentation by randomly inject-
+ingfalse-positive detection outputs. After training, we select
+model checkpoints for evaluation based on the aggregated
+accuracy on a held-out validation set. The evaluation in-
+volves interacting with the physics simulator. We follow the
+5
