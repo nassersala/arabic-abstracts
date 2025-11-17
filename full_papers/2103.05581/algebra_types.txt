@@ -1,0 +1,273 @@
+Algebra Types
+
+Finally we are ready to present the Algebras module of the AgdaUALib. Here we use type theory
+and Agda to codify the most basic objects of universal algebra, such as operations and signatures
+(§4.1), algebras (§4.2), product algebras (§4.3), congruence relations and quotient algebras (§4.4).
+A popular way to represent algebraic structures in type theory is with record types. The
+Sigma type provides an equivalent alternative that we happen to prefer and we use it throughout
+the library, both for consistency and because of its direct connection to the existential quantifier
+of logic. Recall that inhabitants of the type Σ x : X , P are pairs (x, p) such that x : X and
+p : P x. In this sense, when such a Sigma type is inhabited we conclude, “there exists x in
+X such that P x holds;” in symbols, ∃ x ∈ X , P x. Moreover, the pair (x, p) is not merely a
+proof of the logical sentence ∃ x ∈ X , P x; it is also a witness of the truth of this sentence. We
+sometimes say that a proof of an existentially quantified sentence has “computational content”
+if it provides such a witness, or a function that can extract a witness from the proof.
+
+4.1
+
+Signatures
+
+This section presents the Algebras.Signatures module of the AgdaUALib, slightly abridged.37
+We define the signature of an algebraic structure in Agda like this.
+Signature : (O V : Universe) → (O ⊔ V) +
+Signature O V = Σ F : O  , (F → V  )
+
+
+
+As mentioned in §3.1, the symbol O always denotes the universe of operation symbol types,
+while V is always the universe of arity types.
+In §2.1 we defined special syntax for the first and second projections—namely, |_| and ∥_∥,
+respectively. Consequently, if S : Signature O V is a signature, then | S | denotes the set of
+operation symbols, and ∥ S ∥ denotes the arity function. If f : | S | is an operation symbol in
+the signature S, then ∥ S ∥ f is the arity of f .
+
+Example of a signature
+Here is how we could define the signature for monoids as an inhabitant of the type Signature O V.
+data monoid-op : O  where
+e : monoid-op
+· : monoid-op
+monoid-sig : Signature O U0
+monoid-sig = monoid-op , λ { e → 0; · → 2 }
+
+37
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Algebras.Signatures.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Algebras/Signatures.lagda).
+
+28
+
+Algebra Types
+
+Thus, the signature for a monoid consists of two operation symbols, e and ·, and a function
+λ { e → 0 ; · → 2 } which maps e to the empty type 0 (since e is the nullary identity) and
+maps · to the two element type 2 (since · is binary).38
+
+4.2
+
+Algebras
+
+This section presents the Algebras.Algebras module of the AgdaUALib, slightly abridged.39
+Recall, the signature type Signature O V (§4.1) was defined as the Sigma type Σ F : O  , (F → V  ).
+The operation symbol type Op I A (§3.1) was defined as the function type (I → A) → A. For a
+fixed signature S : Signature O V and universe U, we define the type of algebras in the signature
+S (or S-algebras) with domain (or carrier) of type U  as follows.40
+Algebra : ( U : Universe)(S : Signature O V) → O ⊔ V ⊔ U + 
+Algebra U S = Σ A : U  ,
+– the domain
+Π f : | S | , Op (∥ S ∥ f) A – the basic operations
+
+To be precise we could call an inhabitant of this type an “∞-algebra” because its domain
+can be an arbitrary type, say, A : U  and need not be truncated at some level. In particular, A
+need not be a set (§3.4). We could then proceed to define the type of “0-algebras” as algebras
+whose domains would be sets, which may be closer to what most of us have in mind when
+doing informal universal algebra. However, we have found that the domains of our algebras
+need to be sets in just a few places in the UALib, and it seems preferable to work with general
+(∞-)algebras throughout and then assume uniqueness of identity proofs (UIP) explicitly and
+only where needed. This makes any dependence on UIP more transparent (which is also the
+reason –without-K appears at the top of every module in the UALib).
+
+Operation interpretation syntax
+We now define a convenient shorthand for the interpretation of an operation symbol. This looks
+more similar to the standard notation one finds in the literature as compared to the double bar
+notation we started with, so we will use this new notation almost exclusively in the remaining
+modules of the UALib.
+_ ˆ_ : (f : | S |)(A : Algebra U S) → (∥ S ∥ f → | A |) → | A |
+f ˆ A = λ a → (∥ A ∥ f ) a
+
+Thus, if f : | S | is an operation symbol in the signature S and if a : ∥ S ∥ f → | A | is a tuple
+of the same arity, then (f ˆ A) a denotes the operation f interpreted in A and evaluated at a.
+
+Lifts of algebras
+Recall, in §2.5 we described a common diﬀiculty one encounters when working with a noncumulative universe hierarchy. We made a promise to provide some domain-specific level lifting and
+lowering methods. Here we fulfill this promise by supplying a couple of bespoke tools designed
+
+38
+
+The types 0 and 2 are defined in the MGS-MLTT module of TypeTopo.
+For unabridged docs (source code) see https://ualib.gitlab.io/Algebras.Algebras.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Algebras/Algebras.lagda).
+40
+Universal algebraists often call the domain of an algebra its universe. We avoid this terminology since
+“universe” is used in type theory for levels of the type hierarchy.
+39
+
+Agda UALib, Part 1: Foundation
+
+29
+
+specifically for our operation and algebra types.
+Lift-op : ((I → A) → A) → ( W : Universe) → ((I → Lift{ W} A) → Lift { W} A)
+Lift-op f W = λ x → lift (f (λ i → lower (x i)))
+Lift-alg : Algebra U S → ( W : Universe) → Algebra ( U ⊔ W) S
+Lift-alg A W = Lift | A | , (λ (f : | S |) → Lift-op (f ˆ A) W)
+
+What makes the Lift-alg type so useful for resolving type level errors is the nice properties
+it possesses. Indeed, in the UALib we prove that Lift-alg preserves term identities and is a
+homomorphism, an algebraic invariant, and a sublagebraic invariant.41
+
+Compatibility of binary relations
+We now define the function compatible so that, if A is an algebra and R a binary relation, then
+compatible A R will denote the assertion that R is compatible with all basic operations of A.
+Using the relation |: (§3.1) this implication is expressed as (f ˆ A) |: R, yielding a compact
+representation of compatibility of algebraic operations and binary relations.
+compatible : (A : Algebra U S) → Rel | A | W → O ⊔ U ⊔ V ⊔ W 
+compatible A R = ∀ f → (f ˆ A) |: R
+
+Compatibility of continuous relations*29
+In the Relations.Continuous module we defined a function called cont-compatible-op to represent
+the assertion that a given continuous relation is compatible with a given operation. With that
+it is easy to define a function, which we call cont-compatible, representing compatibility of a
+continuous relation with all operations of an algebra. Similarly, we define the analogous depcompatible function for the (even more general) type of dependent relations.
+cont-compatible : {I : V  }(A : Algebra U S) → ContRel I | A | W → O ⊔ U ⊔ V ⊔ W 
+cont-compatible A R = Π f : | S | , cont-compatible-op (f ˆ A) R
+dep-compatible : {I : V  }(A : I → Algebra U S) → DepRel I (λ i → | A i |) W → O ⊔ U ⊔ V ⊔ W 
+dep-compatible A R = Π f : | S | , dep-compatible-op (λ i → f ˆ (A i)) R
+
+4.3
+
+Products
+
+This section presents the Algebras.Products module of the AgdaUALib, slightly abridged.42
+Recall the informal definition of a product of a family of S-algebras. Given a type I : I 
+d
+and a family A : I → Algebra U S, the product
+A is the algebra whose domain is the
+Cartesian product Π i : I , | A i | of the domains of the algebras in A, and the operation symbols are interpreted point-wise in the following sense: if f is a J-ary operation symbol and if
+d
+a : Π i : I , J → A i gives, for each i : I, a J-tuple of elements of A i, then we define (f ˆ A) a
+:= (i : I) → (f ˆ A i)(a i). We now define a type that codifies this informal definition of product
+algebra.
+
+41
+42
+
+See EquationalLogic.html, Homomorphisms.Basic.html, Isomorphisms.html, and Subalgebras.html, resp.
+For unabridged docs (source code) see https://ualib.gitlab.io/Algebras.Products.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Algebras/Products.lagda).
+
+30
+
+Algebra Types
+d
+d
+
+: (A : I → Algebra U S ) → Algebra ( I ⊔ U) S
+
+A = (Π i : I , | A i |) ,
+– domain of the product algebra
+λ f a i → (f ˆ A i) λ x → a x i – basic operations of the product algebra
+
+Before going further, let us agree on another convenient notational convention, which is used
+in many of the later modules of the UALib. Given a signature S : Signature O V, the type
+Algebra U S has type O ⊔ V ⊔ U +  , and O ⊔ V remains fixed since O and V always denote
+the universes of operation and arity types, respectively. Such levels occur so often in the UALib
+that we define the following shorthand for their universes: ov U := O ⊔ V ⊔ U + .
+
+Products of classes of algebras
+An arbitrary class K of algebras is represented as a predicate over the type Algebra U S, for
+some universe level U and signature S. That is, K : Pred(Algebra U S) W for some W. Later
+we will formally state and prove that the product of all subalgebras of algebras in K belongs to
+d
+the class SP(K) of subalgebras of products of algebras in K. That is,
+S(K) ∈ SP(K). This
+turns out to be a nontrivial exercise.
+To begin, we need to define types that represent products over arbitrary (non-indexed) families such as K or S(K). Observe that Π K is certainly not what we want. For recall that
+Pred(Algebra U S) W is just an alias for the function type Algebra U S → W  , and the semantics of the latter takes K A to mean that A belongs to the class K. Therefore, by definition
+Π K = Π A : (Algebra U S) , K A = ∀ (A : Algebra U S) → A ∈ K,
+which denotes the assertion that every inhabitant of the type Algebra U S belongs to K. .
+Evidently this is not the product algebra that we seek.
+What we need is a type that serves to index the class K, and a function A that maps an
+index to the inhabitant of K at that index. But K is a predicate (of type (Algebra U S) → W  )
+and the type Algebra U S seems rather nebulous in that there is no natural indexing class with
+which to “enumerate” all inhabitants of Algebra U S that belong to K.43
+The solution is to essentially take K itself to be the index type; at least heuristically that
+is how one can think of the type I that we now define.44
+I : ov U 
+I = Σ A : (Algebra U S) , (A ∈ K)
+
+Taking the product over the index type I requires a function that maps an index i : I to the
+corresponding algebra. Each i : I denotes a pair, (A , p), where A is an algebra and p is a proof
+that A belongs to K, so the function mapping such an index to the corresponding algebra is
+simply the first projection.
+A : I → Algebra U S
+A = λ (i : I) → | i |
+
+Finally, we represent the product of all members of the class K by the following type.
+class-product : Algebra (ov U) S
+d
+class-product =
+A
+
+43
+44
+
+If you haven’t seen this before, give it some thought and see if the correct type comes to you organically.
+Unicode Hints. Some of our types are denoted with Gothic (“mathfrak”) symbols. To produce them in
+agda2-mode, type \Mf followed by a letter. For example, \MfI ⇝ I.
+
+Agda UALib, Part 1: Foundation
+
+31
+
+Observe that the application of A to the pair (A , p) (the result of which is simply the algebra
+d
+A) may be viewed as the projection out of the product A and onto the “(A, p)-th component”
+of that product.
+
+4.4
+
+Congruences
+
+This section presents the Algebras.Congruences module of the AgdaUALib, slightly abridged.45
+Recall that a congruence relation of an algebra A is defined to be an equivalence relation
+that is compatible with the basic operations of A. This concept can be represented in a number
+of alternative but equivalent ways. Formally, we define a record type (IsCongruence) to represent the property of being a congruence, and we define a Sigma type (Con) to represent the type
+of congruences of a given algebra.
+record IsCongruence (A : Algebra U S)(θ : Rel | A | W) : ov W ⊔ U  where
+constructor mkcon
+field is-equivalence : IsEquivalence θ
+is-compatible : compatible A θ
+Con : (A : Algebra U S) → U ⊔ ov W 
+Con A = Σ θ : ( Rel | A | W ) , IsCongruence A θ
+
+Each of these types captures what it means to be a congruence and they are equivalent in the
+sense that each implies the other. One implication is the “uncurry” operation and the other is
+the second projection.
+IsCongruence→Con : {A : Algebra U S}(θ : Rel | A | W) → IsCongruence A θ → Con A
+IsCongruence→Con θ p = θ , p
+Con→IsCongruence : {A : Algebra U S} → ((θ , _) : Con A) → IsCongruence A θ
+Con→IsCongruence θ = ∥ θ ∥
+
+Above we defined the zero relation 0 (3.3) and we now build the trivial congruence, which has
+0 as its underlying relation. Observe that 0 is equivalent to the identity relation ≡ (§2.2) and
+these are obviously both equivalence relations. We already proved this of ≡, so we can simply
+apply the corresponding proofs. The fact that 0 is compatible with all operations of all algebras
+is equally clear.
+0-IsEquivalence : {A : U  } → IsEquivalence {A = A} 0
+0-IsEquivalence = record {rfl = refl; sym = ≡-sym; trans = ≡-trans}
+0-compatible-op : funext V U → {A : Algebra U S} (f : | S |) → (f ˆ A) |: 0
+0-compatible-op fe {A} f {i}{j} ptws0 = ap (f ˆ A) (fe ptws0)
+0-compatible : funext V U → {A : Algebra U S} → compatible A 0
+0-compatible fe {A} = λ f args → 0-compatible-op fe {A} f args
+
+Finally, we have the ingredients need to construct the zero congruence of any algebra we like.
+∆ : (A : Algebra U S){fe : funext V U} → IsCongruence A 0
+∆ A {fe} = mkcon 0-IsEquivalence (0-compatible fe)
+
+45
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Algebras.Congruences.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Algebras/Congruences.lagda).
+
+32
+

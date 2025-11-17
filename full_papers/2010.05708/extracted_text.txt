@@ -1,0 +1,1193 @@
+arXiv:2010.05708v1  [cs.SE]  12 Oct 2020Rooting Formal Methods
+within Higher Education Curricula
+for Computer Science and Software Engineering
+— A White Paper —
+Antonio Cerone1, Markus Roggenbach2, James Davenport3, Casey Denner4,
+Marie Farrell5, Magne Haveraaen6, Faron Moller4, Philipp K¨ orner7, Sebastian
+Krings8, Peter¨Olveczky9, Bernd-Holger Schlingloﬀ10, Nikolay Shilov11, and
+Rustam Zhumagambetov12
+1Nazarbayev University, Nur-Sultan, Kazakhstan
+antonio.cerone@nu.edu.kz
+2Swansea University, United Kindom
+m.roggenbach@swansea.ac.uk
+3University of Bath, United Kingdom;
+4Swansea University, United Kingom;
+5University of Manchester, United Kingdom;
+6University of Bergen, Norway;
+7Heinrich-Heine-Universit¨ at, Germany;
+8Niederrhein University of Applied Sciences, Germany;
+9University of Oslo, Norway;
+10Humboldt-Universit¨ at zu Berlin, Germany;
+11Innoplolis University, Russia;
+12Nazarbayev University, Nur-Sultan, Kazakhstan
+Abstract. This white paper argues that formal methods need to be
+better rooted in higher education curricula for computer sc ience and
+software engineering programmes of study. To this end, it ad vocates
+–improved teaching of formal methods;
+–systematic highlighting of formal methods within existing , ‘classical’
+computer science courses; and
+–the inclusion of a compulsory formal methods course in compu ter
+science and software engineering curricula.
+These recommendations are based on the observations that
+–formal methods are an essential and cost-eﬀective means to i ncrease
+software quality; however
+–computer science and software engineering programmes typi cally fail
+to provide adequate training in formal methods; and thus
+–there is a lack of computer science graduates who are qualiﬁe d to
+apply formal methods in industry.
+This white paper is the result of a collective eﬀort by author s and par-
+ticipants of the 1st International Workshop on Formal Methods – Fun
+for Everybody which was held in Bergen, Norway, 2-3 December 2019.
+As such, it represents insights based on learning and teachi ng computer
+science and software engineering (with or without formal me thods) at
+various universities across Europe.
+
+--- PAGE BREAK ---
+
+1 Introduction
+The greatest contribution that universities make to industrial pra ctices is
+through releasing legions of graduates every year. When properly equipped with
+a scholarly education, these graduates challenge established proc esses and pave
+the way for new approaches. In the increasingly-digital world we live in, the
+scope for this is arguably greatest in the software industry, part icularly given
+that the public perception–andindeed the reality–is thatsoftware isinherently
+unreliable.
+Advances in digital technology take place at an astronomical rate, unfettered
+by regulations which would hinder progress in other scientiﬁc endeav ours. There
+are generally few established principles in place to ensure that new so ftware
+systems are as reliable as, say, a new vaccine. Software engineers demonstrate
+success in their company by releasing systems which, for almostall intents and
+purposes, appearto work. Because of the beneﬁts these advances oﬀer society,
+the public are generally accepting of – and, indeed, used to – softwa re failures.
+This situation persists in spite of the fact that computer science an d software
+engineering research has developed a multitude of design principles w hich could
+help to improve software quality [Bar11]. It has been over half a cent ury since
+Robert Floyd’s seminal paper [Flo67] set out the means by which comp uter pro-
+grams could be analysed to determine their functional correctnes s, and formal
+methods for developing correct software have been steadily devis ed and reﬁned
+ever since. The typical computer science or software engineering graduate, how-
+ever, leaves university with little or no knowledge of formal methods , and even
+a dislike for whatever formal methods they have encountered in th eir studies.
+Thus, rather than opening doors for formal methods in (softwar e) industry, uni-
+versity education seems to have a detrimental eﬀect.
+Due to their ubiquity, softwarefailures are overlookedby society a s they tend
+to result in nothing moreseriousthan delaysand frustrations.We a ccept asmere
+inconveniencewhenasoftwarefailureresultsinadelayedtrainoran out-of-order
+cash machine or a need to repeatedly enter details into a website. Ho wever, the
+problems of systems failures become more serious (costly, deadly, invasive) as
+automatic control systems ﬁnd their way into virtually every aspec t of our daily
+lives. This increasing reliance on computer systems makes it essentia l to develop
+and maintain software in which the possibility, and probability, of haza rdous
+errors is minimised. Formal methods oﬀer cost-eﬃcient means to ac hieve the
+required high degree of software quality.
+A major reason that students (and, in turn, software engineers ) have a nega-
+tive attitude towards formal methods is that these are not introd uced with due
+care during the earlystages ofhigher education. Left to the theo reticalcomputer
+science professor, such courses often start with fearful term s like state machine,
+logical inference, mathematical semantics, etc., without providing elementary
+explanations of the basic notions which relate these to the practice of software
+development. In their defence, formal methods professors oft en ﬁnd it diﬃcult
+to deliver the subject due to students’ scepticism [Zhu20], which ar ises from the
+generally limited or non-existent exposure to formal methods in the rest of the
+2
+
+--- PAGE BREAK ---
+
+curriculum. Boute [Bou09] and Sekerinski [Sek06] observethat limit ed references
+from other subjects and isolated use are the main factors leading t o students’
+low opinion. Even worse, students perceive formal methods to be u nsuitable for
+actualsoftwareengineering[BDK+06]orevenan“additionalburden”[BLA+09].
+In this white paper we analyse what hinders a successful formal me thods
+education,and makeconstructivesuggestionsabouthowto chan gethe situation.
+We are convinced that such changes are a prerequisite for formal methods to
+become widely accepted in industry. We analyse the current situatio n of formal
+methods teaching and explore ways which we think will be engaging for students
+and practitioners alike. Our vision is that formal methods can be tau ght in such
+a way that both students and lecturers will enjoy formal methods teaching.
+Thiswhite paperistheresultofacollectiveeﬀortbyauthorsandpar ticipants
+at the 1st International Workshop “Formal Methods – Fun for Ev erybody”,
+which was held in Bergen, Norway, 2-3 December 2019. At the works hop, there
+were several discussion sessions. Based on these, the two lead au thors devised a
+paper outline, which was subsequently “populated” with text snippe ts written
+by all authors. The resulting draft was carefully edited, and agree d upon by all
+authors. By its very nature, this white paper oﬀers a spectrum of opinions, in
+particular in the personal statements. What unites us are the follo wing beliefs:
+–Current software engineering practices fail to deliver dependable software.
+–Formal methods are capable of improving this situation, and are ben eﬁcial
+and cost-eﬀective for mainstream software development.
+–Education in formal methods is key to progress things.
+–Education in formal methods needs to be transformed.
+In Section 2, we analyse the challenges in teaching formal methods. In
+Section 3, we collect ideas about how to teach formal methods – the fun way. In
+Section 4, we discusshow to increasethe visibility of formalmethods throughout
+thecurriculum.InSection 5,wesuggestasyllabusforacompulsory formalmeth-
+ods course. Finally, we discuss how to assess such teaching eﬀorts in Section 6,
+before making concluding remarks in Section 7.
+2 Challenges in teaching formal methods
+Teaching of formal methods faces a number of challenges. Curren tly, as a knowl-
+edgearea,formalmethodsarevirtuallyabsentfromcurriculainco mputerscience
+or software engineering. Formal Methods barely appear in the ACM /IEEE 2014
+Software Engineering Curriculum, and indeed the development of fo rmal speciﬁ-
+cations is explicitly deemed to be inappropriate for a capstone proje ct [ACM15,
+p. 56]. Moreover, many students have an incorrect perception of what formal
+methods are about. Formal methods neither make the headlines no r are a pop-
+ular topic in social networks, nor are they visibly used by industry. I t is also
+the case that colleagues as well as students have misguided ideas co ncerning the
+mathematical background required to utilise formal methods. In t he following,
+we elaborate on these topics. The section concludes with personal statements.
+3
+
+--- PAGE BREAK ---
+
+We begin our discussion by providing a working deﬁnition, cf. [RCS+20], of
+what a formal method might be.
+Deﬁnition 1. A formal method Mcan be seen to consist of the three elements
+syntax, semantics, and method:
+–Syntax: the precise description of the form of objects (stri ngs or graphs)
+belonging to M.
+–Semantics: the ‘meaning’ of the syntactic objects of M, in general by a map-
+ping into some mathematical structure.
+–Method: algorithmic ways of transforming syntactic object s, in order to gain
+some insight about them.
+A typical example of a formal method is the process algebra CSP: its syntax
+is given in form of a grammar; there are various formal semantics (o perational,
+denotational, and axiomatic ones); and there are proof methods f or reﬁnement
+via model checking and theorem proving.
+Applying this deﬁnition, e.g., to the programming language Pascal, we s ee
+that it also qualiﬁes as a formal method. It has a deﬁned syntax and formal
+semantics; and each compiler and static analyser provides a method , the Hoare
+calculus would be another instance of a method.
+UML on the other hand does not qualify as a formal method. The syn tax is
+largely ﬁxed via meta models, and there are various methods available , e.g., for
+codegeneration(e.g., fromclassdiagramsorstatemachines). How ever,proposed
+semantics for UML contain several critical “variation points” and h as – to the
+best of our knowledge – never been fully formalised.
+2.1 On the absence of formal methods from computer science an d
+software engineering curricula
+Anecdotal evidence suggests that current computer science an d software engi-
+neering curricula rarely cover formal methods to a large extent. W e exemplify
+this observationby providingan historic perspective on programmin geducation,
+an element central to all curricula.
+Inthelate1980s,Pascalwasadominantteachinglanguageforbeg inningpro-
+gramming students. Pascal is a small, structured programming lang uage with a
+syntax designed to be easy to parse [ISO90]. Most textbooks of t he time pre-
+sented the Pascal language using syntax diagrams, alerting the st udents to the
+idea of context free grammars, e.g., [CC82]. The element of syntax w as taught as
+an integral part of programming.Some textbooks included the ent ire ISO Pascal
+standard, thus making the students aware of language deﬁnition d ocuments.13
+13Pattis [Pat94] even suggested teaching Extended Backus-Na ur Form (EBNF) as the
+ﬁrst topic in computer science. Not to facilitate presentin g the syntax of a program-
+ming language, but because EBNF is a microcosm of programmin g. With no prereq-
+uisites, studentsareintroducedtoavarietyoffundamenta lconceptsinprogramming:
+formal systems, abstraction, control structures, equival ence of descriptions, the dif-
+ference between syntax and semantics, and the relative powe r of recursion versus
+iteration.
+4
+
+--- PAGE BREAK ---
+
+For those speciﬁcally interested, Pascal had a widely available forma l seman-
+tics [HW73]. Robust programming, i.e., checking preconditions, was an essential
+part of programming courses. Some universities would even have sp ace for a
+formal methods course, typically based on Hoare logic, in their unde rgraduate
+curriculum: i.e., a formal method was taught.
+About 20 years ago, Pascal was superseded by Java as the domina ting
+teaching language. Java is a much more complex language than Pasca l; it sup-
+ports object-oriented development, and it has large support libra ries. Thus, in
+the transition to Java, precise syntax and semantics was replaced by a more
+example-driven approach, e.g., [DD07], where the ﬁrst half contain s similar ma-
+terial to [CC82]. Veriﬁcation tools such as Java Pathﬁnder14rarely made it into
+the syllabus of a programming course. Instead, students needed to learn more
+methodology, such as object-orientation, test-driven design an d agile methods.
+All of this reduces the students’ exposure to formality, such as f ormal syntax
+or precise semantics15, making the gap to formal methods larger. Further, the
+pragmatics of software development take up more of the curriculu m, leaving less
+space for a formal methods course in the core curriculum. Dewar a nd Schonberg
+support this criticalassessment:“Itis ourview that Computer Sc ienceeducation
+is neglecting basic skills, in particular in the areas of programming and f ormal
+methods. We consider that the general adoption of Java as a ﬁrst programming
+language is in part responsible for this decline.” [DS18]
+In recent years, Python has emerged into a common teaching langu age for
+programming. The move towards Python represents a change bac k to a much
+smaller language than Java. The Python reference document is jus t 160 pages,
+and its formal grammar is only four pages [vRtPdt20]. This should ma ke it
+possible to at least expose the students to formal syntax and a st andardisation
+document. However,the typing and semantic model of Python rem ains complex,
+and is not easily formalised.
+Thus, while current programming education based on Java often fa ils to
+provide foundations for formal methods by discussing syntax and semantics, the
+move towards Python provides the silver lining that the element of sy ntax might
+again become a part of standard education in programming.
+2.2 Students’ perception of formal methods
+Thereducedexposuretoformalapproaches,asdescribedinSec tion2.1,supports
+university students’ misconception that formal methods are a diﬃ cult topic with
+little or no practical relevance. This keeps students away from for mal methods
+during their undergraduate studies. Even worse, it leads them to e mbrace the
+common belief that mathematics and computer science are two indep endent,
+fully distinct disciplines. Computer science is rather identiﬁed with pro gram-
+ming, which, in turn, is seen more like an art rather than a scientiﬁc ac tiv-
+14https://github.com/javapathfinder/jpf-core/wiki
+15The recent The Java ®Language Speciﬁcation, Java SE 14 Edition is 800
+pages [GJS+20] and not easily digestible.
+5
+
+--- PAGE BREAK ---
+
+ity [CL20]. Interestingly,this view hasevenbeen supportednot only bythe prag-
+matic evolution of programming languages outlined in the previous par agraphs,
+but also by some academic publications claiming that rigorous mathema tical
+knowledge is not necessary for computer science practitioners [Gla 00]. Finally,
+this view has been paradoxically encouraged by the introduction of c omputer
+science in high schools. In fact, although in several schools comput er science has
+been introduced as a stand-alone subject, it is not connected with mathematics
+but, instead, it is presented as a ‘service subject’ intrinsically tied t o the use of
+computers. Scope of the subject is to provide tools that facilitate students in
+carrying out their homework and class projects [Cer20,Gib08].
+Although we can say that, on average, a typical computer science student
+tends to have a negative perception of formal methods, in reality le cturers ob-
+serve a lot of variation between students, as well as changes of pe rceptions in one
+direction or the other. Variations in students can be observed sta rting from the
+ﬁrst programming courses. A slightly exaggerated categorisation goes as follows.
+On the one hand, there are students who tackle programming in a pu rely ‘artis-
+tic way’ by sitting down at the computer and writing code immediately, using
+debugging rather than problem solving to reach the solution. On the other hand,
+there are students who start analysing the problem using pen and p aper, then
+draw diagrams, possibly write pseudo-code, test their solution on p aper and,
+only when they are conﬁdent in their solution, they sit in front of a co mputer
+and convert their solution into a program. Obviously, it is the latter a pproach
+what lectures suggest. Normally, the former group of students t end to have a
+negative perception of formal methods, whereas the latter grou p tend to have a
+positive one. This partition of the students in two groups appears m ore evident
+once recursion is introduced in the programming course. The forme r group of
+students will tend to hate recursion, the latter group will tend to lo ve it.
+These two opposite perceptions obviously occur in several degree s. More-
+over, they are not static but, at least potentially, dynamic and may be either
+encouraged or hindered in various ways throughout the course of undergraduate
+studies. The common absence of formal semantics among the topic s of program-
+ming courses deﬁnitely keeps students away from an early exposur e to formal
+methods and preventsthem from reallyunderstanding what forma lmethods are.
+Being exposed to some basic operational semantics could actually he lp students
+to better understand conditional and iterative constructs, whic h are normally
+serious challenges for ﬁrst year students. Furthermore, recur sion could be better
+understood, thus providing the basis for a future interest in form al methods.
+Concerning senior students, although for some of them their perc eption of
+formalmethods mayhavebeen stronglyorientedtowardsthe neg ativeside,there
+is hope to shift them towards the positive side. Senior students ten d to be very
+pragmatic and their minds are dominated by the goal of entering the job market
+andtheindustrialworld.Thereforetheywillbuildapositivepercept ionofformal
+methods when presented with their pragmatic and industry-orient ed aspects.
+6
+
+--- PAGE BREAK ---
+
+2.3 Limited visibility of formal methods in media and indust ry
+How students perceive a knowledge area has many drivers, such as personal
+success, like/dislike of certain academic teachers, their grades, e tc. But maybe
+‘coolness’isthe dominant factor.Duringtheir studies, students w anttodo some-
+thing cool, maybe work with AlphaZero16or participate in a hackathon such as
+Google’s Hash Code. Students also strive to get ‘cool jobs’, e.g., with Google,
+Facebook, Amazon, and the like. Currently, what one might want to call the
+‘coolness factor’ of formal methods is rather low. Formal method s make neither
+the headlines nor are prominent in social media, nor are they visibly us ed by
+industry.
+Besides studying, quite a number of students work on the side for c ompa-
+nies. In these jobs, students often see only small parts of the ov erall job proﬁle
+of a professional computer scientist or software engineer. Many of these side jobs
+deal with having a quick and dirty solution for some pressing problem, adapting
+software according to customer requests, or building prototype s in order to ﬁnd
+out whether some concept works out. In contrast, mature stud ents, coming back
+from industry and getting into university education again, know abo ut the im-
+portance of quality assurance. But as they usually were not expos ed to formal
+methods in their jobs, they are often reluctant to study them.
+Luckily, there is some serious uptake of formal methods in industry . The
+classic case of a safety-critical industry is railway signalling, as desc ribed
+e.g. in [GM13]. Ligne 14 of the Paris M´ etro had software built using the
+B method [GM13] and has now run for over 20 years without a bug bein g
+reported. The “High Integrity Systems” unit of Altran develops sy stems for,
+e.g., the railway signalling industry and air traﬃc control, as well as too ls and
+methodologies, such as the SPARK subset of Ada [MC15]. SPARK 2014 uses
+contracts to describe the speciﬁcation of components in a form th at is suitable
+for both static and dynamic veriﬁcation.
+Outside the safety-critical industry, a few ‘enlightened’, large info rmation
+technology companies are beginning to use formal methods:
+–Google is developing an ecosystem for formal analysis tools [SvGJ+15].
+–Facebook uses “advanced static analysis” as described in [DFLO19].
+–Amazon’s use of formal methods is discussed in [NRZ+15,BBC+19]. There
+is a more technical description of one component in [CCC+18].
+If we look at Facebook, [DFLO19] reports that, in many cases, “we have grav-
+itated toward a ‘diﬀ time’ deployment, where analyzers participate a s bots in
+codereview,makingautomaticcommentswhenanengineersubmitsa codemod-
+iﬁcation”. For their Infer tool, which has its origin in the separation lo gic work
+of [CDOY11], they aim “for Infer to run in 15–20min on a diﬀ on average ”.
+Similarly,atAltran,anattempt tochecksourcecodeintothe mainre pository
+(the equivalent of git push ) generates a requirement to prove the appropriate
+16AlphaZero is the descendant of AlphaGo, the AI that became kn own for defeating
+Lee Sedol, the world’s best Go player, in March of 2016.
+7
+
+--- PAGE BREAK ---
+
+contracts, and the veriﬁcation conditions that ensure, for exam ple, no numeric
+overﬂow. An important requirement here is that this veriﬁcation be “reasonably
+fast”. [BS12] describes their workhereas “this changesthe qualit ativetime band
+for a large scale industrial project from ‘Nightly’ to ‘Coﬀee’.” Both Fa cebook
+and Altran argue that the primary purpose of this time requirement is to avoid
+‘context switch’ in the developer’s brain.
+Further changes could be initiated by academics. “Two-hundred-t erabyte
+maths proof is largest ever” reported Nature in May 201617and wrote: “Three
+computer scientists have announced the largest-ever mathemat ics proof: a ﬁle
+that comes in at a whopping 200 terabytes, roughly equivalent to all the digi-
+tized text held by the US Library of Congress. The researchers ha ve created a
+68-gigabytecompressedversionoftheirsolution–whichwouldallowa nyonewith
+about 30,000 hours of spare processor time to download, reconst ruct and verify
+it – but a human could never hope to readthrough it.” The results tha t triggered
+this media interest concerns the Pythagorean Triples Problem. “We consider all
+partitions of the set {1,2,...}of natural numbers into ﬁnitely many parts, and
+the question is whether always at least one part contains a Pythago rean triple
+(a,b,c)witha2+b2=c2.Forexamplewhen splittingintoodd andevennumbers,
+then the odd part does not contain a Pythagorean triple (due to od d plus odd =
+even), but the even part contains for example 62+82= 102.We show that the
+answer is yes when partitioning into two parts, and we conjecture t he answer
+to be yes for any ﬁnite size of the partition.” [HK17] Such results tr iggering
+media interest could possibly change the situation. Another approa ch could be
+to organise, say, veriﬁcation competitions at a student level. They would need
+to provide a stimulating social environment by being accessible to all s tudents,
+and could be supported by elements such as cool prizes and free piz za.
+2.4 Students’ mathematical background
+The seeming need for a solid mathematical background is often an ar gument
+against teaching formal methods. However, reﬂecting on the thr ee elements of
+a formal method, grasping the syntax of a formal method is not mo re involved
+than understanding the syntax of a programming language: both a re given by
+grammars.Grammars for formal methods are usually smaller than t hose for pro-
+gramming languages. However, students learn programming langua ges by trial
+and error on a computer, where the compiler/interpreter provide s feedback on
+syntax errors.As discussed in Section 2.1, standard programming coursesmostly
+take an example-driven approach to syntax. In contrast, in form al methods stu-
+dents are often presented with a grammar for the syntax. For st udents, this
+often provides the ﬁrst mathematical hurdle18. The challenge in formal methods
+teaching therefore lies in adopting a more example-driven style when it comes
+to syntax.
+17Nature, 26 May 2016.
+18This is not eased by the often poor error messages provided by formal method tools.
+8
+
+--- PAGE BREAK ---
+
+The semantics of a formal method is inherently mathematical in natu re: in
+logic it is given in terms of the satisfaction of a formula by a model, proc ess
+algebra utilizes structural operational semantics or denotationa l semantics, etc.
+However, in a basic course focused upon the application of formal m ethods,
+it would be enough to point out that such formal semantics exists an d to hint
+at its nature. The teaching challenge lies in providing an explorative ap proach
+to semantics via tools. In logic, this could follow ideas such as Tarski’s w orld.
+In process algebra, one can explore processes by simulating them. In such a
+set-up, students could develop their own formal models and explor e them, i.e.,
+tools provide students with a similar feedback like running a computer program.
+Another idea would be to use a semantics compatible with the program minglan-
+guages students are using. For instance in axiom-based testing, t he ‘axioms’ can
+be interpreted as code in the programming language, thus utilising th e students’
+programming background.
+In an advanced course, in addition to such an explorative approach , the for-
+malsemanticsitselfneeds tobe presented.Thiswill requirea goodm athematical
+background from the students.
+Finally, the method aspect of a formal method is best presented th rough the
+use of a tool that automates the analysis in which one is interested. Running
+a tool would not require any mathematical background at all. Under standing
+the result of a method applied to a concrete example is usually immediat e. An
+advanced course would address the mathematical details of why a m ethod is
+sound.
+Theseconsiderationsrefutethecommonprejudicethatteaching formalmeth-
+ods requires students to have a profound mathematical backgro und. An explo-
+rative teaching approach can make formal methods accessible eve n to students
+who like to program the ‘artistic way’. This is supported by experience reports
+such as: “Engineers from entry level to principal have been able to learn TLA+
+from scratch and get useful results in two to three weeks” [NRZ+15].
+2.5 Personal statements
+In the order in which they were contributed, we present a number o f personal
+statements by the co-authors.
+sk.One challenge in teaching formal methods is to spark an initial interes t.
+This is the case, because links are weak between formal methods an d the current
+hot topics in computer science. Many students steer towards wha t currently is
+perceived to dominate the future: datascience and artiﬁcial intellig ence, to name
+a just a few.
+To overcome this, the formal methods community should strive to d emon-
+strate its relevance, beyond ‘classical’ topics such as railway engine ering. Cor-
+rectness is as relevant in the new, upcoming areas of computer scie nce as it is in
+the classical ones.
+9
+
+--- PAGE BREAK ---
+
+pk.A similar thought adding to sk: many students do not even have a clearidea
+of what formal methods are! They have heard of other areas suc h as machine
+learning, databases, operating systems, computer networks, c ompiler construc-
+tion, and have an idea what is going on there. It’s hard to encounter many
+aspects of formal methods in daily programming life, especially for a s tudent
+with a limited view. So, why exactly would they pick a ‘no-name’ course s uch
+as “formal methods” or “model checking” over the other choices ?
+cd.The name of a course makes a big diﬀerence: students tend to avoid courses
+that already sound complicated (i.e. anything math or formal) in cont rast to
+courses that sound ‘useful’ or ‘applicable’ or even just trendy. As a student, I
+had a coursenamed “ModellingComputer Systems” that wason discr ete mathe-
+matics. If it had been called “Discrete Mathematics”, I’m sure it would have put
+several students on edge to begin with. Courses with names that c ontain tech
+buzzwords may also sound more appealing to students, such as cyb er security,
+software testing, machine learning, artiﬁcial intelligence etc. We sh ould consider
+these trendy subjects and adjust formal methods to be just as appealing, even
+if it means slightly adjusting course names.
+mf.The lack of reliable tools that are suitable for teaching formal metho ds, as
+well as are scalable enough to demonstrate interesting and realistic use cases,
+creates a barrier for students. Throughout our course, we use d a number of
+freely available formal methods and students struggled to unders tand the error
+messages and other feedback from the tools [FW20]. This kind of amb iguous
+feedback causes the students to lose interest and prevents the m from engaging
+with the tools in a positive, constructive way. Furthermore, this us ability issue
+also hinders the uptake of these tools in industry. This is somewhat o f a vicious
+circle. Admittedly, most formal method tools are academic in nature and thus
+often are aimed at being good for publication. Better error messag es and the
+like are often not prioritized that way. This causes the industrial up take to miss,
+which decreases the focus again.
+2.6 A student’s personal statement
+rz.My ﬁrst introduction to formal methods was during my second year (right
+after introductory programming courses but before software e ngineering) in the
+GPU computing course. We used Petri nets for modelling the classic d ining
+philosophers’ problem. One of the motivations for using them was to avoid soft-
+warefailures.ByprovidingamathematicalproofwithPetrinets,s otheprofessor
+claimed, we would be on course for success. At that time formal met hods looked
+to me like an advanced technique in software development and a usua l practice.
+My illusions were shattered later when another professor pointed o ut that it
+takes numerous assumptions for formal methods to work in the re al world, and
+that often these assumptions do not apply.
+10
+
+--- PAGE BREAK ---
+
+3 Teaching formal methods — the fun way
+In this section we collect a number of personal views and ideas on how teaching
+formalmethodscanbedonethefunway.Whilesomeauthors,see, e.g.[CRS+15],
+have written systematic accounts of the topic, here we present a number of
+personal statements in the order in which they were contributed.
+mf.Games can be useful when it comes to teaching formal methods in th e
+initial stages. However, to adequately demonstrate the importan ce of formal
+methods there must also be an emphasis on building and verifying soft ware and
+not just on solving a puzzle, as entertaining as that may be. Of cour se, computer
+science students will ﬁnd enjoyment in building systems, otherwise t hey would
+not be studying the subject. So, perhaps setting them the task o f developing
+and verifying a simple, but realistic, model of a system would also be be neﬁcial
+while encouraging them to have fun with formal methods. In this set ting, games
+would ideally be placed at the beginning of the course as a light-weight a nd fun
+introduction.
+jd.It is often diﬃcult to motivate formal methods. Most students will n ot go
+into the construction of safety-critical systems, important tho ugh they are. Also,
+the specialist safety-critical companies tend to do their own trainin g (though
+they would really like to have to do less!). It is perhaps easier to motiva te formal
+methods with more common examples. The Chromium Project19is one example
+of ‘mainstream’ software, viz. browsers, and shows that the Chr omium team is
+moving ‘more formal’.
+sk.Usually, what makesanycourseinteresting is the applicationsand th e trans-
+fer ofknowledgefrom classroomtoreality.However,most formal method courses
+rely on examples that, while interesting, are far away from what stu dents can
+experience and experiment with. We often rely on examples from indu stry and
+spend quite a lot of time explaining what a particular model is supposed to
+achieve exactly. I feel this often distracts students. Rather th an focusing on
+what formal methods have to oﬀer, we get lost in technical details. This is not
+the case with games, especially if considering well-known ones. Usually , the rules
+are known and (mostly....) agreed upon already and we can focus o n how a for-
+mal method can help us to get them right in our application.
+Again, I strongly believe we should get away from the purely theoret ical ap-
+proach to teaching formal methods to beginners. At least for me, the theoretical
+advances in formal methods have always been a means to an end. In order to
+appreciate them, one has to experience what it means to try and re ach the same
+end withoutthem. This howeverfallsshortin programmingeducation ingeneral.
+Students proceed from smallish group projects to other smallish gr oup projects,
+while only seldom have to experience larger refactoring, legacy code , etc. In an
+environment like this, formal methods are less useful. Let’s teach o ur students
+19https://www.chromium.org/Home/chromium-security/mem ory-safety
+11
+
+--- PAGE BREAK ---
+
+what programming is like in reality: 90% of the work is reworking legacy c ode,
+ﬁxing bugs and trying to understand why things are or are not work ing – by ac-
+cident, this is where formal approaches could shine as well. Another aspect that
+could make a formal methods course interesting is to involve studen ts in formal
+methods research rather than formal methods application. We us ed to teach for-
+mal methods by discussion software issues ﬁrst and then having st udents try to
+ﬁnd automatic ways to detect them, leading from simple static analys is ideas to
+model checking. The course has been thoroughly documented, als o showing that
+the approach was highly motivating for students students [KKS19].
+Notably, students (at least on the masters level) are able and willing t o
+do ‘actual research’ in an inquiry-based course, eventually leading to publica-
+tions [POKG19]. The inquiry- or research-based approach has taug ht students
+the internals of model checkers and how they can be eﬃciently implem ented for
+prototypical languages.
+pk.Shriram Krishnamurthi had a great Keynote at FM’1920. One of the main
+points to take away from that is that tools are a large issue. If you h it students
+with a full-blown industrial tool, they get frustrating error messag es, because
+they have no idea what is going wrong (as the tool is able to understa nd a larger
+part of, e.g., a speciﬁcation language than the student and raises e rrors related
+to other concepts). While it is nice to see that such tools are used in p ractice,
+they might be the wrong means to learn formal methods.
+In D¨ usseldorf, our group has worked on an approach based on Ju pyter note-
+books [GL20]. It allows evaluation of smaller expressions or predicat es without
+a state-based approach, so students can learn and experiment w ith the logical
+foundations of the language21where it is used to solve some logic puzzles). It
+can also be used to interact with B machines, so errors in a speciﬁcat ion can be
+explained and documented in a nicer way (that you can replay). We th ink that
+might resolve some of the issues in teaching (but probably not all).
+cd.Games are important, maybe even essential in teaching formal met hods and
+making it fun. As a teacher of all ages from 8 years old to university le vel, I have
+found games to be one of the best tools to use when teaching. Stud ents under-
+stand games and want to win them, naturally. When you explain to stu dents
+that there is a method in which they are either guaranteed to win, or indeed a
+method in which the second player cannot win, their interest levels pe ak! Stu-
+dents rush home to play the games against their parents and show o ﬀ their new
+found ability.
+Games can also be taught to most age groups. As said in our other pa per
+in this volume “Appealing to their existing understanding of how the wo rld
+works, using puzzles as a medium, students can quickly become comf ortable
+using mathematical concepts such as labelled transition systems” [ MOPD20].
+20https://www.youtube.com/watch?v=UCwyOSHRBi0
+21https://gitlab.cs.uni-duesseldorf.de/general/stups/ prob2-jupyter-kernel/-/blob/master/notebooks/tutori als/prob_solver_intro.ipynb
+12
+
+--- PAGE BREAK ---
+
+We have had success in asking 11 year olds to draw labelled transition s ys-
+tems. If we start teaching them sooner, this could act as a base fr om which we
+can build upon to further their understanding later on.
+mf.In our experience [FW20] the students found it diﬃcult to bridge the gap
+between the theory that was taught during the course (e.g. natu ral deduction
+proofs) and the associated tool support used during the lab sess ions (e.g. Coq).
+As a result, I am inclined to agree with skabove in that the students need to
+see how these methods can work in reality rather than focus too mu ch (although
+it is important and should be covered at some level) on the theory.
+ac.The use of tools provides a great potential for introducing fun in te ach-
+ing formal methods. This is particularly true for simulation and model- checking
+tools, whose emphasis is in giving “life” to formal speciﬁcations rathe r than
+getting involved in the complexity of a formal proof, as it happens, in stead,
+for theorem-proving tools. Moreover, formal methods can be ap plied to a large
+range of problems, basically any problem, well beyond the domain of c omputer
+science. These give chances to teachersto propose fun problems , such as classical
+mathematical puzzles as well as popular games and even video games , and to
+learnersto select problems that are close to their personal and pr ofessional inter-
+ests [CL20]. One eﬀective approach consists of providing learners w ith examples
+offormalmethods descriptionsofvideogamesandinvitingthem toc reateformal
+models of their favourite video games. More in general, learners may be invited
+todeﬁneanyproblemtheywish,formallyspecify/modelitandcarry outanalysis
+with the support oftools. It is actuallyimportant to blur the distinct ion between
+learnerand instructor by letting the learnersdrivethe choice ofex ercisesand use
+their creativity to identify and specify potential problems and inven t new games.
+Blurring such a distinction will also contribute to instill in students a lev el of
+self-conﬁdence that can lead students to carry out “actual res earch” [POKG19]
+and to actively contribute to curriculum development [Zhu20].
+Wecanconcludeourdiscussionontheteacher’sviewaboutfunbysa yingthat
+if motivation is the dimension that allows learners to build up interest in f ormal
+methods, fun is actually the essential dimension to keep learners co ntinuously
+engaged, thus assuring the retention and possibly increase of the ir interest over
+time [CL20,Cer16,RCS+20]. However, it is important that the fun occurs from
+the perspective of the student, not the teacher, and, if it is asso ciated with
+some form of competition, this much eﬀectively fosters motivation a nd does not
+cause frustration. In fact, nothing could be worse than “fun deg enerating into
+frustration”, which could be the case when a game that is fun for th e teacher is
+actually too complex or uninteresting for the students or, especia lly in the case
+of school children, if the outcome of competition is interpreted by t he student
+as a form of assessment [Cer20].
+ns.Fun, puzzles, games and entertainment in teaching are not the uniq ue ingre-
+dients needed to improve formal methods education (more genera l – computer
+science and software engineering education). All these (and some thing else) are
+13
+
+--- PAGE BREAK ---
+
+just ways to engage (undergraduate) students with the learning , studying, com-
+prehension and mastering of formal methods using curiosity and am usement.
+We believe that the experience of individual educators and expertis e of research
+groups in the ﬁeld of formal methods popularization deserves a pos itive atti-
+tude from the computer science, software engineering and (even ) mathematics
+academic community and industry.
+Another opportunity (just as an example) is a competitive spirit tha t is so
+appropriate for young people (in particular – for students of comp uter science
+and software engineering departments). International compet itions between for-
+mal methods tools(e.g. automatedtheorem proversand satisﬁab ilitysolvers)are
+popular, useful and valuable from the industrial and research per spectives, but
+not from the undergraduate education perspective. Unfortuna tely, competitions
+especially designed for (undergraduate) students (like Collegiate P rogramming
+Contest22) are still not involvedin the education processin generaland in form al
+methods education in particular. We hope that competitions of this k ind may
+be used better for engaging students with theory of computer sc ience and formal
+methods in software engineering [SY02].
+po.I also disagree with the ‘puzzle’/‘games’/‘card tricks’ approach. I do not
+think that they show the usefulness and relevance of formal meth ods. I also use
+small games (lots of them!) in my second-year course, up to blackja ck, but only
+as small “toy examples” to get to know the modeling language and too l. On the
+other hand, real industrial applications, as others write here, ar e too large and
+complex to include in beginner’s formal methods courses. A good com promise
+that I use (and describe in my FMfun’19 paper) are seminal systems /algorithms
+that are the cornerstones of diﬀerent other domains and, equally important, of
+today’s large software systems. For example, 2-phase-commit (w hile simple) and
+Paxos (less so) are still key building blocks in today’s distributed syst ems. I
+include key designs from other courses and beyond, like cryptogra phic protocols
+(modeling and breakingNSKP), distributed transactions(2PC), dis tributed mu-
+tual exclusion, distributed leader election, transport protocols lik e TCP, ABP,
+sliding window, and so on. This shows the relevance of formal method s on many
+kinds of systems, and are small enough to easily model and analyze u sing for-
+mal methods, but might still give students (and other professors !) an idea of the
+usefulness of formal methods.
+One ﬁnal problem with games/tricks: even if you learn how to apply yo ur
+formalmethod tomodelandanalyzesuchgames,canyouthen app lyyourformal
+method to a real distributed system such as Paxos or a cryptogra phic protocol?
+Irefertomypaper“TeachingFormalMethodsforFun Using Maude ”[¨Olv20]
+in this volume for a lengthier exposition of how I think formal methods should
+be taught at the undergraduate level.
+22https://icpc.baylor.edu/
+14
+
+--- PAGE BREAK ---
+
+3.1 Summarizing the ideas
+It is obviously impossible to establish general criteria to make formal methods
+teaching a fun activity. Fun cannot be characterised in an objectiv e way and can
+only naturally emerge from the interaction between teachers and s tudents. In
+fact, the emergence of fun is aﬀected by the personalities of individ ual teachers
+and students as well as by the interaction context in which such diﬀe rent person-
+alities meet in the classroom collaborative environment. Here, diﬀere nt criteria
+have been suggested and discussed, including:
+–games and puzzles may represent a light-weight and fun introductio n to
+formal methods;
+–there should be an emphasis on building and verifying software for sim ple,
+but realistic, systems;
+–teaching should focus on demonstrating that tools work rather th an on de-
+livering too much theory;
+–students are likely to enjoy undertaking actual research activitie s;
+–students should be involved in curricula development.
+There is a general view among the co-authors that games and puzz les can
+be useful when it comes to teaching formal methods in the initial sta ges and
+represent a light-weight and fun introduction ( mf,cd,ac). It is important to
+note that this view includes former formal methods students who b ecame formal
+methods teachers [MOPD20]. Games may be also associated with some form of
+competition ( ac,ns), which may be within-class ( ac) or in terms of participa-
+tion at an international context ( ns). Games and puzzles are also a great tool to
+start formal methods education early, even by teaching to schoo l level children,
+as young as 10–11 ( cd,ac). Competition can also be beneﬁcial in the context
+of school children, but should to carefully planned in order to avoid b eing inter-
+preted by the student as a form of assessment, which therefore inhibits rather
+than motivates the students [Cer20].
+In addition, there must also be some emphasis on building and verifying
+software ( mf). However, such a connection with reality should be established
+in the right form to keep in line with the fun determined by the game-ba sed
+approach. In fact, giving students the task of developing and ver ifying a simple,
+but realistic, model of a system would be beneﬁcial while encouraging them
+to have fun with formal methods ( mf). However, on the one hand, realistic,
+industrial systems are often far away from what students can ex perience and
+experiment with ( sk) and most students will not go into the construction of
+safety-critical systems, important though they are ( jd). On the other hand, the
+specialist safety-critical companies tend to do their own training ( jd), which
+may provide a very diﬀerent perspective from what students learn in formal
+methods courses. Moreover, focusing on examples from industry is very time
+consuming and often involvesheavy technical details and, as a cons equence, may
+be distractive rather than beneﬁcial ( sk). Instead, it might be more eﬀective to
+motivate formal methods with more common, but still realistic examp les, such
+as the Chromium Project ( jd).
+15
+
+--- PAGE BREAK ---
+
+There is a general agreement among the co-authors that studen ts need to see
+how formal methods work in reality using tools rather than focusing too much
+on the theory ( sk,mf,pk,ac,po). However, making students use industrial
+tools may result in heavy frustration. While it is nice to see that such t ools are
+used in practice, they might be the wrong means to learn formal met hods (pk).
+An ﬁnal aspect that could make a formal methods course interest ing is
+to involve students in formal methods research rather than form al meth-
+ods application ( sk). In fact, students’ publication are often highly appreci-
+ated [POKG19,Zhu20].
+4 Increasing visibility of formal methods throughout the
+curriculum
+In commoncomputerscienceandsoftwareengineeringcurricula,f ormalmethods
+play a minor role. There are at most one or two specialized courses fo cusing on
+teaching formal methods. Often, these courses are only weakly lin ked to the rest
+of the curriculum.
+Formal methods fail to link to the current hot topics in computer sc ience
+and software engineering, both in teaching and research. In cons equence, even
+students with considerable interest in software engineering are dr awn towards
+courses such as data science, machine learning or artiﬁcial intelligen ce. However,
+now that artiﬁcial intelligence and machine learning techniques ﬁnd th eir way
+intosafetycriticalsystems (suchasautonomouscars),correc tnessconsiderations
+become more important every day.
+The ‘winner-takes-all’ nature of today’s software industry (wher e essentially
+oneproduct/service in each category ‘wins’ and makes billions, and othe r so-
+lutions fade away, e.g., Facebook for social media; Google for searc h engines,
+eBay for online auctions, Zoom for online discussions/teaching/mee tings) jus-
+tiﬁes an upfront investment in system quality. We note that major ﬁ rms like
+Google [SvGJ+15], Facebook [DFLO19], and Amazon [NRZ+15] are all doing
+this, but this has yet to feed through to their hiring practices, or t o students’
+perceptions of what they need to get a job at these favoured emp loyers.
+In consequence, an ideal integration of formal methods into a com puter
+science or software engineering curriculum should ﬁrst and foremo st strive to
+present formal methods as a quality assurance tool to be used in o ther areas,
+be it embedded systems engineering or machine learning. This ﬁrst co ntact to
+formal methods would aim at teaching usage scenarios as well as tec hniques and
+how they are to be deployed.
+We believe that showing the beneﬁt of formal methods by discussing appli-
+cations to other areas will achieve two goals. First, it ensures code quality and
+system functionality are considered as critical. Furthermore, this initial contact
+to formal methods might spark an interest into their development a nd improve-
+ment. Both topics could then be a part of dedicated courses in form al methods.
+While such a ‘casual’ approach would be ideal, it would require colleagues
+to be willing and to be able to teach small units on formal methods. This might
+16
+
+--- PAGE BREAK ---
+
+be an unrealistic assumption. Organising ‘guest sessions’ from form al methods
+experts might be a way forward.
+Togainanacceptanceofhavingmoreformalmethodsvisibilityinauniv ersity
+curriculum, we need to persuade ﬁrst and foremost our colleagues . Ultimately
+they decide whether/how/how much formal methods a university c urriculum
+could/must contain. There is huge competition for places on a curric ulum be-
+tween the diﬀerent specialties/ﬁelds. At least the oldercolleaguesm ay remember
+times when formal methods were not too useful.
+The 2013 “Curriculum Guidelines for Undergraduate Degree Progra ms in
+Computer Science” [ACM13] lists 18 “Knowledge Areas”. In the follow ing, we
+make a number of suggestions for formal method units in some of th ese areas:
+AL-Algorithms and Complexity: formal veriﬁcation of algorithms; model
+checking algorithms.
+DS-Discrete Structures: logic, modelling, semantic foundations of formal
+methods.
+HCI-Human-Computer Interaction: mode confusion problems; formal
+analysis of user dialogs; cognitive models.
+IAS-Information Assurance and Security: formal analysis of security
+protocols.
+IM-Information Management: specifying and analyzing both the correct-
+ness and the performance of cloud storage systems.
+NC-Networking and Communication: protocol veriﬁcation.
+OS-Operating Systems: parallel modelling; scheduling.
+PBD-Platform-based Development: formal model based development.
+PD-Parallel and Distributed Computing: process calculi; Petri nets.
+PL-Programming Languages: how to analyse software written in a speciﬁc
+programming paradigm; compiler correctness; semantics of progr amming
+languages; program correctness.
+5 Syllabus of a compulsory formal methods course
+Besides increasing the visibility of formal methods throughout all co urses and
+also having specialised advanced courses on formal methods, we su ggest that
+curricula for computer science and software engineering should inc lude a com-
+pulsory formal methods course.
+17
+
+--- PAGE BREAK ---
+
+The target audience for such a compulsory formal methods cours e would be
+the complete cohort of computer science / software engineering s tudents in year
+2 or year 3 of a 3-year BSc degree programme.
+Due to the wealth of available formal methods, we refrain from prop osing
+a uniﬁed or ‘standard’ syllabus. Local expertise in speciﬁc formal m ethods and
+application domains should be taken into account. Therefore, we ra ther capture
+the essence of an ideal course in a generic way:
+Introduction.
+–The role of formal methods in the context of software engineering , see, e.g.,
+Roggenbach et. al [RCS+20], Chapter 1, for a thorough discussion, and
+Barnes [Bar11] for a comparative case study.
+–Success storiesofformalmethods, see, e.g., Roggenbachet. al [RCS+20] fora
+compilation of such stories, another good source is Section 1.3.4 of G aravel’s
+report [GG13];
+–Relating formal methods to current trends in computer science, s uch as ma-
+chine learning, where one can use machine learning to improve formal meth-
+ods [ALB18], or, a nascent ﬁeld but one that is growing in importance a nd
+hasalreadyattractedthe attentionofISOin thedraftTR 24029- 2,theappli-
+cation of formal methods to big data [vdA16,Cam14,MLM18] or to mac hine
+learning [HKW17,SKS19,WPW+18].
+Main Part. The main part should oﬀer one or two formal methods of diﬀerent
+nature, e.g. a “model-oriented” and a “property-oriented” one, cf. [Win90] for
+further discussion of this classiﬁcation; in order to demonstrate t he ‘universal-
+ity’ of formal methods, it would appear useful to draw examples fr om diﬀerent
+domains.
+The following topics (listed in no particular order) should be covered:
+–Modelling: going from the informal to the formal; traceability; validat ion of
+models.
+–Languagedesign:explaininghowthelanguageofaformalmethodisd esigned
+for speciﬁc purposes (what are essentials necessary for expres sivity, what is
+syntactic sugar easing the life of the speciﬁer?).
+–Semantics: presenting just the essentials – this needs to be one to pic among
+many rather than the dominating one, as happens too often in curr ent prac-
+tice.
+–Software engineering context: demonstrating that formal meth ods are appli-
+cable throughout the whole software lifecycle, e.g., in analysing desig ns, in
+software veriﬁcation, testing from formal models.
+–Method: systematically using tools to illustrate the ‘method’ aspect .
+–Application domains: illustrate the reach of formal methods by selec ting ex-
+amplesfromdiﬀerent applicationdomains.Safety,security,human -computer
+interaction,e-contracts,andnon-computerareas(biologicals ystems,ecology,
+chemistry) are some possible examples.
+18
+
+--- PAGE BREAK ---
+
+Traditionally, formal methods teaching advocates the use of form al methods
+for safety-critical systems. Formal methods are of course sup er-important
+for those systems, but experience in class (and otherwise) sugge sts that this
+does not inspire and is almost counterproductive: most students d o not fore-
+see themselves designing the quite narrow range of safety-critica l systems
+we tend to use as example (airplanes, cars, medical devices, etc.); focusing
+almost exclusively on safety-critical systems can actually be count erproduc-
+tive as it (can be perceived to) send signals that formal methods ar e only
+usable for such systems.
+As cybersecurity failures are much in the news, we might look at thes e and
+see how formal methods might have found these (e.g. Heartbleed) , or are
+being used (e.g. Chromium), as a way of emphasising the mainstream u tility
+of formal methods.
+Conclusion – reﬂection on formal methods. We present below some items of
+reﬂective nature that ought to be addressed at the end of a form al methods
+course.
+–General limitations: what formal methods can oﬀer, what formal m ethods
+cannot deliver, e.g., based on Levenson’s provocative article “Are Y ou Sure
+Your Software Will Not Kill Anyone?” [Lev20].
+–Scalability: why formal methods work on toy examples but their applic a-
+tion might become impossible for technical reasons when it comes to r eal
+life challenges, see, e.g., [RMS+12] and [JMN+14]. [RMS+12] shows a for-
+mal methods in its early stages, where it can barely verify a toy exam ple;
+[JMN+14] shows how, after two further years of research, with the he lp of
+abstractions it is possible to verify a real world example with the very same
+approach.
+–Costs/beneﬁts: what the cost and ﬁnancial beneﬁts of formal m ethods
+are [Bar11]. The key insight “Formal methods are surprisingly feasib le for
+mainstreamsoftwaredevelopmentandgivegoodreturnoninvestm ent.”from
+Newcombe et al. [NRZ+15] and Amazon’s “We can now use automated rea-
+soning to provide inexpensive and provable assurance to customer s” from J.
+Backes et al. [BBC+19] are probably a ‘must have’!
+–Acceptance: current uptake of formal methods in industry and r easons for
+the low acceptance.
+–Current trends: where one expects the ﬁeld of formal methods t o be in, say,
+a decade.
+Each lecturer will have her/his own subjective view concerning the a bove list
+of topics. Probably they oﬀer a good point for discussion with stude nts. The
+systematic element underlying them is that they ought to be addres sed at the
+end of a formal methods course.
+Learning outcomes. Such a course would provide the learning outcomes that
+students
+19
+
+--- PAGE BREAK ---
+
+–understand the thinking behind formal methods and how it diﬀers fr om ad-
+hoc programming;
+–are ﬂuent in the application of one or two formal methods to academ ic
+examples;
+–areabletoestimatethepotentialofformalmethodswithconcret echallenges;
+–are able to critically compare diﬀerent formal approaches and choo se the
+most appropriate for a given, speciﬁc application.
+6 How to assess our teaching eﬀorts?
+Having introduced changes to teaching, it is important to assess if t hey have
+been successful. In this section, we collect a number of ideas as to h ow this could
+be done. In the order in which they were contributed, we present a number of
+personal statements.
+mf.The obvious measurement is to compare exam results year after ye ar, as-
+suming that the same person teaches the course before and afte r any changes
+are made. We are working towards making some changes to our cour se that we
+could compare against the previous years’ results. However, it is a lso important
+to survey the students before and after the course as well as du ring the lab ses-
+sions to really understand how they are progressing and how eﬀect ive the notes,
+teaching and lab sessions are in improving their formal methods expe rtise.
+cd.As a teacher on a Degree Apprenticeship programme, I think one su ch
+method of assessing our own teaching methods, is to actually asses s the stu-
+dents’ level of understanding by getting them to apply formal met hods in their
+workplace: students on our programme are employed. Often, whe n we teach for-
+mal methods, our students have never seen them before. We tas ked our students
+with producing a work-based portfolio where they have to apply disc rete mathe-
+matics to their workplace. Whilst some students struggle with the ta sk, for most
+of them it becomes apparent how beneﬁcial it is in the workplace. Som etimes
+it even highlights issues with the existing systems logic. In my opinion th is is
+the best outcome and therefore would demonstrate that we have been teaching
+successfully.
+sk.The formal methods community ought to reﬂect on what it wants to achieve
+in teaching. Ultimately, there is no use in being able to enumerate diﬀer ent
+formal methods and just being able to use them if you don’t see any r eason to
+do so. Rather, I am in favour of indeed trying to change (and measu re/evaluate)
+students’ opinions and attitudes.
+Employing a formal approach to software engineering is all about th e re-
+sulting quality of the product. Thus, a formal methods course nee ds to change
+students’ perceptions about software as a product that is used in diﬀerent appli-
+cations and situations – eventually, even in safety critical ones. No body would
+cross a bridge that seems like it might collapse. At the same time, delive ring
+20
+
+--- PAGE BREAK ---
+
+software that is known to cease working under certain conditions h as become
+quite accepted. Once students gain an awareness and consciousn ess for quality
+aspects of software, formal methods (and the eﬀort to use the m) will appear
+more beneﬁcial.
+mr.In my teaching experience, students best learn those topics that they like
+to do, that they can try themselves, and that provide them with a f eeling of
+achievement. For teaching practice in formal methods that means that we ought
+to run supporting lab classes. These would oﬀer meaningful example s on which
+students can successfully apply a formal method, or explore why s ome speciﬁc
+formal method fails. In my view, lab tasks would be well-designed if, sa y, 80%
+of the students can solve them, i.e., oﬀer them a sense of achieveme nt.
+The other objective would be to educate the majority of computer science
+students in such a way that they are capable of applying formal met hods in their
+future careers in industry. This could be evaluated by looking at diss ertations:
+do the majority of them report on the application of formal method s when the
+project concerns software development?
+pk.One criterion could be the number of students that are interested in writing
+their dissertation in the ﬁeld of formal methods. In particular, our experience is
+that while formal methods are not in high demand with students, the ones who
+ﬁnish our formal methods courses usually are willing to gain an expert level of
+knowledge. Many students stay interested, once they have deve loped an appetite
+for formal methods.
+ac.Assessing the eﬀect of teaching changes in standard formal meth ods courses
+is a tricky task for a number of reasons:
+1. classes are normally small;
+2. even within the small group there is often a large variety in backgr ound and
+interest of the students;
+3. although students might be interested and even successful in u sing formal
+methods, in their future research or work goals they are driven by more
+trendy areas and topics, where there is little place for the use of fo rmal
+methods.
+Reason 1 prevents us from collecting enough data to allow us to prod uce sta-
+tistically signiﬁcant results. It is therefore more important to infor mally collect
+personal opinions from students through discussions, open-end ed questionnaires
+and interviews, rather than analysing numerical data such as grad es and per-
+centage of successful students.
+Reason 2 requires an initial assessment of the students to be comp ared with
+the ﬁnalobjectivesthat they achieveatthe and ofthe course(s eemf’s statement
+earlier in this section). A possible form of initial assessment is a quest ionnaire
+to be administered during the very ﬁrst course class. The question naire should
+aim at the assessment of
+21
+
+--- PAGE BREAK ---
+
+–mathematical background;
+–logical and problem solving skills;
+–experience with the logic and functional programming paradigms;
+–knowledge of the software engineering concepts that are centra l in formal
+methods, such as speciﬁcation, testing, veriﬁcation, validation, a ssurance.
+–knowledge of basic logical and set-theoretic concepts such as syn tax, seman-
+tics, theorem, proof, function and more speciﬁc computability con cepts such
+as decidability, enumerability, undecidability.
+–perception of more “exotic” formal methods concepts such as sy stem state
+and concurrent system.
+Due to Reason 3, looking at dissertations or careers of former stu dents does
+not really provide a measure of the achievement of learning objectiv e. In fact,
+students’ pragmatics in looking for a thesis topic or choosing their p rofessional
+career may clash with their academic interests.
+6.1 Summarizing the ideas
+Assessment is often an exercise of producing numbers that can be compared
+over several academic years. Here, diﬀerent criteria have been s uggested and
+discussed, including:
+–exam results of a particular course;
+–number of dissertations in which formal methods are applied; and
+–number of dissertations in the area of formal methods.
+acprovided arguments why one should look at such numbers with care.
+Forteachingaformalmethod it hasbeen suggestedtocloselysurv eystudents
+during the course ( mf), and to design lab classes with ‘guaranteed success’, i.e.,
+which are barely contributing to a diﬀerentiation between students in form of
+marks (mr).
+A slightly deeper looking approach would be to look at students’ opinio ns
+and attitudes and see how they change over time ( sk).
+7 Conclusion and outlook
+In this white paper, we have analysed why formal methods are seldo m promi-
+nently included in computer science and software engineering curric ula. One
+often heard reason for this is that they fail to attract students . However, we be-
+lieve that students often just have misconceptions about formal methods. Also,
+the ‘coolness factor’ of formal methods is low. Finally, formal meth ods are not
+visibly used by industry. It is a myth that formal methods teaching o n a basic
+level would require a particularly strongmathematical background .We provided
+a number of ideas on how to make formal methods more attractive t o students
+and gave examples of the uptake of formal methods in industry bey ond the
+critical systems sector.
+22
+
+--- PAGE BREAK ---
+
+In the spirit of the workshop “Formal Methods – Fun for Everybod y”, this
+paperhascollectedanumberof‘sparklingideas’thataimatimproving the situa-
+tion summarisedabove. We groupedsuch ideas into four categories ,namely indi-
+vidualteachingdelivery,cf.Section 3,makingformalmethodsvisib lethroughout
+the syllabus, cf. Section 4, the proposal of a compulsory formal m ethods course,
+cf. Section 5, and ideas about how to measure the eﬀect of teachin g changes, cf.
+Section 6.
+With thiswhite paperastarthasbeen madetomakeformalmethod t eaching
+more popular. The ideas and arguments presented are ready to be picked up in
+order to improve existing courses, to design new courses, and to m ake formal
+methods more prominent in academic curricula. The participants of t he 2019
+workshop were enthusiastic about this topic, and we hope to have s hared some
+of this enthusiasm with the reader. Let’s turn this into a wider movem ent!
+References
+ACM13. ACM. Computer science curricula 2013: Curriculum gu ide-
+lines for undergraduate degree programs in computer scienc e.
+http://dx.doi.org/10.1145/2534860 , 2013.
+ACM15. ACM. Software engineering 2014: Curriculum guideli nes
+for undergraduate degree programs in computer science.
+https://doi.org/10.1145/2965631 , 2015.
+ALB18. MoussaAmrani, LeviLucio, andAdrienBibal. ML+FV= ♥?Asurveyon
+the application of machine learning to formal veriﬁcation. arXiv: Software
+Engineering , 2018.
+Bar11. Janet Elizabeth Barnes. Experiences in the industri al use of formal meth-
+ods. In Alexander Romanovsky, Cliﬀ Jones, Jens Bendiposto, and Michael
+Leuschel, editors, AVoCS’11 . Electronic Communications of the EASST,
+2011.
+BBC+19. J. Backes, P. Bolignano, B. Cook, A. Gacek, K. S. Luckow, N . Rungta,
+M. Schaef, C. Schlesinger, R. Tanash, C. Varming, and M. Whal en. One-
+click formal methods. IEEE Software , 36(6):61–65, 2019.
+BDK+06. H. Brakman, V. Driessen, J. Kavuma, L.N. Bijvank, and
+S. Vermolen. Supporting formal method teaching with real-
+life protocols. In Formal Methods in the Teaching Lab , 2006.
+http://www4.di.uminho.pt/FME-SoE/FMEd06/Preprints.p df.
+BLA+09. Javier Blanco, Leticia Losano, Nazareno Aguirre, Mar´ ı a Marta Novaira,
+Sonia Permigiani, and Gast´ on Scilingo. An introductory co urse on pro-
+gramming based on formal speciﬁcation and program calculat ion.SIGCSE
+Bull., 41(2), 2009.
+Bou09. Raymond Boute. Teaching and practicing computer sci ence at the univer-
+sity level. SIGCSE Bull. , 41(2), 2009.
+BS12. Martin Brain and Florian Schanda. A lightweight techn ique for distributed
+and incremental program veriﬁcation. In Rajeev Joshi, Pete r M¨ uller, and
+Andreas Podelski, editors, Veriﬁed Software: Theories, Tools, Experiments ,
+pages 114–129, Berlin, Heidelberg, 2012. Springer Berlin H eidelberg.
+Cam14. Matteo Camilli. Formal veriﬁcation problems in a big data world: towards
+a mighty synergy. In Proc. of ICSE 2014 , pages 638–641. ACM, 2014.
+23
+
+--- PAGE BREAK ---
+
+CC82. Doug Cooper and Michael Clancy. Oh! Pascal . W.W.Norton & Company,
+Inc., New York, NY, USA & London UK, 1982.
+CCC+18. Andrey Chudnov, Nathan Collins, Byron Cook, Joey Dodds, Brian Huﬀ-
+man, Colm MacC´ arthaigh, Stephen Magill, Eric Mertens, Eri c Mullen,
+Serdar Tasiran, Aaron Tomb, and Eddy Westbrook. Continuous formal
+veriﬁcation of Amazon s2n. In Hana Chockler and Georg Weisse nbacher,
+editors,Computer Aided Veriﬁcation , pages 430–446, Cham, 2018. Springer
+International Publishing.
+CDOY11. Cristiano Calcagno, Dino Distefano, Peter W. O’Hea rn, and Hongseok
+Yang. Compositional shape analysis by means of bi-abductio n.J. ACM,
+58(6):26:1–26:66, 2011.
+Cer16. Antonio Cerone. Human-oriented formal modelling of human-computer
+interaction. In STAF 2016 Collocated Workshops (HOFM) , volume 9946
+ofLecture Notes in Computer Science , pages 232–241. Springer, 2016.
+Cer20. Antonio Cerone. From stories to concurrency: How chi ldren can play with
+formal methods. In FMFun 2019, Revised Selected Papers. In press. , Com-
+munications in Computer and Information Science. Springer , 2020.
+CL20. Antonio Cerone and Karl Reiner Lermer. Adapting to diﬀ erent types of
+target audience in teaching formal methods. In FMFun 2019, Revised
+Selected Papers. In press. , Communications in Computer and Information
+Science. Springer, 2020.
+CRS+15. Antonio Cerone, Markus Roggenbach, Bernd-Holger Schli ngloﬀ,
+Gerardo Schneider, and Siraj Ahmed Shaikh. Teaching for-
+mal methods for software engineering – ten principles. 2015 .
+https://www.informaticadidactica.de/uploads/Artikel /Schlinghoff2015/Schlinghoff2015.pdf .
+DD07. P.J. Deitel and H.M. Deitel. Java – How to program . Pearson Education,
+Inc., Upper Saddle River, NJ, USA, 7th edition, 2007.
+DFLO19. Dino Distefano, Manuel F¨ ahndrich, Francesco Logo zzo, and Peter W.
+O’Hearn. Scalingstatic analyses atfacebook. Commun. ACM ,62(8):62–70,
+2019.
+DS18. Robert B.K. Dewar and Edmond Schonberg. Computer scie nce educa-
+tion: Where are the software engineers of tomorrow? CROSSTALK – The
+Journal of Defense Software Engineering , 2018.
+Flo67. R.W. Floyd. Assigning meaning to programs. In Mathematical Aspects of
+Computer Science , volume 19, pages 19–32. Americal Mathematical Soci-
+ety, 1967.
+FW20. Marie Farrell and Hao Wu. When the student becomes the t eacher. In FM-
+Fun 2019, Revised Selected Papers. In press. ,Communications inComputer
+and Information Science. Springer, 2020.
+GG13. Hubert Garavel and Susanne Graf. Formal Methods for Safe and Se-
+cure Computers Systems . Federal Oﬃce for Information Security, 2013.
+https://www.bsi.bund.de/DE/Publikationen/Studien/Fo rmal_Methods_Study_875/study_875.html .
+Gib08. J. Paul Gibson. Formal methods: Never too young to sta rt. InProc. of
+FORMED 2008 , pages 151–160, 2008.
+GJS+20. James Gosling, Bill Joy, Guy Steele, Gilad Bracha, Alex B uckley, Daniel
+Smith, and Gavin Bierman. The Java language speciﬁcation – Java SE 14
+Edition. Technical Report JSR-389 Java SE 14, Oracle America, Febru ary
+2020.
+GL20. DavidGeleßus andMichael Leuschel. Prob andjupyterf or logic, set theory,
+theoretical computer science and formal methods. In Alexan der Raschke,
+24
+
+--- PAGE BREAK ---
+
+Dominique M´ ery, and Frank Houdek, editors, Rigorous State-Based Meth-
+ods, pages 248–254, Cham, 2020. Springer International Publis hing.
+Gla00. Robert L. Glass. A new answer to “how important is math ematics to the
+software practitioner?”. IEEE Software , 17(6):136–136, 2000.
+GM13. S. Gnesi and T. Margaria. Some Trends in Formal Methods Applications
+to Railway Signaling , pages 61–84. 2013.
+HK17. Marijn J. H. Heule and Oliver Kullmann. The science of b rute force. Com-
+mun. ACM , 60(8):70–79, 2017.
+HKW17. Xiaowei Huang, Marta Kwiatkowska, and Sen Wang. Safe ty veriﬁcation
+of deep neural networks. In Proc. of CAV 2017 , volume 10426 of Lecture
+Notes in Computer Science , pages 3–29. Springer, 2017.
+HW73. C. A. R. Hoare and Niklaus Wirth. An axiomatic deﬁnitio n of the pro-
+gramming language PASCAL. Acta Inf. , 2:335–355, 1973.
+ISO90. ISO 7185:1990 Information technology – Programming langua ges – Pascal ,
+1990.
+JMN+14. Phillip James, Faron Moller, Nguyen Hoang Nga, Markus Ro ggenbach,
+SteveA.Schneider,andHelenTreharne. Techniquesfor mode llingandveri-
+fyingrailway interlockings. Int. J. Softw. Tools Technol. Transf. ,16(6):685–
+711, 2014.
+KKS19. Sebastian Krings, Philipp K¨ orner, and Joshua Schmi dt. Experience re-
+port on an inquiry-based course on model checking. In Tagungsband des
+16. Workshops zu Software Engineering im Unterricht der Hoc hschulen ,
+volume 2358 of CEUR, 2019.
+Lev20. Nancy Leveson. Are you sure your software will not kil l anyone? Commun.
+ACM, 63(2):25–28, 2020.
+MC15. John W. McCormick and Peter C. Chapin. Building High Integrity Appli-
+cations with SPARK . Cambridge University Press, 2015.
+MLM18. Claudio Mandrioli, Alberto Leva, and Martina Maggio . Dynamic models
+for the formal veriﬁcation of big data applications via stoc hastic model
+checking. In Proc. of CCTA 2018 , pages 1466–1471. IEEE Comp. Soc.,
+2018.
+MOPD20. Faron Moller, Liam O’Reilly, Stewart Powell, and Ca sey Denner. Teaching
+them early: Formal methods in school. In FMFun 2019, Revised Selected
+Papers. In press. , Communications in Computer and Information Science.
+Springer, 2020.
+NRZ+15. ChrisNewcombe, Tim Rath,FanZhang,Bogdan Munteanu,Ma rc Brooker,
+and Michael Deardeuﬀ. How Amazon web services uses formal me thods.
+Commun. ACM , 58(4):66–73, 2015.
+¨Olv20. Peter ¨Olveczky. Teaching formal methods for fun using Maude. In FMFun
+2019, Revised Selected Papers. In press. , Communications in Computer
+and Information Science. Springer, 2020.
+Pat94. Richard E. Pattis. Teaching EBNF ﬁrst in CS 1. In Proceedings of
+the Twenty-Fifth SIGCSE Symposium on Computer Science Educ ation,
+SIGCSE ’94, page 300–303, New York, NY, USA, 1994. Associati on for
+Computing Machinery.
+POKG19. Jessica Petrasch, Jan-Hendrik Oepen, Sebastian Kr ings, and Moritz Ger-
+icke. Writing a model checker in 80 days: Reusable libraries and custom
+implementation. In Proc. of AVoCS 2018 , volume 76 of Electronic Com-
+munications of the EASST , 2019.
+25
+
+--- PAGE BREAK ---
+
+RCS+20. Markus Roggenbach, Antonio Cerone, Bernd-Holger Schli ngloﬀ, Gerardo
+Schneider, and Siraj Ahmed Shaikh. Formal Methods for Software Engi-
+neering. Springer, 2020.
+RMS+12. Markus Roggenbach, Faron Moller, Steve Schneider, Hele n Treharne, and
+Hoang Nga Nguyen. Railway modelling in CSP ||B: the double junction
+case study. ECEASST , 53, 2012.
+Sek06. Emil Sekerinski. Teaching the mathematics of softwa re
+design. In Formal Methods in the Teaching Lab , 2006.
+http://www4.di.uminho.pt/FME-SoE/FMEd06/Preprints.p df.
+SKS19. Xiaowu Sun, Haitham Khedr, and Yasser Shoukry. Forma l veriﬁcation of
+neural network controlled autonomous systems. In Proc. of HSCC 2019 ,
+pages 147–156. ACM, 2019.
+SvGJ+15. C. Sadowski, J. v. Gogh, C. Jaspan, E. S¨ oderberg, and C. W inter. Tri-
+corder: Building a program analysis ecosystem. In 2015 IEEE/ACM 37th
+IEEE International Conference on Software Engineering , volume 1, pages
+598–608, 2015.
+SY02. Nikolay V. Shilov and K. Yi. Engaging students with the ory through ACM
+collegiate programming contests. Communications of ACM , 45(9), 2002.
+vdA16. Wil van der Aalst. Process Mining — Data Science in Action . Springer,
+2nd edition, 2016.
+vRtPdt20. Guido van Rossum and the Python development team. The Python Lan-
+guage Reference – Release 3.8.3. Python Software Foundation, June 2020.
+Retrieved 2020-06-15.
+Win90. J. Wing. A speciﬁer’s introduction to formal methods .IEEE Computer
+23/9, 1990.
+WPW+18. Shiqi Wang, Kexin Pei, Justin Whitehouse, Junfeng Yang, and Suman
+Jana. Formal security analysis of neural networks using sym bolic intervals.
+InProc. of Sec 2018 , pages 1599–1614. ACM, 2018.
+Zhu20. Rustam Zhumagambetov. Teaching formal methods in ac ademia: a sys-
+tematic literature review. In FMFun 2019, Revised Selected Papers. In
+press., Communications in Computer and Information Science. Spri nger,
+2020.
+26

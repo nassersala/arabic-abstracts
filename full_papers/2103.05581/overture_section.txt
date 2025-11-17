@@ -1,0 +1,565 @@
+Overture
+
+2.1
+
+Preliminaries
+
+This section presents the Overture.Preliminaries module of the AgdaUALib, slightly abridged.5
+Here we define or import the basic types of Martin-Löf type theory (MLTT). Although this is
+standard stuff, we take this opportunity to highlight aspects of the UALib syntax that may differ
+from that of “standard Agda.”
+
+Logical foundations
+The AgdaUALib is based on a type theory that is the same or very close to the one on which
+on which Martín Escardó’s Type Topology (TypeTopo) Agda library is based. We don’t discuss
+MLTT in great detail here because there are already nice and freely available resources covering
+the theory. (See, for example, the section A spartan Martin-Löf type theory of the lecture
+notes by Escardó [10], the ncatlab entry on Martin-Löf dependent type theory, or the HoTT
+Book [18].)
+The objects and assumptions that form the foundation of MLTT are few. There are the
+primitive types (0, 1, and N, denoting the empty type, one-element type, and natural numbers),
+the type formers (+, Π, Σ, Id, denoting binary sum, product, sum, and the identity type).
+Each of these type formers is defined by a type forming rule which specifies how that type is
+constructed. Lastly, we have an infinite collection of type universes (types of types) and universe
+variables to denote them. Following Escardó, we denote universes in the UALib by upper-case
+calligraphic letters from the second half of the English alphabet; to be precise, these are O, Q,
+R, . . ., X, Y, Z.6
+That’s all. There are no further axioms or logical deduction (proof derivation) rules needed
+for the foundation of MLTT that we take as the starting point of the AgdaUALib. The logical
+semantics come from the propositions-as-types correspondence [15]: propositions and predicates
+are represented by types and the inhabitants of these types are the proofs of the propositions
+and predicates. As such, proofs are constructed using the type forming rules. In other words,
+the type forming rules are the proof derivation rules.
+To this foundation, we add certain extensionality principles when and were we need them.
+These will be developed as we progress. However, classical axioms such as the Axiom of Choice
+or the Law of the Excluded Middle are not needed and are not assumed anywhere in the library.
+In that sense, all theorems and proofs in the UALib are constructive (as defined, e.g., in [13]).
+A few specific instances (e.g., the proof of the Noether isomorphism theorems and Birkhoff’s HSP theorem) require certain truncation assumptions. In such cases, the theory is not
+predicative (as defined, e.g., in [14]). These instances are always clearly identified.
+
+5
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Preliminaries.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Preliminaries.lagda).
+6
+We avoid using P as a universe variable because it is used to denote the powerset type in TypeTopo.
+
+6
+
+Overture
+
+Specifying logical foundations in Agda
+An Agda program typically begins by setting some options and by importing types from existing Agda libraries. Options are specified with the OPTIONS pragma and control the way Agda
+behaves, for example, by specifying the logical axioms and deduction rules we wish to assume
+when the program is type-checked to verify its correctness. Every Agda program in the UALib
+begins with the following line.
+{-# OPTIONS –without-K –exact-split –safe #-}
+
+(1)
+
+These options control certain foundational assumptions that Agda makes when type-checking
+the program to verify its correctness.
+1. –without-K disables Streicher’s K axiom, which makes Agda compatible with proof-relevant
+type theories; see the discussion of proof-relevance in § 3.4; see also [20, 7];
+2. –exact-split makes Agda accept only definitions that are judgmental equalities; see [22];
+3. –safe ensures that nothing is postulated outright—every non-MLTT axiom has to be an
+explicit assumption (e.g., an argument to a function or module); see [21, 22].
+Throughout this paper we take assumptions 1–3 for granted without mentioning them explicitly.
+
+Agda Modules
+The OPTIONS pragma is usually followed by the start of a module. For example, the Overture.Preliminaries module begins with the following line.
+module Overture.Preliminaries where
+
+Sometimes we want to declare parameters that will be assumed throughout the module. For
+instance, when working with algebras, we often assume they come from a particular fixed signature, and this signature is something we could fix as a parameter at the start of a module.
+Thus, we might start an anonymous submodule of the main module with a line like7
+module _ {S : Signature O V} where
+
+Such a module is called anonymous because an underscore appears in place of a module name.
+Agda determines where a submodule ends by indentation. This can take some getting used
+to, but after a short time it will feel very natural. The main module of a file must have the
+same name as the file, without the .agda or .lagda file extension. The code inside the main
+module is not indented. Submodules are declared inside the main module and code inside
+these submodules must be indented to a fixed column. As long as the code is indented, Agda
+considers it part of the submodule. A submodule is exited as soon as a nonindented line of code
+appears.
+
+Universes in Agda
+For the very small amount of background we require about the notion of type universe (or level),
+we refer the reader to the brief section on universe-levels in the Agda documentation.8
+Throughout the AgdaUALib we use many of the nice tools that Martín Escardó has developed
+and made available in TypeTopo library of Agda code for the Univalent Foundations of math-
+
+7
+8
+
+The Signature type will be defined in Section 4.1.
+See https://agda.readthedocs.io/en/v2.6.1.3/language/universe-levels.html.
+
+Agda UALib, Part 1: Foundation
+
+7
+
+ematics.9 The first of these is the Universes module which we import as follows.
+open import Universes public
+
+Since we use the public directive, the Universes module will be available to all modules that
+import the present module (Overture.Preliminaries). This module declares symbols used to denote universes. As mentioned, we adopt Escardó’s convention of denoting universes by capital
+calligraphic letters, and most of the ones we use are already declared in Universes; those that
+are not are declared as follows.
+variable O X Y Z : Universe
+
+The Universes module also provides alternative syntax for the primitive operations on universes that Agda supports. Specifically, the  operator maps a universe level U to the type
+Set U, and the latter has type Set (lsuc U). The Agda level lzero is renamed U0 , so U0  is an
+alias for Set lzero. Thus, U  is simply an alias for Set U, and we have Set U : Set (lsuc U).
+Finally, Set (lsuc lzero) is equivalent to Set U0 + , which we (and Escardó) denote by U0 +  .
+To justify the introduction of this somewhat nonstandard notation for universe levels, Escardó points out that the Agda library uses Level for universes (so what we write as U  is
+written Set U in standard Agda), but in univalent mathematics the types in U  need not be
+sets, so the standard Agda notation can be a bit confusing, especially to newcomers.
+There will be many occasions calling for a type living in a universe at the level that is the
+least upper bound of two universe levels, say, U and V. The universe level U ⊔ Vdenotes this
+least upper bound. Here ⊔ is an Agda primitive designed for precisely this purpose.
+
+Dependent types
+Sigma types (dependent pairs)
+Given universes U and V, a type A : U  , and a type family B : A → V  , the Sigma type (or
+dependent pair type, or dependent product type) is denoted by Σ x : A , B x and generalizes the
+Cartesian product A × B by allowing the type B x of the second argument of the ordered pair
+(x , y) to depend on the value x of the first. That is, an inhabitant of the type Σ x : A , B x is
+a pair (x , y) such that x : A and y : B x.
+The dependent product type is defined in TypeTopo in a standard way. For pedagogical
+purposes we repeat the definition here.10
+record Σ { U V} {A : U  } (B : A → V  ) : U ⊔ V  where
+constructor _,_
+field
+pr1 : A
+pr2 : B pr1
+
+Agda’s default syntax for this type is Σ λ(x : A) → B, but we prefer the notation Σ x : A , B,
+
+9
+
+Escardó has written an outstanding set of notes called Introduction to Univalent Foundations of Mathematics with Agda, which we highly recommend to anyone looking for more details than we provide here
+about MLTT and Univalent Foundations/HoTT in Agda. [10].
+10
+In the UALib we put such redundant definitions inside “hidden” modules so that they doesn’t conflict with
+the original definitions which we import and use. It may seem odd to define something in a hidden module
+only to import and use an alternative definition, but we do this in order to exhibit all of the types on which
+the UALib depends while ensuring that this cannot be misinterpreted as a claim to originality.
+
+8
+
+Overture
+
+which is closer to the syntax in the preceding paragraph, and will be familiar to readers of the
+HoTT book [18], for example. Fortunately, TypeTopo makes the preferred notation available
+with the following type definition and syntax declaration (see [10, Σ types]).11
+-Σ : { U V : Universe} (A : U  ) (B : A → V  ) → U ⊔ V 
+-Σ A B = Σ B
+syntax -Σ A (λ x → B) = Σ x : A , B
+
+A special case of the Sigma type is the one in which the type B doesn’t depend on A. This
+is the usual Cartesian product, defined in Agda as follows.
+_×_ : U  → V  → U ⊔ V 
+A×B=Σx:A,B
+
+Pi types (dependent functions)
+Given universes U and V, a type A : U  , and a type family B : A → V  , the Pi type (or
+dependent function type) is denoted by Π x : A , B x and generalizes the function type A → B by
+letting the type B x of the codomain depend on the value x of the domain type. The dependent
+function type is defined in TypeTopo in a standard way. For the reader’s benefit, however, we
+repeat the definition here.
+Π : {A : U  } (A : A → W  ) → U ⊔ W 
+Π {A} A = (x : A) → A x
+
+To make the syntax for Π conform to the standard notation for Pi types, Escardó uses the same
+trick as the one used above for Sigma types.11
+-Π : (A : U  )(B : A → W  ) → U ⊔ W 
+-Π A B = Π B
+syntax -Π A (λ x → b) = Π x : A , b
+
+Once we have studied the types (defined in TypeTopo and repeated here for convenience and
+illustration purposes), the original definitions are imported like so.
+open import Sigma-Type public
+open import MGS-MLTT using (pr1 ; pr2 ; _×_; -Σ; Π; -Π) public
+
+Projection notation
+The definition of Σ (and thus ×) includes the fields pr1 and pr2 representing the first and second
+projections out of the product. Sometimes we prefer to denote these projections by |_| and ∥_∥,
+respectively. However, for emphasis or readability we alternate between these and the following
+standard notations: pr1 and fst for the first projection, pr2 and snd for the second. We define
+these alternative notations for projections as follows.
+module _ { U : Universe}{A : U  }{B : A → V  } where
+|_| fst : Σ B → A
+
+11
+
+Attention! The symbol : that appears in the special syntax defined here for the Σ type, and below for
+the Π type, is not the ordinary colon; rather, it is the symbol obtained by typing \:4 in agda2-mode.
+
+Agda UALib, Part 1: Foundation
+
+9
+
+|x,y|=x
+fst (x , y) = x
+∥_∥ snd : (z : Σ B) → B (pr1 z)
+∥x,y∥=y
+snd (x , y) = y
+
+Remarks.
+We place these definitions (of |_|, fst, ∥_∥ and snd) inside an anonymous module, which is a
+module that begins with the module keyword followed by an underscore character (instead
+of a module name). The purpose is to move some of the postulated typing judgments—the
+“parameters” of the module (e.g., U : Universe)—out of the way so they don’t obfuscate the
+definitions inside the module. In library documentation, such as the present paper, we often
+omit such module directives. In contrast, the collection of html pages at ualib.org, which
+is the most current and comprehensive documentation of the UALib, omits nothing.
+As the four definitions above make clear, multiple inhabitants of a single type (e.g., |_| and
+fst) may be declared on the same line.
+
+2.2
+
+Equality
+
+This section presents the Overture.Equality module of the AgdaUALib, slightly abridged.12
+
+Definitional equality
+Here we discuss the basic but important type of MLTT called definitional equality. This concept
+is most understood, at least heuristically, with the following slogan: “Definitional equality is
+the substitution-preserving equivalence relation generated by definitions.” We will make this
+precise below, but first let us quote from a primary source. Per Martin-Löf offers the following
+definition in [12, §1.11] (italics added):13
+Definitional equality is defined to be the equivalence relation, that is, reflexive, symmetric
+and transitive relation, which is generated by the principles that a definiendum is always
+definitionally equal to its definiens and that definitional equality is preserved under
+substitution.
+To be sure we understand what this means, let := denote the relation with respect to which x is
+related to y (denoted x := y) if and only if y is the definition of x. Then the definitional equality
+relation ≡ is the reflexive, symmetric, transitive, substitutive closure of :=. By subsitutive
+closure we mean closure under the following substitution rule.
+{A : U  } {B : A → W  } {x y : A} x ≡ y
+(subst)
+Bx≡By
+The datatype used in the UALib to represent definitional equality is imported from the
+Identity-Type module of TypeTopo, but apart from superficial syntactic differences, it is equivalent to the standard Paulin-Mohring style identity type found in most other Agda libraries. We
+12
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Equality.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Equality.lagda).
+13
+The definiendum is the left-hand side of a defining equation, the definiens is the right-hand side.
+For readers who have never generated an equivalence relation: the reflexive closure of R ⊆ A × A is the
+union of R and all pairs of the form (a , a); the symmetric closure is the union of R and its inverse {(y , x)
+: (x , y) ∈ R}; we leave it to the reader to come up with the correct definition of transitive closure.
+
+10
+
+Overture
+
+repeat the definition here for easy reference.
+data _≡_ { U} {A : U  } : A → A → U  where refl : {x : A} → x ≡ x
+
+Whenever we need to complete a proof by simply asserting that x is definitionally equal to itself,
+we invoke refl. If we need to make explicit the implicit argument x, then we use refl {x = x}.
+
+Assumed module contexts
+Before proceeding, a word about a special convention we adopt in the sequel is in order. To
+reduce reader strain, we often omit easily inferred typing judgments which would normally
+appear in the list of parameters of a module or at the start of a type definition, though we
+sometimes make an announcement like the following (which applies to the present section):
+Unless otherwise indicated, the prevailing context in this section is given by
+module _ { U : Universe} {A : U  } where
+which means that all code in the current section is to be interpreted as occurring inside such
+an anonymous module, where the given typing judgments are taken for granted.
+
+Identity is an equivalence relation
+The relation ≡ just defined is naturally an equivalence relation, and the formal proof of this
+fact is trivial. Indeed, we don’t need to prove reflexivity, since that is the defining property of
+≡, and the proofs of symmetry and transitivity are immediate.
+≡-sym : {x y : A} → x ≡ y → y ≡ x
+≡-sym refl = refl
+≡-trans : {x y z : A} → x ≡ y → y ≡ z → x ≡ z
+≡-trans refl refl = refl
+
+We prove that ≡ obeys the substitution rule (subst) in the next subsection (see ap), but first
+we define some syntactic sugar that will make it easier to apply symmetry and transitivity of
+≡ in proofs.14
+_−1 : {x y : A} → x ≡ y → y ≡ x
+p −1 = ≡-sym p
+
+If we have a proof p : x ≡ y, and we need a proof of y ≡ x, then instead of ≡-sym p we can
+use the more intuitive p −1 . Similarly, the following syntactic sugar makes abundant appeals
+to transitivity easier to stomach.
+_·_ : {x y z : A} → x ≡ y → y ≡ z → x ≡ z
+p · q = ≡-trans p q
+
+Transport (substitution)
+Alonzo Church characterized equality by declaring two things equal if and only if no property
+(predicate) can distinguish them (see [6]). In other terms, x and y are equal if and only if for
+
+14
+
+Unicode Hints (agda2-mode): \^-\^1 ⇝ −1 ; \Mii\Mid ⇝ id; \.⇝ ·. In general, for information about
+a character, place the cursor on the character and type M-x describe-char (or M-x h d c).
+
+Agda UALib, Part 1: Foundation
+
+11
+
+all P we have P x → P y. One direction of this implication is sometimes called substitution
+or transport or transport along an identity. It asserts the following: if two objects are equal
+and one of them satisfies a given predicate, then so does the other. A type representing this
+notion is defined, along with the (polymorphic) identity function, in the MGS-MLTT module of
+TypeTopo as follows.15
+id : { U : Universe} (A : U  ) → A → A
+id A = λ x → x
+transport : {A : U  } (B : A → W  ) {x y : A} → x ≡ y → B x → B y
+transport B (refl {x = x}) = id (B x)
+
+A function is well-defined if and only if it maps equivalent elements to a single element and
+we often use this nature of functions in Agda proofs. It is equivalent to the substitution rule
+(subst) we defined in the last section. If we have a function f : A → B, two elements x y : A
+of the domain, and an identity proof p : x ≡ y, then we obtain a proof of f x ≡ f y by simply
+applying the ap function like so, ap f p : f x ≡ f y. Escardó defines ap in TypeTopo as follows.
+ap : {A : U  }{B : V  } (f : A → B){a b : A} → a ≡ b → f a ≡ f b
+ap f {a} p = transport (λ - → f a ≡ f -) p (refl {x = f a})
+
+This establishes that our definitional equality satisfies the substitution rule (subst).
+Here’s a useful variation of ap that we borrow from the Relation/Binary/Core.agda module of the Agda Standard Library (transcribed into TypeTopo/UALib).
+cong-app : {A : U  }{B : A → W  }{f g : Π B} → f ≡ g → (a : A) → f a ≡ g a
+cong-app refl _ = refl
+
+2.3
+
+Function extensionality
+
+This section presents the Overture.Extensionality module of the AgdaUALib, slightly abridged.16
+This brief introduction to function extensionality is intended for novices. Those already familiar
+with the concept might wish to skip to the next subsection.
+What does it mean to say that two functions f g : X → Y are equal? Suppose f and g are
+defined on X = Z (the integers) as follows: f x := x + 2 and gx := ((2 ∗ x) − 8)/2 + 6. Should
+we call f and g equal? Are they the “same” function? What does that even mean?
+It’s hard to resist the urge to reduce g to x + 2 and proclaim that f and g are equal. Indeed,
+this is often an acceptable answer and the discussion normally ends there. In the science of
+computing, however, more attention is paid to equality, and with good reason.
+We can probably all agree that the functions f and g above, while not syntactically equal,
+do produce the same output when given the same input so it seems fine to think of the functions
+as the same, for all intents and purposes. But we should ask ourselves at what point do we
+notice or care about the difference in the way functions are defined? What if we had started out
+this discussion with two functions f and g both of which take a list as argument and produce
+as output a correctly sorted version of the input list? Suppose f is defined using the merge sort
+
+15
+
+Including every line of code of the AgdaUALib in this paper would result in an unbearable reading experience.
+We include all significant sections of code from the first 13 modules, but we omit lines indicating that
+redundant definitions of functions (e.g., transport and ap) occur inside named “hidden” modules. We also
+omit lines importing the original definitions of such duplicate definitions from TypeTopo library.
+16
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Extensionality.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Extensionality.lagda).
+
+12
+
+Overture
+
+algorithm, while g uses quick sort. Probably few of us would call f and g the “same” in this
+case.
+In the examples above, it is common to say that the two functions are extensionally equal,
+since they produce the same external output when given the same input, but they are not
+intensionally equal, since their internal definitions differ. In the next subsection we describe
+types that manifest this idea of extensional equality of functions, or function extensionality.17
+
+Types for postulating function extensionality
+As explained above, a natural notion of function equality is defined as follows: f and g are said
+to be pointwise equal provided ∀x → f x ≡ gx. Here is how this is expressed in type theory
+(e.g., in TypeTopo).
+_∼_ : {A : U  } {B : A → W  } → Π B → Π B → U ⊔ W 
+f∼g=∀x→fx≡gx
+
+Function extensionality is the principle that pointwise equal functions are definitionally equal;
+that is, ∀ f g (f ∼ g → f ≡ g). In type theory this principle is represented by the types funext
+(for nondependent functions) and dfunext (for dependent functions) ([18, §2.9]). For example,
+the latter is defined as follows.18
+dfunext : ∀ U W → ( U ⊔ W) + 
+dfunext U W = {A : U  }{B : A → W  }{f g : ∀(x : A) → B x} → f ∼ g → f ≡ g
+
+In informal settings, this so-called point-wise equality of functions is typically what one means
+when one asserts that two functions are “equal.”19 However, it is important to keep in mind
+the following fact: function extensionality is known to be neither provable nor disprovable in
+Martin-Löf type theory. It is an independent statement.. [10]
+The next type defines a converse of function extensionality for dependent function types (cf.
+cong-app in Overture.Equality and [18, (2.9.2)]).
+happly : {A : U  }{B : A → W  }(f g : Π B) → f ≡ g → f ∼ g
+happly _ _ refl _ = refl
+
+Though it may seem obvious to some readers, we wish to emphasize the important conceptual
+distinction between two different forms of type definitions by comparing the definitions of
+dfunext and happly. In the definition of dfunext, the codomain is a parameterized type, namely,
+U+ ⊔ V+  , and the right-hand side of the defining equation of dfunext is an assertion (which
+may or may not hold). In the definition of happly, the codomain is an assertion, namely, f ∼
+g, and the right-hand side of the defining equation is a proof of this assertion. As such, happly
+is a proof object; it proves (or inhabits the type that represents) the proposition asserting that
+
+17
+
+Most of these types are already defined in TypeTopo, so the UALib imports the definitions from there; as
+usual, we redefine some of these types here for the purpose of explication.
+18
+Previous versions of the UALib made heavy use of a global function extensionality principle which asserts
+that function extensionality holds at all universe levels. However, we removed all instances of global
+function extensionality in favor of local applications of the principle. This makes transparent precisely
+how and where the library depends on function extensionality. The price we pay for this precision is a
+proliferation of extensionality postulates. Eventually we will likely be able to remove these postulates with
+other approach to extensionality; e.g., univalence and/or Cubical Agda.
+19
+In fact, if one assumes the univalence axiom of Homotopy Type Theory [18], then point-wise equality of
+functions is equivalent to definitional equality of functions. See the section “Function extensionality from
+univalence” of [10].
+
+Agda UALib, Part 1: Foundation
+
+13
+
+definitionally equivalent functions are pointwise equal. In contrast, dfunext is a type, and we
+may or may not wish to postulate an inhabitant of this type. That is, we could postulate that
+function extensionality holds by assuming we have a witness, say, fe : dfunext U V, but as
+noted above the existence of such a witness cannot be proved in MLTT.
+Finally, a useful alternative for expressing dependent function extensionality, which is essentially equivalent to dfunext, is to assert that happly is actually an equivalence in a sense that we
+now describe. This requires a few definitions from the MGS-Equivalences module of TypeTopo.
+First, a type is a singleton if it has exactly one inhabitant and a subsingleton if it has at most
+one inhabitant.
+is-center : (A : U  ) → A → U 
+is-center A c = (x : A) → c ≡ x
+is-singleton : U  → U 
+is-singleton A = Σ c : A , is-center A c
+is-subsingleton : U  → U 
+is-subsingleton A = (x y : A) → x ≡ y
+
+Next, we consider the type is-equiv which is used to assert that a function is an equivalence in
+the sense that we now describe. This requires the concept of a fiber of a function, which can be
+represented as a Sigma type whose inhabitants denote inverse images of points in the codomain
+of the given function.
+fiber : {A : U  } {B : W  } (f : A → B) → B → U ⊔ W 
+fiber {A} f y = Σ x : A , f x ≡ y
+
+A function is called an equivalence if all of its fibers are singletons.
+is-equiv : {A : U  } {B : W  } → (A → B) → U ⊔ W 
+is-equiv f = ∀ y → is-singleton (fiber f y)
+
+Finally we are ready to fulfill the promise of a type that provides an alternative means of postulating function extensionality.
+hfunext : ∀ U W → ( U ⊔ W)+ 
+hfunext U W = {A : U  }{B : A → W  } (f g : Π B) → is-equiv (happly f g)
+
+2.4
+
+Inverses
+
+This section presents the Overture.Inverses module of the AgdaUALib, slightly abridged.20 Assume the following typing judgments: { U W : Universe}{A : U  }{B : W  }.
+We begin by defining an inductive type that represents the inverse image of a function.
+data Image_∋_ (f : A → B) : B → U ⊔ W  where
+im : (x : A) → Image f ∋ f x
+eq : (b : B) → (a : A) → b ≡ f a → Image f ∋ b
+
+Next we verify that the type behaves as we expect.
+
+20
+
+For unabridged docs (source code) see https://ualib.gitlab.io/Overture.Inverses.html
+(https://gitlab.com/ualib/ualib.gitlab.io/-/blob/master/UALib/Overture/Inverses.lagda).
+
+14
+
+Overture
+
+ImageIsImage : (f : A → B)(b : B)(a : A) → b ≡ f a → Image f ∋ b
+ImageIsImage f b a b≡fa = eq b a b≡fa
+
+An inhabitant of Image f ∋ b is a pair (a , p), where a : A, and p is a proof that f maps a to
+b; that is, p : b ≡ f a. Since the proof that b belongs to the image of f is always accompanied
+by a witness a : A, we can actually compute a pseudoinverse of f. This will be a function that
+takes an arbitrary b : B and a (witness, proof )-pair, (a , p) : Image f ∋ b, and returns a.
+Inv : (f : A → B){b : B} → Image f ∋ b → A
+Inv f {.(f a)} (im a) = a
+Inv f (eq _ a _) = a
+
+We can prove that Inv f is the right-inverse of f, as follows.
+InvIsInv : (f : A → B){b : B}(q : Image f ∋ b) → f(Inv f q) ≡ b
+InvIsInv f {.(f a)} (im a) = refl
+InvIsInv f (eq _ _ p) = p −1
+
+Epics (surjective functions)
+We represent an epic (or surjective) function from A to B as an inhabitant of the following type.
+Epic : (A → B) → U ⊔ W 
+Epic f = ∀ y → Image f ∋ y
+
+With the next definition, we can represent the right-inverse of an epic function.
+EpicInv : (f : A → B) → Epic f → B → A
+EpicInv f fE b = Inv f (fE b)
+
+The right-inverse of f is obtained by applying EpicInv to f along with a proof of Epic f. To see
+that this does indeed give the right-inverse we prove the EpicInvIsRightInv lemma below. This
+requires function composition, denoted ◦ and defined in TypeTopo library.
+_◦_ : {C : B → W  } → Π C → (f : A → B) → (x : A) → C (f x)
+g ◦ f = λ x → g (f x)
+
+Note that the next proof requires function extensionality, which we postulate a module declaration like this: module _ { U W : Universe}{fe : funext W W}{A : U  }{B : W  } where
+EpicInvIsRightInv : (f : A → B)(fE : Epic f) → f ◦ (EpicInv f fE) ≡ id B
+EpicInvIsRightInv f fE = fe (λ x → InvIsInv f (fE x))
+
+Monics (injective functions)
+We say that a function g : A → B is monic (or injective) if it does not map distinct elements
+to a common point. The following types manifest this property and prove that monic functions
+have left-inverses.
+Monic : (g : A → B) → U ⊔ W 
+Monic g = ∀ a1 a2 → g a1 ≡ g a2 → a1 ≡ a2
+MonicInv : (f : A → B) → Monic f → (b : B) → Image f ∋ b → A
+MonicInv f _ = λ b imfb → Inv f imfb
+
+Agda UALib, Part 1: Foundation
+
+15
+
+MonicInvIsLeftInv : {f : A → B}{fM : Monic f}{x : A} → (MonicInv f fM)(f x)(im x) ≡ x
+MonicInvIsLeftInv = refl
+
+Embeddings
+The is-embedding type is defined in TypeTopo in the following way.
+is-embedding : (A → B) → U ⊔ W 
+is-embedding f = ∀ b → is-subsingleton (fiber f b)
+
+Thus, is-embedding f asserts that f is a function all of whose fibers are subsingletons. Observe
+that an embedding is not simply an injective map. However, if we assume that the codomain
+B has unique identity proofs (UIP), then we can prove that a monic function into B is an
+embedding. We discuss the UIP principle in §3.4 where we present the Relations.Truncation
+module.
+Finding a proof that a function is an embedding isn’t always easy, but one path that is often
+straightforward is to first prove that the function is invertible and then invoke the following
+theorem.
+invertibles-are-embeddings : (f : A → B) → invertible f → is-embedding f
+invertibles-are-embeddings f fi = equivs-are-embeddings f (invertibles-are-equivs f fi)
+
+Finally, embeddings are monic; from a proof p : is-embedding f that f is an embedding we can
+construct a proof of Monic f. We confirm this as follows.
+embedding-is-monic : (f : A → B) → is-embedding f → Monic f
+embedding-is-monic f femb x y fxfy = ap pr1 ((femb (f x)) fx fy) where
+fx fy : fiber f (f x)
+fx = x , refl
+fy = y , (fxfy −1 )
+
+2.5
+
+Lifts
+
+This section presents the Overture.Lifts module of the AgdaUALib, slightly abridged.21
+
+Agda’s universe hierarchy
+The hierarchy of universes in Agda is structured as follows: U  : U +  , U +  : U ++  , etc.22
+This means that the universe U  has type U +  , and U +  has type U ++  , and so on. It
+is important to note, however, this does not imply that U  : U ++  . In other words, Agda’s
+universe hierarchy is noncumulative. This can be advantageous as it becomes possible to treat
+universe levels more generally and precisely. On the other hand, a noncumulative hierarchy can
+sometimes make it seem unduly diﬀicult to convince Agda that a program or proof is correct.
+To help us overcome this technical issue, there are some general universe lifting and lowering
+functions, which we describe in the next subsection. In Section 4.2 we will define a couple

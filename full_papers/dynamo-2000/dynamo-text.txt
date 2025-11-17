@@ -1,0 +1,814 @@
+     Dynamo: A Transparent Dynamic Optimization System
+             Vasanth Bala                                    Evelyn Duesterwald                               Sanjeev Banerjia
+               vas@hpl.hp.com                                     duester@hpl.hp.com                            sbanerjia@incert.com
+
+                                                           Hewlett-Packard Labs
+                                                    1 Main Street, Cambridge, MA 02142
+                                                   www.hpl.hp.com/cambridge/projects/Dynamo
+
+
+Abstract                                                                      recently, the use of dynamic code generation environments (like
+     We describe the design and implementation of Dynamo, a                   Java JITs and dynamic binary translators) makes the applicability
+software dynamic optimization system that is capable of                       of heavyweight static compiler optimization techniques
+transparently improving the performance of a native instruction               impractical. Meanwhile, on the hardware side, technology is
+stream as it executes on the processor. The input native instruction          moving toward offloading more complexity from the hardware
+stream to Dynamo can be dynamically generated (by a JIT for                   logic to the software compiler, as evidenced by the CISC to RISC
+example), or it can come from the execution of a statically                   to VLIW progression.
+compiled native binary. This paper evaluates the Dynamo system                      The problem with this trend is that the static compiler is
+in the latter, more challenging situation, in order to emphasize the          taking on an increasingly greater performance burden while the
+limits, rather than the potential, of the system. Our experiments             obstacles to traditional static compiler analysis are continuing to
+demonstrate that even statically optimized native binaries can be             increase. This will inevitably lead to either very complex compiler
+accelerated Dynamo, and often by a significant degree. For                    software that provides only modest performance gains on general-
+example, the average performance of –O optimized SpecInt95                    purpose applications, or highly customized compilers that are
+benchmark binaries created by the HP product C compiler is                    tailored for very narrow classes of applications.
+improved to a level comparable to their –O4 optimized version                       The Dynamo project was started in 1996 to investigate a
+running without Dynamo. Dynamo achieves this by focusing its                  technology that can complement the static compiler’s traditional
+efforts on optimization opportunities that tend to manifest only at           strength as a static performance improvement tool with a novel
+runtime, and hence opportunities that might be difficult for a static         dynamic performance improvement capability [3]. In contrast to
+compiler to exploit. Dynamo’s operation is transparent in the                 the static compiler, Dynamo offers a client-side performance
+sense that it does not depend on any user annotations or binary               delivery mechanism that allows computer system vendors to
+instrumentation, and does not require multiple runs, or any special           provide some degree of machine-specific performance without the
+compiler, operating system or hardware support. The Dynamo                    ISV’s involvement.
+prototype presented here is a realistic implementation running on                   Dynamo is a dynamic optimization system (i.e., the input is an
+an HP PA-8000 workstation under the HPUX 10.20 operating                      executing native instruction stream), implemented entirely in
+system.                                                                       software. Its operation is transparent: no preparatory compiler
+                                                                              phase or programmer assistance is required, and even legacy native
+1. Introduction                                                               binaries can be dynamically optimized by Dynamo. Because
+     Recent trends in software and hardware technologies appear               Dynamo operates at runtime, it has to focus its optimization effort
+to be moving in directions that are making traditional performance            very carefully. Its optimizations have to not only improve the
+delivery mechanisms less effective. The use of object-oriented                executing native program, but also recoup the overhead of
+languages and techniques in modern software development has                   Dynamo’s own operation.
+resulted in a greater degree of delayed binding, limiting the size of               The input native instruction stream to Dynamo can come from
+the scope available for static compiler analysis. Shrink-wrapped              a statically prepared binary created by a traditional optimizing
+software is being shipped as a collection of DLLs rather than a               compiler, or it can be dynamically generated by an application
+single monolithic executable, making whole-program optimization               such as a JIT. Clearly, the runtime performance opportunities
+at static compile-time virtually impossible. Even in cases where              available for Dynamo can vary significantly depending on the
+powerful static compiler optimizations can be applied, computer               source of this input native instruction stream. The experiments
+system vendors have to rely on the ISV (independent software                  reported in this paper only discuss the operation of Dynamo in the
+vendor) to enable them. This puts computer system vendors in the              more challenging situation of accelerating the execution of a
+uncomfortable position of not being able to control the very keys             statically optimized native binary. The performance data presented
+that unlock the performance potential of their own machines. More             here thus serve as an indicator of the limits of the Dynamo system,
+ ____________________________________________________                         rather than its potential. The data demonstrates that even in this
+                                                                              extreme test case, Dynamo manages to speedup many applications,
+ Permission to make digital or hard copies of part or all of this work        and comes close to breaking even in the worst case.
+ for personal or classroom use is granted without fee provided that                 Section 1 gives an overview of how Dynamo works. The
+ copies are not made or distributed for profit or commercial
+ advantage and that copies bear this notice and the full citation on
+                                                                              following sections highlight several key innovations of the
+ the first page. Copyrights for components of this work owned by              Dynamo system. Section 2 describes Dynamo’s startup
+ others than ACM must be honored. Abstracting with credit is                  mechanism, Section 4 gives an overview of the hot code selection,
+ permitted. To copy otherwise, to republish, to post on servers or            optimization and code generation process, Section 5 describes how
+ to redistribute to lists, requires prior specific permission and/or a        different optimized code snippets are linked together, Section 6
+ fee. To appear in PLDI 2000, Vancouver, Canada. © 2000 ACM                   describes how the storage containing the dynamically optimized
+
+
+
+                                                                          1
+                     native instruction stream
+
+
+                                             A                                     B                            no      C
+
+                           interpret until                    lookup branch            miss           start-of-trace
+                           taken branch                      target in cache                           condition?
+
+                                                                          hit                                   yes
+                                                                                   F                                        D                   no
+                                                                                                                                                        E
+                                                                  jump to top of                  increment counter                     counter value
+                                                                    fragment in                     associated with                      exceeds hot
+                                                                       cache                      branch target addr                     threshold ?
+
+                                                                                   context                                                      yes
+                                        K                                           switch
+                                                     O/S signal                                                                                             G
+                                         handler
+                                          signal
+
+
+
+
+                                                                                   Fragment                                           interpret + codegen
+                                                                                    Cache                                              until taken branch
+
+
+
+
+                                                                                              J                            I                            H
+                                                    emit into cache, link with                                 create new       yes                         no
+                                                                                                                                         end-of-trace
+                                                   other fragments & recycle                                 fragment and
+                                                                                                                                          condition?
+                                                     the associated counter                                    optimize it
+
+
+                                                                        Figure 1. How Dynamo works
+code is managed, and Section 7 describes signal handling. Finally,                                    taken branches (likely loop headers) and fragment cache exit
+Section 8 summarizes the experimental data to evaluate Dynamo’s                                       branches (exits from previously identified hot traces). If the
+performance. Dynamo is a complex system that took several years                                       counter value exceeds a preset hot threshold (E), the interpreter
+to engineer. This paper only provides an overview of the whole                                        toggles state and goes into “code generation mode” (G). When
+system. Further details are available in [2] and on the Dynamo                                        interpreting in this mode, the native instruction sequence being
+project website (www.hpl.hp.com/cambridge/projects/Dynamo).                                           interpreted is recorded in a hot trace buffer, until an “end-of-trace”
+                                                                                                      condition is reached (H). At that point the hot trace buffer is
+2. Overview                                                                                           processed by a fast, lightweight optimizer (I) to create an
+      From a user’s perspective, Dynamo looks like a PA-8000                                          optimized single-entry, multi-exit, contiguous sequence of
+software interpreter that itself runs on a PA-8000 processor (the                                     instructions called the fragment1. Our current prototype defines
+hardware interpreter). Interpretation allows Dynamo to observe                                        end-of-trace as backward taken branches or taken branches whose
+execution behavior without having to instrument the application                                       targets correspond to fragment entry points in the fragment cache
+binary. Since software interpretation is much slower than direct                                      (i.e., fragment cache hits). A trace may also be truncated if its
+execution on the processor, Dynamo only interprets the instruction                                    length exceeds a certain number of instructions. The fragment
+stream until a “hot” instruction sequence (or trace) is identified. At                                generated by the optimizer is emitted into the fragment cache by a
+that point, Dynamo generates an optimized version of the trace                                        linker (J), which also connects fragment exit branches to other
+(called a fragment) into a software code cache (called the fragment                                   fragments in the fragment cache if possible. Connecting fragments
+cache). Subsequent encounters of the hot trace’s entry address                                        together in this manner minimizes expensive fragment cache exits
+during interpretation will cause control to jump to the top of the                                    to the Dynamo interpretive loop. The new fragment is tagged with
+corresponding cached fragment. This effectively suspends the                                          the application binary address of the start-of-trace instruction.
+interpreter and allows the cached code to execute directly on the
+                                                                                                            As execution proceeds, the application’s working set
+processor without incurring any further interpretive overhead.
+                                                                                                      gradually materializes in the fragment cache, and the Dynamo
+When control eventually exits the fragment cache, Dynamo
+                                                                                                      overhead (time spent in the Dynamo interpretive loop / time spent
+resumes interpreting the instruction stream, and the process repeats
+                                                                                                      executing in the fragment cache) begins to drop. Assuming that the
+itself.
+                                                                                                      majority of an application’s execution time is typically spent in a
+      Figure 1 illustrates this flow of control in more detail.                                       small portion of its code, the performance benefits from repeated
+Dynamo starts out by interpreting the input native instruction                                        reuse of the optimized fragments can be sufficient to offset the
+stream until a taken branch is encountered (A). If the branch target                                  overhead of Dynamo’s operation. On the SpecInt95 benchmarks,
+address corresponds to the entry point of a fragment already in the                                   the average Dynamo overhead is less than 1.5% of execution time.
+fragment cache (B), control jumps to the top of that fragment,                                        Dynamo’s interpreter-based hot trace selection process (A-H)
+effectively suspending Dynamo, and causing execution of the
+cached fragments to occur directly on the underlying processor (F).
+Otherwise, if the branch target satisfies a “start-of-trace” condition                                1
+                                                                                                          A fragment is similar to a superblock, except for the fact that it is
+(C), a counter associated with the target address is incremented (D).
+                                                                                                          a dynamic instruction sequence, and can cross static program
+Our current prototype defines start-of-trace as targets of backward-
+                                                                                                          boundaries like procedure calls and returns.
+
+
+                                                                                                  2
+                                         Application crt0 code                 Dynam o library code
+                                         ...
+                                         ...                                   dynamo_exec:
+                         app runs        push stack frame;                       save callee-save regs to app-context;
+                         natively        spill caller-save regs;                 copy caller-save regs from stack frame
+                                         call dynamo_exec;                            to app-context;
+                                         restore caller-save regs;               save stackptr to app-context;
+                                         pop stack frame;                        return-pc = value of link reg;
+                                         ...                                     swap Dynamo & application stack;
+                        app runs         ...                                     // stackptr now points to Dynamo stack
+                      under Dynamo       ...                                     initialize internal data structures;
+                                                                                 call interpreter (return-pc, app-context);
+                                                                                 // control does not return here!
+
+
+                                       Figure 2. How Dynamo gains control over the application
+dominates this overhead, with the optimizer and linker components           compete, with the compiler that generated the instruction stream,
+(I, J) contributing a relatively insignificant amount.                      Dynamo primarily looks for performance opportunities that tend to
+                                                                            manifest themselves in the runtime context of the application.
+3. Startup and initialization                                               These are generally redundancies that cross static program
+      Dynamo is provided as a user-mode dynamically linked                  boundaries like procedure calls, returns, virtual function calls,
+library (shared library). The entry point into this library is the          indirect branches and dynamically linked function calls. Another
+routine dynamo_exec. When dynamo_exec is invoked by an                      performance opportunity is instruction cache utilization, since a
+application, the remainder of the application code after return from        dynamically contiguous sequence of frequently executing
+the dynamo_exec call will execute under Dynamo control.                     instructions may often be statically non-contiguous in the
+      As outlined in Figure 2, dynamo_exec first saves a snapshot           application binary.
+of the application’s context (i.e., the machine registers and stack               Dynamo’s unit of runtime optimization is a trace, defined as a
+environment) to an internal app-context data structure. It then             dynamic sequence of consecutively executed instructions. A trace
+swaps the stack environment so that Dynamo’s own code uses a                starts at an address that satisfies the start-of-trace condition and
+custom runtime stack allocated separately for its use. Dynamo’s             ends at an address that satisfies the end-of-trace condition. Traces
+operation thus does not interfere with the runtime stack of the             may extend across statically or dynamically linked procedure
+application running on it. The interpreter (box A in Figure 1) is           calls/returns, indirect branches and virtual function calls. Dynamo
+eventually invoked with the return-pc corresponding to the                  first selects a “hot” trace, then optimizes it, and finally emits
+application’s dynamo_exec call. The interpreter starts interpreting         relocatable code for it into the fragment cache. The emitted
+the application code from this return-pc, using the context saved in        relocatable code is contiguous in the fragment cache memory, and
+app-context. The interpreter never returns to dynamo_exec (unless           branches that exit this code jump to corresponding exit stubs at the
+a special bailout condition occurs, which is discussed later), and          bottom of the code. This code is referred to as a fragment. The
+Dynamo has gained control over the application. From this point             trace is a unit of the application’s dynamic instruction stream (i.e.,
+onwards, an application instruction is either interpreted, or a copy        a sequence of application instructions whose addresses are
+of it is executed in the fragment cache. The original instruction is        application binary addresses) whereas the fragment is a Dynamo
+never executed in place the way it would have been if the                   internal unit, addressed by fragment cache addresses. The
+application were running directly on the processor.                         following subsections outline the trace selection, trace optimization
+      We provide a custom version of the execution startup code             and fragment code generation mechanisms of Dynamo.
+crt0.o, that checks to see if the Dynamo library is installed on the        4.1 Trace selection
+system, and if it is, invokes dynamo_start prior to the jump to
+                                                                                 Since Dynamo operates at runtime, it cannot afford to use
+_start (the application’s main entry point). Application binaries
+                                                                            elaborate profiling mechanisms to identify hot traces (such as
+that are linked with this version of crt0.o will transparently invoke
+                                                                            [14][4]). Moreover, most profiling techniques in use today have
+Dynamo if Dynamo is installed on the system, otherwise they will
+                                                                            been designed for offline use, where the gathered profile data is
+execute normally. The application binary itself remains unchanged
+                                                                            collated and analyzed post-mortem. The objective here is not
+whether or not it is run under Dynamo. This strategy allows
+                                                                            accuracy, but predictability. If a particular trace is very hot over a
+Dynamo to preserve the original mapping of the application’s text
+                                                                            short period of time, but its overall contribution to the execution
+segment, a key requirement for transparent operation.
+                                                                            time is small, it may still be an important trace to identify. Another
+       As part of the initialization done in dynamo_exec prior to
+                                                                            concern for Dynamo is the amount of counter updates and counter
+actually invoking the interpreter, Dynamo mmaps a separate area
+                                                                            storage required for identifying hot traces, since this adds to the
+of memory that it manages itself. All dynamically allocated objects
+                                                                            overhead and memory footprint of the system.
+in Dynamo code are created in this area of memory. Access to this
+                                                                                 As discussed in Section 2, Dynamo uses software
+area is protected to prevent the application from inadvertently or
+                                                                            interpretation of the instruction stream to observe runtime
+maliciously corrupting Dynamo’s state.
+                                                                            execution behavior. Interpretation is expensive but it prevents the
+4. Fragment formation                                                       need to instrument the application binary or otherwise perturb it in
+     Due to the significant overheads of operating at runtime,              any way. Interpretation is preferable to statistical PC sampling
+Dynamo has to maximize the impact of any optimization that it               because it does not interfere with applications that use timer
+performs. Furthermore, since the objective is to complement, not            interrupts. Also, as we will elaborate shortly, interpretation allows
+
+
+
+                                                                        3
+Dynamo to select hot regions directly without having to collate and            optimistically pick this sequence as a hot trace. Besides its
+analyze point statistics like the kind produced by PC sampling                 simplicity and ease of engineering, MRET has the advantage of
+techniques. Another important advantage of interpretation is that it           requiring much smaller counter storage than traditional branch or
+is a deterministic trace selection scheme, which makes the task of             path profiling techniques. Counters are only maintained for
+engineering the Dynamo system much easier.                                     potential loop headers. Furthermore, once a hot trace has been
+      It is worth noting that the “interpreter” here is a native               selected and emitted into the fragment cache, the counter
+instruction interpreter and that the underlying CPU is itself a very           associated with its start-of-trace address can be recycled. This is
+fast native instruction interpreter implemented in hardware. This              possible because all future occurrences of this address will cause
+fact can be exploited on machines that provide fast breakpoint                 the cached version of the code to be executed and no further
+traps (e.g., through user-mode accessible breakpoint window                    profiling is required.
+registers) to implement the Dynamo interpreter very efficiently [2].                Subsequent hot traces that also start at the same start-of-trace
+On the PA-8000 however, breakpoint traps are very expensive, and               address will be selected when control exits the first selected trace
+it was more efficient to implement the interpreter by using                    for that start-of-trace address. Exits from previously selected hot
+emulation. The higher the interpretive overhead, the earlier                   traces are treated as start-of-trace points by Dynamo (see Figure 1).
+Dynamo has to predict the hot trace in order to keep the overheads             This allows subsequent hot tails that follow the earlier hot start-of-
+low. In general, the more speculative the trace prediction scheme,             trace to be selected by the MRET scheme in the usual manner.
+the larger we need to size the fragment cache, to compensate for                    No profiling is done on the code generated into Dynamo’s
+the larger number of traces picked as a result. Thus, the                      fragment cache. This allows the cached code to run directly on the
+interpretive overhead has a ripple effect throughout the rest of the           processor at full native speed without any Dynamo introduced
+Dynamo system.                                                                 overheads. The flip side of this is that if the biases of some
+      Dynamo uses a speculative scheme we refer to as MRET (for                branches change after a hot trace was selected, Dynamo would be
+most recently executed tail) to pick hot traces without doing any              unable to detect it. In order to allow Dynamo to adapt to changing
+path or branch profiling. The MRET strategy works as follows.                  branch biases, the fragment cache is designed to tolerate periodic
+Dynamo associates a counter with certain selected start-of-trace               flushes. Periodically flushing some of the traces in the fragment
+points such as the target addresses of backward taken branches.                cache helps remove unused traces, and also forces re-selection of
+The target of a backward taken branch is very likely to be a loop              active traces. This is discussed in more detail in Section 6.
+header, and thus the head of several hot traces in the loop body. If
+the counter associated with a certain start-of-trace address exceeds
+                                                                               4.2 Trace optimization
+                                                                                    The selected hot trace is prepared for optimization by
+a preset threshold value, Dynamo switches its interpreter to a mode
+                                                                               converting it into a low-level intermediate representation (IR) that
+where the sequence of interpreted instructions is recorded as they
+                                                                               is very close to the underlying machine instruction set.
+are being interpreted. Eventually, when an end-of-trace condition
+                                                                                    The first task of trace optimization is to transform the
+is reached, the recorded sequence of instructions (the most recently
+                                                                               branches on the trace so that their fall-through direction remains on
+executed tail starting from the hot start-of-trace) is selected as a hot
+                                                                               the trace. Loops are only allowed if the loop-back branch targets
+trace.
+                                                                               the start-of-trace. Otherwise the loop-back branch is treated as a
+      The insight behind MRET is that when an instruction
+                                                                               trace exit. Unconditional direct branches are redundant on the trace
+becomes hot, it is statistically likely that the very next sequence of
+                                                                               and can be removed. In the case of branches with side-effects, such
+executed instructions that follow it is also hot. Thus, instead of
+                                                                               as branch-and-link branches, the side-effect is preserved even if the
+profiling the branches in the rest of the sequence, we simply record
+                                                                               branch itself is removed. After trace optimization, no branch-and-
+the tail of instructions following the hot start-of-trace and
+                                                                               link type branches remain on the trace.
+
+
+                   A                                                             A                                  A
+                                                                                 B                                  C
+
+              B            C                                                     C                                  D            fragment
+                                                                                                                                    body
+                                                                                 D                                  G
+
+                    D                                                            E                                  H
+                                 call
+                                                                                         call                       J
+                                            G
+                                                                                                                    E
+                    E                                      return
+                                                                                 G                                 to B             exit
+                                        H       I                                                                                  stubs
+                                                                                 H                                 to I
+                        return                                                                       trap to
+                                                                                 I                  Dynam o
+                                            J
+                                                                                 J
+
+                                 (a)                                       (b)                                          (c)
+
+ Figure 3. Control flow snippet in the application binary, (b) Layout of this snippet in the application program's memory, and (c)
+ Layout of a trace through this snippet in Dynamo's fragment cache.
+
+
+                                                                           4
+     Even indirect branches may be redundant. For example, a                 registers defined by those instructions are downward-exposed.
+return branch if preceded by the corresponding call on the trace is          Fragment A in Figure 5 illustrates such a case. The assignment to
+redundant and will be removed. Other indirect branches are                   register r5 shown in the compensation block (thick border) could
+optimistically transformed into direct conditional branches. The             have originally been in the first trace block. This sinking code
+transformed conditional branch compares the dynamic branch                   motion ensures that the overhead of executing this assignment is
+target with the target contained in the trace at the time the trace          only incurred when control exits the fragment via the path along
+was selected (referred to as the predicted indirect branch target). If       which that assignment to r5 is downwards exposed.
+the comparison succeeds, control goes to the predicted (on-trace)                  Other conventional optimizations performed are copy
+target. If the comparison fails, control is directed to a special            propagation, constant propagation, strength reduction, loop
+Dynamo routine that looks up a Dynamo-maintained switch table.               invariant code motion and loop unrolling. Dynamo also performs
+The switch table is a hash table indexed by indirect branch target           runtime disambiguated conditional load removal by inserting
+addresses (application binary addresses). The table entries contain          instruction guards that conditionally nullify a potentially redundant
+the fragment cache address corresponding to the target. If an entry          load.
+is found for the dynamic indirect branch target, control is directed               Note that load removal is only safe if it is known that the
+to the corresponding fragment cache address. Otherwise, control              respective memory location is not volatile. Information about
+exits the fragment cache to the Dynamo interpreter. If the                   volatile variables may be communicated to Dynamo through the
+interpreter then selects a new hot trace starting at that dynamic            symbol table. In the absence of any information about volatile
+indirect branch target, Dynamo will add a new entry to the switch            variables, load removal transformations are conservatively
+table corresponding to the mapping from the start-of-trace                   suppressed.
+application address to its fragment cache address. Assuming
+execution follows the selected hot trace most of the time, this
+                                                                             4.3 Fragment code generation
+                                                                                   The fragment code generator emits code for the trace IR into
+transformation replaces a potentially expensive indirect branch
+                                                                             the fragment cache. The emitted code is referred to as a fragment.
+with a less expensive direct conditional branch. The following
+                                                                             The fragment cache manager (discussed in Section 6) first
+outlines the transformed code for an indirect branch instruction:
+                                                                             allocates sufficient room in the fragment cache to generate the
+     // assuming the indirect branch’s dynamic target is in Rx
+                                                                             code.
+     spill Rscratch to app-context; // free a fixed register                       A trace IR may be split into multiple fragments when it is
+     set Rscratch = address of predicted on-trace target;                    emitted into the fragment cache. This is the case, for example, if a
+     if (Rx = = Rscratch) goto predicted target;                             direct conditional branch is encountered on the trace, which was
+     copy Rx to Rscratch;                                                    converted from the application’s original indirect branch
+     goto switch_table_lookup(Rscratch);                                     instruction by the trace optimizer (see Section 4.2). Such a branch
+                                                                             splits the trace into two fragments. The predicted on-trace target of
+      The actual register that contains the original indirect branch’s       the original indirect branch, which is the instruction immediately
+dynamic target can be different for different indirect branch                following this branch on the trace, starts a separate fragment.
+instructions. The purpose of copying this dynamic target to register               Virtual registers may be used in the IR but the trace optimizer
+Rscratch is to ensure that when control enters the switch table              retains their original machine register mappings. The register
+lookup routine at execution time, the same fixed register (Rscratch)         allocator attempts to preserve the original machine register
+will contain the dynamic target that has to be looked up.                    mappings to the extent possible when the code is finally emitted.
+      Finally, an unconditional trace exit branch is appended to the         The allocator reservers one register to hold the address of the app-
+bottom of the trace so that control reaching the end of the trace can        context data structure (see Figure 2) when control is within the
+exit it via a taken branch. After fixing up the branches on the trace,       fragment. The app-context is a Dynamo internal data structure that
+the result is a single-entry, multi-exit sequence of instructions with       is used to keep the application’s machine state during
+no internal control join points. Figure 3 illustrates the branch             interpretation, and also to record a snapshot of the application’s
+adjustments that occur after a trace is selected from the application        machine state at the point of the last fragment cache exit to
+binary.                                                                      Dynamo. The trace optimizer uses the app-context as a spill area to
+      Since traces are free of internal join points, new opportunities       create temporary scratch registers necessary for its optimizations.
+for optimization may be exposed that were otherwise unsafe in the            It cannot use the application’s runtime stack as a spill area because
+original program code. The simplicity of control flow allowed                that would interfere with stack operations generated by the static
+within a trace also means traces can be analyzed and optimized               compiler that created the application binary.
+very rapidly. In fact, the Dynamo trace optimizer is non-iterative,                Generation of the fragment code from the trace IR involves
+and optimizes a trace in only two passes: a forward pass and a               two steps: emitting the fragment body, and emitting the fragment
+backward pass. During each pass the necessary data flow                      exit stubs. Emitting the fragment body involves straightforward
+information is collected as it proceeds along the fragment. Most of          generation of the code corresponding to the trace IR itself. After
+the optimizations performed involve redundancy removal:                      that, a unique exit stub is emitted for every fragment exit branch
+redundant branch elimination, redundant load removal, and                    and fragment loop-back branch. The exit stub is a piece of code
+redundant assignment elimination. These opportunities typically              that transfers control from the fragment cache to the Dynamo
+result from partial redundancies in the original application binary          interpreter in a canonical way, as outlined below:
+that become full redundancies in a join-free trace.
+      The trace optimizer also sinks all partially redundant                      spill Rlink to app-context;
+instructions (i.e., on-trace redundancies) into special off-trace                 branch & link to interpreter; // sets Rlink to the following PC
+compensation blocks that it creates at the bottom of the trace. This              <ptr to linkage info for this exit branch>
+ensures that the partially redundant instructions get executed only
+when control exits the trace along a specific path where the
+
+
+                                                                         5
+                  A
+                  C                                                                       Fragment A
+                  D
+
+                  G                              B
+                  H                              D
+                                                                                                                       Fragment B
+                  J                              G                                           r5 = ...
+                  E                              I
+                                                                                             r5 = ...
+                to B                             J
+                                                                                                                          r5 = ...
+                to I                             E
+                                               to H
+                                                to A
+
+
+
+              Figure 4. Example of fragment linking                                    Figure 5. Example of link-time optimization
+     Each stub can be entered by only one fragment exit branch.              such a case, where the assignment to r5 shown in the compensation
+The stub code first saves the link register (Rlink) to the app-              block (thick border) was originally in the first block before it was
+context. It then does a branch and link to the entry point of the            sunk into its compensation block. As part of the linkage
+Dynamo interpreter, which sets the Rlink register to the fragment            information that is kept at each fragment exit stub (the shaded
+cache address following this branch. The Dynamo interpreter will             boxes in Figure 5), a mask of on-trace redundant register
+take a snapshot of the application’s machine state (with the                 assignments along that particular fragment exit is maintained. In
+application’s original Rlink value being taken from the app-context          Figure 5, this mask would be kept in the exit stub corresponding to
+data structure) prior to starting interpretation. The end of the exit        the compensation block, and bit 5 of the mask would be set. A
+stub beyond the branch and link instruction contains a pointer to            similar mask of killed register assignments at the top of every
+linkage information for the fragment exit branch associated with             fragment is also maintained as part of the Dynamo internal data
+the stub. When control exits the fragment to the Dynamo                      structure that keeps fragment-related information. At link-time, if a
+interpreter, the interpreter consults this linkage information to            register appears in both masks, the instruction that last defined it in
+figure out the next application address at which it should start             the source fragment’s compensation block is dead and can be
+interpretation. The value of the Rlink register contains the address         removed. This is illustrated in Figure 5, where the assignment to r5
+of the location containing the pointer to the linkage information for        in Fragment A’s compensation block can be deleted because r5 is
+the current fragment exit.                                                   defined before being used on entry to Fragment B.
+                                                                                  While the advantages of linking are clear, it also has some
+5. Fragment linking                                                          disadvantages that impact other parts of the Dynamo system. For
+      After the fragment code is emitted into the fragment cache,
+                                                                             instance, linking makes the removal of individual fragments from
+the new fragment is linked to other fragments already in the
+                                                                             the fragment cache expensive, because all incoming branches into
+fragment cache. Linking involves patching a fragment exit branch
+                                                                             a fragment must be unlinked first. Linking also makes it difficult to
+so that its taken target is the entry point of another fragment,
+                                                                             relocate fragments in the fragment cache memory after they have
+instead of to its exit stub.
+                                                                             been emitted. This might be useful for instance to do periodic de-
+      As an example, suppose the trace BDGIJE in Figure 3 (a) now
+                                                                             fragmentation of the fragment cache memory.
+becomes hot (B is a valid start-of-trace by our definition, when it is
+entered via an exit from the earlier hot trace ACDGHJE). Figure 4            6. Fragment cache management
+illustrates the linking that occurs after the fragment corresponding              Dynamo cannot afford to do complicated management of the
+to the BDGIJE trace is emitted into the fragment cache. Linked               fragment cache storage, because of the overheads this would incur.
+branches are shown as dark arrows, and their original unlinked               We could avoid storage management altogether by simply
+versions are indicated as dashed light arrows.                               expanding the size of the fragment cache as needed. But this has
+      Fragment linking is essential for performance, because it              several undesirable effects. For example, one of the advantages of
+prevents expensive exits from the fragment cache back to the                 collecting hot traces in a separate fragment cache is the improved
+Dynamo interpreter. In our prototype implementation on the PA-               instruction cache locality and TLB utilization that can result from
+8000 for example, disabling fragment linking results in an order of          keeping the working set close together in memory. This advantage
+magnitude slowdown (by an average factor of 40 for the SpecInt95             could go away if over time, the hot traces that make up the current
+benchmarks).                                                                 working set are spread out over a large area of fragment cache
+      Fragment linking also provides an opportunity for removing             memory. Clearly, the ideal situation where the fragment cache only
+redundant compensation code from the source fragment involved                contains the traces that make up the current working set is difficult
+in the link. Recall that the trace optimizer sinks on-trace                  to achieve. The overhead of implementing an LRU type scheme to
+redundancies into compensation blocks, so that these instructions            identify cold fragments would be too expensive as well. Moreover,
+are only executed when control exits the fragment along a                    as pointed out earlier, any policy that only removes a few
+particular path (see Section 4.2). Fragment A in Figure 5 illustrates
+
+
+                                                                         6
+                             100
+                              90
+                              80
+                                       previous working set
+                              70       formation completed
+         # traces selected
+
+
+
+
+                              60
+                              50                     new working set
+                                                      being formed
+                              40
+                              30
+                              20
+                                                               flush
+                              10
+                               0
+                                   1   16    31    46     61    76     91   106 121 136 151 166 181 196 211 226 241 256
+                                                              Time (s)
+    Figure 6. Dynamic trace selection rate for m88ksim, showing a sharp change in the working set ~106 sec into its execution
+
+fragments would incur the expense of having to unlink every                         even modifies the machine context at the instant of the signal. If a
+incoming branch into these fragments.                                               signal arrives at a point where a dead register assignment has been
+      Dynamo instead employs a novel pre-emptive flushing                           removed, the signal context is incomplete.
+heuristic to periodically remove cold traces from the fragment                            Dynamo intercepts all signals, and executes the program’s
+cache without incurring a high penalty. A complete fragment cache                   signal handler code under its control, in the same manner that it
+flush is triggered whenever Dynamo recognizes a sharp increase in                   executes the rest of the application code (box K in Figure 1). This
+the fragment creation rate (or hot trace selection rate). The                       gives Dynamo an opportunity to rectify the signal context that
+rationale here is that a sharp rise in new fragment creation is very                would otherwise be passed directly to the application’s handler by
+likely indicative of a significant change in the working set of the                 the operating system. Asynchronous signals (such as keyboard
+program that is currently in the fragment cache. Since control is                   interrupts, etc., where the signal address is irrelevant) are treated
+predominantly being spent in Dynamo during this stage, the                          differently from synchronous signals (such as segment faults, etc.,
+fragment cache flush is essentially “free”. Figure 6 illustrates this               where the signal address is critical).
+scenario for the SpecInt95 m88ksim benchmark. Since all                                   If an asynchronous signal arrives when executing a fragment,
+fragments are removed during a fragment cache flush, no unlinking                   the Dynamo signal handler will queue it and return control back to
+of branches needs to be done.                                                       the fragment cache. All queued asynchronous signals are processed
+      The pre-emptive flushing mechanism has other useful side                      when the next normal fragment cache exit occurs. This allows
+effects. All fragment-related data structures maintained for internal               Dynamo to provide a proper signal context to the application’s
+bookkeeping by Dynamo are tied to the flush, causing these                          handler since control is not in the middle of an optimized fragment
+memory pools to be reset as a side effect of a pre-emptive flush. A                 at the time the signal context is constructed.
+pre-emptive flush thus serves as an efficient garbage collection                          In order to bound asynchronous signal handling latency, the
+mechanism to free dynamic objects associated with fragments that                    Dynamo signal handler unlinks all linked branches on the current
+are likely to have dropped out of the current working set. If some                  fragment prior to resuming execution of the fragment. To
+fragments belonging to the new working set are inadvertently                        disconnect self-loops in a similar manner, the fragment generator
+flushed as a result, they will be regenerated by Dynamo when                        emits an exit stub for each self-loop branch in addition to the exit
+those program addresses are encountered later during execution.                     stubs for the fragment exit branches. Unlinking the current
+Regeneration of fragments allows Dynamo to adapt to changes in                      fragment forces the next fragment exit branch to exit the fragment
+the application’s branch biases. When a trace is re-created,                        cache via the exit stub, preventing the possibility of control
+Dynamo may select a different tail of instructions from the same                    spinning within the fragment cache for an arbitrarily long period of
+start-of-trace point. This automatic “re-biasing” of fragments is                   time before the queued signals are processed. This feature allows
+another useful side effect of the pre-emptive cache flushing                        Dynamo to operate in environments where soft real-time
+strategy.                                                                           constraints must be met.
+                                                                                          Synchronous signals on the other hand are problematic,
+7. Signal handling                                                                  because they cannot be postponed. A drastic solution is to suppress
+     Optimizations that involve code reordering or removal, such                    code removing and reordering transformations altogether. A more
+as dead code elimination and loop unrolling, can create a problem                   acceptable alternative is to use techniques similar to that developed
+if a signal arrives while executing the optimized fragment, by                      for debugging of optimized code to de-optimize the fragment code
+making it difficult or impossible for Dynamo to recreate the                        before attempting to construct the synchronous signal context.
+original signal context prior to the optimization. This can create                  Fortunately, the problem of de-optimizing is much simpler in
+complications for precise signal delivery. For example, the                         Dynamo since only straight-line fragments are considered during
+application might arm a signal with a handler that examines or                      optimization. Optimization logs can be stored along with each
+
+
+                                                                                7
+                    25%
+                                                                                                  aggressive optimization
+                    20%                                                                           conservative optimization
+                                                                                                  trace selection
+                    15%
+
+
+                    10%
+
+
+                     5%
+
+
+                     0%
+
+
+                    -5%
+
+
+ Figure 7. Speedup of +O2 optimized PA-8000 binaries running on Dynamo, relative to the identical binaries running
+ standalone. The contributions from dynamic inlining due to trace selection, conservative trace optimization and aggressive trace
+ optimization are shown. Dynamo bails out to direct native execution on go and vortex.
+fragment that describes compensation actions to be performed                SpecInt95 benchmarks2 and a commercial C++ code called
+upon signal-delivery, such as the execution a previously deleted            deltablue, which is an incremental constraint solver [28]. The
+instruction. This is presently an ongoing effort in the Dynamo              programs were compiled at the +O2 optimization level (equivalent
+project.                                                                    to the default –O option) using the product HP C/C++ compiler.
+     Our prototype currently implements a less ambitious solution           This optimization level includes global intraprocedural
+to this problem, by dividing trace optimizations into two                   optimization. Performance measurements were based on wall clock
+categories,    conservative     and    aggressive.     Conservative         time on a lightly loaded single-processor HP PA-8000 workstation
+optimizations allow the precise signal context to be constructed if a       [21] running the HP-UX 10.20 operating system.
+synchronous fault occurs while executing the fragment. Aggressive                Figure 7 shows the speedup that Dynamo achieves over +O2
+optimizations on the other hand cannot guarantee this. Examples of          optimized native program binaries running without Dynamo. For
+conservative optimizations include constant propagation, constant           these runs, Dynamo was configured to use a fixed size 150 Kbyte
+folding, strength reduction, copy propagation and redundant                 fragment cache, which is flushed when sharp changes occur to the
+branch removal. The aggressive category includes all of the                 trace selection rate or there is no room to generate new fragments.
+conservative optimizations plus dead code removal, code sinking             Details about the performance impact of varying the fragment
+and loop invariant code motion. Certain aggressive optimizations,           cache size are outside the scope of this paper and can be found
+like redundant load removal, can sometimes be incorrect, if the             elsewhere [2]. As the figure indicates, Dynamo achieves
+load is from a volatile memory location.                                    considerable speedup in some cases, over 22% in li and m88skim,
+     Dynamo’s trace optimizer is capable of starting out in its             about 18% in perl, and about 14% in compress. These four
+aggressive mode of optimization, and switching to conservative              programs have relatively stable working sets, a fact that dynamic
+mode followed by a fragment cache flush if any suspicious                   optimization can exploit very well. The average overall speedup is
+instruction sequence is encountered. Unfortunately, the PA-RISC             about 9%. A significant portion of the performance gains come
+binary does not provide information about volatile memory                   from the act of selecting a trace and forming a fragment out of it,
+operations or information about program-installed signal handlers.          that is, from the implied partial procedure inlining and improved
+So this capability is currently unused in Dynamo. In a future               code layout in the fragment cache. Fragment optimization accounts
+version of Dynamo, we plan to investigate ways to allow the                 for approximately 3% of the total gains on average, and one-third
+generator of Dynamo’s input native instruction stream to provide            of this is due to conservative (signal and volatile-memory safe)
+hints to Dynamo. Dynamo can use such hints if they are available,
+but will not rely on them for operation.
+                                                                            2
+                                                                                Our experiments do not include the SpecInt95 gcc benchmark.
+8. Performance data                                                             This benchmark actually consists of repeated runs of gcc on a
+     For performance evaluation we present experiments on                       number of input files, and the individual runs are too short
+several integer benchmarks. Dynamo incurs a fixed startup                       running to qualify for our performance study (less than 60
+overhead for allocating and initializing its internal data structures           seconds on the PA-8000). To understand the performance
+and the fragment cache. The startup overhead could probably be                  characteristics of gcc, we modified the gcc program to internally
+improved through more careful engineering. But for the purposes                 loop over the input files, thus resulting in a single long
+of this study, we use benchmarks that long enough to allow the                  invocation of gcc. We do not show data for the modified gcc
+startup and initialization overhead to be recouped. This section                because it does not represent the original benchmark, but it’s
+presents data comparing the performance of running several                      performance characteristics are comparable to that of go for all
+integer benchmarks on Dynamo to the identical binary executing                  of the data shown here.
+directly on the processor. Our benchmark set includes the
+
+
+
+                                                                        8
+                                     100%
+ Overhead (% time spent in Dynamo)
+
+
+
+
+                                     90%                                                      go
+                                     80%                                                      go (with bail-out)
+                                     70%                                                      m88ksim
+                                     60%
+                                     50%
+                                     40%
+                                     30%
+                                     20%
+                                     10%
+                                      0%
+                                            0   100                                     200                                  300
+                                                                 Time (sec)
+   Figure 8. Illustration of bail-out. Dynamo bails out on go ~45 sec into its execution, after which go runs directly on the
+   processor without incurring any Dynamo overhead. m88ksim is shown for comparison as a case where Dynamo does not
+   bail out.
+optimizations. Note however, that if we ignore the inputs on which        compile-time increases very significantly from +O2 to +O4, and
+Dynamo bails out (as discussed shortly), the average contribution         the ability to debug the binary is lost. Because of this, most
+due to trace optimization is around 5%.                                   software vendors are reluctant to enable higher optimization levels,
+      Dynamo does not achieve performance improvements on                 in spite of the performance advantages they offer.
+programs go, ijpeg and vortex. Dynamo’s startup time is a non-                  The data in Figure 9 shows that Dynamo finds performance
+negligible fraction of the total runtime of ijpeg, as ijpeg does not      improvement opportunities even in highly optimized binaries. In
+run long enough to recoup Dynamo’s startup overhead before                fact, on this set of benchmarks, Dynamo is able to raise the average
+starting to provide any performance benefit. In the case of go and        performance of +O2 compiled binaries to a level that slightly
+vortex that run for a long time, the problem is the lack of a stable      exceeds the performance of their +O4 compiled versions running
+working set. A relatively high number of distinct dynamic                 without Dynamo! This performance boost comes in a transparent
+execution paths are executed in these benchmarks [4]. Frequently          fashion, without the creator of the binary having to do anything
+changing dynamic execution paths result in an unstable working            special. The fact that Dynamo finds performance improvement
+set, and Dynamo spends too much time selecting traces without             opportunities even in +O4 optimized binaries is not as surprising
+these traces being reused sufficiently in the cache to offset the         as it first seems, because Dynamo primarily focuses on runtime
+overhead of its own operation.                                            performance opportunities that a static compiler would find
+      Fortunately, since Dynamo is a native-to-native optimizer, it       difficult to exploit.
+can use the original input program binary as a fallback when its                In some programs (such as li and perl), Dynamo is able to
+overhead starts to get too high. Dynamo constantly monitors the           boost the performance of even profile-feedback compiled binaries
+ratio of time spent in Dynamo over time spent in the fragment             (+O4 +P). On average however, the benefits of Dynamo disappear
+cache. If this ratio stays above a tolerable threshold for a prolonged    once static optimization is enhanced with profile information. This
+period of time, Dynamo assumes that the application cannot be             is to be expected, as the most beneficial inlining and other path-
+profitably optimized at runtime. At that point Dynamo bails-out by        sensitive optimizations have been already made at compile-time.
+loading the application’s app-context to the machine registers and              As pointed out in the introduction, the goal of this study is to
+jumping to an application binary address. From that point on the          establish the limits of Dynamo’s capabilities in an extreme setting,
+application runs directly on the processor, without any further           where the quality of the input program code is good. In compiling
+dynamic optimization. Bail-out allows Dynamo to come close to             these benchmarks, the static compiler had all of the program
+break-even performance even on “ill-behaved” programs with                sources available, and no dynamically linked libraries were used.
+unstable working sets. This is illustrated in the graph in Figure 8       Using good quality compiled code as input forced the development
+for the benchmark go. The Dynamo overhead for a relatively well-          effort to focus on fine-tuning the engineering of the Dynamo
+behaved application, m88ksim, is also shown for comparison.               system.
+       Figure 9 shows Dynamo’s performance on binaries compiled                 It should be emphasized that the performance data shown here
+with higher optimization levels. The figure shows the program             is very specific to the quality of the code produced by the PA-8000
+runtimes with and without Dynamo, for three optimization levels:          compiler, and to the PA-8000 processor implementation. Although
++O2 (same as –O), +O4, and profile-based +O4 +P (i.e., +O4 with           the hot trace selection and dynamic optimization can be expected
+a prior profile collection run). At level +O4, the HP C compiler          to provide benefits in general, the actual impact in terms of wall-
+performs global interprocedural and link-time optimization. At            clock performance improvement will vary from target to target. On
+level +O4 +P the compiler performs +O4 optimizations based on             the deeply pipelined PA-8000 for example, the branch
+profile information gathered during a prior +O4 run. However,             misprediction penalty is 5 cycles, and indirect branches (including
+
+
+                                                                       9
+          500
+                             Native +O2
+          450
+                             Native +O4
+          400                Native +O4 +P
+          350                Dynamo +O2
+                             Dynamo +O4
+          300
+                             Dynamo +O4 +P
+          250
+
+          200
+
+          150
+
+          100
+
+            50
+
+             0
+
+
+
+
+Figure 8. Dynamo performance on native binaries compiled at higher optimization levels (the first 3 bars for each program
+correspond to the native runs without Dynamo, and the next 3 bars correspond to the runs on Dynamo)
+returns) are always mispredicted. Indirect branch removal therefore        These generate profile data during the initial run via emulation,
+makes a big contribution toward Dynamo’s performance gains on              and perform background translation together with optimization of
+the PA-8000. On the other hand, the PA-8000 has a large                    hot spots based on the profile data. The benefit of the profile-based
+instruction cache (1 Mbyte), so the gains from improved I-cache            optimization is only available during subsequent runs of the
+locality in the software fragment cache code are unlikely to be            program and the initial profile-collecting run may suffer from
+significant. However, the processor has a unified instruction and          worsened performance.
+data TLB with only 96 entries, so the reduction in TLB pressure                  Hardware solutions for a limited form of runtime code
+due to better locality of the working set in the fragment cache can        optimization are now commonplace in modern superscalar
+contribute to a performance boost.                                         microprocessors [21][25][19]. The optimization unit is a fixed size
+                                                                           instruction window, with the optimization logic operating on the
+9. Related work                                                            critical execution path. The Trace Cache is another hardware
+      In focusing on native-to-native runtime optimization, Dynamo
+                                                                           alternative that can be extended to do superscalar-like optimization
+is a fundamentally different approach from past work on dynamic
+                                                                           off the critical path [27][15]. Dynamo offers the potential for a
+compilation. Just-in-time compilers delay all compilation until
+                                                                           purely software alternative, which could allow it to be tailored to
+runtime      [6][11][10].     Selective     dynamic     compilation
+                                                                           specific application domains, and cooperate with the compiler or
+[1][9][23][13][22][26][16][24] is a staged form of compilation that
+                                                                           JIT in ways that hardware dynamic optimizers cannot.
+restricts dynamic compilation to selected portions of code
+identified by user annotations or source language extensions. In           10. Conclusion
+these cases, the static compiler prepares the dynamic compilation               Dynamo is a novel performance delivery mechanism. It
+process as much as possible by generating templates that are               complements the compiler’s traditional strength as a static
+instantiated at run-time by a specialized dynamic compiler.                performance improvement tool by providing a dynamic
+      In contrast to both just-in-time and selective dynamic               optimization capability. In contrast to other approaches to dynamic
+compilation, Dynamo separates that task of compilation, which              optimization, Dynamo works transparently, requiring no user
+occurs prior to execution, from dynamic optimization, which                intervention. This fact allows Dynamo to be bundled with a
+occurs entirely at runtime and without requiring user assistance.          computer system, and shipped as a client-side performance
+Dynamo’s input is an already compiled native instruction stream,           delivery mechanism, whose activation does not depend on the
+that is re-optimized to exploit performance opportunities that             ISVs (independent software vendors) in the way that traditional
+manifest themselves at runtime.                                            compiler optimizations do.
+      A lot of work has been done on dynamic translation as a                   This paper demonstrates that it is possible to engineer a
+technique for non-native system emulation [8][30][5][31][12][17].          practical software dynamic optimizer that provides a significant
+The idea is to lower emulation overhead by caching native code             performance benefit even on highly optimized executables
+translations of frequently interpreted regions. Unlike such binary         produced by a static compiler. The key is to focus the optimization
+translators, Dynamo is not concerned with translation. The                 effort on opportunities that are likely to manifest themselves only
+Dynamo approach does however allow one to couple a fast                    at runtime, and hence those that a static compiler might miss.
+lightweight translator that emits native code to Dynamo, which                  We are currently investigating applications of Dynamo’s
+then becomes a backend optimizer.                                          dynamic optimization technology in many different areas. One of
+      There are several implementations of offline binary                  the directions we are exploring is to export an API to the
+translators that also perform native code optimization [7][29].            application program, so that a “Dynamo-aware” application can
+
+
+
+                                                                      10
+use the underlying system in interesting ways. This might be useful        [11] Deutsch, L.P. and Schiffman A.M. 1984. Efficient
+for example to implement a very low-overhead profiler, or a JIT                 implementation of the Smalltalk-80 system. In Proceedings of
+compiler. From Dynamo’s perspective, user and/or compiler hints                 the 11th Annual ACM Symposium on Principles of
+provided via this API might allow it to perform more                            Programming Languages. 297-302.
+comprehensive optimizations that go beyond the scope of                    [12] Ebcioglu K., and Altman, E.R. 1997. DAISY: Dynamic
+individual traces. Finally, we are also looking at the problem of               compilation for 100% architectural compatibility. In
+transparent de-optimization at runtime.                                         Proceedings of the 24th Annual International Symposium on
+                                                                                Computer Architecture. 26-37.
+11. Acknowledgements
+     Since the inception of the Dynamo project, many people have           [13] Engler, D.R. 1996. VCODE: a retargetable, extensible, very
+influenced our thinking. We would particularly like to thank Bill               fast dynamic code generation system. In Proceedings of the
+Buzbee, Wei Hsu, Lacky Shah, Giuseppe Desoli, Paolo                             SIGPLAN’96 Conference on Programming Language Design
+Faraboschi, Geoffrey Brown and Stefan Freudenberger for                         and Implementation (PLDI’96).
+numerous technical discussions. Finally, we are grateful to Josh           [14] Fisher, J., and Freudenberger, S. 1992. Predicting conditional
+Fisher and Dick Lampman for their encouragement and support of                  branch directions from previous runs of a program. In
+this project.                                                                   Proceedings of the 5th International Conference on
+                                                                                Architectural Support for Programming Languages and
+12. References                                                                  Operating Systems (ASPLOS 5). Oct 1992. 85-95.
+[1] Auslander, J., Philipose, M., Chambers, C., Eggers, S.J., and
+    Bershad, B.N. 1996. Fast, effective dynamic compilation. In            [15] Friendly, D.H., Patel, S.J., and Patt., Y.N. 1998. Putting the
+    Proceedings of the SIGPLAN’96 Conference on                                 fill unit to work: dynamnic optimizations for trace cache
+    Programming Language Design and Implementation                              microprocessors. In Proceedings of the 31st Annual
+    (PLDI’96).                                                                  Internation Symposium on Microarchitecture (MICRO-31),
+                                                                                Dallas. 173-181.
+[2] Bala, V., Duesterwald, E., and Banerjia, S. 1999. Transparent
+    dynamic optimization: The design and implementation of                 [16] Grant, B., Philipose, M., Mock, M., Chambers, C., and
+    Dynamo. Hewlett Packard Laboratories Technical Report                       Eggers, S.J. An evaluation of staged run-time optimizations in
+    HPL-1999-78. June 1999.                                                     DyC. In Proceedings of the SIGPLAN’99 Conference on
+                                                                                Programming Language Design and Implementation. 293-
+[3] Bala V., and Freudenberger, S. 1996. Dynamic optimization:                  303.
+    the Dynamo project at HP Labs Cambridge (project proposal).
+    HP Labs internal memo, Feb 1996.                                       [17] Herold, S.A. 1998. Using complete machine simulation to
+                                                                                understand computer system behavior. Ph.D. thesis, Dept.
+[4] Ball, T., and Larus, J.R. 1996. Efficient path profiling. In                Computer Science, Stanford University.
+    Proceedings of the 29th Annual International Symposium on
+    Microarchitecture (MICRO-29), Paris. 46-57.                            [18] Hwu, W.W., Mahlke, S.A., Chen, W.Y., Chang, P. P., Warter,
+                                                                                N.J., Bringmann, R.A., Ouellette, R.Q., Hank, R.E., Kiyohara,
+[5] Bedichek, R. 1995. Talisman: fast and accurate                              T., Haab, G.E., Holm, J.G., and Lavery, D.M. 1993.The
+    multicomputer simulation. In Proceedings of the 1995 ACM                    superblock: an effective structure for VLIW and superscalar
+    SIGMETRICS Conference on Measurement and Modeling of                        compilation. The Journal of Supercomputing 7, (Jan.). 229-
+    Computer Systems.                                                           248.
+[6] Chambers, C., and Ungar, D. 1989. Customization:                       [19] Keller, J. 1996. The 21264: a superscalar Alpha processor
+    optimizing compiler technology for Self, a dynamically-typed                with out-of-order execution. Presented at the 9th Annual
+    object-orientied programming language. In Proceedings of the                Microprocessor Forum, San Jose, CA.
+    SIGPLAN’89 Conference on Programming Language Design
+    and Implementation. 146-160.                                           [20] Kelly, E.K., Cmelik, R.F., and Wing, M.J. 1998. Memory
+                                                                                controller for a microprocessor for detecting a failure of
+[7] Chernoff, A., Herdeg, M., Hookway, R., Reeve, C., Rubin,                    speculation on the physical nature of a component being
+    N., Tye, T., Yadavalli, B., and Yates, J. 1998. FX!32: a                    addressed. U.S. Patent 5,832,205, Nov. 1998.
+    profile-directed binary translator. IEEE Micro, Vol 18, No. 2,
+    March/April 1998.                                                      [21] Kumar, A. 1996. The HP PA-8000 RISC CPU: a high
+                                                                                performance out-of-order processor. In Proceedings of Hot
+[8] Cmelik, R.F., and Keppel, D. 1993. Shade: a fast instruction                Chips VIII, Palo Alto, CA.
+    set simulator for execution profiling. Technical Report
+    UWCSE-93-06-06, Dept. Computer Science and Engineering,                [22] Leone, M. and Dybvig, R.K. 1997. Dynamo: a staged
+    University .of Washington.                                                  compiler architecture for dynamic program optimization.
+                                                                                Technical Report #490, Dept. of Computer Science, Indiana
+[9] Consel, C., and Noel, F. 1996. A general approach for run-                  University.
+    time specialization and its application to C. In Proceedings of
+    the 23th Annual Symposium on Principles of Programming                 [23] Leone, M. and Lee, P. 1996. Optimizing ML with run-time
+    Languages. 145-156.                                                         code generation. In Proceedings of the SIGPLAN’96
+                                                                                Conference on Programming Language Design and
+[10] Cramer, T., Friedman, R., Miller, T., Seberger, D., Wilson,                Implementation. 137-148.
+     R., and Wolczko, M. 1997. Compiling Java Just In Time.
+     IEEE Micro, May/Jun 1997.                                             [24] Marlet, R., Consel, C., and Boinot, P. Efficient incremental
+                                                                                run-time specialization for free. In Proceedings of the
+
+
+
+
+                                                                      11
+    SIGPLAN ’99 Conference on Programming Language Design                  [28] Sannella, M., Maloney, J., Freeman-Benson, B., and Borning,
+    and Implementation. 281-292.                                                A. 1993. Multi-way versus one-way constraints in user
+[25] Papworth, D. 1996. Tuning the Pentium                     Pro              interfaces: experiences with the Deltablue algorithm. Software
+     microarchitecture. IEEE Micro, (Apr.). 8-15.                               – Practice and Experience 23, 5 (May). 529-566.
+
+[26] Poletta, M., Engler, D.R., and Kaashoek, M.F. 1997. tcc: a            [29] Sites, R.L., Chernoff, A., Kirk, M.B., Marks, M.P., and
+     system for fast flexible, and high-level dynamic code                      Robinson, S.G. Binary Translation. Digital Technical
+     generation. In Proceedings of the SIGPLAN ’97 Conference                   Journal, Vol 4, No. 4, Special Issue, 1992.
+     on Programming Language Design and Implementation. 109-               [30] Stears, P. 1994. Emulating the x86 and DOS/Windows in
+     121.                                                                       RISC environments. In Proceedings of the Microprocessor
+[27] Rotenberg, E., Bennett, S., and Smith, J.E. 1996. Trace cache:             Forum, San Jose, CA.
+     a low latency approach to high bandwidth instruction                  [31] Witchel, E. and Rosenblum R. 1996. Embra: fast and flexible
+     fetching. In Proceedings of the 29th Annual International                  machine simulation. In Proceedings of the SIGMETRICS ’96
+     Symposium on Microarchitecture (MICRO-29), Paris. 24-35.                   Conference on Measurement and Modeling of Computer
+                                                                                Systems. 68-78
+
+
+
+
+                                                                      12
+
